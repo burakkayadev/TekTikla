@@ -20,9 +20,9 @@ Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğ
 
 | Sekme | Ne yapar |
 |---|---|
-| **İndir** | Linki analiz eder: tüm kaliteler (144p–8K, tahmini boyutlarıyla), MP4/MKV/WEBM, MP3/M4A/OPUS/FLAC/WAV, sitedeki altyazılar veya kendi .srt/.vtt/.ass dosyan (gömülü / videoya yakılmış / ayrı .srt), kesit indirme, oynatma listesi. ⚡ Hızlı İndir ve Hızlı MP3 analiz beklemeden indirir. |
+| **İndir** | Linki analiz eder: tüm kaliteler (144p–8K, tahmini boyutlarıyla), MP4/MKV/WEBM, MP3/M4A/OPUS/FLAC/WAV, sitedeki altyazılar veya kendi .srt/.vtt/.ass dosyan (gömülü / videoya yakılmış / ayrı .srt), kesit indirme, oynatma listesi, en yüksek çözünürlükte kapak fotoğrafı indirme, benzer videoları listeleme. ⚡ Hızlı İndir ve Hızlı MP3 analiz beklemeden indirir. |
 | **İndirmeler** | Kuyruk: canlı ilerleme, hız, kalan süre, iptal, tekrar dene, dosyayı aç / klasörde göster. Aynı anda 1–4 indirme. |
-| **AI Özet** | Videonun altyazı dökümünü yapay zekâya okutup Türkçe tek cümlelik özet, genel özet, önemli noktalar ve konu etiketleri çıkarır. |
+| **AI Stüdyo** | **Video özeti:** altyazı dökümünü (yoksa, X/Twitter gibi, sesi bilgisayarda yazıya döküp) okutarak tek cümlelik özet, genel özet, önemli noktalar ve konu etiketleri. **Yorum özeti:** en çok beğenilen 300 yorumdan beğenilenler, eleştiriler, bildirilen sorunlar ve yorumlardaki çözümleri, sık sorulan sorular. **Video fikirleri:** bir linkten benzer (kopya olmayan) ya da yazdığın konudan başlık, açılış cümlesi ve akışıyla 6 içerik fikri. |
 | **AI Altyazı** | İndirirken *Yapay zekâ ile altyazı* açılırsa videonun konuşması seçilen dile (Türkçe, İngilizce, Almanca… 15 dil) çevrilip altyazı olarak eklenir: gömülü, videoya yakılmış ya da ayrı .srt. Videoda altyazı yoksa konuşma bilgisayarda Whisper ile ücretsiz yazıya dökülür (ilk kullanımda ~190 MB model iner). |
 | **Geçmiş** | Aranabilir indirme geçmişi. |
 | **Ayarlar** | Kayıt klasörü, koyu/açık tema, pano izleme, paralel indirme, hız sınırı, varsayılan biçimler, kapak/bilgi gömme, SponsorBlock, tarayıcı çerezleri, yt-dlp ve uygulama güncellemesi. |
@@ -51,7 +51,7 @@ tektikla/app.py          pencere (pywebview + WebView2)
 tektikla/api.py          arayüz ↔ Python köprüsü, indirme kuyruğu, pano izleme
 tektikla/web/            arayüz (index.html, style.css, app.js)
 tektikla/engine.py       indirme motoru (yt-dlp + FFmpeg: kalite, MP3, altyazı gömme/yakma, kesit)
-tektikla/ai.py           AI video özeti
+tektikla/ai.py           AI video özeti, yorum özeti, video fikirleri
 tektikla/llm.py          yapay zekâ servisleri (Gemini, Claude Haiku)
 tektikla/subtitles.py    zamanlı altyazı okuma, birleştirme, .srt, AI çeviri
 tektikla/transcribe.py   konuşmayı yazıya dökme (whisper.cpp)

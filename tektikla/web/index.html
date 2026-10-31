@@ -23,7 +23,7 @@
       <div class="nav-indicator" id="navIndicator"></div>
       <button class="nav-item active" data-page="download"><i data-ic="download"></i>İndir</button>
       <button class="nav-item" data-page="queue"><i data-ic="list"></i>İndirmeler<span class="badge hidden" id="queueBadge">0</span></button>
-      <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Özet<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Stüdyo<span class="tag">YENİ</span></button>
       <button class="nav-item" data-page="history"><i data-ic="clock"></i>Geçmiş</button>
       <button class="nav-item" data-page="settings"><i data-ic="settings"></i>Ayarlar</button>
     </nav>
@@ -81,7 +81,10 @@
             <p id="mUploader"></p>
             <div class="meta-actions">
               <button class="btn ai" id="mAiBtn"><i data-ic="sparkles"></i>AI ile özetle</button>
-              <button class="btn" id="mResetBtn"><i data-ic="x"></i>Temizle</button>
+              <button class="btn" id="mCommentsBtn"><i data-ic="chat"></i>Yorum özeti</button>
+              <button class="btn" id="mThumbBtn"><i data-ic="image"></i>Kapağı indir</button>
+              <button class="btn" id="mSimilarBtn"><i data-ic="grid"></i>Benzer videolar</button>
+              <button class="btn icon" id="mResetBtn" title="Temizle"><i data-ic="x"></i></button>
             </div>
           </div>
         </div>
@@ -163,6 +166,10 @@
           <div class="info"><b id="dlSummary"></b><small id="dlSummary2"></small></div>
           <button class="btn primary xl" id="downloadBtn"><i data-ic="download"></i>İndir</button>
         </div>
+        <div class="card hidden" id="similarBox">
+          <div class="sim-head"><h3>Benzer videolar</h3><button class="btn icon ghost" id="similarClose" title="Kapat"><i data-ic="x"></i></button></div>
+          <div class="sim-grid" id="similarGrid"></div>
+        </div>
       </div>
     </section>
 
@@ -187,8 +194,8 @@
     <!-- ======================= AI ÖZET ======================= -->
     <section class="page" id="page-ai">
       <div class="page-head">
-        <div><h1><span class="grad-text">AI</span> Video Özeti</h1>
-        <p>İzlemeden önce videonun ne anlattığını öğren. Yapay zekâ konuşma dökümünü okuyup özetler.</p></div>
+        <div><h1><span class="grad-text">AI</span> Stüdyo</h1>
+        <p id="aiSub">İzlemeden önce videonun ne anlattığını öğren.</p></div>
       </div>
       <div class="card callout hidden" id="aiNoKey">
         <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></div>
@@ -196,11 +203,16 @@
         <button class="btn primary" id="aiGoSettings"><i data-ic="settings"></i>Ayarlara git</button>
       </div>
       <div class="card hero">
-        <div class="ai-hero">
-          <div class="url-box"><i data-ic="link"></i><input id="aiUrl" placeholder="Özetlenecek video linki…" spellcheck="false" autocomplete="off"></div>
-          <button class="btn ai lg" id="aiBtn" style="height:60px"><i data-ic="sparkles"></i>Özetle</button>
+        <div class="seg big" id="aiModeSeg">
+          <button data-v="summary"><i data-ic="sparkles"></i>Video özeti</button>
+          <button data-v="comments"><i data-ic="chat"></i>Yorum özeti</button>
+          <button data-v="ideas"><i data-ic="bulb"></i>Video fikirleri</button>
         </div>
-        <p class="hint">Altyazısı olan videolarda konuşmanın tamamı okunur; altyazı yoksa başlık ve açıklamadan özet çıkarılır.</p>
+        <div class="ai-hero" style="margin-top:14px">
+          <div class="url-box"><i data-ic="link"></i><input id="aiUrl" placeholder="Özetlenecek video linki…" spellcheck="false" autocomplete="off"></div>
+          <button class="btn ai lg" id="aiBtn" style="height:60px"><i data-ic="sparkles"></i><span>Özetle</span></button>
+        </div>
+        <p class="hint" id="aiHint"></p>
       </div>
 
       <div class="card hidden" id="aiLoading">
@@ -216,12 +228,28 @@
           <button class="btn primary" id="aiDownload"><i data-ic="download"></i>İndir</button>
         </div>
         <div class="tldr"><i data-ic="sparkles"></i><span id="aiTldr"></span></div>
-        <h3>Özet</h3>
-        <p class="ai-summary" id="aiSummary"></p>
-        <h3>Önemli noktalar</h3>
-        <ul class="points" id="aiPoints"></ul>
-        <h3>Konular</h3>
-        <div class="chips" id="aiTopics"></div>
+        <div id="aiBodySummary">
+          <h3>Özet</h3>
+          <p class="ai-summary" id="aiSummary"></p>
+          <h3>Önemli noktalar</h3>
+          <ul class="points" id="aiPoints"></ul>
+          <h3>Konular</h3>
+          <div class="chips" id="aiTopics"></div>
+        </div>
+        <div id="aiBodyComments">
+          <div class="pro-con">
+            <div class="pc good"><h3>Beğenilenler</h3><ul id="cLikes"></ul></div>
+            <div class="pc bad"><h3>Beğenilmeyenler</h3><ul id="cDislikes"></ul></div>
+          </div>
+          <div id="cIssuesBox"><h3>Bildirilen sorunlar ve çözümleri</h3><div class="issues" id="cIssues"></div></div>
+          <div id="cThemesBox"><h3>Yorumlarda öne çıkanlar</h3><ul class="points" id="cThemes"></ul></div>
+          <div id="cQuestionsBox"><h3>Sık sorulan sorular</h3><ul class="points" id="cQuestions"></ul></div>
+          <h3>Ayrıntılı özet</h3>
+          <p class="ai-summary" id="cSummary"></p>
+        </div>
+        <div id="aiBodyIdeas">
+          <div class="ideas" id="ideaGrid"></div>
+        </div>
       </div>
     </section>
 

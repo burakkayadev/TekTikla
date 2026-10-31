@@ -30,6 +30,10 @@ const ICONS = {
   play: '<path d="M7 4v16l13-8z"/>',
   check: '<path d="M20 6L9 17l-5-5"/>',
   retry: '<path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/>',
+  chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/>',
+  image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
+  grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  bulb: '<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
   palette: '<path d="M12 21a9 9 0 1 1 9-9c0 2.5-2 4-4.5 4H15a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 21z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>',
 };
 function icon(name) {
@@ -113,7 +117,7 @@ window.addEventListener("resize", () => Object.values(segs).forEach((s) => s.ref
 /* ---------------------------------------------------------------- durum */
 const state = {
   settings: {}, items: new Map(), history: [], media: null, mediaUrl: "",
-  analyzeToken: 0, aiToken: 0, extSub: null, setup: "checking", keys: {}, providers: {}, languages: [],
+  analyzeToken: 0, aiToken: 0, similarToken: 0, aiMode: "summary", aiSteps: [], extSub: null, setup: "checking", keys: {}, providers: {}, languages: [],
   quality: null, queueFilter: "all", update: null, repo: "",
 };
 
@@ -178,7 +182,10 @@ function onAnalyzed(ev) {
   $("#mBadge").textContent = m.is_playlist ? `Oynatma listesi · ${m.entry_count} öğe` : m.audio_only ? "Ses kaynağı" : nq ? `${nq} kalite seçeneği` : "İndirilebilir";
   $("#mSubs").textContent = m.subtitles.length ? `${m.subtitles.length} altyazı` : "";
   $("#mSubs").classList.toggle("hidden", !m.subtitles.length);
-  $("#mAiBtn").classList.toggle("hidden", m.is_playlist);
+  for (const id of ["mAiBtn", "mCommentsBtn", "mSimilarBtn"]) $("#" + id).classList.toggle("hidden", m.is_playlist);
+  $("#mThumbBtn").classList.toggle("hidden", m.is_playlist || !m.thumb);
+  $("#similarBox").classList.add("hidden");
+  state.similarToken++;
 
   // kalite kutucukları
   const grid = $("#qualityGrid");
@@ -412,30 +419,80 @@ function renderQueue() {
 }
 
 /* ================================================================ AI */
-const AI_STEPS = ["Video bilgileri alınıyor", "Konuşma dökümü çıkarılıyor", "Claude videoyu özetliyor"];
+const AI_MODES = {
+  summary: {
+    sub: "İzlemeden önce videonun ne anlattığını öğren.",
+    placeholder: "Özetlenecek video linki…", button: "Özetle", icon: "link",
+    hint: "Altyazı varsa konuşmanın tamamı okunur; yoksa (X/Twitter gibi) ses bilgisayarında yazıya dökülüp özetlenir.",
+    steps: ["Video bilgileri alınıyor", "Konuşma dökümü çıkarılıyor", "Yapay zekâ videoyu özetliyor"],
+  },
+  comments: {
+    sub: "İzleyiciler neyi beğenmiş, neyi eleştirmiş, hangi sorunu nasıl çözmüş; tek bakışta.",
+    placeholder: "Yorumları özetlenecek video linki…", button: "Yorumları özetle", icon: "link",
+    hint: "En çok beğenilen 300 yorum okunur. Şu an en iyi YouTube videolarında çalışır.",
+    steps: ["Yorumlar alınıyor", "Yapay zekâ yorumları özetliyor"],
+  },
+  ideas: {
+    sub: "Bir video linki ver ya da aklındaki konuyu yaz; yapay zekâ özgün içerik fikirleri çıkarsın.",
+    placeholder: "Video linki ya da konu: ör. evde 10 dakikalık sabah sporu…", button: "Fikir üret", icon: "bulb",
+    hint: "Linkten benzer ama kopya olmayan fikirler; yazdığın konudan ise başlık, açılış cümlesi ve akış önerileri.",
+    steps: ["Video bilgileri alınıyor", "Yapay zekâ fikir üretiyor"],
+  },
+};
+// altyazısız videolarda (X/Twitter gibi) araya giren adımlar
+const WHISPER_STEPS = ["Videonun sesi indiriliyor", "Konuşma yazıya dökülüyor"];
+let aiModeSeg = null;
 
 function aiView(which) {
   for (const id of ["aiLoading", "aiError", "aiResult"]) $("#" + id).classList.toggle("hidden", id !== which);
 }
 
+function setAiMode(mode) {
+  state.aiMode = mode;
+  const m = AI_MODES[mode];
+  $("#aiSub").textContent = m.sub;
+  $("#aiUrl").placeholder = m.placeholder;
+  $("#aiHint").textContent = m.hint;
+  $("#aiBtn").querySelector("span").textContent = m.button;
+  $("#aiUrl").parentElement.querySelector("svg.ic").replaceWith(icon(m.icon));
+}
+
 function renderSteps(current) {
-  const idx = AI_STEPS.indexOf(current);
-  $("#aiSteps").replaceChildren(...AI_STEPS.map((s, i) =>
+  if (!state.aiSteps.includes(current) && WHISPER_STEPS.includes(current))
+    state.aiSteps.splice(state.aiSteps.length - 1, 0, ...WHISPER_STEPS);
+  const steps = state.aiSteps;
+  const idx = steps.indexOf(current);
+  $("#aiSteps").replaceChildren(...steps.map((s, i) =>
     h("div", { class: "ai-step" + (i < idx ? " done" : i === idx ? " active" : "") },
       h("span", { class: "b" }, i < idx ? icon("check") : String(i + 1)), s)));
 }
 
-async function aiSummarize(url) {
-  url = (url ?? $("#aiUrl").value).trim();
-  $("#aiUrl").value = url;
+async function aiRun(mode, text) {
+  if (mode) aiModeSeg.set(mode, false);
+  mode = state.aiMode;
+  text = (text ?? $("#aiUrl").value).trim();
+  $("#aiUrl").value = text;
   showPage("ai");
   if (!state.keys[currentProvider()]) { $("#aiNoKey").classList.remove("hidden"); toast("Önce Ayarlar'dan API anahtarını ekle.", "err"); return; }
-  if (!URL_RE.test(url)) { toast("Geçerli bir video linki girin.", "err"); return; }
+  const isUrl = URL_RE.test(text);
+  if (mode === "ideas" ? !text : !isUrl) { toast(mode === "ideas" ? "Bir link ya da konu yazın." : "Geçerli bir video linki girin.", "err"); return; }
   const token = ++state.aiToken;
+  state.aiSteps = [...AI_MODES[mode].steps];
+  if (mode === "ideas" && !isUrl) state.aiSteps.shift();
+  const cached = state.media && state.mediaUrl === text;
   aiView("aiLoading");
-  renderSteps(state.media && state.mediaUrl === url ? AI_STEPS[1] : AI_STEPS[0]);
+  renderSteps(state.aiSteps[mode === "summary" && cached ? 1 : 0]);
   setLoading($("#aiBtn"), true);
-  await api.ai_summary(url, token);
+  if (!(await api.ai_run(mode, text, token))) { setLoading($("#aiBtn"), false); aiView(null); toast("Geçersiz istek.", "err"); }
+}
+
+const bullets = (items) => items.length ? items.map((t) => h("li", {}, t)) : [h("li", { class: "none" }, "Belirgin bir şey yok")];
+function numbered(items) {
+  return items.map((p, i) => {
+    const li = h("li", {}, h("span", { class: "n" }, String(i + 1)), h("span", {}, p));
+    li.style.animationDelay = i * 70 + "ms";
+    return li;
+  });
 }
 
 function onAiDone(ev) {
@@ -446,17 +503,63 @@ function onAiDone(ev) {
   $("#aiThumb").classList.toggle("hidden", !r.thumb);
   if (r.thumb) $("#aiThumb").src = r.thumb;
   $("#aiTitle").textContent = r.title;
-  $("#aiSource").textContent = r.provider + " · Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : "");
-  $("#aiTldr").textContent = r.tldr;
-  $("#aiSummary").textContent = r.summary;
-  $("#aiPoints").replaceChildren(...r.key_points.map((p, i) => {
-    const li = h("li", {}, h("span", { class: "n" }, String(i + 1)), h("span", {}, p));
-    li.style.animationDelay = i * 70 + "ms";
-    return li;
-  }));
-  $("#aiTopics").replaceChildren(...r.topics.map((t) => h("span", { class: "chip accent" }, "#" + t)));
+  for (const [id, m] of [["aiBodySummary", "summary"], ["aiBodyComments", "comments"], ["aiBodyIdeas", "ideas"]])
+    $("#" + id).classList.toggle("hidden", r.mode !== m);
+  $("#aiDownload").classList.toggle("hidden", !URL_RE.test($("#aiUrl").value.trim()));
+
+  if (r.mode === "summary") {
+    $("#aiSource").textContent = r.provider + " · Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : "");
+    $("#aiTldr").textContent = r.tldr;
+    $("#aiSummary").textContent = r.summary;
+    $("#aiPoints").replaceChildren(...numbered(r.key_points));
+    $("#aiTopics").replaceChildren(...r.topics.map((t) => h("span", { class: "chip accent" }, "#" + t)));
+  } else if (r.mode === "comments") {
+    $("#aiSource").textContent = `${r.provider} · ${r.count.toLocaleString("tr-TR")} yorum okundu`;
+    $("#aiTldr").textContent = r.genel_hava;
+    $("#cLikes").replaceChildren(...bullets(r.begenilenler));
+    $("#cDislikes").replaceChildren(...bullets(r.begenilmeyenler));
+    $("#cIssuesBox").classList.toggle("hidden", !r.sorunlar.length);
+    $("#cIssues").replaceChildren(...r.sorunlar.map((x, i) => {
+      const el = h("div", { class: "issue" },
+        h("div", { class: "p" }, h("small", {}, "Sorun"), x.sorun),
+        h("div", { class: "s" }, h("small", {}, "Çözüm"), x.cozum));
+      el.style.animationDelay = i * 70 + "ms";
+      return el;
+    }));
+    $("#cThemesBox").classList.toggle("hidden", !r.one_cikanlar.length);
+    $("#cThemes").replaceChildren(...numbered(r.one_cikanlar));
+    $("#cQuestionsBox").classList.toggle("hidden", !r.sorular.length);
+    $("#cQuestions").replaceChildren(...numbered(r.sorular));
+    $("#cSummary").textContent = r.ozet;
+  } else {
+    $("#aiSource").textContent = `${r.provider} · ${r.fikirler.length} fikir`;
+    $("#aiTldr").textContent = r.ozet;
+    $("#ideaGrid").replaceChildren(...r.fikirler.map((f, i) => {
+      const el = h("div", { class: "idea" },
+        h("div", { class: "top" }, h("span", { class: "n" }, String(i + 1)), h("h4", {}, f.baslik)),
+        h("span", { class: "chip accent" }, f.format),
+        h("p", { class: "hook" }, "“" + f.kanca + "”"),
+        h("ol", {}, f.akis.map((a) => h("li", {}, a))),
+        h("p", { class: "why" }, f.neden));
+      el.style.animationDelay = i * 70 + "ms";
+      return el;
+    }));
+  }
   aiView("aiResult");
-  toast("Özet hazır", "ok");
+  toast({ summary: "Özet hazır", comments: "Yorum özeti hazır", ideas: "Fikirler hazır" }[r.mode], "ok");
+}
+
+function aiResultText(r) {
+  const list = (title, items) => items.length ? `\n\n${title}\n` + items.map((x) => `- ${x}`).join("\n") : "";
+  if (r.mode === "summary")
+    return `${r.title}\n\n${r.tldr}\n\n${r.summary}\n\n` + r.key_points.map((p, i) => `${i + 1}. ${p}`).join("\n");
+  if (r.mode === "comments")
+    return `${r.title} (yorum özeti)\n\n${r.genel_hava}` + list("Beğenilenler", r.begenilenler) +
+      list("Beğenilmeyenler", r.begenilmeyenler) +
+      list("Sorunlar ve çözümleri", r.sorunlar.map((x) => `${x.sorun} → ${x.cozum}`)) +
+      list("Öne çıkanlar", r.one_cikanlar) + list("Sık sorulan sorular", r.sorular) + `\n\n${r.ozet}`;
+  return `${r.title} (video fikirleri)\n\n${r.ozet}\n\n` + r.fikirler.map((f, i) =>
+    `${i + 1}. ${f.baslik} (${f.format})\nAçılış: "${f.kanca}"\n` + f.akis.map((a) => `   - ${a}`).join("\n") + `\nNeden: ${f.neden}`).join("\n\n");
 }
 
 function onAiError(ev) {
@@ -464,6 +567,44 @@ function onAiError(ev) {
   setLoading($("#aiBtn"), false);
   $("#aiErrorText").textContent = ev.message;
   aiView("aiError");
+}
+
+/* ================================================================ KAPAK + BENZER VİDEOLAR */
+async function downloadThumb() {
+  const b = $("#mThumbBtn");
+  setLoading(b, true);
+  const res = await api.download_thumbnail(state.mediaUrl);
+  setLoading(b, false);
+  if (!res.ok) { toast(res.error, "err"); return; }
+  toast(`Kapak kaydedildi (${res.size})`, "ok");
+  api.reveal_file(res.path);
+}
+
+async function showSimilar() {
+  const box = $("#similarBox");
+  const token = ++state.similarToken;
+  box.classList.remove("hidden");
+  $("#similarGrid").replaceChildren(...Array.from({ length: 8 }, () =>
+    h("div", { class: "sim" }, h("div", { class: "sk thumb" }), h("div", { class: "sk line", style: "margin-top:10px" }), h("div", { class: "sk line", style: "margin-top:8px;width:55%" }))));
+  box.scrollIntoView({ behavior: "smooth", block: "start" });
+  setLoading($("#mSimilarBtn"), true);
+  if (!(await api.similar(state.mediaUrl, token))) { setLoading($("#mSimilarBtn"), false); box.classList.add("hidden"); }
+}
+
+function onSimilar(ev) {
+  if (ev.token !== state.similarToken) return;
+  setLoading($("#mSimilarBtn"), false);
+  const grid = $("#similarGrid");
+  if (!ev.items.length) { grid.replaceChildren(h("p", { class: "sim-empty" }, ev.error || "Benzer video bulunamadı.")); return; }
+  grid.replaceChildren(...ev.items.map((v, i) => {
+    const img = v.thumb ? h("img", { src: v.thumb, alt: "" }) : h("div", { class: "ph" }, icon("film"));
+    const open = () => { $("#urlInput").value = v.url; analyze(v.url); $("#main").scrollTo({ top: 0, behavior: "smooth" }); };
+    const el = h("button", { class: "sim", title: v.title, onclick: open },
+      h("div", { class: "thumb" }, img, v.duration ? h("span", { class: "dur" }, v.duration) : null),
+      h("b", {}, v.title), h("small", {}, v.channel));
+    el.style.animationDelay = i * 40 + "ms";
+    return el;
+  }));
 }
 
 /* ================================================================ GEÇMİŞ */
@@ -610,6 +751,7 @@ const HANDLERS = {
   },
   ai_stage: (ev) => { if (ev.token === state.aiToken) renderSteps(ev.stage); },
   ai_done: onAiDone,
+  similar: onSimilar,
   ai_error: onAiError,
   ytdlp: (ev) => { setLoading($("#ytdlpBtn"), false); $("#ytdlpMsg").textContent = ev.message; toast(ev.message, ev.message.startsWith("Güncellenemedi") ? "err" : "ok"); },
   app_update: onAppUpdate,
@@ -659,8 +801,12 @@ function wire() {
   $("#analyzeBtn").addEventListener("click", () => analyze());
   $("#quickBtn").addEventListener("click", () => quick("video"));
   $("#quickAudioBtn").addEventListener("click", () => quick("audio"));
-  $("#heroAiBtn").addEventListener("click", () => aiSummarize($("#urlInput").value));
-  $("#mAiBtn").addEventListener("click", () => aiSummarize(state.mediaUrl));
+  $("#heroAiBtn").addEventListener("click", () => aiRun("summary", $("#urlInput").value));
+  $("#mAiBtn").addEventListener("click", () => aiRun("summary", state.mediaUrl));
+  $("#mCommentsBtn").addEventListener("click", () => aiRun("comments", state.mediaUrl));
+  $("#mThumbBtn").addEventListener("click", downloadThumb);
+  $("#mSimilarBtn").addEventListener("click", showSimilar);
+  $("#similarClose").addEventListener("click", () => { state.similarToken++; setLoading($("#mSimilarBtn"), false); $("#similarBox").classList.add("hidden"); });
   $("#mResetBtn").addEventListener("click", () => { state.media = null; $("#urlInput").value = ""; dlView("dlEmpty"); $("#urlInput").focus(); });
   $("#downloadBtn").addEventListener("click", startDownload);
   $("#subSelect").addEventListener("change", updateSummary);
@@ -675,14 +821,15 @@ function wire() {
   $("#openDirBtn").addEventListener("click", () => api.open_download_dir());
   $("#clearDoneBtn").addEventListener("click", () => api.clear_finished());
 
-  $("#aiBtn").addEventListener("click", () => aiSummarize());
-  $("#aiUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") aiSummarize(); });
+  aiModeSeg = seg("aiModeSeg", setAiMode);
+  aiModeSeg.set("summary", false);
+  $("#aiBtn").addEventListener("click", () => aiRun());
+  $("#aiUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") aiRun(); });
   $("#aiGoSettings").addEventListener("click", () => { showPage("settings"); setTimeout(() => $("#apiKeyInput").focus(), 300); });
   $("#aiCopy").addEventListener("click", async () => {
     const r = state.aiResult;
     if (!r) return;
-    const text = `${r.title}\n\n${r.tldr}\n\n${r.summary}\n\n` + r.key_points.map((p, i) => `${i + 1}. ${p}`).join("\n");
-    try { await navigator.clipboard.writeText(text); toast("Özet panoya kopyalandı", "ok"); } catch { toast("Kopyalanamadı", "err"); }
+    try { await navigator.clipboard.writeText(aiResultText(r)); toast("Panoya kopyalandı", "ok"); } catch { toast("Kopyalanamadı", "err"); }
   });
   $("#aiDownload").addEventListener("click", () => analyze($("#aiUrl").value));
 

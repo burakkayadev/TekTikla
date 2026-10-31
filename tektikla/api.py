@@ -19,6 +19,7 @@ import webbrowser
 from ctypes import wintypes
 from dataclasses import asdict
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import requests
@@ -164,6 +165,7 @@ class Api:
         self._missing: list[str] = []
         self._started = False
         self._hwnd = 0
+        self._thumb_files: set[str] = set()
 
     # -- iç yardımcılar
     def _emit(self, event_type: str, /, **data) -> None:
@@ -583,25 +585,99 @@ class Api:
         self._history.clear()
         return []
 
-    # -- AI özeti
-    def ai_summary(self, url: str, token: int) -> bool:
-        url = (url or "").strip()
-        if not URL_RE.match(url):
+    # -- yapay zekâ: video özeti, yorum özeti, video fikirleri
+    def ai_run(self, mode: str, text: str, token: int) -> bool:
+        text = (text or "").strip()
+        is_url = bool(URL_RE.match(text))
+        if mode not in ("summary", "comments", "ideas") or not text or (mode != "ideas" and not is_url):
             return False
         provider, key = self._provider(), self._api_key()
+        settings = dict(self._settings)
+        stage = lambda s: self._emit("ai_stage", token=token, stage=s)  # noqa: E731
 
         def work():
             try:
-                cached = self._media.get(url)
+                cached = self._media.get(text) if is_url else None
                 info = cached[0].raw if cached and not cached[0].is_playlist else None
-                result = ai.summarize(url, dict(self._settings), provider, key, info=info,
-                                      on_stage=lambda s: self._emit("ai_stage", token=token, stage=s))
+                if mode == "summary":
+                    result = ai.summarize(text, settings, provider, key, info=info, on_stage=stage)
+                elif mode == "comments":
+                    result = ai.summarize_comments(text, settings, provider, key, on_stage=stage)
+                else:
+                    result = ai.video_ideas(text, settings, provider, key, info=info, on_stage=stage)
                 thumb = cached[1] if cached else _thumb_data(result.get("thumbnail"))
-                self._emit("ai_done", token=token, result={**result, "thumb": thumb})
+                self._emit("ai_done", token=token, result={**result, "thumb": thumb, "mode": mode})
             except ai.AIError as e:
                 self._emit("ai_error", token=token, message=str(e))
             except Exception as e:  # noqa: BLE001
                 self._emit("ai_error", token=token, message=engine.friendly_error(e))
+
+        self._bg(work)
+        return True
+
+    # -- kapak fotoğrafı
+    def download_thumbnail(self, source_url: str) -> dict:
+        cached = self._media.get(source_url)
+        if not cached:
+            return {"ok": False, "error": "Önce linki analiz edin."}
+        info = cached[0]
+        thumbs = [t for t in (info.raw or {}).get("thumbnails") or [] if t.get("url")]
+        best = max(thumbs, key=lambda t: ((t.get("width") or 0) * (t.get("height") or 0), t.get("preference") or 0),
+                   default=None)
+        url = best["url"] if best else info.thumbnail
+        if not url:
+            return {"ok": False, "error": "Bu videonun kapak fotoğrafı yok."}
+        try:
+            r = requests.get(url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+            r.raise_for_status()
+            img = Image.open(io.BytesIO(r.content)).convert("RGB")
+        except Exception:  # noqa: BLE001
+            return {"ok": False, "error": "Kapak fotoğrafı indirilemedi."}
+        out_dir = Path(self._settings["download_dir"])
+        out_dir.mkdir(parents=True, exist_ok=True)
+        name = re.sub(r'[\\/:*?"<>|]+', " ", info.title).strip()[:150] or "kapak"
+        path = out_dir / f"{name} (kapak).jpg"
+        img.save(path, "JPEG", quality=95)
+        self._thumb_files.add(str(path))
+        return {"ok": True, "path": str(path), "size": f"{img.width}×{img.height}"}
+
+    def reveal_file(self, path: str) -> None:
+        if path in self._thumb_files:  # yalnızca TekTıkla'nın kaydettiği dosyalar
+            self._reveal(path)
+
+    # -- benzer videolar
+    def similar(self, source_url: str, token: int) -> bool:
+        cached = self._media.get(source_url)
+        if not cached:
+            return False
+        info = cached[0]
+        query = re.sub(r"#\S+|[|•–—\-_:()\[\]]+", " ", info.title)
+        query = " ".join(query.split()[:10]) or info.title
+        settings = dict(self._settings)
+
+        def work():
+            try:
+                opts = engine.base_opts(settings) | {"skip_download": True, "extract_flat": "in_playlist"}
+                with engine.yt_dlp.YoutubeDL(opts) as ydl:
+                    result = ydl.extract_info(f"ytsearch13:{query}", download=False)
+                items = []
+                for e in result.get("entries") or []:
+                    if not e.get("url") or e.get("id") == (info.raw or {}).get("id"):
+                        continue
+                    thumbs = e.get("thumbnails") or []
+                    items.append({
+                        "url": e["url"], "title": e.get("title") or "",
+                        "channel": (e.get("channel") or e.get("uploader") or "").split("•")[0].strip()[:60],
+                        "duration": engine.human_time(e.get("duration")),
+                        "thumb": thumbs[-1]["url"] if thumbs else None,
+                    })
+                items = items[:12]
+                with ThreadPoolExecutor(6) as pool:  # kapakları veri URI'sine çevir (siteler doğrudan gömmeyi engelleyebilir)
+                    for it, data in zip(items, pool.map(_thumb_data, [it["thumb"] for it in items])):
+                        it["thumb"] = data
+                self._emit("similar", token=token, items=items)
+            except Exception as e:  # noqa: BLE001
+                self._emit("similar", token=token, items=[], error=engine.friendly_error(e))
 
         self._bg(work)
         return True
