@@ -133,6 +133,7 @@ $$(".nav-item").forEach((n) => n.addEventListener("click", () => showPage(n.data
 
 /* ---------------------------------------------------------------- tema */
 const THEMES = ["mono", "paper", "violet", "ocean"];
+function applyFont(f) { document.documentElement.dataset.font = f === "grotesk" ? "grotesk" : "serif"; }
 function applyTheme(t) {
   document.documentElement.dataset.theme = THEMES.includes(t) ? t : "mono";
   $$(".theme-opt").forEach((o) => o.classList.toggle("on", o.dataset.themeOpt === document.documentElement.dataset.theme));
@@ -492,6 +493,8 @@ function renderSettings() {
   $("#setFolder").textContent = s.download_dir;
   $("#folderText").textContent = s.download_dir;
   applyTheme(s.theme);
+  applyFont(s.font);
+  segs.fontSeg.set(s.font || "serif");
   segs.parallelSeg.set(s.max_parallel);
   segs.defContainerSeg.set(s.container);
   segs.defAudioSeg.set(s.audio_format);
@@ -642,6 +645,7 @@ function wire() {
   seg("whisperSeg", (v) => setSetting("whisper_model", v));
   seg("queueFilter", (v) => { state.queueFilter = v; renderQueue(); }).set("all");
   $$(".theme-opt").forEach((o) => o.addEventListener("click", () => setSetting("theme", o.dataset.themeOpt)));
+  seg("fontSeg", (v) => { applyFont(v); setSetting("font", v); });
   seg("parallelSeg", (v) => setSetting("max_parallel", Number(v)));
   seg("defContainerSeg", (v) => setSetting("container", v));
   seg("defAudioSeg", (v) => setSetting("audio_format", v));

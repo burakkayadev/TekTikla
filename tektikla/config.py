@@ -26,6 +26,7 @@ OLD_DEFAULT_DOWNLOADS = str(Path.home() / "Downloads" / "BİM")
 
 DEFAULTS = {
     "download_dir": str(Path.home() / "Downloads" / "TekTıkla"),
+    "font": "serif",  # başlık yazı tipi: "serif" (Instrument Serif) | "grotesk" (Bricolage Grotesque)
     "theme": "mono",  # "mono" (Siyah) | "paper" (Kâğıt) | "violet" (Mor) | "ocean" (Okyanus)
     "clipboard_watch": True,
     "max_parallel": 2,

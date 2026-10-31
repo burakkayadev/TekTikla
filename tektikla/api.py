@@ -26,7 +26,7 @@ import webview
 from PIL import Image
 
 from . import APP_VERSION, GITHUB_REPO, ai, engine, llm, subtitles, tools, updater
-from .config import DEFAULTS, History, Settings, decrypt_secret, encrypt_secret
+from .config import APP_DIR, DEFAULTS, History, Settings, decrypt_secret, encrypt_secret
 
 URL_RE = re.compile(r"^https?://\S+$", re.I)
 EXTERNAL_URLS = {
@@ -40,7 +40,7 @@ PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc"}
 KEY_SETTINGS = {"claude": ("api_key_enc", "ANTHROPIC_API_KEY"), "gemini": ("gemini_key_enc", "GEMINI_API_KEY")}
 CHOICES = {"ai_provider": set(llm.PROVIDERS), "whisper_model": {"base", "small"},
            "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"},
-           "theme": {"mono", "paper", "violet", "ocean"}}
+           "theme": {"mono", "paper", "violet", "ocean"}, "font": {"serif", "grotesk"}}
 THEME_BARS = {"mono": ("#050505", True), "paper": ("#F3F2EE", False), "violet": ("#0B0A12", True),
               "ocean": ("#04101A", True)}  # başlık çubuğu rengi, koyu mod
 FINISHED = ("done", "error", "cancelled")
@@ -292,8 +292,25 @@ class Api:
             dwm.DwmSetWindowAttribute(hwnd, 20, ctypes.byref(ctypes.c_int(int(dark))), 4)  # koyu mod
             r, g, b = (int(color[i:i + 2], 16) for i in (1, 3, 5))
             dwm.DwmSetWindowAttribute(hwnd, 35, ctypes.byref(ctypes.c_int(r | (g << 8) | (b << 16))), 4)
+            self._set_window_icon(hwnd)
         except Exception:  # noqa: BLE001 - eski Windows'ta desteklenmeyebilir
             pass
+
+    def _set_window_icon(self, hwnd: ctypes.c_void_p) -> None:
+        """Pencere ve görev çubuğu simgesini temanın logosuyla değiştirir (assets/icons/<tema>.ico)."""
+        icon = APP_DIR / "assets" / "icons" / f"{self._settings.get('theme', 'mono')}.ico"
+        if not icon.exists():
+            return
+        user32 = ctypes.windll.user32
+        user32.LoadImageW.restype = ctypes.c_void_p
+        user32.LoadImageW.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_uint, ctypes.c_int, ctypes.c_int,
+                                      ctypes.c_uint]
+        user32.SendMessageW.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_size_t, ctypes.c_void_p]
+        for which, metric in ((1, 11), (0, 49)):  # ICON_BIG / SM_CXICON, ICON_SMALL / SM_CXSMICON
+            px = user32.GetSystemMetrics(metric)
+            handle = user32.LoadImageW(None, str(icon), 1, px, px, 0x10)  # IMAGE_ICON, LR_LOADFROMFILE
+            if handle:
+                user32.SendMessageW(hwnd, 0x80, which, handle)  # WM_SETICON
 
     def pick_folder(self) -> str | None:
         result = self._window.create_file_dialog(webview.FileDialog.FOLDER,
