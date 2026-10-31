@@ -66,7 +66,7 @@ def main() -> None:
         "--icon", str(icon), "--version-file", str(version_file("TekTikla", "TekTıkla - Video İndirici")),
         "--add-data", f"{ROOT / 'assets'};assets",
         "--add-data", f"{ROOT / 'tektikla' / 'web'};tektikla/web",
-        "--collect-all", "yt_dlp_ejs",
+        "--collect-all", "yt_dlp_ejs", "--collect-all", "pywhispercpp", "--hidden-import", "_pywhispercpp",
         "--workpath", str(BUILD / "work-app"), "--specpath", str(BUILD), "--distpath", str(DIST),
         str(ROOT / "tektikla.py"),
     )

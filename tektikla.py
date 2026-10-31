@@ -37,6 +37,13 @@ def selftest(url: str, out_dir: str) -> None:
             events = []
             engine.DownloadJob(req, settings, lambda k, **d: events.append((k, d)) if k != "progress" else None).run()
             log.write(f"{req.mode}: {events}\n")
+            if req.mode == "video" and events and events[0][0] == "done":
+                # konuşma tanıma: altyazısı yokmuş gibi Whisper'ı indirilen videoda dener
+                from pathlib import Path
+                job = engine.DownloadJob(engine.DownloadRequest(url=url, title="w", out_dir=out_dir, ai_sub="orig"),
+                                         settings, lambda k, **d: None)
+                srt, title, _tag = job.make_ai_subtitle(Path(events[0][1]["files"][-1]), {})
+                log.write(f"whisper: {title} | {srt.read_text(encoding='utf-8').count('-->')} satır\n")
         log.write("BITTI\n")
     except Exception:  # noqa: BLE001
         log.write(traceback.format_exc())

@@ -25,17 +25,21 @@ import requests
 import webview
 from PIL import Image
 
-from . import APP_VERSION, GITHUB_REPO, ai, engine, tools, updater
+from . import APP_VERSION, GITHUB_REPO, ai, engine, llm, subtitles, tools, updater
 from .config import DEFAULTS, History, Settings, decrypt_secret, encrypt_secret
 
 URL_RE = re.compile(r"^https?://\S+$", re.I)
 EXTERNAL_URLS = {
     "anthropic_keys": "https://console.anthropic.com/settings/keys",
+    "gemini_keys": "https://aistudio.google.com/apikey",
     "anthropic_billing": "https://console.anthropic.com/settings/billing",
     "releases": f"https://github.com/{GITHUB_REPO}/releases" if GITHUB_REPO else "",
 }
 BOOL_KEYS = {k for k, v in DEFAULTS.items() if isinstance(v, bool)}
-PRIVATE_KEYS = {"api_key_enc"}
+PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc"}
+KEY_SETTINGS = {"claude": ("api_key_enc", "ANTHROPIC_API_KEY"), "gemini": ("gemini_key_enc", "GEMINI_API_KEY")}
+CHOICES = {"ai_provider": set(llm.PROVIDERS), "whisper_model": {"base", "small"},
+           "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"}}
 FINISHED = ("done", "error", "cancelled")
 
 
@@ -167,8 +171,15 @@ class Api:
     def _public_settings(self) -> dict:
         return {k: v for k, v in self._settings.items() if k not in PRIVATE_KEYS}
 
-    def _api_key(self) -> str:
-        return decrypt_secret(self._settings.get("api_key_enc", "")) or os.environ.get("ANTHROPIC_API_KEY", "")
+    def _provider(self) -> str:
+        return self._settings.get("ai_provider") if self._settings.get("ai_provider") in llm.PROVIDERS             else llm.DEFAULT_PROVIDER
+
+    def _api_key(self, provider: str | None = None) -> str:
+        setting, env = KEY_SETTINGS[provider or self._provider()]
+        return decrypt_secret(self._settings.get(setting, "")) or os.environ.get(env, "")
+
+    def _key_status(self) -> dict:
+        return {p: bool(self._api_key(p)) for p in llm.PROVIDERS}
 
     def _attach(self, window: webview.Window) -> None:
         self._window = window
@@ -189,7 +200,9 @@ class Api:
             "version": APP_VERSION,
             "repo": GITHUB_REPO,
             "settings": self._public_settings(),
-            "has_api_key": bool(self._api_key()),
+            "keys": self._key_status(),
+            "providers": {k: v["name"] for k, v in llm.PROVIDERS.items()},
+            "languages": [[c, n] for c, n, _ in subtitles.LANGUAGES],
             "setup": self._setup_state,
             "missing": self._missing,
             "items": [i.to_dict() for i in self._items.values()],
@@ -251,6 +264,9 @@ class Api:
             value = bool(value)
         elif key == "max_parallel":
             value = max(1, min(4, int(value)))
+        elif key in CHOICES:
+            if value not in CHOICES[key]:
+                return self._public_settings()
         else:
             value = str(value).strip()
         self._settings[key] = value
@@ -277,18 +293,22 @@ class Api:
             return path
         return None
 
-    def save_api_key(self, key: str) -> dict:
+    def save_api_key(self, provider: str, key: str) -> dict:
+        if provider not in KEY_SETTINGS:
+            return {"ok": False, "error": "Bilinmeyen servis."}
         key = (key or "").strip()
-        if not key.startswith("sk-ant-"):
-            return {"ok": False, "error": "Anthropic API anahtarı 'sk-ant-' ile başlar."}
-        self._settings["api_key_enc"] = encrypt_secret(key)
+        problem = llm.valid_key(provider, key)
+        if problem:
+            return {"ok": False, "error": problem}
+        self._settings[KEY_SETTINGS[provider][0]] = encrypt_secret(key)
         self._settings.save()
-        return {"ok": True}
+        return {"ok": True, "keys": self._key_status()}
 
-    def delete_api_key(self) -> bool:
-        self._settings["api_key_enc"] = ""
-        self._settings.save()
-        return bool(self._api_key())
+    def delete_api_key(self, provider: str) -> dict:
+        if provider in KEY_SETTINGS:
+            self._settings[KEY_SETTINGS[provider][0]] = ""
+            self._settings.save()
+        return self._key_status()
 
     def open_url(self, name: str) -> None:
         url = EXTERNAL_URLS.get(name)
@@ -367,6 +387,15 @@ class Api:
                 req.sub_lang, req.sub_auto = info.subtitles[idx].lang, info.subtitles[idx].auto
             ext = opts.get("external_sub")
             req.external_sub = ext if ext in self._picked_subs else None
+            ai_sub = opts.get("ai_sub")
+            if ai_sub in CHOICES["ai_sub_lang"]:
+                req.ai_sub, req.sub_lang, req.external_sub = ai_sub, None, None  # AI altyazı diğerlerinin yerine
+                req.ai_provider, req.ai_key = self._provider(), self._api_key()
+                req.whisper_model = self._settings.get("whisper_model", "small")
+                if ai_sub != "orig" and not req.ai_key:
+                    name = llm.PROVIDERS[req.ai_provider]["name"]
+                    return {"ok": False, "error": f"AI çeviri için Ayarlar > Yapay Zekâ bölümüne {name} anahtarı girin. "
+                                                  "Sadece yazıya dökmek için dil olarak 'Orijinal dil'i seçin."}
             req.sub_mode = opts.get("sub_mode") if opts.get("sub_mode") in ("embed", "burn", "file") else "embed"
         return {"ok": True, "id": self._enqueue(req, thumb)}
 
@@ -427,7 +456,11 @@ class Api:
                 "date": datetime.now().strftime("%d.%m.%Y %H:%M"),
             })
             self._emit("history", history=self._history.items[:300])
-            self._emit("notify", kind="ok", text=f"İndirildi: {item.req.title}")
+            item.error = data.get("warning", "")  # ör. video indi ama AI altyazı eklenemedi
+            if item.error:
+                self._emit("notify", kind="err", text=item.error.splitlines()[0])
+            else:
+                self._emit("notify", kind="ok", text=f"İndirildi: {item.req.title}")
         else:
             item.state = kind
             item.stage = "Hata" if kind == "error" else "İptal edildi"
@@ -518,13 +551,13 @@ class Api:
         url = (url or "").strip()
         if not URL_RE.match(url):
             return False
-        key = self._api_key()
+        provider, key = self._provider(), self._api_key()
 
         def work():
             try:
                 cached = self._media.get(url)
                 info = cached[0].raw if cached and not cached[0].is_playlist else None
-                result = ai.summarize(url, dict(self._settings), key, info=info,
+                result = ai.summarize(url, dict(self._settings), provider, key, info=info,
                                       on_stage=lambda s: self._emit("ai_stage", token=token, stage=s))
                 thumb = cached[1] if cached else _thumb_data(result.get("thumbnail"))
                 self._emit("ai_done", token=token, result={**result, "thumb": thumb})

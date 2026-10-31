@@ -449,3 +449,10 @@ details.adv .select { margin-top: 10px; }
 .modal .progress { height: 10px; margin: 22px 0 10px; }
 .modal small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .modal .btns { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+
+/* ---------- AI altyazı ---------- */
+.ai-sub-row { padding-top: 4px; }
+.ai-sub-row .txt b { display: flex; align-items: center; gap: 6px; }
+.ai-sub-row .txt b svg.ic { stroke: url(#gradStroke); width: 16px; height: 16px; }
+#aiSubBox { padding: 2px 0 6px; animation: rise .35s var(--ease); }
+.q-card.done .q-body .err { color: var(--warn); }

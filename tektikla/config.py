@@ -39,6 +39,10 @@ DEFAULTS = {
     "rate_limit": "",
     "sub_lang_pref": "tr",
     "api_key_enc": "",  # Anthropic API anahtarı, Windows DPAPI ile şifreli (base64)
+    "gemini_key_enc": "",  # Google Gemini API anahtarı, aynı şekilde şifreli
+    "ai_provider": "gemini",  # "gemini" (ücretsiz anahtar) | "claude"
+    "ai_sub_lang": "tr",  # AI altyazı için son seçilen dil
+    "whisper_model": "small",  # konuşma tanıma: "base" (hızlı) | "small" (daha doğru)
     "auto_update_check": True,
 }
 

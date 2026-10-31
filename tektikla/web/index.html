@@ -119,6 +119,16 @@
 
           <div class="card" id="subCard">
             <h3>Altyazı</h3>
+            <div class="row ai-sub-row">
+              <div class="txt"><b><i data-ic="sparkles"></i> Yapay zekâ ile altyazı</b><small>Videonun konuşmasını istediğin dile çevirip altyazı olarak ekler.</small></div>
+              <label class="switch"><input type="checkbox" id="aiSubToggle"><span></span></label>
+            </div>
+            <div class="hidden" id="aiSubBox">
+              <label class="lbl">Altyazı dili</label>
+              <select class="select" id="aiSubLang"></select>
+              <p class="hint" id="aiSubHint">Videoda altyazı varsa onu çevirir; yoksa konuşmayı bilgisayarında yazıya döker (ilk kullanımda ~190 MB model iner), sonra çevirir.</p>
+            </div>
+            <div id="manualSubBox">
             <label class="lbl">Sitedeki altyazılar</label>
             <select class="select" id="subSelect"></select>
             <label class="lbl">Kendi altyazı dosyan</label>
@@ -126,6 +136,7 @@
               <span class="name" id="extSubName">Seçilmedi (.srt, .vtt, .ass)</span>
               <button class="btn" id="extSubBtn"><i data-ic="file"></i>Seç</button>
               <button class="btn icon" id="extSubClear" title="Kaldır"><i data-ic="x"></i></button>
+            </div>
             </div>
             <label class="lbl">Ekleme şekli</label>
             <div class="seg" id="subModeSeg"><button data-v="embed">Göm</button><button data-v="burn">Videoya yak</button><button data-v="file">Ayrı .srt</button></div>
@@ -182,11 +193,11 @@
     <section class="page" id="page-ai">
       <div class="page-head">
         <div><h1><span class="grad-text">AI</span> Video Özeti</h1>
-        <p>İzlemeden önce videonun ne anlattığını öğren. Claude konuşma dökümünü okuyup özetler.</p></div>
+        <p>İzlemeden önce videonun ne anlattığını öğren. Yapay zekâ konuşma dökümünü okuyup özetler.</p></div>
       </div>
       <div class="card callout hidden" id="aiNoKey">
         <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></div>
-        <div class="txt"><b>Önce API anahtarını ekle</b><p>AI özeti için bir Anthropic API anahtarı gerekir (console.anthropic.com). Anahtar bu bilgisayarda Windows şifrelemesiyle saklanır.</p></div>
+        <div class="txt"><b>Önce API anahtarını ekle</b><p>Google Gemini anahtarı ücretsizdir: aistudio.google.com/apikey adresinden kredi kartı olmadan birkaç saniyede alınır. Anahtar bu bilgisayarda Windows şifrelemesiyle saklanır.</p></div>
         <button class="btn primary" id="aiGoSettings"><i data-ic="settings"></i>Ayarlara git</button>
       </div>
       <div class="card hero">
@@ -248,12 +259,17 @@
 
         <div class="card">
           <div class="card-title"><span class="ci"><i data-ic="sparkles"></i></span>Yapay Zekâ</div>
-          <p class="hint" style="margin-top:4px">AI özeti Anthropic'in Claude modelini kullanır. Anahtarınızı <a href="#" id="keysLink" style="color:var(--accent-2)">console.anthropic.com</a> adresinden alabilirsiniz; ücretlendirme kendi hesabınızdan yapılır.</p>
+          <p class="hint" style="margin-top:4px">AI özeti ve altyazı çevirisi bu servisle yapılır.</p>
+          <div class="row"><div class="txt"><b>Servis</b></div>
+            <div class="seg" id="providerSeg"><button data-v="gemini">Gemini (ücretsiz)</button><button data-v="claude">Claude Haiku</button></div></div>
+          <p class="hint" id="providerHint"></p>
           <div class="key-row">
             <input class="input" id="apiKeyInput" type="password" placeholder="sk-ant-…" autocomplete="off">
             <button class="btn primary" id="saveKeyBtn">Kaydet</button>
           </div>
           <div class="row" style="margin-top:8px"><div class="txt"><b id="keyStatus"></b><small>Anahtar Windows şifrelemesiyle (DPAPI) yalnızca bu bilgisayarda saklanır.</small></div><button class="btn danger sm" id="deleteKeyBtn">Sil</button></div>
+          <div class="row"><div class="txt"><b>Konuşma tanıma</b><small>Altyazısı olmayan videolarda konuşma bilgisayarında, ücretsiz yazıya dökülür.</small></div>
+            <div class="seg" id="whisperSeg"><button data-v="base">Hızlı</button><button data-v="small">Daha doğru</button></div></div>
         </div>
 
         <div class="card">

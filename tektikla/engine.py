@@ -295,6 +295,10 @@ class DownloadRequest:
     sub_auto: bool = False
     sub_mode: str = "embed"  # "embed" | "burn" | "file"
     external_sub: str | None = None
+    ai_sub: str | None = None  # AI altyazı hedef dili ("tr", "en"… ya da "orig": sadece yazıya dök)
+    ai_provider: str = "gemini"
+    ai_key: str = field(default="", repr=False)
+    whisper_model: str = "small"
     trim: tuple[float, float] | None = None
     playlist: bool = False
     embed_thumbnail: bool = True
@@ -336,6 +340,20 @@ class _SubtitlePP(PostProcessor):
             else:
                 shutil.copyfile(ext_sub, path.with_suffix(ext_sub.suffix))
 
+        if req.ai_sub:
+            try:
+                ai_srt, title, lang_tag = self.job.make_ai_subtitle(path, info)
+                if req.sub_mode == "burn":
+                    path = self.job.burn_subtitle(path, ai_srt, info)
+                elif req.sub_mode == "embed":
+                    path = self.job.embed_subtitle(path, ai_srt, title=title, lang=lang_tag)
+                if req.sub_mode != "file":
+                    ai_srt.unlink(missing_ok=True)
+            except (Cancelled, DownloadCancelled):
+                raise
+            except Exception as e:  # noqa: BLE001 - video indi; altyazı hatası indirmeyi boşa çıkarmasın
+                self.job.warnings.append(f"Video indirildi ama AI altyazı eklenemedi: {friendly_error(e)}")
+
         info["filepath"] = str(path)
         return [], info
 
@@ -346,6 +364,7 @@ class DownloadJob:
         self.settings = settings
         self.emit = emit
         self.files: list[str] = []
+        self.warnings: list[str] = []
         self._cancel = threading.Event()
         self._proc: subprocess.Popen | None = None
         self._ffmpeg = tools.ffmpeg_exe()
@@ -365,7 +384,7 @@ class DownloadJob:
             self._download()
             if self.cancelled:
                 raise Cancelled
-            self.emit("done", files=self.files)
+            self.emit("done", files=self.files, warning="\n".join(self.warnings))
         except (Cancelled, DownloadCancelled):
             self.emit("cancelled")
         except yt_dlp.utils.DownloadError as e:
@@ -468,7 +487,7 @@ class DownloadJob:
         self.emit("progress", stage="Başlıyor…", frac=None)
         with yt_dlp.YoutubeDL(opts) as ydl:
             needs_sub_pp = self.req.mode == "video" and self._ffmpeg and (
-                self.req.external_sub or (self.req.sub_lang and self.req.sub_mode == "burn"))
+                self.req.external_sub or self.req.ai_sub or (self.req.sub_lang and self.req.sub_mode == "burn"))
             if needs_sub_pp:
                 ydl.add_post_processor(_SubtitlePP(self), when="after_move")
             ydl.download([self.req.url])
@@ -568,18 +587,58 @@ class DownloadJob:
         video.unlink(missing_ok=True)
         return out
 
-    def embed_subtitle(self, video: Path, sub: Path) -> Path:
+    def embed_subtitle(self, video: Path, sub: Path, title: str = "Harici altyazı", lang: str | None = None) -> Path:
         """Altyazıyı ayrı bir iz olarak ekler (oynatıcıdan açılıp kapatılabilir)."""
         ext = video.suffix.lstrip(".").lower()
         tmp_out = video.with_name(video.stem + ".tmp" + video.suffix)
+        index = str(self._sub_stream_count(video))
+        meta = ["-metadata:s:s:" + index, f"title={title}"]
+        if lang:
+            meta += ["-metadata:s:s:" + index, f"language={lang}"]
         self._run_ffmpeg([
             "-i", str(video), "-i", str(sub), "-map", "0", "-map", "1:0",
-            "-c", "copy", "-c:s", SUB_CODEC.get(ext, "copy"),
-            "-metadata:s:s:" + str(self._sub_stream_count(video)), "title=Harici altyazı",
-            str(tmp_out),
+            "-c", "copy", "-c:s", SUB_CODEC.get(ext, "copy"), *meta, str(tmp_out),
         ], None, None, "Altyazı ekleniyor")
         tmp_out.replace(video)
         return video
+
+    def make_ai_subtitle(self, video: Path, info: dict) -> tuple[Path, str, str | None]:
+        """Videonun konuşmasından (sitedeki altyazı ya da Whisper) hedef dilde .srt üretir.
+
+        (srt yolu, altyazı izi başlığı, ffmpeg dil etiketi) döndürür.
+        """
+        from . import subtitles, transcribe  # ağır modüller; yalnızca gerektiğinde
+
+        req = self.req
+        progress = lambda frac, text: self.emit("progress", stage=text, frac=frac)  # noqa: E731
+        progress(None, "Altyazı kaynağı aranıyor")
+        found = subtitles.caption_cues(info, self.settings)
+        if found:
+            cues, src_lang, _source = found
+            if req.trim:
+                cues = subtitles.shift(cues, *req.trim)
+        else:
+            cues, src_lang = transcribe.transcribe(video, req.whisper_model, progress, lambda: self.cancelled)
+        if self.cancelled:
+            raise Cancelled
+        cues = subtitles.merge(cues)
+        if not cues:
+            raise RuntimeError("Videoda yazıya dökülecek bir konuşma bulunamadı.")
+
+        target = src_lang if req.ai_sub == "orig" else req.ai_sub
+        if target != src_lang:
+            progress(0, f"Altyazı {subtitles.LANG_NAMES.get(target, target)} diline çevriliyor")
+            cues = subtitles.translate(
+                cues, target, req.ai_provider, req.ai_key,
+                lambda f: progress(f, f"Altyazı {subtitles.LANG_NAMES.get(target, target)} diline çevriliyor"),
+                lambda: self.cancelled)
+            if self.cancelled:
+                raise Cancelled
+            title = f"{subtitles.LANG_NAMES.get(target, target)} (AI çeviri)"
+        else:
+            title = f"{subtitles.LANG_NAMES.get(target, target)} (AI)"
+        srt = subtitles.write_srt(cues, video.with_name(f"{video.stem}.{target}.srt"))
+        return srt, title, subtitles.LANG_TAGS.get(target)
 
     def _sub_stream_count(self, video: Path) -> int:
         probe = Path(self._ffmpeg).with_name("ffprobe.exe" if self._ffmpeg.endswith(".exe") else "ffprobe")

@@ -112,7 +112,7 @@ window.addEventListener("resize", () => Object.values(segs).forEach((s) => s.ref
 /* ---------------------------------------------------------------- durum */
 const state = {
   settings: {}, items: new Map(), history: [], media: null, mediaUrl: "",
-  analyzeToken: 0, aiToken: 0, extSub: null, setup: "checking", hasKey: false,
+  analyzeToken: 0, aiToken: 0, extSub: null, setup: "checking", keys: {}, providers: {}, languages: [],
   quality: null, queueFilter: "all", update: null, repo: "",
 };
 
@@ -215,6 +215,8 @@ function onAnalyzed(ev) {
   segs.audioFmtSeg.set(state.settings.audio_format || "mp3");
   segs.audioQSeg.set(state.settings.audio_quality || "320");
   segs.subModeSeg.set("embed");
+  $("#aiSubToggle").checked = false;
+  updateAiSub();
   updateSubHint();
 
   $("#trimToggle").checked = false; $("#trimRow").classList.add("hidden");
@@ -279,8 +281,10 @@ function updateSummary() {
   } else {
     const fmt = $("#advDetails").open && $("#formatSelect").value;
     main = (fmt ? "Özel format" : state.quality ? `${state.quality}p` : "En iyi kalite") + " · " + (segs.containerSeg.value || "mp4").toUpperCase();
-    const sub = $("#subSelect").value !== "" || state.extSub;
-    if (sub) main += " · altyazı " + ({ embed: "gömülü", burn: "yakılmış", file: ".srt" })[segs.subModeSeg.value];
+    const ai = $("#aiSubToggle").checked;
+    const sub = ai || $("#subSelect").value !== "" || state.extSub;
+    if (sub) main += ` · ${ai ? "AI altyazı (" + $("#aiSubLang").selectedOptions[0]?.textContent + ")" : "altyazı"} `
+      + ({ embed: "gömülü", burn: "yakılmış", file: ".srt" })[segs.subModeSeg.value];
   }
   if ($("#trimToggle").checked) main += " · kesit";
   if ($("#playlistToggle").checked && !$("#playlistRow").classList.contains("hidden")) main += " · tüm liste";
@@ -304,6 +308,7 @@ async function startDownload() {
     sub_index: subVal === "" ? null : Number(subVal),
     sub_mode: segs.subModeSeg.value,
     external_sub: state.extSub,
+    ai_sub: !audio && $("#aiSubToggle").checked ? $("#aiSubLang").value : null,
     trim: $("#trimToggle").checked,
     trim_start: $("#trimStart").value,
     trim_end: $("#trimEnd").value,
@@ -374,7 +379,7 @@ function itemCard(it) {
       h("div", { class: "s" }, h("span", { class: "st" }, it.stage), h("span", {}, it.summary)),
       it.state === "error" ? null : bar,
       stats.length ? h("div", { class: "stats" }, ...stats.map((s) => h("span", {}, s))) : null,
-      it.state === "error" && it.error ? h("div", { class: "err" }, it.error) : null),
+      (it.state === "error" || it.state === "done") && it.error ? h("div", { class: "err" }, it.error) : null),
     acts);
 }
 
@@ -422,7 +427,7 @@ async function aiSummarize(url) {
   url = (url ?? $("#aiUrl").value).trim();
   $("#aiUrl").value = url;
   showPage("ai");
-  if (!state.hasKey) { $("#aiNoKey").classList.remove("hidden"); toast("Önce Ayarlar'dan API anahtarını ekle.", "err"); return; }
+  if (!state.keys[currentProvider()]) { $("#aiNoKey").classList.remove("hidden"); toast("Önce Ayarlar'dan API anahtarını ekle.", "err"); return; }
   if (!URL_RE.test(url)) { toast("Geçerli bir video linki girin.", "err"); return; }
   const token = ++state.aiToken;
   aiView("aiLoading");
@@ -439,7 +444,7 @@ function onAiDone(ev) {
   $("#aiThumb").classList.toggle("hidden", !r.thumb);
   if (r.thumb) $("#aiThumb").src = r.thumb;
   $("#aiTitle").textContent = r.title;
-  $("#aiSource").textContent = "Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : "");
+  $("#aiSource").textContent = r.provider + " · Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : "");
   $("#aiTldr").textContent = r.tldr;
   $("#aiSummary").textContent = r.summary;
   $("#aiPoints").replaceChildren(...r.key_points.map((p, i) => {
@@ -493,13 +498,36 @@ function renderSettings() {
   $("#rateInput").value = s.rate_limit || "";
   $("#cookiesSelect").value = s.cookies_browser || "Yok";
   $$("input[data-setting]").forEach((i) => { i.checked = !!s[i.dataset.setting]; });
+  segs.providerSeg.set(currentProvider());
+  segs.whisperSeg.set(s.whisper_model || "small");
   renderKey();
 }
 
+const currentProvider = () => state.settings.ai_provider || "gemini";
+const PROVIDER_INFO = {
+  gemini: { hint: "Ücretsiz: Google hesabınla aistudio.google.com/apikey adresinden kredi kartı olmadan anahtar al. "
+                  + "Ücretsiz katmanda Google gönderilen metni ürünlerini geliştirmek için kullanabilir.",
+            placeholder: "AIza…", link: "gemini_keys" },
+  claude: { hint: "Ücretli ama çok ucuz (10 dakikalık video özeti ~0,001 $). Anahtarı console.anthropic.com'dan al; "
+                  + "ücret kendi Anthropic hesabından düşer.",
+            placeholder: "sk-ant-…", link: "anthropic_keys" },
+};
+
 function renderKey() {
-  $("#keyStatus").textContent = state.hasKey ? "✓ API anahtarı kayıtlı" : "API anahtarı eklenmedi";
-  $("#deleteKeyBtn").classList.toggle("hidden", !state.hasKey);
-  $("#aiNoKey").classList.toggle("hidden", state.hasKey);
+  const p = currentProvider(), info = PROVIDER_INFO[p], has = !!state.keys[p];
+  $("#providerHint").replaceChildren(info.hint + " ",
+    h("a", { href: "#", style: "color:var(--accent-2)", onclick: (e) => { e.preventDefault(); api.open_url(info.link); } }, "Anahtar al →"));
+  $("#apiKeyInput").placeholder = info.placeholder;
+  $("#keyStatus").textContent = has ? `✓ ${state.providers[p] || p} anahtarı kayıtlı` : `${state.providers[p] || p} anahtarı eklenmedi`;
+  $("#deleteKeyBtn").classList.toggle("hidden", !has);
+  $("#aiNoKey").classList.toggle("hidden", has);
+}
+
+function updateAiSub() {
+  const on = $("#aiSubToggle").checked;
+  $("#aiSubBox").classList.toggle("hidden", !on);
+  $("#manualSubBox").classList.toggle("hidden", on);
+  updateSummary();
 }
 
 function renderTools(t) {
@@ -603,6 +631,8 @@ function wire() {
   seg("audioFmtSeg", updateMode);
   seg("audioQSeg", updateSummary);
   seg("subModeSeg", updateSubHint);
+  seg("providerSeg", async (v) => { await setSetting("ai_provider", v); renderKey(); });
+  seg("whisperSeg", (v) => setSetting("whisper_model", v));
   seg("queueFilter", (v) => { state.queueFilter = v; renderQueue(); }).set("all");
   seg("themeSeg", (v) => setSetting("theme", v));
   seg("parallelSeg", (v) => setSetting("max_parallel", Number(v)));
@@ -655,14 +685,15 @@ function wire() {
   $("#rateInput").addEventListener("change", (e) => setSetting("rate_limit", e.target.value));
   $("#cookiesSelect").addEventListener("change", (e) => setSetting("cookies_browser", e.target.value));
   $$("input[data-setting]").forEach((i) => i.addEventListener("change", () => setSetting(i.dataset.setting, i.checked)));
-  $("#keysLink").addEventListener("click", (e) => { e.preventDefault(); api.open_url("anthropic_keys"); });
   $("#saveKeyBtn").addEventListener("click", async () => {
-    const res = await api.save_api_key($("#apiKeyInput").value);
+    const res = await api.save_api_key(currentProvider(), $("#apiKeyInput").value);
     if (!res.ok) { toast(res.error, "err"); return; }
     $("#apiKeyInput").value = "";
-    state.hasKey = true; renderKey(); toast("API anahtarı kaydedildi", "ok");
+    state.keys = res.keys; renderKey(); toast("API anahtarı kaydedildi", "ok");
   });
-  $("#deleteKeyBtn").addEventListener("click", async () => { state.hasKey = await api.delete_api_key(); renderKey(); toast("API anahtarı silindi", "info"); });
+  $("#deleteKeyBtn").addEventListener("click", async () => { state.keys = await api.delete_api_key(currentProvider()); renderKey(); toast("API anahtarı silindi", "info"); });
+  $("#aiSubToggle").addEventListener("change", updateAiSub);
+  $("#aiSubLang").addEventListener("change", (e) => setSetting("ai_sub_lang", e.target.value));
   $("#ytdlpBtn").addEventListener("click", () => { setLoading($("#ytdlpBtn"), true); $("#ytdlpMsg").textContent = "Güncelleniyor…"; api.update_ytdlp(); });
   $("#repairBtn").addEventListener("click", () => { state.setupHidden = false; api.install_components(); });
   $("#checkUpdateBtn").addEventListener("click", () => {
@@ -683,7 +714,12 @@ window.addEventListener("pywebviewready", async () => {
   wire();
   const init = await api.init();
   state.settings = init.settings;
-  state.hasKey = init.has_api_key;
+  state.keys = init.keys;
+  state.providers = init.providers;
+  state.languages = init.languages;
+  $("#aiSubLang").replaceChildren(...init.languages.map(([c, n]) => h("option", { value: c }, n)),
+    h("option", { value: "orig" }, "Orijinal dil (çevirmeden)"));
+  $("#aiSubLang").value = init.settings.ai_sub_lang || "tr";
   state.history = init.history;
   state.repo = init.repo;
   applyTheme(state.settings.theme);

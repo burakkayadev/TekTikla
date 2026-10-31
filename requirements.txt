@@ -1,5 +1,7 @@
 yt-dlp[default]
 pywebview>=6.0
 anthropic>=2.0
+pywhispercpp>=1.5
+numpy
 pillow
 requests

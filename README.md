@@ -22,7 +22,8 @@ Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğ
 |---|---|
 | **İndir** | Linki analiz eder: tüm kaliteler (144p–8K, tahmini boyutlarıyla), MP4/MKV/WEBM, MP3/M4A/OPUS/FLAC/WAV, sitedeki altyazılar veya kendi .srt/.vtt/.ass dosyan (gömülü / videoya yakılmış / ayrı .srt), kesit indirme, oynatma listesi. ⚡ Hızlı İndir ve Hızlı MP3 analiz beklemeden indirir. |
 | **İndirmeler** | Kuyruk: canlı ilerleme, hız, kalan süre, iptal, tekrar dene, dosyayı aç / klasörde göster. Aynı anda 1–4 indirme. |
-| **AI Özet** | Videonun altyazı dökümünü Claude'a (Anthropic) okutup Türkçe tek cümlelik özet, genel özet, önemli noktalar ve konu etiketleri çıkarır. Kendi Anthropic API anahtarınız gerekir (Ayarlar > Yapay Zekâ); anahtar Windows DPAPI ile şifreli saklanır. |
+| **AI Özet** | Videonun altyazı dökümünü yapay zekâya okutup Türkçe tek cümlelik özet, genel özet, önemli noktalar ve konu etiketleri çıkarır. |
+| **AI Altyazı** | İndirirken *Yapay zekâ ile altyazı* açılırsa videonun konuşması seçilen dile (Türkçe, İngilizce, Almanca… 15 dil) çevrilip altyazı olarak eklenir: gömülü, videoya yakılmış ya da ayrı .srt. Videoda altyazı yoksa konuşma bilgisayarda Whisper ile ücretsiz yazıya dökülür (ilk kullanımda ~190 MB model iner). |
 | **Geçmiş** | Aranabilir indirme geçmişi. |
 | **Ayarlar** | Kayıt klasörü, koyu/açık tema, pano izleme, paralel indirme, hız sınırı, varsayılan biçimler, kapak/bilgi gömme, SponsorBlock, tarayıcı çerezleri, yt-dlp ve uygulama güncellemesi. |
 
@@ -50,7 +51,10 @@ tektikla/app.py          pencere (pywebview + WebView2)
 tektikla/api.py          arayüz ↔ Python köprüsü, indirme kuyruğu, pano izleme
 tektikla/web/            arayüz (index.html, style.css, app.js)
 tektikla/engine.py       indirme motoru (yt-dlp + FFmpeg: kalite, MP3, altyazı gömme/yakma, kesit)
-tektikla/ai.py           AI video özeti (altyazı dökümü + Claude)
+tektikla/ai.py           AI video özeti
+tektikla/llm.py          yapay zekâ servisleri (Gemini, Claude Haiku)
+tektikla/subtitles.py    zamanlı altyazı okuma, birleştirme, .srt, AI çeviri
+tektikla/transcribe.py   konuşmayı yazıya dökme (whisper.cpp)
 tektikla/tools.py        FFmpeg/Deno otomatik kurulum, yt-dlp güncelleme
 tektikla/updater.py      GitHub Releases üzerinden uygulama güncellemesi
 tektikla/config.py       ayarlar, geçmiş, DPAPI ile şifreli API anahtarı
@@ -62,5 +66,8 @@ build_release.py    uygulama + kurulum exe'sini derler
 
 - DRM korumalı servisler (Netflix, Disney+, Spotify vb.) teknik olarak indirilemez.
 - Giriş isteyen siteler (ör. Vimeo, yaş sınırlı videolar) için tarayıcıda giriş yapıp Ayarlar > Tarayıcı çerezleri'nden o tarayıcıyı seçin.
-- AI özeti Anthropic API'sini kullanır; ücreti anahtar sahibinin hesabından düşer.
+- AI özet ve altyazı çevirisi için Ayarlar > Yapay Zekâ'dan servis seçilir:
+  - **Google Gemini (ücretsiz):** [aistudio.google.com/apikey](https://aistudio.google.com/apikey) adresinden kredi kartı olmadan anahtar alınır. Ücretsiz katmanda Google gönderilen metni ürünlerini geliştirmek için kullanabilir.
+  - **Claude Haiku 5.5:** ücretli ama çok ucuz; ücret anahtar sahibinin Anthropic hesabından düşer.
+- Konuşmayı yazıya dökme (Whisper) tamamen bilgisayarda çalışır; ses hiçbir yere gönderilmez.
 - Telif hakkı olan içerikleri yalnızca kişisel kullanım için ve sitenin kurallarına uygun şekilde indirin.
