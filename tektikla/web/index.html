@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TekTıkla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs><linearGradient id="gradStroke" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B6CFF"/><stop offset=".55" stop-color="#C04CFD"/><stop offset="1" stop-color="#FF4D8D"/></linearGradient></defs>
+</svg>
+<div class="aurora"><span></span><span></span><span></span></div>
+
+<div class="app">
+  <!-- ======================= YAN MENÜ ======================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+      <div><b>TekTıkla</b><small>Video İndirici</small></div>
+    </div>
+    <nav id="nav">
+      <div class="nav-indicator" id="navIndicator"></div>
+      <button class="nav-item active" data-page="download"><i data-ic="download"></i>İndir</button>
+      <button class="nav-item" data-page="queue"><i data-ic="list"></i>İndirmeler<span class="badge hidden" id="queueBadge">0</span></button>
+      <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Özet<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="history"><i data-ic="clock"></i>Geçmiş</button>
+      <button class="nav-item" data-page="settings"><i data-ic="settings"></i>Ayarlar</button>
+    </nav>
+    <div class="side-foot">
+      <div class="status-chip update hidden" id="updateChip"><span class="dot"></span><span id="updateChipText">Güncelleme var</span></div>
+      <div class="status-chip busy" id="setupChip"><span class="dot"></span><span id="setupChipText">Kontrol ediliyor…</span></div>
+      <small id="versionText"></small>
+    </div>
+  </aside>
+
+  <main id="main">
+    <!-- ======================= İNDİR ======================= -->
+    <section class="page active" id="page-download">
+      <div class="page-head">
+        <div><h1>Ne indirmek <span class="grad-text">istersin?</span></h1>
+        <p>Linki yapıştır ya da sadece kopyala — TekTıkla kendisi algılar.</p></div>
+      </div>
+
+      <div class="card hero">
+        <div class="url-box">
+          <i data-ic="link"></i>
+          <input id="urlInput" placeholder="Video, şarkı veya oynatma listesi linki…" spellcheck="false" autocomplete="off">
+          <button class="btn sm" id="pasteBtn"><i data-ic="clipboard"></i>Yapıştır</button>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary lg" id="analyzeBtn"><i data-ic="search"></i>Analiz Et</button>
+          <button class="btn success lg" id="quickBtn"><i data-ic="zap"></i>Hızlı İndir</button>
+          <button class="btn lg" id="quickAudioBtn"><i data-ic="music"></i>Hızlı MP3</button>
+          <span class="spacer"></span>
+          <button class="btn ai lg" id="heroAiBtn"><i data-ic="sparkles"></i>AI ile Özetle</button>
+        </div>
+        <div class="sites">
+          <span>YouTube</span><span>Shorts</span><span>Instagram</span><span>TikTok</span><span>X / Twitter</span>
+          <span>Facebook</span><span>Twitch</span><span>Reddit</span><span>Vimeo</span><span>SoundCloud</span><span>+1800 site</span>
+        </div>
+      </div>
+
+      <div id="dlEmpty" class="empty">
+        <div class="art"><i data-ic="film"></i></div>
+        <h2>Bir link bekleniyor</h2>
+        <p>Analiz edince tüm kalite seçenekleri, altyazılar ve MP3 burada görünecek.</p>
+      </div>
+
+      <div id="dlLoading" class="card hidden">
+        <div class="skeleton">
+          <div class="sk thumb"></div>
+          <div class="sk-lines"><div class="sk line" style="width:40%"></div><div class="sk line" style="width:85%;height:22px"></div><div class="sk line" style="width:60%"></div><div class="sk line" style="width:30%"></div></div>
+        </div>
+        <div class="wait-text" id="dlLoadingText"><span class="btn loading icon ghost" style="border:0"></span>Link analiz ediliyor…</div>
+      </div>
+
+      <div id="dlError" class="card error-card hidden"><i data-ic="alert"></i><p id="dlErrorText"></p></div>
+
+      <div id="dlResult" class="hidden">
+        <div class="card media">
+          <div class="thumb"><img id="mThumb" alt=""><div class="ph hidden" id="mThumbPh"><i data-ic="film"></i></div><span class="dur" id="mDur"></span></div>
+          <div class="meta">
+            <div class="chips"><span class="chip accent" id="mSite"></span><span class="chip ok" id="mBadge"></span><span class="chip" id="mSubs"></span></div>
+            <h2 id="mTitle"></h2>
+            <p id="mUploader"></p>
+            <div class="meta-actions">
+              <button class="btn ai" id="mAiBtn"><i data-ic="sparkles"></i>AI ile özetle</button>
+              <button class="btn" id="mResetBtn"><i data-ic="x"></i>Temizle</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="seg big" id="modeSeg">
+              <button data-v="video"><i data-ic="film"></i>Video</button>
+              <button data-v="audio"><i data-ic="music"></i>Sadece Ses</button>
+            </div>
+            <div id="videoOpts">
+              <h3 style="margin-top:18px">Kalite</h3>
+              <div class="quality-grid" id="qualityGrid"></div>
+              <h3>Dosya türü</h3>
+              <div class="seg" id="containerSeg"><button data-v="mp4">MP4</button><button data-v="mkv">MKV</button><button data-v="webm">WEBM</button></div>
+              <p class="hint">MP4 her cihazda açılır. MKV en yüksek kaliteyi korur.</p>
+              <details class="adv" id="advDetails"><summary>Gelişmiş: tüm formatlar</summary>
+                <select class="select" id="formatSelect"></select>
+              </details>
+            </div>
+            <div id="audioOpts" class="hidden">
+              <h3 style="margin-top:18px">Ses biçimi</h3>
+              <div class="seg" id="audioFmtSeg"><button data-v="mp3">MP3</button><button data-v="m4a">M4A</button><button data-v="opus">OPUS</button><button data-v="flac">FLAC</button><button data-v="wav">WAV</button></div>
+              <div id="audioQBlock"><h3>Kalite</h3>
+                <div class="seg" id="audioQSeg"><button data-v="320">320 kbps</button><button data-v="256">256</button><button data-v="192">192</button><button data-v="128">128</button></div>
+              </div>
+              <p class="hint">Kapak resmi ve sanatçı bilgisi dosyaya otomatik eklenir.</p>
+            </div>
+          </div>
+
+          <div class="card" id="subCard">
+            <h3>Altyazı</h3>
+            <label class="lbl">Sitedeki altyazılar</label>
+            <select class="select" id="subSelect"></select>
+            <label class="lbl">Kendi altyazı dosyan</label>
+            <div class="file-row">
+              <span class="name" id="extSubName">Seçilmedi (.srt, .vtt, .ass)</span>
+              <button class="btn" id="extSubBtn"><i data-ic="file"></i>Seç</button>
+              <button class="btn icon" id="extSubClear" title="Kaldır"><i data-ic="x"></i></button>
+            </div>
+            <label class="lbl">Ekleme şekli</label>
+            <div class="seg" id="subModeSeg"><button data-v="embed">Göm</button><button data-v="burn">Videoya yak</button><button data-v="file">Ayrı .srt</button></div>
+            <p class="hint" id="subHint"></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Diğer</h3>
+          <div class="row">
+            <div class="txt"><b>Sadece bir bölümünü indir</b><small>Örneğin 1:30 ile 2:45 arası</small></div>
+            <label class="switch"><input type="checkbox" id="trimToggle"><span></span></label>
+          </div>
+          <div class="sub-row hidden" id="trimRow">
+            <span class="hint" style="margin:0">Başlangıç</span><input class="input sm" id="trimStart" placeholder="0:00">
+            <span class="hint" style="margin:0">Bitiş</span><input class="input sm" id="trimEnd" placeholder="1:30">
+          </div>
+          <div class="row hidden" id="playlistRow">
+            <div class="txt"><b>Oynatma listesinin tamamını indir</b><small id="playlistHint">Linkteki listenin tüm videoları kendi klasörüne indirilir.</small></div>
+            <label class="switch"><input type="checkbox" id="playlistToggle"><span></span></label>
+          </div>
+          <div class="row">
+            <div class="txt"><b>Kayıt yeri</b><small id="folderText"></small></div>
+            <button class="btn" id="folderBtn"><i data-ic="folder"></i>Değiştir</button>
+          </div>
+        </div>
+
+        <div class="dl-bar">
+          <div class="info"><b id="dlSummary"></b><small id="dlSummary2"></small></div>
+          <button class="btn primary xl" id="downloadBtn"><i data-ic="download"></i>İndir</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= İNDİRMELER ======================= -->
+    <section class="page" id="page-queue">
+      <div class="page-head">
+        <div><h1>İndirmeler</h1><p id="queueSub">Kuyruktaki ve biten indirmeler.</p></div>
+        <div class="right">
+          <div class="seg" id="queueFilter"><button data-v="all">Tümü</button><button data-v="active">Aktif</button><button data-v="done">Biten</button><button data-v="failed">Hatalı</button></div>
+          <button class="btn" id="openDirBtn"><i data-ic="folder"></i>Klasörü aç</button>
+          <button class="btn danger" id="clearDoneBtn"><i data-ic="trash"></i>Bitenleri temizle</button>
+        </div>
+      </div>
+      <div class="q-list" id="queueList"></div>
+      <div class="empty" id="queueEmpty">
+        <div class="art"><i data-ic="list"></i></div>
+        <h2>Henüz indirme yok</h2>
+        <p>İndir sekmesinden bir link analiz ederek başla.</p>
+      </div>
+    </section>
+
+    <!-- ======================= AI ÖZET ======================= -->
+    <section class="page" id="page-ai">
+      <div class="page-head">
+        <div><h1><span class="grad-text">AI</span> Video Özeti</h1>
+        <p>İzlemeden önce videonun ne anlattığını öğren. Claude konuşma dökümünü okuyup özetler.</p></div>
+      </div>
+      <div class="card callout hidden" id="aiNoKey">
+        <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></div>
+        <div class="txt"><b>Önce API anahtarını ekle</b><p>AI özeti için bir Anthropic API anahtarı gerekir (console.anthropic.com). Anahtar bu bilgisayarda Windows şifrelemesiyle saklanır.</p></div>
+        <button class="btn primary" id="aiGoSettings"><i data-ic="settings"></i>Ayarlara git</button>
+      </div>
+      <div class="card hero">
+        <div class="ai-hero">
+          <div class="url-box"><i data-ic="link"></i><input id="aiUrl" placeholder="Özetlenecek video linki…" spellcheck="false" autocomplete="off"></div>
+          <button class="btn ai lg" id="aiBtn" style="height:60px"><i data-ic="sparkles"></i>Özetle</button>
+        </div>
+        <p class="hint">Altyazısı olan videolarda konuşmanın tamamı okunur; altyazı yoksa başlık ve açıklamadan özet çıkarılır.</p>
+      </div>
+
+      <div class="card hidden" id="aiLoading">
+        <h3>Çalışıyor</h3>
+        <div class="ai-steps" id="aiSteps"></div>
+      </div>
+      <div class="card error-card hidden" id="aiError"><i data-ic="alert"></i><p id="aiErrorText"></p></div>
+      <div class="card ai-result hidden" id="aiResult">
+        <div class="head">
+          <img id="aiThumb" alt="">
+          <div style="flex:1;min-width:0"><div class="chips"><span class="chip accent" id="aiSource"></span></div><h2 id="aiTitle" style="margin-top:8px"></h2></div>
+          <button class="btn" id="aiCopy"><i data-ic="copy"></i>Kopyala</button>
+          <button class="btn primary" id="aiDownload"><i data-ic="download"></i>İndir</button>
+        </div>
+        <div class="tldr"><i data-ic="sparkles"></i><span id="aiTldr"></span></div>
+        <h3>Özet</h3>
+        <p class="ai-summary" id="aiSummary"></p>
+        <h3>Önemli noktalar</h3>
+        <ul class="points" id="aiPoints"></ul>
+        <h3>Konular</h3>
+        <div class="chips" id="aiTopics"></div>
+      </div>
+    </section>
+
+    <!-- ======================= GEÇMİŞ ======================= -->
+    <section class="page" id="page-history">
+      <div class="page-head">
+        <div><h1>Geçmiş</h1><p>Daha önce indirdiklerin.</p></div>
+        <div class="right">
+          <input class="input search" id="historySearch" placeholder="Ara…">
+          <button class="btn danger" id="clearHistoryBtn"><i data-ic="trash"></i>Temizle</button>
+        </div>
+      </div>
+      <div class="card" style="padding:10px"><div id="historyList"></div>
+        <div class="empty hidden" id="historyEmpty"><div class="art"><i data-ic="clock"></i></div><h2>Geçmiş boş</h2><p>İndirdiğin dosyalar burada listelenir.</p></div>
+      </div>
+    </section>
+
+    <!-- ======================= AYARLAR ======================= -->
+    <section class="page" id="page-settings">
+      <div class="page-head"><div><h1>Ayarlar</h1><p>Değişiklikler otomatik kaydedilir.</p></div></div>
+      <div class="settings-grid">
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="settings"></i></span>Genel</div>
+          <div class="row"><div class="txt"><b>Kayıt klasörü</b><small id="setFolder"></small></div><button class="btn" id="setFolderBtn">Değiştir</button></div>
+          <div class="row"><div class="txt"><b>Tema</b></div><div class="seg" id="themeSeg"><button data-v="dark">Koyu</button><button data-v="light">Açık</button><button data-v="system">Sistem</button></div></div>
+          <div class="row"><div class="txt"><b>Panoyu izle</b><small>Link kopyalayınca TekTıkla otomatik algılar.</small></div><label class="switch"><input type="checkbox" data-setting="clipboard_watch"><span></span></label></div>
+          <div class="row"><div class="txt"><b>Aynı anda indirme</b></div><div class="seg" id="parallelSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button></div></div>
+          <div class="row"><div class="txt"><b>Hız sınırı</b><small>Örnek: 2M = saniyede 2 MB. Boş = sınırsız.</small></div><input class="input sm" id="rateInput" placeholder="sınırsız"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="sparkles"></i></span>Yapay Zekâ</div>
+          <p class="hint" style="margin-top:4px">AI özeti Anthropic'in Claude modelini kullanır. Anahtarınızı <a href="#" id="keysLink" style="color:var(--accent-2)">console.anthropic.com</a> adresinden alabilirsiniz; ücretlendirme kendi hesabınızdan yapılır.</p>
+          <div class="key-row">
+            <input class="input" id="apiKeyInput" type="password" placeholder="sk-ant-…" autocomplete="off">
+            <button class="btn primary" id="saveKeyBtn">Kaydet</button>
+          </div>
+          <div class="row" style="margin-top:8px"><div class="txt"><b id="keyStatus"></b><small>Anahtar Windows şifrelemesiyle (DPAPI) yalnızca bu bilgisayarda saklanır.</small></div><button class="btn danger sm" id="deleteKeyBtn">Sil</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="film"></i></span>Varsayılan biçimler</div>
+          <div class="row"><div class="txt"><b>Video dosya türü</b></div><div class="seg" id="defContainerSeg"><button data-v="mp4">MP4</button><button data-v="mkv">MKV</button><button data-v="webm">WEBM</button></div></div>
+          <div class="row"><div class="txt"><b>Ses biçimi</b></div><div class="seg" id="defAudioSeg"><button data-v="mp3">MP3</button><button data-v="m4a">M4A</button><button data-v="opus">OPUS</button><button data-v="flac">FLAC</button><button data-v="wav">WAV</button></div></div>
+          <div class="row"><div class="txt"><b>Ses kalitesi</b></div><div class="seg" id="defAudioQSeg"><button data-v="320">320</button><button data-v="256">256</button><button data-v="192">192</button><button data-v="128">128</button></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="zap"></i></span>Ekstralar</div>
+          <div class="row"><div class="txt"><b>Kapak resmini göm</b><small>MP3/MP4 dosyalarına video kapağı eklenir.</small></div><label class="switch"><input type="checkbox" data-setting="embed_thumbnail"><span></span></label></div>
+          <div class="row"><div class="txt"><b>Bilgileri ve bölümleri göm</b><small>Başlık, sanatçı, tarih ve bölümler dosyaya yazılır.</small></div><label class="switch"><input type="checkbox" data-setting="embed_metadata"><span></span></label></div>
+          <div class="row"><div class="txt"><b>Sponsor bölümlerini kes</b><small>YouTube'daki sponsor ve "abone ol" kısımları SponsorBlock ile çıkarılır.</small></div><label class="switch"><input type="checkbox" data-setting="sponsorblock"><span></span></label></div>
+          <div class="row"><div class="txt"><b>Tarayıcı çerezleri</b><small>Yaş sınırlı veya giriş isteyen videolar için. Chrome'da sorun olursa Firefox önerilir.</small></div>
+            <select class="select" id="cookiesSelect" style="width:140px"><option>Yok</option><option>Firefox</option><option>Edge</option><option>Chrome</option><option>Brave</option><option>Opera</option><option>Vivaldi</option></select></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="box"></i></span>Bileşenler</div>
+          <div class="kv"><span>yt-dlp (indirme motoru)</span><b id="tYtdlp"></b></div>
+          <div class="kv"><span>FFmpeg (birleştirme, MP3, altyazı)</span><b id="tFfmpeg"></b></div>
+          <div class="kv"><span>JavaScript çalıştırıcı (YouTube)</span><b id="tJs"></b></div>
+          <div class="row" style="margin-top:6px"><div class="txt"><b>yt-dlp'yi güncelle</b><small id="ytdlpMsg">Bir site indirmeyi reddederse önce bunu deneyin.</small></div><button class="btn" id="ytdlpBtn"><i data-ic="refresh"></i>Güncelle</button></div>
+          <div class="row hidden" id="repairRow"><div class="txt"><b>Bileşenleri kur</b><small>Eksik bileşenler indirilir.</small></div><button class="btn primary" id="repairBtn">Kur</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span class="ci"><i data-ic="refresh"></i></span>Uygulama güncellemesi</div>
+          <div class="kv"><span>Sürüm</span><b id="appVersion"></b></div>
+          <div class="kv"><span>Güncelleme kaynağı</span><b id="repoText"></b></div>
+          <div class="row"><div class="txt"><b>Açılışta güncellemeleri kontrol et</b></div><label class="switch"><input type="checkbox" data-setting="auto_update_check"><span></span></label></div>
+          <div class="row"><div class="txt"><b id="updateStatus">Güncellemeleri denetle</b><small id="updateNotes"></small></div>
+            <button class="btn" id="checkUpdateBtn"><i data-ic="refresh"></i>Denetle</button>
+            <button class="btn primary hidden" id="installUpdateBtn"><i data-ic="download"></i>Güncelle</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toasts"></div>
+
+<div class="overlay hidden" id="setupOverlay">
+  <div class="card modal">
+    <div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+    <h2 id="setupTitle">TekTıkla hazırlanıyor</h2>
+    <p id="setupDesc">İlk açılışa özel: video birleştirme ve YouTube için gereken bileşenler kuruluyor. Bu sadece bir kez yapılır.</p>
+    <div class="progress" id="setupBar"><i style="width:0%"></i></div>
+    <small id="setupText">Başlıyor…</small>
+    <div class="btns">
+      <button class="btn" id="setupHide">Arka planda devam et</button>
+      <button class="btn primary hidden" id="setupRetry">Tekrar dene</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

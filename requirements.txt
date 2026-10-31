@@ -1,0 +1,5 @@
+yt-dlp[default]
+pywebview>=6.0
+anthropic>=2.0
+pillow
+requests
