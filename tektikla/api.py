@@ -599,12 +599,14 @@ class Api:
 
         def work():
             try:
-                updater.download_and_run(self._update, lambda f: self._emit("update_progress", frac=f))
+                updater.apply(self._update, lambda f: self._emit("update_progress", frac=f))
                 self.cancel_all()
                 time.sleep(1)
                 self._window.destroy()
+            except updater.UpdateError as e:
+                self._emit("update_progress", error=str(e), page=True)
             except Exception as e:  # noqa: BLE001
-                self._emit("update_progress", error=str(e)[:200])
+                self._emit("update_progress", error=f"Güncelleme başarısız: {str(e)[:200]}", page=True)
 
         self._bg(work)
 

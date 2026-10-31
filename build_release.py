@@ -79,6 +79,10 @@ def main() -> None:
             if f.is_file():
                 z.write(f, f.relative_to(app_dir))
 
+    OUT.mkdir(exist_ok=True)
+    # uygulama içi güncellemeler bu zip'i kullanır (kurulum programını çalıştırmadan, Defender dostu)
+    shutil.copyfile(payload, OUT / f"TekTikla-{APP_VERSION}-win64.zip")
+
     print("[3/3] Kurulum programı derleniyor…")
     stub_dir = BUILD / "installer"
     stub_dir.mkdir(exist_ok=True)
@@ -103,7 +107,9 @@ def main() -> None:
         "Yönetici izni gerekmez. TekTıkla, Başlat menüsüne ve masaüstüne eklenir.\r\n\r\n"
         "Windows \"Bilinmeyen yayımcı\" uyarısı verirse: Ek bilgi > Yine de çalıştır.\r\n"
         "İlk açılışta FFmpeg gibi gerekli bileşenler otomatik indirilir (internet gerekir).\r\n"
-        "Kaldırmak için: Ayarlar > Uygulamalar > TekTıkla > Kaldır.\r\n",
+        "Kaldırmak için: Ayarlar > Uygulamalar > TekTıkla > Kaldır.\r\n\r\n"
+        f"Kurulum programı açılmazsa (Defender engellerse): TekTikla-{APP_VERSION}-win64.zip dosyasını bir "
+        "klasöre çıkarıp içindeki TekTikla.exe'yi çalıştırın (kurulumsuz, taşınabilir sürüm).\r\n",
         encoding="utf-8-sig",
     )
     size = (OUT / f"{setup_name}.exe").stat().st_size / 1e6

@@ -611,7 +611,13 @@ const HANDLERS = {
   app_update: onAppUpdate,
   update_progress: (ev) => {
     const b = $("#installUpdateBtn");
-    if (ev.error) { setLoading(b, false); toast("Güncelleme başarısız: " + ev.error, "err"); return; }
+    if (ev.error) {
+      setLoading(b, false);
+      toast(ev.error, "err");
+      $("#updateNotes").textContent = ev.error;
+      if (ev.page) { state.updateFailed = true; b.lastChild.textContent = " İndirme sayfasını aç"; }
+      return;
+    }
     b.lastChild.textContent = ` %${Math.round(ev.frac * 100)}`;
   },
 };
@@ -700,7 +706,10 @@ function wire() {
     if (!state.repo) { toast("Güncelleme kaynağı (GitHub deposu) henüz ayarlanmadı.", "info"); return; }
     setLoading($("#checkUpdateBtn"), true); api.check_update();
   });
-  $("#installUpdateBtn").addEventListener("click", () => { setLoading($("#installUpdateBtn"), true); api.install_update(); });
+  $("#installUpdateBtn").addEventListener("click", () => {
+    if (state.updateFailed) { api.open_url("releases"); return; }  // otomatik güncelleme engellendiyse elle indir
+    setLoading($("#installUpdateBtn"), true); api.install_update();
+  });
   $("#updateChip").addEventListener("click", () => showPage("settings"));
 
   $("#setupHide").addEventListener("click", () => { state.setupHidden = true; $("#setupOverlay").classList.add("hidden"); });
