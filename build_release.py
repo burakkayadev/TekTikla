@@ -89,7 +89,7 @@ def main() -> None:
     (stub_dir / "_version.py").write_text(f'VERSION = "{APP_VERSION}"\n', encoding="utf-8")
     logo72 = stub_dir / "logo72.png"  # kurulum penceresinin başlığındaki logo
     Image.open(ROOT / "assets" / "tektikla.png").resize((72, 72), Image.LANCZOS).save(logo72)
-    font = ROOT / "tektikla" / "web" / "fonts" / "PlusJakartaSans.ttf"
+    font = ROOT / "tektikla" / "web" / "fonts" / "Geist.ttf"
     OUT.mkdir(exist_ok=True)
     setup_name = f"TekTikla-Setup-{APP_VERSION}"
     pyinstaller(

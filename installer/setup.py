@@ -53,12 +53,12 @@ def resource(name: str) -> Path:
 
 
 def load_font() -> str:
-    """Uygulamadaki Plus Jakarta Sans'ı sisteme kurmadan, yalnızca bu süreç için yükler."""
-    path = resource("PlusJakartaSans.ttf")
+    """Uygulamadaki Geist fontunu sisteme kurmadan, yalnızca bu süreç için yükler."""
+    path = resource("Geist.ttf")
     try:
         import ctypes
         if path.exists() and ctypes.windll.gdi32.AddFontResourceExW(str(path), 0x10, None):  # FR_PRIVATE
-            return "Plus Jakarta Sans"
+            return "Geist"
     except OSError:
         pass
     return "Segoe UI"
