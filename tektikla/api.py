@@ -39,7 +39,10 @@ BOOL_KEYS = {k for k, v in DEFAULTS.items() if isinstance(v, bool)}
 PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc"}
 KEY_SETTINGS = {"claude": ("api_key_enc", "ANTHROPIC_API_KEY"), "gemini": ("gemini_key_enc", "GEMINI_API_KEY")}
 CHOICES = {"ai_provider": set(llm.PROVIDERS), "whisper_model": {"base", "small"},
-           "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"}}
+           "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"},
+           "theme": {"mono", "paper", "violet", "ocean"}}
+THEME_BARS = {"mono": ("#050505", True), "paper": ("#F3F2EE", False), "violet": ("#0B0A12", True),
+              "ocean": ("#04101A", True)}  # başlık çubuğu rengi, koyu mod
 FINISHED = ("done", "error", "cancelled")
 
 
@@ -160,6 +163,7 @@ class Api:
         self._update: dict | None = None
         self._missing: list[str] = []
         self._started = False
+        self._hwnd = 0
 
     # -- iç yardımcılar
     def _emit(self, event_type: str, /, **data) -> None:
@@ -273,7 +277,23 @@ class Api:
         self._settings.save()
         if key == "max_parallel":
             self._schedule()
+        if key == "theme":
+            self._paint_titlebar()
         return self._public_settings()
+
+    def _paint_titlebar(self, window: webview.Window | None = None) -> None:
+        """Windows 11 başlık çubuğunu seçili temanın rengine boyar (açık temada açık renk)."""
+        color, dark = THEME_BARS.get(self._settings.get("theme"), THEME_BARS["mono"])
+        try:
+            if window is not None:  # pencere ilk açıldığında; sonraki çağrılar başka iş parçacığından gelir
+                self._hwnd = window.native.Handle.ToInt64()
+            hwnd = ctypes.c_void_p(self._hwnd)
+            dwm = ctypes.windll.dwmapi
+            dwm.DwmSetWindowAttribute(hwnd, 20, ctypes.byref(ctypes.c_int(int(dark))), 4)  # koyu mod
+            r, g, b = (int(color[i:i + 2], 16) for i in (1, 3, 5))
+            dwm.DwmSetWindowAttribute(hwnd, 35, ctypes.byref(ctypes.c_int(r | (g << 8) | (b << 16))), 4)
+        except Exception:  # noqa: BLE001 - eski Windows'ta desteklenmeyebilir
+            pass
 
     def pick_folder(self) -> str | None:
         result = self._window.create_file_dialog(webview.FileDialog.FOLDER,

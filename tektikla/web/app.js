@@ -30,6 +30,7 @@ const ICONS = {
   play: '<path d="M7 4v16l13-8z"/>',
   check: '<path d="M20 6L9 17l-5-5"/>',
   retry: '<path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/>',
+  palette: '<path d="M12 21a9 9 0 1 1 9-9c0 2.5-2 4-4.5 4H15a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 21z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>',
 };
 function icon(name) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -131,11 +132,11 @@ function moveIndicator() {
 $$(".nav-item").forEach((n) => n.addEventListener("click", () => showPage(n.dataset.page)));
 
 /* ---------------------------------------------------------------- tema */
+const THEMES = ["mono", "paper", "violet", "ocean"];
 function applyTheme(t) {
-  const dark = t === "dark" || (t === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
-  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  document.documentElement.dataset.theme = THEMES.includes(t) ? t : "mono";
+  $$(".theme-opt").forEach((o) => o.classList.toggle("on", o.dataset.themeOpt === document.documentElement.dataset.theme));
 }
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => applyTheme(state.settings.theme));
 
 /* ================================================================ İNDİR */
 const URL_RE = /^https?:\/\/\S+$/i;
@@ -490,7 +491,7 @@ function renderSettings() {
   const s = state.settings;
   $("#setFolder").textContent = s.download_dir;
   $("#folderText").textContent = s.download_dir;
-  segs.themeSeg.set(s.theme);
+  applyTheme(s.theme);
   segs.parallelSeg.set(s.max_parallel);
   segs.defContainerSeg.set(s.container);
   segs.defAudioSeg.set(s.audio_format);
@@ -640,7 +641,7 @@ function wire() {
   seg("providerSeg", async (v) => { await setSetting("ai_provider", v); renderKey(); });
   seg("whisperSeg", (v) => setSetting("whisper_model", v));
   seg("queueFilter", (v) => { state.queueFilter = v; renderQueue(); }).set("all");
-  seg("themeSeg", (v) => setSetting("theme", v));
+  $$(".theme-opt").forEach((o) => o.addEventListener("click", () => setSetting("theme", o.dataset.themeOpt)));
   seg("parallelSeg", (v) => setSetting("max_parallel", Number(v)));
   seg("defContainerSeg", (v) => setSetting("container", v));
   seg("defAudioSeg", (v) => setSetting("audio_format", v));

@@ -14,7 +14,7 @@ from .api import Api
 from .config import APP_DIR
 
 WEB_DIR = APP_DIR / "tektikla" / "web" if (APP_DIR / "tektikla" / "web").exists() else Path(__file__).parent / "web"
-BG_COLOR = "#0B0A12"
+BG_COLOR = "#050505"
 
 
 # TT logosu, 24 birimlik ızgarada (web/index.html'deki SVG ile aynı ölçüler):
@@ -23,26 +23,26 @@ LOGO_BAR = (3.6, 5.2, 20.4, 8.4)
 LOGO_STEM1 = (6.4, 5.2, 9.6, 19.2)
 LOGO_STEM2 = (14.4, 5.2, 17.6, 14.6)
 LOGO_ARROW = ((12.4, 13.8), (19.6, 13.8), (16.0, 19.2))
-LOGO_COLORS = ((124, 92, 255), (176, 76, 253), (255, 77, 141))
+LOGO_TOP, LOGO_BOTTOM = (34, 34, 38), (6, 6, 7)  # antrasitten siyaha dikey geçiş
 
 
 def _logo_image(size: int = 1024) -> Image.Image:
     u = size / 24
-    # köşegen mor → pembe degrade
     grad = Image.new("RGB", (size, size))
-    px = grad.load()
-    a, b, c = LOGO_COLORS
+    draw_grad = ImageDraw.Draw(grad)
     for y in range(size):
-        for x in range(0, size, 4):
-            t = (x + y) / (2 * size)
-            s, e, k = (a, b, t * 2) if t < .5 else (b, c, t * 2 - 1)
-            col = tuple(int(s[i] + (e[i] - s[i]) * k) for i in range(3))
-            for dx in range(4):
-                px[x + dx, y] = col
+        t = y / (size - 1)
+        draw_grad.line([(0, y), (size, y)], fill=tuple(int(LOGO_TOP[i] + (LOGO_BOTTOM[i] - LOGO_TOP[i]) * t) for i in range(3)))
     mask = Image.new("L", (size, size), 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, size - 1, size - 1], radius=int(5.6 * u), fill=255)
+    radius = int(5.6 * u)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, size - 1, size - 1], radius=radius, fill=255)
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     img.paste(grad, (0, 0), mask)
+    # ince açık kenar: koyu temada ve koyu görev çubuğunda logo kaybolmasın
+    ring = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    ImageDraw.Draw(ring).rounded_rectangle([0, 0, size - 1, size - 1], radius=radius, outline=(255, 255, 255, 46),
+                                           width=max(2, size // 90))
+    img.alpha_composite(ring)
 
     glyph = Image.new("L", (size, size), 0)
     g = ImageDraw.Draw(glyph)
@@ -54,7 +54,7 @@ def _logo_image(size: int = 1024) -> Image.Image:
     glyph = glyph.filter(ImageFilter.GaussianBlur(size / 110)).point(lambda v: 255 if v > 128 else 0)  # köşeleri yumuşat
     # harflerin altına yumuşak gölge
     shadow = glyph.filter(ImageFilter.GaussianBlur(size / 60)).point(lambda v: v * 0.35)
-    shadow_layer = Image.new("RGBA", (size, size), (40, 10, 70, 0))
+    shadow_layer = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     shadow_layer.putalpha(shadow)
     img.alpha_composite(shadow_layer, (0, int(size / 90)))
     white = Image.new("RGBA", (size, size), (255, 255, 255, 255))
@@ -73,20 +73,6 @@ def ensure_icon() -> Path:
     img.resize((512, 512), Image.LANCZOS).save(ico.with_suffix(".png"))
     img.save(ico, sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
     return ico
-
-
-def _dark_title_bar(window: webview.Window) -> None:
-    """Windows 11'de başlık çubuğunu uygulamanın koyu rengine boyar."""
-    try:
-        hwnd = window.native.Handle.ToInt64()
-        dwm = ctypes.windll.dwmapi
-        on = ctypes.c_int(1)
-        dwm.DwmSetWindowAttribute(ctypes.c_void_p(hwnd), 20, ctypes.byref(on), 4)  # koyu mod
-        r, g, b = (int(BG_COLOR[i:i + 2], 16) for i in (1, 3, 5))
-        color = ctypes.c_int(r | (g << 8) | (b << 16))
-        dwm.DwmSetWindowAttribute(ctypes.c_void_p(hwnd), 35, ctypes.byref(color), 4)  # başlık rengi
-    except Exception:  # noqa: BLE001 - eski Windows'ta desteklenmeyebilir
-        pass
 
 
 def main() -> None:
@@ -117,7 +103,7 @@ def main() -> None:
         return True
 
     window.events.closing += on_closing
-    window.events.shown += lambda: _dark_title_bar(window)
+    window.events.shown += lambda: api._paint_titlebar(window)
     window.events.loaded += api._start_background
 
     icon = None

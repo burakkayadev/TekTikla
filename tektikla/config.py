@@ -26,7 +26,7 @@ OLD_DEFAULT_DOWNLOADS = str(Path.home() / "Downloads" / "BİM")
 
 DEFAULTS = {
     "download_dir": str(Path.home() / "Downloads" / "TekTıkla"),
-    "theme": "dark",
+    "theme": "mono",  # "mono" (Siyah) | "paper" (Kâğıt) | "violet" (Mor) | "ocean" (Okyanus)
     "clipboard_watch": True,
     "max_parallel": 2,
     "container": "mp4",
@@ -119,6 +119,8 @@ class Settings(dict):
             self.update({k: v for k, v in stored.items() if k in DEFAULTS})
         if self["download_dir"] == OLD_DEFAULT_DOWNLOADS:
             self["download_dir"] = DEFAULTS["download_dir"]
+        # v2.3 öncesi tema adları: koyu/sistem → Siyah, açık → Kâğıt
+        self["theme"] = {"dark": "mono", "system": "mono", "light": "paper"}.get(self["theme"], self["theme"])
 
     def save(self) -> None:
         with _lock:
