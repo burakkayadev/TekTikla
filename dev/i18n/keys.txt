@@ -1,0 +1,633 @@
+İndir
+İndirmeler
+YENİ
+Görsel
+Dublaj
+AI Stüdyo
+Geçmiş
+Ayarlar
+Güncelleme var
+Kontrol ediliyor…
+Ne indirmek
+istersin?
+Linki yapıştır ya da sadece kopyala — TekTıkla kendisi algılar.
+Video, şarkı veya oynatma listesi linki…
+Yapıştır
+Analiz Et
+Hızlı İndir
+Hızlı MP{0}
+AI ile Özetle
+Bir link bekleniyor
+Analiz edince tüm kalite seçenekleri, altyazılar ve MP{0} burada görünecek.
+Link analiz ediliyor…
+AI ile özetle
+Yorum özeti
+Reels yap
+Dublajla
+Kapak tasarla
+Kapağı indir
+Benzer videolar
+Temizle
+Listedeki videolar
+Listede ara…
+Tümünü seç
+Hiçbiri
+Video
+Sadece Ses
+Kalite
+Dosya türü
+MP{0} her cihazda açılır. MKV en yüksek kaliteyi korur.
+Gelişmiş: tüm formatlar
+Ses biçimi
+Kapak resmi ve sanatçı bilgisi dosyaya otomatik eklenir.
+Altyazı
+Yapay zekâ ile altyazı
+Videonun konuşmasını istediğin dile çevirip altyazı olarak ekler.
+Altyazı dili
+Videoda altyazı varsa onu çevirir; yoksa konuşmayı bilgisayarında yazıya döker (ilk kullanımda ~{0} MB model iner), sonra çevirir.
+Sitedeki altyazılar
+Kendi altyazı dosyan
+Seçilmedi (.srt, .vtt, .ass)
+Seç
+Kaldır
+Ekleme şekli
+Göm
+Videoya yak
+Ayrı .srt
+Diğer
+Sadece bir bölümünü indir
+Örneğin {0}:{1} ile {2}:{3} arası
+Başlangıç
+Bitiş
+Oynatma listesinin tamamını indir
+Linkteki listenin tüm videoları kendi klasörüne indirilir.
+Videoları listele
+Kayıt yeri
+Değiştir
+Hepsini indir
+Kapat
+Kuyruktaki ve biten indirmeler.
+Tümü
+Aktif
+Biten
+Hatalı
+Klasörü aç
+Bitenleri temizle
+Henüz indirme yok
+İndir sekmesinden bir link analiz ederek başla.
+Stüdyo
+İzlemeden önce videonun ne anlattığını öğren.
+Önce API anahtarını ekle
+Google Gemini anahtarı ücretsizdir: aistudio.google.com/apikey adresinden kredi kartı olmadan birkaç saniyede alınır. Anahtar bu bilgisayarda Windows şifrelemesiyle saklanır.
+Ayarlara git
+Video özeti
+Video fikirleri
+Özetlenecek video linki…
+Özetle
+Çalışıyor
+Kopyala
+Özet
+Önemli noktalar
+Konular
+Beğenilenler
+Beğenilmeyenler
+Bildirilen sorunlar ve çözümleri
+Yorumlarda öne çıkanlar
+Sık sorulan sorular
+Ayrıntılı özet
+Stüdyosu
+Uzun videodan ya da bir fikirden Instagram Reels, TikTok ve Shorts videoları.
+Videodan Reels
+Fikirden Reels
+Video linki yapıştır…
+Bilgisayardan
+Klip süresi
+{0}–{1} sn
+Klip sayısı
+En iyi anları bul
+Yapay zekâ konuşmayı okuyup en çok izlenecek anları seçer (Gemini anahtarı ücretsiz). Anahtar yoksa konuşma yoğunluğuna göre seçilir.
+Bulunan anlar
+Elle klip ekle
+Fikrini yaz… ör. 'Sabah rutinini değiştirecek {0} alışkanlık'
+Metni kendim yazdım
+Yapay zekâ yazmasın, metnim olduğu gibi seslendirilsin
+Süre
+{0} sn
+Dil
+Seslendirme
+Ses
+Görüntüler
+Görsel servisi
+Kurgu
+Kadraj (dikey {0}:{1})
+Akıllı kırpma (yüz takibi)
+Bulanık arka plan
+Ortadan kırp
+Altyazı stili
+BU
+ÇOK
+İYİ
+Bu çok
+iyi
+Bu
+çok
+Kutu
+Bu çok iyi
+Sade
+Kapalı
+Vurgu rengi
+Konum
+Üst
+Orta
+Alt
+Ekranda kelime
+BÜYÜK HARF
+Kanca başlığı
+İlk {0} saniye üstte
+Sessizlikleri kes
+Duraklamalar atlanır
+Dinamik zoom
+Cümle geçişlerinde yakınlaşma
+İlerleme çubuğu
+Kullanıcı adı
+Üstte küçük filigran
+Arka plan müziği
+Konuşma başlayınca müzik otomatik kısılır
+Müzik seviyesi
+Seçilmedi
+Reels oluştur
+Hazır Reels
+Fikirden kapak fotoğrafı ve görsel üret. Ücretsiz servisler her zaman önce gelir.
+Kapak hazırla
+Görsel üret
+Fikrini yaz… ör. 'İstanbul'un en iyi {0} kahvecisi'
+Arka plan
+Yapay zekâ üretsin
+Analiz edilen videonun kapağı
+Kendi görselim
+Oran
+{0}:{1} YouTube
+{0}:{1} Reels
+{0}:{1} Kare
+{0}:{1} Gönderi
+Adet
+Stil
+Otomatik
+Fotoğraf
+Sinematik
+İllüstrasyon
+Kapak yazısı
+Başlık
+Boş bırakırsan yapay zekâ yazar
+Alt başlık (isteğe bağlı)
+ör. Gizli mekânlar
+Yerleşim
+Sol
+Yazı stili
+Kalın
+Oluştur
+Videoyu başka bir dile çevirip seslendir. Ücretsiz sesler önce gelir.
+Hedef dil
+Seslendiren
+Orijinal ses
+Arka planda kısık
+Tamamen kaldır
+Orijinal sesi ayrı iz olarak sakla
+Oynatıcıdan dil değiştirir gibi geçebilirsin
+Altyazı ekle
+Hedef dilde, açılıp kapatılabilir
+Çeviri için Ayarlar'daki Gemini (ücretsiz) ya da Claude anahtarı kullanılır. Her cümle zamanında seslendirilir; süreye sığmazsa hafifçe hızlandırılır.
+Daha önce indirdiklerin.
+Ara…
+Geçmiş boş
+İndirdiğin dosyalar burada listelenir.
+Değişiklikler otomatik kaydedilir.
+Görünüm
+Siyah
+Kâğıt
+Mor
+Okyanus
+Başlık yazı tipi
+İkisini karşılaştır
+Genel
+Kayıt klasörü
+Panoyu izle
+Kopyalanan link otomatik algılanır
+Aynı anda indirme
+Hız sınırı
+Örnek: {0}M · boş = sınırsız
+sınırsız
+Varsayılan biçimler
+Ses kalitesi
+Ekstralar
+Kapak resmini göm
+MP{0} ve MP{1}'e video kapağı
+Bilgileri göm
+Başlık, sanatçı, bölümler
+Sponsorları kes
+Tarayıcı çerezleri
+Giriş isteyen videolar için
+Yok
+Yapay Zekâ
+Servis
+Özet ve altyazı çevirisi
+Kaydet
+Windows şifrelemesiyle saklanır
+Sil
+Konuşma tanıma
+Altyazısız videolar · bilgisayarda
+Hızlı
+Doğru
+Sistem
+Sürüm
+İndirme motoru
+Güncelleme kaynağı
+Açılışta güncelleme denetle
+Uygulama güncellemesi
+Denetle
+Güncelle
+İndirme motorunu güncelle
+Bir site indirmeyi reddederse
+Bileşenleri kur
+Eksik bileşenler indirilir
+Kur
+Servisler
+Görsel, ses ve video için bağlanabilecek servisler. Ücretsiz seçenekler her zaman önce gelir; anahtarlar bu bilgisayarda şifreli saklanır.
+TekTıkla'ya hoş geldin
+Uygulama dilini seç · Choose your language
+Devam
+TekTıkla hazırlanıyor
+İlk açılışa özel: video birleştirme ve YouTube için gereken bileşenler kuruluyor. Bu sadece bir kez yapılır.
+Başlıyor…
+Arka planda devam et
+Tekrar dene
+Geçerli bir link girin (http:// veya https:// ile başlamalı).
+Oynatma listesi · {0} öğe
+Ses kaynağı
+{0} kalite seçeneği
+İndirilebilir
+{0} altyazı
+En iyi
+Kullanma (yukarıdaki kaliteyi kullan)
+Bu videoda altyazı yok
+Bu link bir listenin parçası. Açarsan listedeki tüm videolar indirilir.
+Altyazı videonun içine ayrı bir iz olarak eklenir; oynatıcıdan açıp kapatabilirsin.
+Altyazı görüntüye kalıcı yazılır, her cihazda görünür. Video yeniden işlendiği için biraz sürer; çıktı MP{0} olur.
+(kayıpsız)
+Özel format
+En iyi kalite
+gömülü
+yakılmış
+· tüm liste
+{0} / {1} video seçili ·
+{0} / {1} seçili
+Seçilenleri indir ({0})
+Video seçin
+Hepsini indir ({0})
+Kayıt:
+Listeden en az bir video seçin.
+{0} video sıraya alındı
+İndirme başladı
+Sıraya alındı — bileşenler kurulunca başlayacak
+MP{0} olarak indiriliyor
+En iyi kalitede indiriliyor
+Aç
+Klasörde göster
+İptal
+Listeden kaldır
+Altyazı varsa konuşmanın tamamı okunur; yoksa (X/Twitter gibi) ses bilgisayarında yazıya dökülüp özetlenir.
+Video bilgileri alınıyor
+Konuşma dökümü çıkarılıyor
+Yapay zekâ videoyu özetliyor
+İzleyiciler neyi beğenmiş, neyi eleştirmiş, hangi sorunu nasıl çözmüş; tek bakışta.
+Yorumları özetlenecek video linki…
+Yorumları özetle
+En çok beğenilen {0} yorum okunur. Şu an en iyi YouTube videolarında çalışır.
+Yorumlar alınıyor
+Yapay zekâ yorumları özetliyor
+Bir video linki ver ya da aklındaki konuyu yaz; yapay zekâ özgün içerik fikirleri çıkarsın.
+Fikir üret
+Linkten benzer ama kopya olmayan fikirler; yazdığın konudan ise başlık, açılış cümlesi ve akış önerileri.
+Yapay zekâ fikir üretiyor
+Videonun sesi indiriliyor
+Konuşma yazıya dökülüyor
+Önce Ayarlar'dan API anahtarını ekle.
+Bir link ya da konu yazın.
+Geçerli bir video linki girin.
+Geçersiz istek.
+Belirgin bir şey yok
+Çözüm
+Özet hazır
+Yorum özeti hazır
+Fikirler hazır
+Sorunlar ve çözümleri
+Öne çıkanlar
+Kapak kaydedildi ({0})
+Benzer video bulunamadı.
+Ücretsiz: Google hesabınla aistudio.google.com/apikey adresinden kredi kartı olmadan anahtar al. Ücretsiz katmanda Google gönderilen metni ürünlerini geliştirmek için kullanabilir.
+Ücretli ama çok ucuz ({0} dakikalık video özeti ~{1} $). Anahtarı console.anthropic.com'dan al; ücret kendi Anthropic hesabından düşer.
+Anahtar al →
+✓ {name} anahtarı kayıtlı
+{name} anahtarı eklenmedi
+Kayıt klasörü değişti
+Hazır
+TekTıkla hazır! Artık her şeyi indirebilirsin.
+Bileşenler kuruluyor…
+Kurulum başarısız
+Kurulum tamamlanamadı
+Güncelleme var: v{0}
+Yeni sürüm: v{0}
+TekTıkla v{0} yayınlandı
+Kontrol edilemedi
+TekTıkla güncel
+Bileşenler kuruluyor, bitince analiz başlayacak…
+Link algılandı, analiz ediliyor
+Güncellenemedi
+İndirme sayfasını aç
+Pano okunamadı, Ctrl+V ile yapıştırın.
+Panoya kopyalandı
+Kopyalanamadı
+İndirme geçmişi silinsin mi? (Dosyalar silinmez)
+API anahtarı kaydedildi
+API anahtarı silindi
+Güncelleniyor…
+Güncelleme kaynağı (GitHub deposu) henüz ayarlanmadı.
+Orijinal dil (çevirmeden)
+TekTıkla v{0}
+Ayarlanmadı
+Ücretsiz
+Ücretsiz kota
+Ücretsiz + ücretli
+Ücretli
+Kelime kelime döküm çıkarılıyor
+Yapay zekâ en iyi anları seçiyor
+Anahtar gerekli
+Bir video linki yapıştırın ya da bilgisayardan video seçin.
+yapay zekâsız seçim
+Klip adı
+Kanca yazısı (ilk {0} sn)
+Viral olma puanı
+Fikirden Reels · {s} sn
+{n} klip seçili
+Önce en iyi anları bulun
+Seçilen klipleri oluştur ({n})
+{n} klip kuyruğa alındı
+Reels kuyruğa alındı
+Anahtarsız · {0}+ dil · kelime zamanlı
+Gemini anahtarıyla · çok doğal ve duygulu
+Konuşmacının kendi sesini korur · ücretsizde filigranlı
+En doğal sesler · ayda ~{0} dk ücretsiz
+Açıklama ve etiketler kopyalandı
+Klasör
+Açıklama
+Ne görmek istiyorsun? ör. 'Gün batımında sisli bir orman, sinematik'
+videonun kapağı
+kendi görselin
+Görseller
+Yazı güncellendi
+Yukarıdaki başlık ve stil ayarlarıyla yazıyı yeniden yerleştir
+Yazıyı güncelle
+Görseller hazır
+Microsoft Edge'in doğal sesleri: tamamen ücretsiz, anahtar gerekmez.
+Gemini {0} TTS: ücretsiz katmanda, Gemini anahtarınla. Çok doğal ve duygulu.
+ElevenLabs otomatik dublaj: konuşmacının kendi sesini korur. Ücretsiz planda ayda ~{0} dk ve filigranlı.
+Dublaj kuyruğa alındı
+Anahtar kaydedildi
+Bağlı
+İsteğe bağlı
+Bağlı değil
+Anahtar al
+Anahtarsız çalışır · ücretsiz hesapla logosuz
+Günde ~{0} görsel ücretsiz · FLUX kalitesi
+Nano Banana · görsel başı ~{0} $
+SOUL modeli · kullandıkça öde
+Stok video
+Pexels · ücretsiz anahtar
+AI görsel
+Her sahneye üretilen hareketli görsel
+AI video
+Higgsfield Seedance · sahne başı video
+Sade arka plan
+Anında · yalnızca yazı ve ses
+Sırada
+İptal ediliyor…
+altyazılı
+Bileşenler hazırlanıyor…
+Bilinmeyen servis.
+Önce linki analiz edin.
+En az bir video seçin.
+Oynatma listesi
+Geçerli bir link girin.
+Bu videonun kapak fotoğrafı yok.
+Tüm dosyalar (*.*)
+Bitiş zamanı başlangıçtan büyük olmalı.
+Tamamlandı
+İptal edildi
+Kapak fotoğrafı indirilemedi.
+Güncellenemedi: {0}
+— etkin olması için TekTıkla'yı yeniden açın.
+Kurulum başarısız: {0}
+AI çeviri için Ayarlar > Yapay Zekâ bölümüne {name} anahtarı girin. Sadece yazıya dökmek için dil olarak 'Orijinal dil'i seçin.
+Güncellendi:
+Güncelleme başarısız: {0}
+İndirildi: {title}
+Reels hazır: {title}
+Dublaj · {lang}
+Dublaj hazır: {title}
+Önce bir fikir ya da açıklama yazın.
+Önce bir görsel seçin.
+Önce İndir sekmesinde bir video analiz edin.
+Kapak başlığını yazın.
+Bu servis için Ayarlar > Servisler'den anahtar girin.
+Bu görselin arka planı artık yok, yeniden üretin.
+Önce en iyi anları bulun.
+En az bir klip seçin.
+Videonun fikrini ya da metnini yazın.
+Bu ses için Ayarlar'dan anahtar girin.
+Stok video için Ayarlar > Servisler'e ücretsiz Pexels anahtarı girin.
+AI video için Ayarlar > Servisler'e Higgsfield anahtarı girin (ücretli).
+ElevenLabs için Ayarlar > Servisler'e anahtar girin.
+Gemini sesi için Ayarlar > Yapay Zekâ'ya Gemini anahtarı girin.
+Fikir görsel istemine çevriliyor
+Erkek|Kadın
+Görsel üretiliyor ({0}/{1})
+Video ve ses birleştiriliyor
+Sese dönüştürülüyor
+Altyazı gömülüyor
+Altyazı hazırlanıyor
+Kapak resmi ekleniyor
+Bilgiler ekleniyor
+Sponsor bölümleri kesiliyor
+Sponsor bölümleri aranıyor
+Harici altyazı
+Geçersiz zaman: {0}
+Bu linkte indirilebilir video bulunamadı.
+Yaş doğrulaması gerekiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin.
+Site giriş istiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin.
+Bu site giriş istiyor. Siteye tarayıcınızda giriş yapıp Ayarlar > Tarayıcı çerezleri'nden o tarayıcıyı seçin.
+Sayfa bulunamadı ({0}). Linki kontrol edin.
+Bu video veya liste bulunamadı. Linki kontrol edin.
+Bu video gizli.
+Video kullanılamıyor (silinmiş veya bölgenizde engelli olabilir).
+Bu video DRM ile korunuyor, indirilemez.
+Site erişimi reddetti ({0}). Ayarlar'dan yt-dlp'yi güncellemeyi deneyin.
+Seçilen kalite bu video için mevcut değil.
+FFmpeg gerekli ama bulunamadı. Üstteki uyarıdan FFmpeg'i kurun.
+Siteye bağlanılamadı. İnternet bağlantınızı kontrol edin.
+En iyi kalite (otomatik)
+Altyazı ekleniyor
+Altyazı kaynağı aranıyor
+{0} (AI çeviri)
+Videoda yazıya dökülecek bir konuşma bulunamadı.
+Altyazı {0} diline çevriliyor
+Ses dönüştürmek için FFmpeg gerekli.
+FFmpeg hatası:
+Altyazı videoya yakılıyor
+{0}İndirildi, işleniyor…
+En fazla {0}p
+Bu iş için FFmpeg gerekli ama bulunamadı. Ayarlar > Sistem'den bileşenleri kurun.
+Dosya okunamadı:
+Ses okunamadı:
+Video okunuyor
+Video {0} saatten uzun; Reels için daha kısa bir video seçin.
+Konuşmanın en yoğun ve hareketli bölümü (yapay zekâ anahtarı olmadan seçildi)
+Konuşma puanlanıyor (yapay zekâ anahtarı yok)
+Klip bölümü indiriliyor
+Yapay zekâ senaryoyu yazıyor
+Klip bölümü indirilemedi.
+Reels kurgulanıyor
+Kapak hazırlanıyor
+Senaryo boş geldi.
+Video birleştiriliyor
+Videonun sesi indirilemedi.
+Kapak hazırlanamadı: {0}
+Yapay zekâ anahtarı olmadığı için yazdığın metin olduğu gibi seslendirildi.
+Seslendirilecek metin boş.
+Sahne {0} görseli alınamadı, sade arka plan kullanıldı: {1}
+Seslendiriliyor ({0}/{1})
+Görüntüler hazırlanıyor ({0}/{1})
+Yüzler takip ediliyor (akıllı kırpma)
+Akıllı kırpma yapılamadı, ortadan kırpıldı ({0}).
+Dublaj ({0})
+Video indiriliyor
+ElevenLabs'e yükleniyor
+Dublaj videoya ekleniyor
+Video indirilemedi.
+Videoda ses yok; dublajlanacak konuşma bulunamadı.
+Videoda konuşma bulunamadı.
+Konuşma çevriliyor
+Çeviri için Ayarlar > Yapay Zekâ bölümüne Gemini anahtarı girin (ücretsiz).
+Görsel üretme
+Anahtarsız da çalışır (yavaş, köşede küçük logo). Ücretsiz hesapla logosuz ve daha hızlı.
+sk_… (isteğe bağlı)
+Görsel üretme (günde ~{0} görsel ücretsiz)
+Ücretsiz hesap aç, Workers AI > REST API'den token oluştur. 'hesap-id:token' biçiminde gir.
+Fikirden Reels için dikey stok videolar
+Ücretsiz: pexels.com/api adresinden hesap açıp anahtarını kopyala (saatte {0} arama).
+Pexels API anahtarı
+Orijinal sesle dublaj, doğal seslendirme
+Ücretsiz planda ayda ~{0} dk ses ve ~{1} dk filigranlı dublaj (ticari kullanım yok). Sonrası ücretli.
+AI görsel (SOUL) ve AI video (Seedance) - Reels için
+Kullandıkça öde: console.higgsfield.ai'den bakiye yükleyip API anahtarı oluştur. 'anahtar-id:gizli-anahtar' biçiminde gir.
+Kadın · net
+Erkek · neşeli
+Erkek · bilgilendirici
+Kadın · ferah
+Erkek · heyecanlı
+Kadın · genç
+Erkek · kararlı
+Kadın · parlak
+Kadın · sıcak
+Erkek · olgun
+Erkek · samimi
+Kadın · nazik
+Higgsfield zaman aşımına uğradı.
+Anahtar boş olamaz.
+Anahtar çok kısa görünüyor.
+Bunun için Ayarlar > Yapay Zekâ bölümüne Gemini anahtarı girin (ücretsiz).
+Gemini ücretsiz kota sınırına ulaşıldı; bir dakika sonra tekrar deneyin.
+Gemini görsel döndürmedi (istem güvenlik filtresine takılmış olabilir).
+Gemini ses döndürmedi.
+Cloudflare için 'hesap-id:api-token' biçiminde anahtar girin.
+Pexels'te '{0}' için video bulunamadı.
+Pexels videosunun uygun bir dosyası yok.
+Higgsfield anahtarını 'anahtar-id:gizli-anahtar' biçiminde girin.
+Higgsfield'da üretiliyor ({0} sn)
+Higgsfield görsel döndürmedi.
+Higgsfield video döndürmedi.
+Bunun için Ayarlar > Servisler'e ElevenLabs anahtarı girin.
+ElevenLabs dublajlıyor ({0} sn)
+Bu Gemini modeli ücretli: Google AI Studio'da faturalandırmayı açmanız gerekir. Ücretsiz için Pollinations veya Cloudflare'i seçin.
+Cloudflare görsel döndürmedi:
+İptal edildi.
+içerik filtresine takıldı
+Higgsfield üretimi başarısız: {0}
+ElevenLabs dublajı zaman aşımına uğradı.
+Ücretsiz sıra bekleniyor ({0} sn)
+Kadın
+ElevenLabs dublajı başarısız:
+Ücretsiz sunucu yoğun, tekrar deneniyor ({0} sn)
+Edge sesleri
+Babək · Erkek
+Edge seslendirme ses döndürmedi.
+Edge seslendirme servisine ulaşılamadı: {0}
+AI özeti oynatma listeleri için değil, tek bir video için çalışır.
+başlık ve açıklama (döküm yok)
+konuşma tanıma ({0})
+Yorum özeti tek bir video için çalışır.
+Bu videonun yorumları alınamadı. Yorum özeti şu an en iyi YouTube videolarında çalışır.
+Ses hazırlanıyor
+Konuşma yazıya dökülüyor ({0})
+Konuşma tanıma modeli indirilemedi.
+Konuşmayı yazıya dökmek için FFmpeg gerekli.
+Videonun sesi okunamadı:
+Konuşma tanıma modeli indiriliyor (ilk sefer) {0} MB
+Konuşma kelime kelime yazıya dökülüyor ({0})
+OpenCV indirmesi doğrulanamadı (SHA-{0} uyuşmuyor).
+Akıllı kırpma bileşeni indiriliyor (ilk sefer) {0} MB
+{0} altyazı ({1})
+Anthropic API anahtarı 'sk-ant-' ile başlar.
+Bu bir Gemini API anahtarına benzemiyor (aistudio.google.com/apikey).
+Yapay zekâ özellikleri için Ayarlar > Yapay Zekâ bölümüne {0} anahtarınızı girin.
+Claude bu içerik için yanıt vermeyi reddetti.
+Yanıt çok uzun olduğu için yarıda kesildi.
+Yapay zekâ yanıtı okunamadı, lütfen tekrar deneyin.
+Gemini hata verdi ({0}): {1}
+Gemini bu içerik için yanıt vermeyi reddetti.
+Gemini boş yanıt döndürdü, lütfen tekrar deneyin.
+Claude API anahtarı geçersiz. Ayarlar > Yapay Zekâ bölümünden kontrol edin.
+Bu API anahtarının Claude'u kullanma izni yok.
+Claude: çok fazla istek gönderildi. Biraz sonra tekrar deneyin.
+Claude isteği reddetti: {0}
+Claude'a bağlanılamadı. İnternet bağlantınızı kontrol edin.
+Claude geçici bir hata verdi ({0}). Biraz sonra tekrar deneyin.
+Gemini'ye bağlanılamadı. İnternet bağlantınızı kontrol edin.
+Gemini API anahtarı geçersiz. Ayarlar > Yapay Zekâ bölümünden kontrol edin.
+Gemini'nin ücretsiz kotası doldu. Biraz bekleyin veya yarın tekrar deneyin (günlük kota gece yenilenir).
+Anthropic hesabınızda yeterli kredi yok (console.anthropic.com > Billing).
+Windows Defender veya bir güvenlik programı güncelleme dosyasını engelledi. Güncellemeyi GitHub sayfasından elle indirip kurabilirsiniz.
+İndirilen güncelleme doğrulanamadı (SHA-{0} uyuşmuyor).
+Güncelleme paketi eksik veya bozuk.
+Kaynak koddan çalışırken otomatik güncelleme yapılmaz; git pull kullanın.
+Güncelleme indirilemedi. İnternet bağlantınızı kontrol edin.
+Bu sürümde indirilebilir bir güncelleme dosyası yok.
+yt-dlp zaten güncel ({0}).
+yt-dlp zaten güncel.
+İndirilen dosya doğrulanamadı (SHA-{0} uyuşmuyor).
+pip başarısız oldu
+FFmpeg açılıyor…
+Deno açılıyor…
+Erkek
+net
+neşeli
+bilgilendirici
+ferah
+heyecanlı
+genç
+kararlı
+parlak
+sıcak
+olgun
+samimi
+nazik
+Ayrıntı

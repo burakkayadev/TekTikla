@@ -50,6 +50,29 @@ def version_file(name: str, desc: str) -> Path:
     return path
 
 
+# kurulum programının düğmeleri: (tür, en, boy) -> tkinter kenar yumuşatma yapamadığı için önceden çizilir
+INSTALLER_BUTTONS = [("primary", 132, 44), ("secondary", 132, 44), ("secondary", 104, 36)]
+INSTALLER_BG = (10, 10, 10)
+BUTTON_COLORS = {"primary": ((255, 255, 255), (220, 220, 220)), "secondary": ((30, 30, 30), (42, 42, 42))}
+
+
+def render_installer_buttons(dest: Path) -> list[Path]:
+    """installer/setup.py'deki RoundButton'ın kullandığı yumuşak kenarlı zemin resimlerini üretir."""
+    from PIL import ImageDraw
+
+    paths = []
+    for kind, w, h in INSTALLER_BUTTONS:
+        for suffix, color in zip(("", "_hover"), BUTTON_COLORS[kind]):
+            scale = 4
+            img = Image.new("RGB", (w * scale, h * scale), INSTALLER_BG)
+            ImageDraw.Draw(img).rounded_rectangle([0, 0, w * scale - 1, h * scale - 1],
+                                                  radius=(12 if h >= 40 else 10) * scale, fill=color)
+            path = dest / f"btn_{kind}{suffix}_{w}x{h}.png"
+            img.resize((w, h), Image.LANCZOS).save(path)
+            paths.append(path)
+    return paths
+
+
 def pyinstaller(*args: str) -> None:
     subprocess.run([sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--log-level", "WARN", *args],
                    check=True, cwd=ROOT)
@@ -67,6 +90,10 @@ def main() -> None:
         "--add-data", f"{ROOT / 'assets'};assets",
         "--add-data", f"{ROOT / 'tektikla' / 'web'};tektikla/web",
         "--collect-all", "yt_dlp_ejs", "--collect-all", "pywhispercpp", "--hidden-import", "_pywhispercpp",
+        # akıllı kırpmadaki OpenCV sonradan indirilir: numpy.core uyumluluk modüllerini ve (kararlı ABI
+        # ile derlendiği için) python3.dll'i ister; ikisi de pakette olmalı
+        "--hidden-import", "numpy.core.multiarray", "--hidden-import", "numpy.core._multiarray_umath",
+        "--add-binary", f"{Path(sys.base_prefix) / 'python3.dll'};.",
         "--workpath", str(BUILD / "work-app"), "--specpath", str(BUILD), "--distpath", str(DIST),
         str(ROOT / "tektikla.py"),
     )
@@ -90,13 +117,14 @@ def main() -> None:
     logo72 = stub_dir / "logo72.png"  # kurulum penceresinin başlığındaki logo
     Image.open(ROOT / "assets" / "tektikla.png").resize((72, 72), Image.LANCZOS).save(logo72)
     font = ROOT / "tektikla" / "web" / "fonts" / "Geist.ttf"
+    buttons = [arg for p in render_installer_buttons(stub_dir) for arg in ("--add-data", f"{p};.")]
     OUT.mkdir(exist_ok=True)
     setup_name = f"TekTikla-Setup-{APP_VERSION}"
     pyinstaller(
         "--onefile", "--windowed", "--name", setup_name,
         "--icon", str(icon), "--version-file", str(version_file(setup_name, "TekTıkla Kurulumu")),
         "--add-data", f"{payload};.", "--add-data", f"{icon};.",
-        "--add-data", f"{logo72};.", "--add-data", f"{font};.",
+        "--add-data", f"{logo72};.", "--add-data", f"{font};.", *buttons,
         "--paths", str(stub_dir), "--hidden-import", "_version",
         "--workpath", str(BUILD / "work-setup"), "--specpath", str(BUILD), "--distpath", str(OUT),
         str(ROOT / "installer" / "setup.py"),

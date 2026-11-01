@@ -14,7 +14,7 @@ import yt_dlp
 from yt_dlp.postprocessor.common import PostProcessor
 from yt_dlp.utils import DownloadCancelled, download_range_func, parse_bytes
 
-from . import tools
+from . import i18n, tools
 
 AUDIO_FORMATS = ["mp3", "m4a", "opus", "flac", "wav"]
 AUDIO_QUALITIES = ["320", "256", "192", "128"]
@@ -100,8 +100,8 @@ def friendly_error(err: Exception | str) -> str:
     ]
     for key, text in hints:
         if key in low:
-            return f"{text}\n\nAyrıntı: {msg[:300]}"
-    return msg[:500]
+            return f"{i18n.t(text)}\n\n{i18n.t('Ayrıntı')}: {msg[:300]}"
+    return i18n.t(msg[:500])
 
 
 def base_opts(settings: dict) -> dict:
@@ -157,6 +157,7 @@ class MediaInfo:
     has_playlist_param: bool = False
     audio_only: bool = False  # SoundCloud gibi sadece ses sunan kaynaklar
     raw: dict | None = field(default=None, repr=False)  # AI özeti tekrar indirmesin diye
+    entries: list[dict] = field(default_factory=list)  # oynatma listesindeki videolar (seçerek indirme için)
 
 
 def _height_label(height: int, fps: float | None, size: float | None) -> str:
@@ -233,6 +234,31 @@ def _build_subtitles(info: dict) -> list[SubtitleTrack]:
     return tracks
 
 
+UNAVAILABLE_TITLES = {"[private video]", "[deleted video]", "[unavailable video]"}
+
+
+def _playlist_entry(e: dict, index: int) -> dict | None:
+    """Düz (flat) liste öğesini arayüzün göstereceği küçük sözlüğe çevirir."""
+    url = e.get("url") or e.get("webpage_url") or ""
+    if not url.startswith("http"):
+        url = e.get("webpage_url") or ""
+    if not url:
+        return None
+    if e.get("ie_key") == "Youtube" and e.get("id"):
+        thumb = f"https://i.ytimg.com/vi/{e['id']}/mqdefault.jpg"
+    else:
+        thumbs = [t for t in e.get("thumbnails") or [] if t.get("url")]
+        thumb = (min(thumbs, key=lambda t: abs((t.get("width") or 320) - 320))["url"] if thumbs
+                 else e.get("thumbnail"))
+    title = (e.get("title") or "").strip()
+    return {
+        "index": index, "url": url, "title": title,
+        "channel": (e.get("channel") or e.get("uploader") or "").strip(),
+        "duration": human_time(e.get("duration")), "thumb": thumb,
+        "available": title.lower() not in UNAVAILABLE_TITLES,
+    }
+
+
 def analyze(url: str, settings: dict) -> MediaInfo:
     opts = base_opts(settings) | {
         "skip_download": True,
@@ -257,6 +283,7 @@ def analyze(url: str, settings: dict) -> MediaInfo:
             site=info.get("extractor_key") or "",
             is_playlist=True,
             entry_count=info.get("playlist_count") or len(entries),
+            entries=[x for i, e in enumerate(entries, 1) if (x := _playlist_entry(e, i))],
             qualities=[Quality("En iyi kalite (otomatik)", None)]
             + [Quality(f"En fazla {h}p", h) for h in (2160, 1440, 1080, 720, 480, 360)],
         )
@@ -301,6 +328,7 @@ class DownloadRequest:
     whisper_model: str = "small"
     trim: tuple[float, float] | None = None
     playlist: bool = False
+    name_prefix: str = ""  # listeden seçilen videolarda sıra numarası, ör. "003 - "
     embed_thumbnail: bool = True
     embed_metadata: bool = True
     sponsorblock: bool = False
@@ -403,7 +431,7 @@ class DownloadJob:
         if req.playlist:
             template = out / "%(playlist_title,playlist_id).100B" / f"%(playlist_index)03d - {name}.%(ext)s"
         else:
-            template = out / f"{name}.%(ext)s"
+            template = out / f"{req.name_prefix}{name}.%(ext)s"
 
         opts.update(
             outtmpl=str(template),

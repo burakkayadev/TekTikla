@@ -44,6 +44,19 @@ def selftest(url: str, out_dir: str) -> None:
                                          settings, lambda k, **d: None)
                 srt, title, _tag = job.make_ai_subtitle(Path(events[0][1]["files"][-1]), {})
                 log.write(f"whisper: {title} | {srt.read_text(encoding='utf-8').count('-->')} satır\n")
+        # stüdyo: ücretsiz ses (edge-tts), kapak yazısı (fontlar), Reels kurgusu (libass + FFmpeg)
+        from tektikla import captions, imagegen, reels, tts
+        speech = tts.synthesize("edge", "TekTıkla test", "tr-TR-EmelNeural", {})
+        log.write(f"tts: {speech.duration:.2f} sn, {len(speech.words)} kelime\n")
+        from PIL import Image
+        cover = imagegen.compose(Image.new("RGB", (1280, 720), (40, 60, 90)), "Kapak testi", aspect="16:9")
+        log.write(f"kapak: {cover.size} | font klasörü var: {imagegen.FONTS_DIR.exists()}\n")
+        src = reels.load_source(url, settings)
+        clip = {"start": 0, "end": min(12.0, src.duration or 12), "title": "test", "hook": "Kanca testi"}
+        events = []
+        reels.ClipJob(settings, lambda k, **d: events.append((k, d)) if k != "progress" else None, src, clip, 1,
+                      reels.Edit(frame="smart", caption=captions.Options(lang=src.lang)), Path(out_dir)).run()
+        log.write(f"reels: {events}\n")
         log.write("BITTI\n")
     except Exception:  # noqa: BLE001
         log.write(traceback.format_exc())

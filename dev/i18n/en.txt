@@ -1,0 +1,633 @@
+1|Download
+2|Downloads
+3|NEW
+4|Image
+5|Dubbing
+6|AI Studio
+7|History
+8|Settings
+9|Update available
+10|Checking…
+11|What do you want
+12|to download?
+13|Paste a link or just copy it — TekTıkla detects it automatically.
+14|Video, song or playlist link…
+15|Paste
+16|Analyze
+17|Quick Download
+18|Quick MP{0}
+19|Summarize with AI
+20|Waiting for a link
+21|After analysis, all quality options, subtitles and MP{0} will appear here.
+22|Analyzing link…
+23|Summarize with AI
+24|Comment summary
+25|Make Reels
+26|Dub
+27|Design cover
+28|Download thumbnail
+29|Similar videos
+30|Clear
+31|Videos in the list
+32|Search the list…
+33|Select all
+34|None
+35|Video
+36|Audio only
+37|Quality
+38|File type
+39|MP{0} plays on every device. MKV keeps the highest quality.
+40|Advanced: all formats
+41|Audio format
+42|Cover art and artist info are added to the file automatically.
+43|Subtitles
+44|AI subtitles
+45|Translates the video's speech into your chosen language and adds it as subtitles.
+46|Subtitle language
+47|Translates the video's subtitles if it has any; otherwise transcribes the speech on your computer (first use downloads a ~{0} MB model), then translates.
+48|Subtitles on the site
+49|Your own subtitle file
+50|Not selected (.srt, .vtt, .ass)
+51|Choose
+52|Remove
+53|How to add
+54|Embed
+55|Burn into video
+56|Separate .srt
+57|Other
+58|Download only a part
+59|For example from {0}:{1} to {2}:{3}
+60|Start
+61|End
+62|Download the whole playlist
+63|All videos in the linked list are downloaded into their own folder.
+64|List videos
+65|Save to
+66|Change
+67|Download all
+68|Close
+69|Queued and finished downloads.
+70|All
+71|Active
+72|Finished
+73|Failed
+74|Open folder
+75|Clear finished
+76|No downloads yet
+77|Start by analyzing a link in the Download tab.
+78|Studio
+79|Learn what a video is about before watching it.
+80|Add an API key first
+81|A Google Gemini key is free: get one in seconds at aistudio.google.com/apikey, no credit card needed. The key is stored on this computer with Windows encryption.
+82|Go to Settings
+83|Video summary
+84|Video ideas
+85|Video link to summarize…
+86|Summarize
+87|Working
+88|Copy
+89|Summary
+90|Key points
+91|Topics
+92|Liked
+93|Disliked
+94|Reported problems and fixes
+95|Highlights from comments
+96|Frequently asked questions
+97|Detailed summary
+98|Studio
+99|Instagram Reels, TikTok and Shorts videos from a long video or an idea.
+100|Reels from video
+101|Reels from idea
+102|Paste a video link…
+103|From computer
+104|Clip length
+105|{0}–{1} s
+106|Number of clips
+107|Find the best moments
+108|AI reads the speech and picks the most watchable moments (Gemini key is free). Without a key, moments are picked by speech density.
+109|Moments found
+110|Add clip manually
+111|Write your idea… e.g. '{0} habits that will change your morning routine'
+112|I wrote the script myself
+113|Don't let AI write it; read my text as it is
+114|Length
+115|{0} s
+116|Language
+117|Voiceover
+118|Voice
+119|Visuals
+120|Image service
+121|Editing
+122|Framing (vertical {0}:{1})
+123|Smart crop (face tracking)
+124|Blurred background
+125|Center crop
+126|Caption style
+127|THIS
+128|IS
+129|GREAT
+130|This is
+131|great
+132|This
+133|is
+134|Box
+135|This is great
+136|Clean
+137|Off
+138|Highlight color
+139|Position
+140|Top
+141|Middle
+142|Bottom
+143|Words on screen
+144|UPPERCASE
+145|Hook title
+146|At the top for the first {0} seconds
+147|Cut silences
+148|Pauses are skipped
+149|Dynamic zoom
+150|Zooms in on sentence changes
+151|Progress bar
+152|Username
+153|Small watermark at the top
+154|Background music
+155|Music ducks automatically when someone speaks
+156|Music level
+157|Not selected
+158|Create Reels
+159|Ready Reels
+160|Create thumbnails and images from an idea. Free services always come first.
+161|Make a thumbnail
+162|Generate image
+163|Write your idea… e.g. 'The {0} best coffee shops in Istanbul'
+164|Background
+165|Let AI generate it
+166|Thumbnail of the analyzed video
+167|My own image
+168|Aspect ratio
+169|{0}:{1} YouTube
+170|{0}:{1} Reels
+171|{0}:{1} Square
+172|{0}:{1} Post
+173|Count
+174|Style
+175|Auto
+176|Photo
+177|Cinematic
+178|Illustration
+179|Thumbnail text
+180|Title
+181|Leave empty and AI will write it
+182|Subtitle (optional)
+183|e.g. Hidden gems
+184|Layout
+185|Left
+186|Text style
+187|Bold
+188|Create
+189|Translate a video into another language and voice it. Free voices come first.
+190|Target language
+191|Narrator
+192|Original audio
+193|Lowered in the background
+194|Remove completely
+195|Keep the original audio as a separate track
+196|Switch between them in your player like changing the language
+197|Add subtitles
+198|In the target language, can be turned on and off
+199|Translation uses the Gemini (free) or Claude key from Settings. Each sentence is voiced on time; if it doesn't fit, it is sped up slightly.
+200|What you downloaded before.
+201|Search…
+202|History is empty
+203|Files you download are listed here.
+204|Changes are saved automatically.
+205|Appearance
+206|Black
+207|Paper
+208|Violet
+209|Ocean
+210|Heading font
+211|Compare the two
+212|General
+213|Download folder
+214|Watch clipboard
+215|Copied links are detected automatically
+216|Simultaneous downloads
+217|Speed limit
+218|Example: {0}M · empty = unlimited
+219|unlimited
+220|Default formats
+221|Audio quality
+222|Extras
+223|Embed cover art
+224|Video cover in MP{0} and MP{1}
+225|Embed metadata
+226|Title, artist, chapters
+227|Skip sponsors
+228|Browser cookies
+229|For videos that require sign-in
+230|None
+231|Artificial Intelligence
+232|Service
+233|Summaries and subtitle translation
+234|Save
+235|Stored with Windows encryption
+236|Delete
+237|Speech recognition
+238|Videos without subtitles · on your computer
+239|Fast
+240|Accurate
+241|System
+242|Version
+243|Download engine
+244|Update source
+245|Check for updates at startup
+246|App update
+247|Check
+248|Update
+249|Update the download engine
+250|If a site refuses a download
+251|Install components
+252|Missing components are downloaded
+253|Install
+254|Services
+255|Services you can connect for images, voice and video. Free options always come first; keys are stored encrypted on this computer.
+256|Welcome to TekTıkla
+257|Choose your language
+258|Continue
+259|Getting TekTıkla ready
+260|First launch only: installing the components needed for merging video and for YouTube. This happens only once.
+261|Starting…
+262|Continue in background
+263|Try again
+264|Enter a valid link (it must start with http:// or https://).
+265|Playlist · {0} items
+266|Audio source
+267|{0} quality options
+268|Downloadable
+269|{0} subtitles
+270|Best
+271|Don't use (use the quality above)
+272|This video has no subtitles
+273|This link is part of a list. If you turn this on, all videos in the list are downloaded.
+274|Subtitles are added inside the video as a separate track; you can turn them on and off in your player.
+275|Subtitles are burned into the picture and show on every device. The video is re-encoded so it takes a while; output is MP{0}.
+276|(lossless)
+277|Custom format
+278|Best quality
+279|embedded
+280|burned in
+281|· whole list
+282|{0} / {1} videos selected ·
+283|{0} / {1} selected
+284|Download selected ({0})
+285|Select videos
+286|Download all ({0})
+287|Saved to:
+288|Select at least one video from the list.
+289|{0} videos added to the queue
+290|Download started
+291|Queued — will start once the components are installed
+292|Downloading as MP{0}
+293|Downloading in best quality
+294|Open
+295|Show in folder
+296|Cancel
+297|Remove from list
+298|If there are subtitles the whole speech is read; if not (like X/Twitter), the audio is transcribed on your computer and summarized.
+299|Getting video info
+300|Extracting the transcript
+301|AI is summarizing the video
+302|What viewers liked, criticized and which problems they solved, at a glance.
+303|Video link whose comments to summarize…
+304|Summarize comments
+305|The {0} most-liked comments are read. Currently works best with YouTube videos.
+306|Fetching comments
+307|AI is summarizing the comments
+308|Give a video link or describe a topic; AI will come up with original content ideas.
+309|Generate ideas
+310|From a link: similar but not copied ideas; from your topic: titles, opening lines and outlines.
+311|AI is generating ideas
+312|Downloading the video's audio
+313|Transcribing speech
+314|Add an API key in Settings first.
+315|Write a link or a topic.
+316|Enter a valid video link.
+317|Invalid request.
+318|Nothing notable
+319|Fix
+320|Summary ready
+321|Comment summary ready
+322|Ideas ready
+323|Problems and fixes
+324|Highlights
+325|Thumbnail saved ({0})
+326|No similar videos found.
+327|Free: get a key at aistudio.google.com/apikey with your Google account, no credit card needed. On the free tier Google may use the text you send to improve its products.
+328|Paid but very cheap (a {0}-minute video summary costs ~{1} $). Get a key at console.anthropic.com; costs are charged to your own Anthropic account.
+329|Get a key →
+330|✓ {name} key saved
+331|{name} key not added
+332|Download folder changed
+333|Ready
+334|TekTıkla is ready! You can download anything now.
+335|Installing components…
+336|Installation failed
+337|Installation could not be completed
+338|Update available: v{0}
+339|New version: v{0}
+340|TekTıkla v{0} is out
+341|Could not check
+342|TekTıkla is up to date
+343|Installing components; analysis will start when done…
+344|Link detected, analyzing
+345|Could not update
+346|Open download page
+347|Couldn't read the clipboard; paste with Ctrl+V.
+348|Copied to clipboard
+349|Couldn't copy
+350|Delete download history? (Files are not deleted)
+351|API key saved
+352|API key deleted
+353|Updating…
+354|The update source (GitHub repository) is not set yet.
+355|Original language (no translation)
+356|TekTıkla v{0}
+357|Not set
+358|Free
+359|Free quota
+360|Free + paid
+361|Paid
+362|Extracting a word-by-word transcript
+363|AI is picking the best moments
+364|Key required
+365|Paste a video link or choose a video from your computer.
+366|picked without AI
+367|Clip name
+368|Hook text (first {0} s)
+369|Viral potential score
+370|Reels from idea · {s} s
+371|{n} clips selected
+372|Find the best moments first
+373|Create selected clips ({n})
+374|{n} clips added to the queue
+375|Reels added to the queue
+376|No key · {0}+ languages · word-timed
+377|With a Gemini key · very natural and expressive
+378|Keeps the speaker's own voice · watermarked on free plan
+379|Most natural voices · ~{0} min free per month
+380|Caption and hashtags copied
+381|Folder
+382|Caption
+383|What do you want to see? e.g. 'A misty forest at sunset, cinematic'
+384|video thumbnail
+385|your own image
+386|Images
+387|Text updated
+388|Re-place the text with the title and style settings above
+389|Update text
+390|Images ready
+391|Microsoft Edge's natural voices: completely free, no key needed.
+392|Gemini {0} TTS: on the free tier with your Gemini key. Very natural and expressive.
+393|ElevenLabs automatic dubbing: keeps the speaker's own voice. ~{0} min per month on the free plan, watermarked.
+394|Dubbing added to the queue
+395|Key saved
+396|Connected
+397|Optional
+398|Not connected
+399|Get a key
+400|Works without a key · logo-free with a free account
+401|~{0} free images per day · FLUX quality
+402|Nano Banana · ~{0} $ per image
+403|SOUL model · pay as you go
+404|Stock video
+405|Pexels · free key
+406|AI image
+407|A moving image generated for each scene
+408|AI video
+409|Higgsfield Seedance · a video per scene
+410|Plain background
+411|Instant · text and voice only
+412|Queued
+413|Cancelling…
+414|with subtitles
+415|Preparing components…
+416|Unknown service.
+417|Analyze the link first.
+418|Select at least one video.
+419|Playlist
+420|Enter a valid link.
+421|This video has no thumbnail.
+422|All files (*.*)
+423|End time must be after the start time.
+424|Completed
+425|Cancelled
+426|Couldn't download the thumbnail.
+427|Could not update: {0}
+428|— restart TekTıkla for it to take effect.
+429|Installation failed: {0}
+430|For AI translation, add a {name} key in Settings > Artificial Intelligence. To only transcribe, choose 'Original language' as the language.
+431|Updated:
+432|Update failed: {0}
+433|Downloaded: {title}
+434|Reels ready: {title}
+435|Dubbing · {lang}
+436|Dubbing ready: {title}
+437|Write an idea or a description first.
+438|Choose an image first.
+439|Analyze a video in the Download tab first.
+440|Write the thumbnail title.
+441|Add a key for this service in Settings > Services.
+442|This image's background is no longer available; generate it again.
+443|Find the best moments first.
+444|Select at least one clip.
+445|Write the idea or script of the video.
+446|Add a key for this voice in Settings.
+447|For stock video, add a free Pexels key in Settings > Services.
+448|For AI video, add a Higgsfield key in Settings > Services (paid).
+449|For ElevenLabs, add a key in Settings > Services.
+450|For the Gemini voice, add a Gemini key in Settings > Artificial Intelligence.
+451|Turning the idea into an image prompt
+452|Male|Female
+453|Generating image ({0}/{1})
+454|Merging video and audio
+455|Converting to audio
+456|Embedding subtitles
+457|Preparing subtitles
+458|Adding cover art
+459|Adding metadata
+460|Cutting sponsor segments
+461|Looking for sponsor segments
+462|External subtitles
+463|Invalid time: {0}
+464|No downloadable video found at this link.
+465|Age verification required. In Settings > Browser cookies, choose the browser you are signed in with.
+466|The site requires sign-in. In Settings > Browser cookies, choose the browser you are signed in with.
+467|This site requires sign-in. Sign in to the site in your browser and choose that browser in Settings > Browser cookies.
+468|Page not found ({0}). Check the link.
+469|This video or list was not found. Check the link.
+470|This video is private.
+471|Video unavailable (it may be deleted or blocked in your region).
+472|This video is DRM-protected and can't be downloaded.
+473|The site denied access ({0}). Try updating yt-dlp in Settings.
+474|The selected quality isn't available for this video.
+475|FFmpeg is required but wasn't found. Install it from the warning at the top.
+476|Couldn't connect to the site. Check your internet connection.
+477|Best quality (automatic)
+478|Adding subtitles
+479|Looking for a subtitle source
+480|{0} (AI translation)
+481|No speech to transcribe was found in the video.
+482|Translating subtitles to {0}
+483|FFmpeg is required to convert audio.
+484|FFmpeg error:
+485|Burning subtitles into the video
+486|{0}Downloaded, processing…
+487|Up to {0}p
+488|This task needs FFmpeg but it wasn't found. Install the components in Settings > System.
+489|Couldn't read the file:
+490|Couldn't read the audio:
+491|Reading the video
+492|The video is longer than {0} hours; choose a shorter video for Reels.
+493|The busiest and most lively part of the talk (picked without an AI key)
+494|Scoring the speech (no AI key)
+495|Downloading the clip section
+496|AI is writing the script
+497|Couldn't download the clip section.
+498|Editing the Reels
+499|Preparing the cover
+500|The script came back empty.
+501|Merging the video
+502|Couldn't download the video's audio.
+503|Couldn't prepare the cover: {0}
+504|Your text was voiced as is because there is no AI key.
+505|The text to voice is empty.
+506|Couldn't get the image for scene {0}, a plain background was used: {1}
+507|Voicing ({0}/{1})
+508|Preparing visuals ({0}/{1})
+509|Tracking faces (smart crop)
+510|Smart crop failed, cropped from the center ({0}).
+511|Dubbing ({0})
+512|Downloading the video
+513|Uploading to ElevenLabs
+514|Adding the dub to the video
+515|Couldn't download the video.
+516|The video has no audio; no speech to dub.
+517|No speech found in the video.
+518|Translating the speech
+519|For translation, add a Gemini key in Settings > Artificial Intelligence (free).
+520|Image generation
+521|Works without a key too (slow, small logo in the corner). With a free account: no logo and faster.
+522|sk_… (optional)
+523|Image generation (~{0} free images per day)
+524|Create a free account and a token under Workers AI > REST API. Enter it as 'account-id:token'.
+525|Vertical stock videos for Reels from an idea
+526|Free: create an account at pexels.com/api and copy your key ({0} searches per hour).
+527|Pexels API key
+528|Dubbing in the original voice, natural voiceover
+529|Free plan: ~{0} min of voice and ~{1} min of watermarked dubbing per month (no commercial use). Paid after that.
+530|AI images (SOUL) and AI video (Seedance) - for Reels
+531|Pay as you go: top up your balance at console.higgsfield.ai and create an API key. Enter it as 'key-id:secret-key'.
+532|Female · clear
+533|Male · cheerful
+534|Male · informative
+535|Female · breezy
+536|Male · excitable
+537|Female · youthful
+538|Male · firm
+539|Female · bright
+540|Female · warm
+541|Male · mature
+542|Male · friendly
+543|Female · gentle
+544|Higgsfield timed out.
+545|The key can't be empty.
+546|The key looks too short.
+547|For this, add a Gemini key in Settings > Artificial Intelligence (free).
+548|Gemini free quota limit reached; try again in a minute.
+549|Gemini returned no image (the prompt may have hit the safety filter).
+550|Gemini returned no audio.
+551|For Cloudflare, enter the key as 'account-id:api-token'.
+552|No video found on Pexels for '{0}'.
+553|This Pexels video has no suitable file.
+554|Enter the Higgsfield key as 'key-id:secret-key'.
+555|Generating on Higgsfield ({0} s)
+556|Higgsfield returned no image.
+557|Higgsfield returned no video.
+558|For this, add an ElevenLabs key in Settings > Services.
+559|ElevenLabs is dubbing ({0} s)
+560|This Gemini model is paid: you need to enable billing in Google AI Studio. For free, choose Pollinations or Cloudflare.
+561|Cloudflare returned no image:
+562|Cancelled.
+563|hit the content filter
+564|Higgsfield generation failed: {0}
+565|ElevenLabs dubbing timed out.
+566|Waiting in the free queue ({0} s)
+567|Female
+568|ElevenLabs dubbing failed:
+569|The free server is busy, retrying ({0} s)
+570|Edge voices
+571|Babək · Male
+572|Edge voiceover returned no audio.
+573|Couldn't reach the Edge voiceover service: {0}
+574|AI summary works for a single video, not playlists.
+575|title and description (no transcript)
+576|speech recognition ({0})
+577|Comment summary works for a single video.
+578|Couldn't get this video's comments. Comment summary currently works best with YouTube videos.
+579|Preparing audio
+580|Transcribing speech ({0})
+581|Couldn't download the speech recognition model.
+582|FFmpeg is required to transcribe speech.
+583|Couldn't read the video's audio:
+584|Downloading the speech recognition model (first time) {0} MB
+585|Transcribing speech word by word ({0})
+586|Couldn't verify the OpenCV download (SHA-{0} mismatch).
+587|Downloading the smart crop component (first time) {0} MB
+588|{0} subtitles ({1})
+589|Anthropic API keys start with 'sk-ant-'.
+590|This doesn't look like a Gemini API key (aistudio.google.com/apikey).
+591|For AI features, add your {0} key in Settings > Artificial Intelligence.
+592|Claude declined to respond to this content.
+593|The response was cut off because it was too long.
+594|Couldn't read the AI response, please try again.
+595|Gemini returned an error ({0}): {1}
+596|Gemini declined to respond to this content.
+597|Gemini returned an empty response, please try again.
+598|Invalid Claude API key. Check it in Settings > Artificial Intelligence.
+599|This API key isn't allowed to use Claude.
+600|Claude: too many requests. Try again in a bit.
+601|Claude rejected the request: {0}
+602|Couldn't connect to Claude. Check your internet connection.
+603|Claude had a temporary error ({0}). Try again in a bit.
+604|Couldn't connect to Gemini. Check your internet connection.
+605|Invalid Gemini API key. Check it in Settings > Artificial Intelligence.
+606|Gemini's free quota is used up. Wait a bit or try again tomorrow (the daily quota resets overnight).
+607|Your Anthropic account doesn't have enough credit (console.anthropic.com > Billing).
+608|Windows Defender or a security program blocked the update file. You can download and install the update manually from the GitHub page.
+609|Couldn't verify the downloaded update (SHA-{0} mismatch).
+610|The update package is missing or corrupted.
+611|Automatic updates don't run from source code; use git pull.
+612|Couldn't download the update. Check your internet connection.
+613|This release has no downloadable update file.
+614|yt-dlp is already up to date ({0}).
+615|yt-dlp is already up to date.
+616|Couldn't verify the downloaded file (SHA-{0} mismatch).
+617|pip failed
+618|Extracting FFmpeg…
+619|Extracting Deno…
+620|Male
+621|clear
+622|cheerful
+623|informative
+624|breezy
+625|excitable
+626|youthful
+627|firm
+628|bright
+629|warm
+630|mature
+631|friendly
+632|gentle
+633|Details

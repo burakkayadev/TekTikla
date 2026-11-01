@@ -116,7 +116,7 @@ def main() -> None:
 
     api = Api()
     window = webview.create_window(
-        f"{APP_NAME} — Video İndirici", url=str(WEB_DIR / "index.html"), js_api=api,
+        APP_NAME, url=str(WEB_DIR / "index.html"), js_api=api,
         width=1280, height=840, min_size=(1040, 700), background_color=BG_COLOR,
     )
     api._attach(window)

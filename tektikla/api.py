@@ -17,7 +17,7 @@ import threading
 import time
 import webbrowser
 from ctypes import wintypes
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -26,7 +26,8 @@ import requests
 import webview
 from PIL import Image
 
-from . import APP_VERSION, GITHUB_REPO, ai, engine, llm, subtitles, tools, updater
+from . import APP_VERSION, GITHUB_REPO, ai, engine, i18n, llm, media, subtitles, tools, updater
+from .studio_api import SERVICE_KEYS, SERVICE_URLS, StudioApi
 from .config import APP_DIR, DEFAULTS, History, Settings, decrypt_secret, encrypt_secret
 
 URL_RE = re.compile(r"^https?://\S+$", re.I)
@@ -35,9 +36,10 @@ EXTERNAL_URLS = {
     "gemini_keys": "https://aistudio.google.com/apikey",
     "anthropic_billing": "https://console.anthropic.com/settings/billing",
     "releases": f"https://github.com/{GITHUB_REPO}/releases" if GITHUB_REPO else "",
+    **SERVICE_URLS,
 }
 BOOL_KEYS = {k for k, v in DEFAULTS.items() if isinstance(v, bool)}
-PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc"}
+PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc", *SERVICE_KEYS.values()}
 KEY_SETTINGS = {"claude": ("api_key_enc", "ANTHROPIC_API_KEY"), "gemini": ("gemini_key_enc", "GEMINI_API_KEY")}
 CHOICES = {"ai_provider": set(llm.PROVIDERS), "whisper_model": {"base", "small"},
            "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"},
@@ -63,6 +65,11 @@ def _thumb_data(url: str | None) -> str | None:
         return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
     except Exception:  # noqa: BLE001 - kapak olmasa da olur
         return None
+
+
+def _safe_name(text: str, limit: int = 100) -> str:
+    """Windows'ta dosya ya da klasör adı olarak kullanılabilir hale getirir."""
+    return re.sub(r'[\\/:*?"<>|\x00-\x1f]+', " ", text or "").strip().rstrip(". ")[:limit].strip()
 
 
 def _media_dict(info: engine.MediaInfo, thumb: str | None) -> dict:
@@ -121,6 +128,8 @@ class _Item:
 
     def summary(self) -> str:
         r = self.req
+        if isinstance(r, media.StudioTask):
+            return r.label
         if r.mode == "audio":
             parts = [f"{r.audio_format.upper()}" + ("" if r.audio_format in ("wav", "flac") else f" {r.audio_quality} kbps")]
         else:
@@ -148,9 +157,11 @@ class _Item:
 
 # ----------------------------------------------------------------------------- köprü
 
-class Api:
+class Api(StudioApi):
     def __init__(self):
         self._settings = Settings()
+        i18n.load(self._settings.get("language") or "tr")
+        self._studio_init()
         self._history = History()
         self._events: queue.Queue = queue.Queue()
         self._items: dict[str, _Item] = {}
@@ -215,7 +226,22 @@ class Api:
             "history": self._history.items[:300],
             "tools": self.tool_status(),
             "update": self._update,
+            "studio": self.studio_init(),
+            "lang": self._settings.get("language") or "",
+            "system_lang": i18n.system_language(),
+            "ui_languages": i18n.LANGUAGES,
+            "i18n": i18n.table(i18n.current()),
+            "rtl": i18n.current() in i18n.RTL,
         }
+
+    def set_language(self, code: str) -> dict:
+        if code not in i18n.NAMES:
+            return {"ok": False}
+        self._settings["language"] = code
+        self._settings.save()
+        i18n.load(code)
+        return {"ok": True, "lang": code, "i18n": i18n.table(code), "rtl": code in i18n.RTL,
+                "studio": self.studio_init()}
 
     def poll(self) -> list[dict]:
         events = []
@@ -433,10 +459,29 @@ class Api:
                 req.whisper_model = self._settings.get("whisper_model", "small")
                 if ai_sub != "orig" and not req.ai_key:
                     name = llm.PROVIDERS[req.ai_provider]["name"]
-                    return {"ok": False, "error": f"AI çeviri için Ayarlar > Yapay Zekâ bölümüne {name} anahtarı girin. "
-                                                  "Sadece yazıya dökmek için dil olarak 'Orijinal dil'i seçin."}
+                    return {"ok": False, "error": i18n.t("AI çeviri için Ayarlar > Yapay Zekâ bölümüne {name} anahtarı girin. Sadece yazıya dökmek için dil olarak 'Orijinal dil'i seçin.", name=name)}
             req.sub_mode = opts.get("sub_mode") if opts.get("sub_mode") in ("embed", "burn", "file") else "embed"
+        if info.is_playlist:
+            return self._enqueue_playlist(info, req, opts.get("items"))
         return {"ok": True, "id": self._enqueue(req, thumb)}
+
+    def _enqueue_playlist(self, info: engine.MediaInfo, req: engine.DownloadRequest, picked) -> dict:
+        """Listeden seçilen (ya da tüm) videoları ayrı ayrı sıraya koyar; her biri kendi ilerlemesini gösterir."""
+        if isinstance(picked, list):
+            wanted = {i for i in picked if isinstance(i, int)}
+            chosen = [e for e in info.entries if e["index"] in wanted]
+        else:
+            chosen = [e for e in info.entries if e["available"]]
+        if not chosen:
+            return {"ok": False, "error": "En az bir video seçin."}
+        folder = Path(req.out_dir) / (_safe_name(info.title) or "Oynatma listesi")
+        width = max(2, len(str(chosen[-1]["index"])))
+        ids = [self._enqueue(replace(req, url=e["url"], title=e["title"] or e["url"], out_dir=str(folder),
+                                     playlist=False, trim=None, external_sub=None,
+                                     name_prefix=f"{e['index']:0{width}d} - "),
+                             e["thumb"])
+               for e in chosen]
+        return {"ok": True, "id": ids[0], "count": len(ids)}
 
     def quick(self, url: str, mode: str) -> dict:
         url = (url or "").strip()
@@ -467,8 +512,11 @@ class Api:
                     break
                 if item.state == "pending":
                     item.state, item.stage, item.frac = "running", "Başlıyor…", None
-                    item.job = engine.DownloadJob(item.req, dict(self._settings),
-                                                  lambda k, it=item, **d: self._on_job(it, k, d))
+                    callback = (lambda k, it=item, **d: self._on_job(it, k, d))
+                    if isinstance(item.req, media.StudioTask):
+                        item.job = item.req.make_job(self._studio_settings(), callback)
+                    else:
+                        item.job = engine.DownloadJob(item.req, dict(self._settings), callback)
                     self._bg(item.job.run)
                     self._emit("item", item=item.to_dict())
                     running += 1
@@ -498,8 +546,13 @@ class Api:
             item.error = data.get("warning", "")  # ör. video indi ama AI altyazı eklenemedi
             if item.error:
                 self._emit("notify", kind="err", text=item.error.splitlines()[0])
+            elif isinstance(item.req, media.StudioTask):
+                self._made_files.update(item.files)
+                self._emit("notify", kind="ok", text=item.req.done_text)
+                self._emit("studio_done", kind=item.req.kind, id=item.id, files=item.files,
+                           urls=self._media_urls(item.files))
             else:
-                self._emit("notify", kind="ok", text=f"İndirildi: {item.req.title}")
+                self._emit("notify", kind="ok", text=i18n.t("İndirildi: {title}", title=item.req.title))
         else:
             item.state = kind
             item.stage = "Hata" if kind == "error" else "İptal edildi"
@@ -635,7 +688,7 @@ class Api:
             return {"ok": False, "error": "Kapak fotoğrafı indirilemedi."}
         out_dir = Path(self._settings["download_dir"])
         out_dir.mkdir(parents=True, exist_ok=True)
-        name = re.sub(r'[\\/:*?"<>|]+', " ", info.title).strip()[:150] or "kapak"
+        name = _safe_name(info.title, 150) or "kapak"
         path = out_dir / f"{name} (kapak).jpg"
         img.save(path, "JPEG", quality=95)
         self._thumb_files.add(str(path))

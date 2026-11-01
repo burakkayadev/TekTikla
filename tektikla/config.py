@@ -45,6 +45,15 @@ DEFAULTS = {
     "ai_sub_lang": "tr",  # AI altyazı için son seçilen dil
     "whisper_model": "small",  # konuşma tanıma: "base" (hızlı) | "small" (daha doğru)
     "auto_update_check": True,
+    "language": "",  # arayüz dili; boşsa ilk açılışta dil seçme ekranı gösterilir
+    # stüdyo servisleri: anahtarlar DPAPI ile şifreli; ücretsiz seçenekler varsayılan
+    "elevenlabs_key_enc": "",
+    "higgsfield_key_enc": "",  # "anahtar-id:gizli-anahtar"
+    "pollinations_key_enc": "",  # isteğe bağlı: ücretsiz hesapla filigransız, daha hızlı
+    "cloudflare_key_enc": "",  # "hesap-id:api-token" (Workers AI, günlük ücretsiz kota)
+    "pexels_key_enc": "",  # ücretsiz stok video (Fikirden Reels)
+    "image_provider": "pollinations",
+    "tts_engine": "edge",
 }
 
 _lock = threading.Lock()

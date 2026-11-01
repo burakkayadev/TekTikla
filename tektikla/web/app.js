@@ -117,7 +117,7 @@ window.addEventListener("resize", () => Object.values(segs).forEach((s) => s.ref
 /* ---------------------------------------------------------------- durum */
 const state = {
   settings: {}, items: new Map(), history: [], media: null, mediaUrl: "",
-  analyzeToken: 0, aiToken: 0, similarToken: 0, aiMode: "summary", aiSteps: [], extSub: null, setup: "checking", keys: {}, providers: {}, languages: [],
+  analyzeToken: 0, aiToken: 0, similarToken: 0, aiMode: "summary", aiSteps: [], extSub: null, plSel: new Set(), setup: "checking", keys: {}, providers: {}, languages: [],
   quality: null, queueFilter: "all", update: null, repo: "",
 };
 
@@ -157,7 +157,7 @@ async function analyze(url) {
   const token = ++state.analyzeToken;
   showPage("download");
   dlView("dlLoading");
-  $("#dlLoadingText").lastChild.textContent = "Link analiz ediliyor…";
+  $("#dlLoadingText").lastChild.textContent = tr("Link analiz ediliyor…");
   setLoading($("#analyzeBtn"), true);
   await api.analyze(url, token);
 }
@@ -173,16 +173,16 @@ function onAnalyzed(ev) {
   const img = $("#mThumb");
   if (m.thumb) { img.src = m.thumb; img.classList.remove("hidden"); $("#mThumbPh").classList.add("hidden"); }
   else { img.removeAttribute("src"); img.classList.add("hidden"); $("#mThumbPh").classList.remove("hidden"); }
-  $("#mDur").textContent = m.duration_text || "";
+  $("#mDur").textContent = tr(m.duration_text || "");
   $("#mDur").classList.toggle("hidden", !m.duration_text);
-  $("#mSite").textContent = m.site || "Video";
-  $("#mTitle").textContent = m.title;
-  $("#mUploader").textContent = m.uploader || "";
+  $("#mSite").textContent = tr(m.site || "Video");
+  $("#mTitle").textContent = tr(m.title);
+  $("#mUploader").textContent = tr(m.uploader || "");
   const nq = m.qualities.length - 1;
-  $("#mBadge").textContent = m.is_playlist ? `Oynatma listesi · ${m.entry_count} öğe` : m.audio_only ? "Ses kaynağı" : nq ? `${nq} kalite seçeneği` : "İndirilebilir";
-  $("#mSubs").textContent = m.subtitles.length ? `${m.subtitles.length} altyazı` : "";
+  $("#mBadge").textContent = tr(m.is_playlist ? `Oynatma listesi · ${m.entry_count} öğe` : m.audio_only ? "Ses kaynağı" : nq ? `${nq} kalite seçeneği` : "İndirilebilir");
+  $("#mSubs").textContent = tr(m.subtitles.length ? `${m.subtitles.length} altyazı` : "");
   $("#mSubs").classList.toggle("hidden", !m.subtitles.length);
-  for (const id of ["mAiBtn", "mCommentsBtn", "mSimilarBtn"]) $("#" + id).classList.toggle("hidden", m.is_playlist);
+  for (const id of ["mAiBtn", "mCommentsBtn", "mSimilarBtn", "mReelsBtn", "mDubBtn", "mCoverBtn"]) $("#" + id).classList.toggle("hidden", m.is_playlist);
   $("#mThumbBtn").classList.toggle("hidden", m.is_playlist || !m.thumb);
   $("#similarBox").classList.add("hidden");
   state.similarToken++;
@@ -230,22 +230,70 @@ function onAnalyzed(ev) {
 
   $("#trimToggle").checked = false; $("#trimRow").classList.add("hidden");
   $("#trimStart").value = ""; $("#trimEnd").value = "";
-  const showPl = m.is_playlist || m.has_playlist_param;
-  $("#playlistRow").classList.toggle("hidden", !showPl);
-  $("#playlistToggle").checked = m.is_playlist;
-  $("#playlistToggle").disabled = m.is_playlist;
-  $("#playlistHint").textContent = m.is_playlist
-    ? `Listedeki ${m.entry_count} video kendi klasörüne indirilecek.`
-    : "Bu link bir listenin parçası. Açarsan listedeki tüm videolar indirilir.";
+  $("#trimToggle").closest(".row").classList.toggle("hidden", m.is_playlist);
+  $("#manualSubBox").classList.toggle("hidden", m.is_playlist);
+  // tek video bir listenin parçasıysa: tüm listeyi indir anahtarı + listeyi açıp seçme
+  $("#playlistRow").classList.toggle("hidden", !m.has_playlist_param);
+  $("#playlistToggle").checked = false;
+  $("#plOpenBtn").classList.toggle("hidden", !listUrlOf(state.mediaUrl));
+  $("#playlistHint").textContent = tr("Bu link bir listenin parçası. Açarsan listedeki tüm videolar indirilir.");
+  renderPlaylist(m);
 
   dlView("dlResult");
   updateSummary();
 }
 
+/* ---------------------------------------------------------------- oynatma listesi */
+function listUrlOf(url) {
+  try {
+    const u = new URL(url);
+    const id = u.searchParams.get("list");
+    return id && /(^|\.)youtube\.com$|(^|\.)youtu\.be$/.test(u.hostname) ? `https://www.youtube.com/playlist?list=${id}` : null;
+  } catch { return null; }
+}
+
+function renderPlaylist(m) {
+  $("#plCard").classList.toggle("hidden", !m.is_playlist);
+  $("#downloadAllBtn").classList.toggle("hidden", !m.is_playlist);
+  state.plSel = new Set(m.is_playlist ? m.entries.filter((e) => e.available).map((e) => e.index) : []);
+  $("#plSearch").value = "";
+  if (!m.is_playlist) return;
+  $("#plList").replaceChildren(...m.entries.map((e) => {
+    const box = h("input", { type: "checkbox" });
+    box.checked = state.plSel.has(e.index);
+    box.addEventListener("change", () => { box.checked ? state.plSel.add(e.index) : state.plSel.delete(e.index); updateSummary(); });
+    const img = e.thumb ? h("img", { src: e.thumb, alt: "", loading: "lazy", referrerpolicy: "no-referrer" }) : null;
+    if (img) img.addEventListener("error", () => img.replaceWith(h("div", { class: "ph" }, icon("film"))));
+    const row = h("label", { class: "pl-row" + (e.available ? "" : " off"), title: e.title },
+      box, h("span", { class: "cb" }, icon("check")), h("span", { class: "idx" }, String(e.index)),
+      h("div", { class: "pl-thumb" }, img || h("div", { class: "ph" }, icon("film")), e.duration ? h("span", { class: "dur" }, e.duration) : null),
+      h("div", { class: "t" }, h("b", {}, e.title || e.url), h("small", {}, e.channel || "")));
+    row.dataset.q = (e.title + " " + e.channel).toLocaleLowerCase("tr");
+    row.dataset.i = e.index;
+    return row;
+  }));
+}
+
+function plVisibleRows() { return $$("#plList .pl-row").filter((r) => !r.classList.contains("hidden")); }
+
+function plSelect(on) {
+  for (const row of plVisibleRows()) {
+    const i = Number(row.dataset.i);
+    row.querySelector("input").checked = on;
+    on ? state.plSel.add(i) : state.plSel.delete(i);
+  }
+  updateSummary();
+}
+
+function plFilter() {
+  const q = $("#plSearch").value.trim().toLocaleLowerCase("tr");
+  for (const row of $$("#plList .pl-row")) row.classList.toggle("hidden", !!q && !row.dataset.q.includes(q));
+}
+
 function onAnalyzeError(ev) {
   if (ev.token !== state.analyzeToken) return;
   setLoading($("#analyzeBtn"), false);
-  $("#dlErrorText").textContent = ev.message;
+  $("#dlErrorText").textContent = tr(ev.message);
   dlView("dlError");
 }
 
@@ -270,11 +318,11 @@ const SUB_HINTS = {
   burn: "Altyazı görüntüye kalıcı yazılır, her cihazda görünür. Video yeniden işlendiği için biraz sürer; çıktı MP4 olur.",
   file: "Altyazı videonun yanına aynı isimle .srt dosyası olarak kaydedilir.",
 };
-function updateSubHint() { $("#subHint").textContent = SUB_HINTS[segs.subModeSeg.value] || ""; updateSummary(); }
+function updateSubHint() { $("#subHint").textContent = tr(SUB_HINTS[segs.subModeSeg.value] || ""); updateSummary(); }
 
 function updateExtSub() {
   const n = $("#extSubName");
-  n.textContent = state.extSub ? state.extSub.split(/[\\/]/).pop() : "Seçilmedi (.srt, .vtt, .ass)";
+  n.textContent = tr(state.extSub ? state.extSub.split(/[\\/]/).pop() : "Seçilmedi (.srt, .vtt, .ass)");
   n.classList.toggle("set", !!state.extSub);
   updateSummary();
 }
@@ -297,13 +345,26 @@ function updateSummary() {
   }
   if ($("#trimToggle").checked) main += " · kesit";
   if ($("#playlistToggle").checked && !$("#playlistRow").classList.contains("hidden")) main += " · tüm liste";
-  $("#dlSummary").textContent = main;
-  $("#dlSummary2").textContent = "Kayıt: " + (state.settings.download_dir || "");
+  const label = $("#downloadBtn span");
+  if (m.is_playlist) {
+    const n = state.plSel.size, total = m.entries.length;
+    main = `${n} / ${total} video seçili · ` + main;
+    $("#plCount").textContent = tr(`${n} / ${total} seçili`);
+    label.textContent = tr(n ? `Seçilenleri indir (${n})` : "Video seçin");
+    $("#downloadBtn").disabled = !n;
+    $("#downloadAllBtn span").textContent = tr(`Hepsini indir (${m.entries.filter((e) => e.available).length})`);
+  } else {
+    label.textContent = tr("İndir");
+    $("#downloadBtn").disabled = false;
+  }
+  $("#dlSummary").textContent = tr(main);
+  $("#dlSummary2").textContent = tr("Kayıt:") + " " + (state.settings.download_dir || "");
 }
 
-async function startDownload() {
+async function startDownload(all = false) {
   const m = state.media;
   if (!m) return;
+  if (m.is_playlist && !all && !state.plSel.size) { toast("Listeden en az bir video seçin.", "err"); return; }
   const audio = segs.modeSeg.value === "audio";
   const subVal = $("#subSelect").value;
   const opts = {
@@ -321,14 +382,17 @@ async function startDownload() {
     trim: $("#trimToggle").checked,
     trim_start: $("#trimStart").value,
     trim_end: $("#trimEnd").value,
-    playlist: $("#playlistToggle").checked,
+    playlist: !m.is_playlist && $("#playlistToggle").checked,
+    items: m.is_playlist ? (all ? "all" : [...state.plSel].sort((a, b) => a - b)) : null,
   };
-  const btn = $("#downloadBtn");
+  const btn = all ? $("#downloadAllBtn") : $("#downloadBtn");
   setLoading(btn, true);
   const res = await api.download(opts);
   setLoading(btn, false);
+  updateSummary();
   if (!res.ok) { toast(res.error, "err"); return; }
-  toast(state.setup === "ready" ? "İndirme başladı" : "Sıraya alındı — bileşenler kurulunca başlayacak", "ok");
+  const what = res.count > 1 ? `${res.count} video sıraya alındı` : "İndirme başladı";
+  toast(state.setup === "ready" ? what : "Sıraya alındı — bileşenler kurulunca başlayacak", "ok");
   flyToQueue(btn);
 }
 
@@ -413,9 +477,9 @@ function renderQueue() {
   $("#queueEmpty").classList.toggle("hidden", items.length > 0);
   const active = [...state.items.values()].filter(FILTERS.active).length;
   const badge = $("#queueBadge");
-  badge.textContent = active;
+  badge.textContent = tr(active);
   badge.classList.toggle("hidden", !active);
-  $("#queueSub").textContent = active ? `${active} indirme devam ediyor.` : "Kuyruktaki ve biten indirmeler.";
+  $("#queueSub").textContent = tr(active ? `${active} indirme devam ediyor.` : "Kuyruktaki ve biten indirmeler.");
 }
 
 /* ================================================================ AI */
@@ -450,10 +514,10 @@ function aiView(which) {
 function setAiMode(mode) {
   state.aiMode = mode;
   const m = AI_MODES[mode];
-  $("#aiSub").textContent = m.sub;
-  $("#aiUrl").placeholder = m.placeholder;
-  $("#aiHint").textContent = m.hint;
-  $("#aiBtn").querySelector("span").textContent = m.button;
+  $("#aiSub").textContent = tr(m.sub);
+  $("#aiUrl").placeholder = tr(m.placeholder);
+  $("#aiHint").textContent = tr(m.hint);
+  $("#aiBtn").querySelector("span").textContent = tr(m.button);
   $("#aiUrl").parentElement.querySelector("svg.ic").replaceWith(icon(m.icon));
 }
 
@@ -502,20 +566,20 @@ function onAiDone(ev) {
   state.aiResult = r;
   $("#aiThumb").classList.toggle("hidden", !r.thumb);
   if (r.thumb) $("#aiThumb").src = r.thumb;
-  $("#aiTitle").textContent = r.title;
+  $("#aiTitle").textContent = tr(r.title);
   for (const [id, m] of [["aiBodySummary", "summary"], ["aiBodyComments", "comments"], ["aiBodyIdeas", "ideas"]])
     $("#" + id).classList.toggle("hidden", r.mode !== m);
   $("#aiDownload").classList.toggle("hidden", !URL_RE.test($("#aiUrl").value.trim()));
 
   if (r.mode === "summary") {
-    $("#aiSource").textContent = r.provider + " · Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : "");
-    $("#aiTldr").textContent = r.tldr;
-    $("#aiSummary").textContent = r.summary;
+    $("#aiSource").textContent = tr(r.provider + " · Kaynak: " + r.source + (r.words ? ` · ${r.words.toLocaleString("tr-TR")} kelime` : ""));
+    $("#aiTldr").textContent = tr(r.tldr);
+    $("#aiSummary").textContent = tr(r.summary);
     $("#aiPoints").replaceChildren(...numbered(r.key_points));
     $("#aiTopics").replaceChildren(...r.topics.map((t) => h("span", { class: "chip accent" }, "#" + t)));
   } else if (r.mode === "comments") {
-    $("#aiSource").textContent = `${r.provider} · ${r.count.toLocaleString("tr-TR")} yorum okundu`;
-    $("#aiTldr").textContent = r.genel_hava;
+    $("#aiSource").textContent = tr(`${r.provider} · ${r.count.toLocaleString("tr-TR")} yorum okundu`);
+    $("#aiTldr").textContent = tr(r.genel_hava);
     $("#cLikes").replaceChildren(...bullets(r.begenilenler));
     $("#cDislikes").replaceChildren(...bullets(r.begenilmeyenler));
     $("#cIssuesBox").classList.toggle("hidden", !r.sorunlar.length);
@@ -530,10 +594,10 @@ function onAiDone(ev) {
     $("#cThemes").replaceChildren(...numbered(r.one_cikanlar));
     $("#cQuestionsBox").classList.toggle("hidden", !r.sorular.length);
     $("#cQuestions").replaceChildren(...numbered(r.sorular));
-    $("#cSummary").textContent = r.ozet;
+    $("#cSummary").textContent = tr(r.ozet);
   } else {
-    $("#aiSource").textContent = `${r.provider} · ${r.fikirler.length} fikir`;
-    $("#aiTldr").textContent = r.ozet;
+    $("#aiSource").textContent = tr(`${r.provider} · ${r.fikirler.length} fikir`);
+    $("#aiTldr").textContent = tr(r.ozet);
     $("#ideaGrid").replaceChildren(...r.fikirler.map((f, i) => {
       const el = h("div", { class: "idea" },
         h("div", { class: "top" }, h("span", { class: "n" }, String(i + 1)), h("h4", {}, f.baslik)),
@@ -565,7 +629,7 @@ function aiResultText(r) {
 function onAiError(ev) {
   if (ev.token !== state.aiToken) return;
   setLoading($("#aiBtn"), false);
-  $("#aiErrorText").textContent = ev.message;
+  $("#aiErrorText").textContent = tr(ev.message);
   aiView("aiError");
 }
 
@@ -631,8 +695,8 @@ async function setSetting(key, value) {
 
 function renderSettings() {
   const s = state.settings;
-  $("#setFolder").textContent = s.download_dir;
-  $("#folderText").textContent = s.download_dir;
+  $("#setFolder").textContent = tr(s.download_dir);
+  $("#folderText").textContent = tr(s.download_dir);
   applyTheme(s.theme);
   applyFont(s.font);
   segs.fontSeg.set(s.font || "grotesk");
@@ -650,20 +714,20 @@ function renderSettings() {
 
 const currentProvider = () => state.settings.ai_provider || "gemini";
 const PROVIDER_INFO = {
-  gemini: { hint: "Ücretsiz: Google hesabınla aistudio.google.com/apikey adresinden kredi kartı olmadan anahtar al. "
-                  + "Ücretsiz katmanda Google gönderilen metni ürünlerini geliştirmek için kullanabilir.",
+  // çeviri tablosunda tek anahtar olsun diye ipuçları tek parça yazıldı
+  gemini: { hint: "Ücretsiz: Google hesabınla aistudio.google.com/apikey adresinden kredi kartı olmadan anahtar al. Ücretsiz katmanda Google gönderilen metni ürünlerini geliştirmek için kullanabilir.",
             placeholder: "AIza…", link: "gemini_keys" },
-  claude: { hint: "Ücretli ama çok ucuz (10 dakikalık video özeti ~0,001 $). Anahtarı console.anthropic.com'dan al; "
-                  + "ücret kendi Anthropic hesabından düşer.",
+  claude: { hint: "Ücretli ama çok ucuz (10 dakikalık video özeti ~0,001 $). Anahtarı console.anthropic.com'dan al; ücret kendi Anthropic hesabından düşer.",
             placeholder: "sk-ant-…", link: "anthropic_keys" },
 };
 
 function renderKey() {
   const p = currentProvider(), info = PROVIDER_INFO[p], has = !!state.keys[p];
-  $("#providerHint").replaceChildren(info.hint + " ",
+  $("#providerHint").replaceChildren(tr(info.hint) + " ",
     h("a", { href: "#", style: "color:var(--accent-2)", onclick: (e) => { e.preventDefault(); api.open_url(info.link); } }, "Anahtar al →"));
-  $("#apiKeyInput").placeholder = info.placeholder;
-  $("#keyStatus").textContent = has ? `✓ ${state.providers[p] || p} anahtarı kayıtlı` : `${state.providers[p] || p} anahtarı eklenmedi`;
+  $("#apiKeyInput").placeholder = tr(info.placeholder);
+  const name = state.providers[p] || p;
+  $("#keyStatus").textContent = has ? tr("✓ {name} anahtarı kayıtlı", { name }) : tr("{name} anahtarı eklenmedi", { name });
   $("#deleteKeyBtn").classList.toggle("hidden", !has);
   $("#aiNoKey").classList.toggle("hidden", has);
 }
@@ -677,9 +741,9 @@ function updateAiSub() {
 
 function renderTools(t) {
   if (!t) return;
-  $("#tYtdlp").textContent = t.ytdlp;
-  $("#tFfmpeg").textContent = t.ffmpeg ? "✓ Kurulu" : "✗ Eksik";
-  $("#tJs").textContent = t.js ? "✓ " + t.js : "✗ Eksik";
+  $("#tYtdlp").textContent = tr(t.ytdlp);
+  $("#tFfmpeg").textContent = tr(t.ffmpeg ? "✓ Kurulu" : "✗ Eksik");
+  $("#tJs").textContent = tr(t.js ? "✓ " + t.js : "✗ Eksik");
 }
 
 async function pickFolder() {
@@ -695,23 +759,23 @@ function onSetup(ev) {
   chip.classList.toggle("fail", ev.state === "failed");
   $("#repairRow").classList.toggle("hidden", ev.state !== "failed");
   if (ev.state === "ready") {
-    $("#setupChipText").textContent = "Hazır";
+    $("#setupChipText").textContent = tr("Hazır");
     if (!$("#setupOverlay").classList.contains("hidden")) {
       $("#setupOverlay").classList.add("hidden");
       toast("TekTıkla hazır! Artık her şeyi indirebilirsin.", "ok");
     }
     renderTools(ev.tools);
   } else if (ev.state === "installing") {
-    $("#setupChipText").textContent = "Bileşenler kuruluyor…";
+    $("#setupChipText").textContent = tr("Bileşenler kuruluyor…");
     if (!state.setupHidden) $("#setupOverlay").classList.remove("hidden");
-    $("#setupText").textContent = ev.text || "";
+    $("#setupText").textContent = tr(ev.text || "");
     $("#setupBar i").style.width = Math.round((ev.frac || 0) * 100) + "%";
     $("#setupRetry").classList.add("hidden");
   } else if (ev.state === "failed") {
-    $("#setupChipText").textContent = "Kurulum başarısız";
+    $("#setupChipText").textContent = tr("Kurulum başarısız");
     $("#setupOverlay").classList.remove("hidden");
-    $("#setupTitle").textContent = "Kurulum tamamlanamadı";
-    $("#setupText").textContent = ev.text || "";
+    $("#setupTitle").textContent = tr("Kurulum tamamlanamadı");
+    $("#setupText").textContent = tr(ev.text || "");
     $("#setupRetry").classList.remove("hidden");
   }
 }
@@ -721,15 +785,15 @@ function onAppUpdate(ev) {
   state.update = ev.update;
   if (ev.update) {
     $("#updateChip").classList.remove("hidden");
-    $("#updateChipText").textContent = `Güncelleme var: v${ev.update.version}`;
-    $("#updateStatus").textContent = `Yeni sürüm: v${ev.update.version}`;
-    $("#updateNotes").textContent = ev.update.notes || "";
+    $("#updateChipText").textContent = tr(`Güncelleme var: v${ev.update.version}`);
+    $("#updateStatus").textContent = tr(`Yeni sürüm: v${ev.update.version}`);
+    $("#updateNotes").textContent = tr(ev.update.notes || "");
     $("#installUpdateBtn").classList.remove("hidden");
     if (!ev.manual) toast(`TekTıkla v${ev.update.version} yayınlandı`, "info");
   } else if (ev.manual) {
     setLoading($("#checkUpdateBtn"), false);
-    $("#updateStatus").textContent = ev.error ? "Kontrol edilemedi" : "TekTıkla güncel";
-    $("#updateNotes").textContent = ev.error || "";
+    $("#updateStatus").textContent = tr(ev.error ? "Kontrol edilemedi" : "TekTıkla güncel");
+    $("#updateNotes").textContent = tr(ev.error || "");
   }
   setLoading($("#checkUpdateBtn"), false);
 }
@@ -738,7 +802,7 @@ function onAppUpdate(ev) {
 const HANDLERS = {
   analyzed: onAnalyzed,
   analyze_error: onAnalyzeError,
-  analyze_wait: (ev) => { if (ev.token === state.analyzeToken) $("#dlLoadingText").lastChild.textContent = "Bileşenler kuruluyor, bitince analiz başlayacak…"; },
+  analyze_wait: (ev) => { if (ev.token === state.analyzeToken) $("#dlLoadingText").lastChild.textContent = tr("Bileşenler kuruluyor, bitince analiz başlayacak…"); },
   item: (ev) => upsertItem(ev.item),
   removed: (ev) => { state.items.delete(ev.id); renderQueue(); },
   history: (ev) => { state.history = ev.history; renderHistory(); },
@@ -753,18 +817,18 @@ const HANDLERS = {
   ai_done: onAiDone,
   similar: onSimilar,
   ai_error: onAiError,
-  ytdlp: (ev) => { setLoading($("#ytdlpBtn"), false); $("#ytdlpMsg").textContent = ev.message; toast(ev.message, ev.message.startsWith("Güncellenemedi") ? "err" : "ok"); },
+  ytdlp: (ev) => { setLoading($("#ytdlpBtn"), false); $("#ytdlpMsg").textContent = tr(ev.message); toast(ev.message, ev.message.startsWith("Güncellenemedi") ? "err" : "ok"); },
   app_update: onAppUpdate,
   update_progress: (ev) => {
     const b = $("#installUpdateBtn");
     if (ev.error) {
       setLoading(b, false);
       toast(ev.error, "err");
-      $("#updateNotes").textContent = ev.error;
-      if (ev.page) { state.updateFailed = true; b.lastChild.textContent = " İndirme sayfasını aç"; }
+      $("#updateNotes").textContent = tr(ev.error);
+      if (ev.page) { state.updateFailed = true; b.lastChild.textContent = tr(" İndirme sayfasını aç"); }
       return;
     }
-    b.lastChild.textContent = ` %${Math.round(ev.frac * 100)}`;
+    b.lastChild.textContent = tr(` %${Math.round(ev.frac * 100)}`);
   },
 };
 
@@ -808,7 +872,12 @@ function wire() {
   $("#mSimilarBtn").addEventListener("click", showSimilar);
   $("#similarClose").addEventListener("click", () => { state.similarToken++; setLoading($("#mSimilarBtn"), false); $("#similarBox").classList.add("hidden"); });
   $("#mResetBtn").addEventListener("click", () => { state.media = null; $("#urlInput").value = ""; dlView("dlEmpty"); $("#urlInput").focus(); });
-  $("#downloadBtn").addEventListener("click", startDownload);
+  $("#downloadBtn").addEventListener("click", () => startDownload(false));
+  $("#downloadAllBtn").addEventListener("click", () => startDownload(true));
+  $("#plAll").addEventListener("click", () => plSelect(true));
+  $("#plNone").addEventListener("click", () => plSelect(false));
+  $("#plSearch").addEventListener("input", plFilter);
+  $("#plOpenBtn").addEventListener("click", () => { const u = listUrlOf(state.mediaUrl); if (u) { $("#urlInput").value = u; analyze(u); } });
   $("#subSelect").addEventListener("change", updateSummary);
   $("#formatSelect").addEventListener("change", updateSummary);
   $("#advDetails").addEventListener("toggle", updateSummary);
@@ -852,7 +921,7 @@ function wire() {
   $("#deleteKeyBtn").addEventListener("click", async () => { state.keys = await api.delete_api_key(currentProvider()); renderKey(); toast("API anahtarı silindi", "info"); });
   $("#aiSubToggle").addEventListener("change", updateAiSub);
   $("#aiSubLang").addEventListener("change", (e) => setSetting("ai_sub_lang", e.target.value));
-  $("#ytdlpBtn").addEventListener("click", () => { setLoading($("#ytdlpBtn"), true); $("#ytdlpMsg").textContent = "Güncelleniyor…"; api.update_ytdlp(); });
+  $("#ytdlpBtn").addEventListener("click", () => { setLoading($("#ytdlpBtn"), true); $("#ytdlpMsg").textContent = tr("Güncelleniyor…"); api.update_ytdlp(); });
   $("#repairBtn").addEventListener("click", () => { state.setupHidden = false; api.install_components(); });
   $("#checkUpdateBtn").addEventListener("click", () => {
     if (!state.repo) { toast("Güncelleme kaynağı (GitHub deposu) henüz ayarlanmadı.", "info"); return; }
@@ -865,7 +934,7 @@ function wire() {
   $("#updateChip").addEventListener("click", () => showPage("settings"));
 
   $("#setupHide").addEventListener("click", () => { state.setupHidden = true; $("#setupOverlay").classList.add("hidden"); });
-  $("#setupRetry").addEventListener("click", () => { $("#setupTitle").textContent = "TekTıkla hazırlanıyor"; api.install_components(); });
+  $("#setupRetry").addEventListener("click", () => { $("#setupTitle").textContent = tr("TekTıkla hazırlanıyor"); api.install_components(); });
 }
 
 /* ---------------------------------------------------------------- başlangıç */
@@ -873,6 +942,7 @@ window.addEventListener("pywebviewready", async () => {
   api = window.pywebview.api;
   hydrateIcons();
   wire();
+  studioWire();
   const init = await api.init();
   state.settings = init.settings;
   state.keys = init.keys;
@@ -885,16 +955,17 @@ window.addEventListener("pywebviewready", async () => {
   state.repo = init.repo;
   applyTheme(state.settings.theme);
   init.items.forEach((it) => state.items.set(it.id, it));
-  $("#versionText").textContent = `TekTıkla v${init.version}`;
-  $("#appVersion").textContent = "v" + init.version;
-  $("#repoText").textContent = init.repo ? "github.com/" + init.repo : "Ayarlanmadı";
+  $("#versionText").textContent = tr(`TekTıkla v${init.version}`);
+  $("#appVersion").textContent = tr("v" + init.version);
+  $("#repoText").textContent = tr(init.repo ? "github.com/" + init.repo : "Ayarlanmadı");
   renderSettings();
   renderTools(init.tools);
   renderQueue();
   renderHistory();
   if (init.update) onAppUpdate({ update: init.update, manual: false });
   onSetup({ state: init.setup === "checking" ? "checking" : init.setup, tools: init.tools });
-  if (init.setup === "checking") $("#setupChipText").textContent = "Kontrol ediliyor…";
+  if (init.setup === "checking") $("#setupChipText").textContent = tr("Kontrol ediliyor…");
+  studioInit(init);
   moveIndicator();
   $("#urlInput").focus();
   pollLoop();

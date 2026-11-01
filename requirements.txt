@@ -5,3 +5,4 @@ pywhispercpp>=1.5
 numpy
 pillow
 requests
+edge-tts

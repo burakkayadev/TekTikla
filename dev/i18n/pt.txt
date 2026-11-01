@@ -1,0 +1,633 @@
+1|Baixar
+2|Downloads
+3|NOVO
+4|Imagem
+5|Dublagem
+6|Estúdio IA
+7|Histórico
+8|Configurações
+9|Atualização disponível
+10|Verificando…
+11|O que você quer
+12|baixar?
+13|Cole um link ou apenas copie — o TekTıkla detecta sozinho.
+14|Link de vídeo, música ou playlist…
+15|Colar
+16|Analisar
+17|Download rápido
+18|MP{0} rápido
+19|Resumir com IA
+20|Aguardando um link
+21|Depois da análise, todas as qualidades, legendas e MP{0} aparecem aqui.
+22|Analisando link…
+23|Resumir com IA
+24|Resumo dos comentários
+25|Criar Reels
+26|Dublar
+27|Criar capa
+28|Baixar miniatura
+29|Vídeos parecidos
+30|Limpar
+31|Vídeos da lista
+32|Buscar na lista…
+33|Selecionar tudo
+34|Nenhum
+35|Vídeo
+36|Só áudio
+37|Qualidade
+38|Tipo de arquivo
+39|MP{0} abre em qualquer aparelho. MKV mantém a qualidade máxima.
+40|Avançado: todos os formatos
+41|Formato de áudio
+42|A capa e os dados do artista são adicionados ao arquivo automaticamente.
+43|Legendas
+44|Legendas com IA
+45|Traduz a fala do vídeo para o idioma que você escolher e adiciona como legenda.
+46|Idioma da legenda
+47|Se o vídeo tiver legendas, ele as traduz; se não, transcreve a fala no seu computador (o primeiro uso baixa um modelo de ~{0} MB) e depois traduz.
+48|Legendas do site
+49|Seu próprio arquivo de legenda
+50|Nenhum selecionado (.srt, .vtt, .ass)
+51|Escolher
+52|Remover
+53|Forma de inclusão
+54|Incorporar
+55|Gravar no vídeo
+56|.srt separado
+57|Outros
+58|Baixar só uma parte
+59|Por exemplo de {0}:{1} a {2}:{3}
+60|Início
+61|Fim
+62|Baixar a playlist inteira
+63|Todos os vídeos da lista são baixados na própria pasta.
+64|Listar vídeos
+65|Salvar em
+66|Alterar
+67|Baixar tudo
+68|Fechar
+69|Downloads na fila e concluídos.
+70|Todos
+71|Ativos
+72|Concluídos
+73|Com erro
+74|Abrir pasta
+75|Limpar concluídos
+76|Nenhum download ainda
+77|Comece analisando um link na aba Baixar.
+78|Estúdio
+79|Saiba do que um vídeo trata antes de assistir.
+80|Adicione uma chave de API primeiro
+81|A chave do Google Gemini é grátis: pegue em segundos em aistudio.google.com/apikey, sem cartão de crédito. Ela fica guardada neste computador com a criptografia do Windows.
+82|Ir para Configurações
+83|Resumo do vídeo
+84|Ideias de vídeo
+85|Link do vídeo para resumir…
+86|Resumir
+87|Trabalhando
+88|Copiar
+89|Resumo
+90|Pontos principais
+91|Assuntos
+92|O que agradou
+93|O que não agradou
+94|Problemas relatados e soluções
+95|Destaques dos comentários
+96|Perguntas frequentes
+97|Resumo detalhado
+98|Estúdio
+99|Vídeos para Instagram Reels, TikTok e Shorts a partir de um vídeo longo ou de uma ideia.
+100|Reels de vídeo
+101|Reels de ideia
+102|Cole um link de vídeo…
+103|Do computador
+104|Duração do clipe
+105|{0}–{1} s
+106|Número de clipes
+107|Encontrar os melhores momentos
+108|A IA lê a fala e escolhe os momentos mais assistíveis (a chave do Gemini é grátis). Sem chave, eles são escolhidos pela densidade da fala.
+109|Momentos encontrados
+110|Adicionar clipe manualmente
+111|Escreva sua ideia… ex.: '{0} hábitos que vão mudar sua rotina matinal'
+112|Eu escrevi o roteiro
+113|Sem IA; meu texto é narrado como está
+114|Duração
+115|{0} s
+116|Idioma
+117|Narração
+118|Voz
+119|Imagens
+120|Serviço de imagens
+121|Edição
+122|Enquadramento (vertical {0}:{1})
+123|Corte inteligente (rastreamento de rosto)
+124|Fundo desfocado
+125|Corte central
+126|Estilo da legenda
+127|ISSO
+128|É
+129|DEMAIS
+130|Isso é
+131|demais
+132|Isso
+133|é
+134|Caixa
+135|Isso é demais
+136|Simples
+137|Desligado
+138|Cor de destaque
+139|Posição
+140|Topo
+141|Meio
+142|Base
+143|Palavras na tela
+144|MAIÚSCULAS
+145|Título gancho
+146|No topo nos primeiros {0} segundos
+147|Cortar silêncios
+148|As pausas são puladas
+149|Zoom dinâmico
+150|Aproxima nas trocas de frase
+151|Barra de progresso
+152|Nome de usuário
+153|Pequena marca d'água no topo
+154|Música de fundo
+155|A música abaixa sozinha quando alguém fala
+156|Volume da música
+157|Nenhum selecionado
+158|Criar Reels
+159|Reels prontos
+160|Crie miniaturas e imagens a partir de uma ideia. Serviços grátis sempre vêm primeiro.
+161|Criar miniatura
+162|Gerar imagem
+163|Escreva sua ideia… ex.: 'As {0} melhores cafeterias de Istambul'
+164|Fundo
+165|Deixar a IA gerar
+166|Miniatura do vídeo analisado
+167|Minha própria imagem
+168|Proporção
+169|{0}:{1} YouTube
+170|{0}:{1} Reels
+171|{0}:{1} Quadrado
+172|{0}:{1} Post
+173|Quantidade
+174|Estilo
+175|Automático
+176|Foto
+177|Cinematográfico
+178|Ilustração
+179|Texto da miniatura
+180|Título
+181|Deixe vazio e a IA escreve
+182|Subtítulo (opcional)
+183|ex.: Lugares escondidos
+184|Layout
+185|Esquerda
+186|Estilo do texto
+187|Negrito
+188|Criar
+189|Traduza um vídeo para outro idioma e coloque voz. Vozes grátis vêm primeiro.
+190|Idioma de destino
+191|Narrador
+192|Áudio original
+193|Baixo, ao fundo
+194|Remover totalmente
+195|Manter o áudio original como faixa separada
+196|Troque no seu player como se mudasse de idioma
+197|Adicionar legendas
+198|No idioma de destino, pode ligar e desligar
+199|A tradução usa a chave do Gemini (grátis) ou do Claude nas Configurações. Cada frase é narrada no tempo certo; se não couber, acelera um pouco.
+200|O que você baixou antes.
+201|Buscar…
+202|O histórico está vazio
+203|Os arquivos que você baixa aparecem aqui.
+204|As alterações são salvas automaticamente.
+205|Aparência
+206|Preto
+207|Papel
+208|Violeta
+209|Oceano
+210|Fonte dos títulos
+211|Compare as duas
+212|Geral
+213|Pasta de downloads
+214|Monitorar a área de transferência
+215|Links copiados são detectados sozinhos
+216|Downloads simultâneos
+217|Limite de velocidade
+218|Exemplo: {0}M · vazio = ilimitado
+219|ilimitado
+220|Formatos padrão
+221|Qualidade do áudio
+222|Extras
+223|Incorporar capa
+224|Capa do vídeo em MP{0} e MP{1}
+225|Incorporar metadados
+226|Título, artista, capítulos
+227|Pular patrocínios
+228|Cookies do navegador
+229|Para vídeos que pedem login
+230|Nenhum
+231|Inteligência artificial
+232|Serviço
+233|Resumos e tradução de legendas
+234|Salvar
+235|Guardada com a criptografia do Windows
+236|Excluir
+237|Reconhecimento de fala
+238|Vídeos sem legenda · no seu computador
+239|Rápido
+240|Preciso
+241|Sistema
+242|Versão
+243|Motor de download
+244|Fonte de atualizações
+245|Verificar atualizações ao abrir
+246|Atualização do app
+247|Verificar
+248|Atualizar
+249|Atualizar o motor de download
+250|Se um site recusar o download
+251|Instalar componentes
+252|Os componentes que faltam são baixados
+253|Instalar
+254|Serviços
+255|Serviços que você pode conectar para imagem, voz e vídeo. Opções grátis sempre vêm primeiro; as chaves ficam criptografadas neste computador.
+256|Bem-vindo ao TekTıkla
+257|Escolha seu idioma
+258|Continuar
+259|Preparando o TekTıkla
+260|Só na primeira vez: instalando os componentes necessários para juntar vídeo e para o YouTube. Isso acontece uma única vez.
+261|Começando…
+262|Continuar em segundo plano
+263|Tentar de novo
+264|Digite um link válido (precisa começar com http:// ou https://).
+265|Playlist · {0} itens
+266|Fonte de áudio
+267|{0} opções de qualidade
+268|Disponível para baixar
+269|{0} legendas
+270|Melhor
+271|Não usar (usar a qualidade acima)
+272|Este vídeo não tem legendas
+273|Este link faz parte de uma lista. Se ativar, todos os vídeos da lista serão baixados.
+274|A legenda é adicionada dentro do vídeo como faixa separada; você liga e desliga no player.
+275|A legenda é gravada na imagem e aparece em qualquer aparelho. O vídeo é recodificado, então demora um pouco; a saída é MP{0}.
+276|(sem perdas)
+277|Formato personalizado
+278|Melhor qualidade
+279|incorporada
+280|gravada
+281|· lista inteira
+282|{0} / {1} vídeos selecionados ·
+283|{0} / {1} selecionados
+284|Baixar selecionados ({0})
+285|Selecione vídeos
+286|Baixar tudo ({0})
+287|Salvo em:
+288|Selecione pelo menos um vídeo da lista.
+289|{0} vídeos adicionados à fila
+290|Download iniciado
+291|Na fila — começa quando os componentes forem instalados
+292|Baixando como MP{0}
+293|Baixando na melhor qualidade
+294|Abrir
+295|Mostrar na pasta
+296|Cancelar
+297|Remover da lista
+298|Se houver legendas, toda a fala é lida; se não (como no X/Twitter), o áudio é transcrito no seu computador e resumido.
+299|Obtendo informações do vídeo
+300|Extraindo a transcrição
+301|A IA está resumindo o vídeo
+302|O que o público gostou, criticou e quais problemas resolveu, num relance.
+303|Link do vídeo cujos comentários resumir…
+304|Resumir comentários
+305|Os {0} comentários mais curtidos são lidos. No momento funciona melhor com vídeos do YouTube.
+306|Buscando comentários
+307|A IA está resumindo os comentários
+308|Dê um link de vídeo ou descreva um tema; a IA cria ideias de conteúdo originais.
+309|Gerar ideias
+310|De um link: ideias parecidas, mas não copiadas; do seu tema: títulos, frases de abertura e roteiros.
+311|A IA está gerando ideias
+312|Baixando o áudio do vídeo
+313|Transcrevendo a fala
+314|Adicione uma chave de API nas Configurações primeiro.
+315|Escreva um link ou um tema.
+316|Digite um link de vídeo válido.
+317|Solicitação inválida.
+318|Nada relevante
+319|Solução
+320|Resumo pronto
+321|Resumo dos comentários pronto
+322|Ideias prontas
+323|Problemas e soluções
+324|Destaques
+325|Miniatura salva ({0})
+326|Nenhum vídeo parecido encontrado.
+327|Grátis: pegue uma chave em aistudio.google.com/apikey com sua conta Google, sem cartão. No plano grátis o Google pode usar o texto enviado para melhorar seus produtos.
+328|Pago, mas bem barato (resumir um vídeo de {0} minutos custa ~{1} $). Pegue a chave em console.anthropic.com; o custo vai para a sua conta Anthropic.
+329|Pegar chave →
+330|✓ Chave do {name} salva
+331|Chave do {name} não adicionada
+332|Pasta de downloads alterada
+333|Pronto
+334|O TekTıkla está pronto! Agora você pode baixar qualquer coisa.
+335|Instalando componentes…
+336|A instalação falhou
+337|Não foi possível concluir a instalação
+338|Atualização disponível: v{0}
+339|Nova versão: v{0}
+340|Saiu o TekTıkla v{0}
+341|Não foi possível verificar
+342|O TekTıkla está atualizado
+343|Instalando componentes; a análise começa ao terminar…
+344|Link detectado, analisando
+345|Não foi possível atualizar
+346|Abrir página de download
+347|Não deu para ler a área de transferência; cole com Ctrl+V.
+348|Copiado
+349|Não foi possível copiar
+350|Apagar o histórico de downloads? (Os arquivos não são apagados)
+351|Chave de API salva
+352|Chave de API excluída
+353|Atualizando…
+354|A fonte de atualizações (repositório no GitHub) ainda não foi configurada.
+355|Idioma original (sem traduzir)
+356|TekTıkla v{0}
+357|Não configurado
+358|Grátis
+359|Cota grátis
+360|Grátis + pago
+361|Pago
+362|Extraindo transcrição palavra por palavra
+363|A IA está escolhendo os melhores momentos
+364|Precisa de chave
+365|Cole um link de vídeo ou escolha um vídeo do computador.
+366|escolhido sem IA
+367|Nome do clipe
+368|Texto gancho (primeiros {0} s)
+369|Pontuação de potencial viral
+370|Reels de ideia · {s} s
+371|{n} clipes selecionados
+372|Encontre os melhores momentos primeiro
+373|Criar clipes selecionados ({n})
+374|{n} clipes adicionados à fila
+375|Reels adicionado à fila
+376|Sem chave · {0}+ idiomas · sincronizado por palavra
+377|Com chave do Gemini · muito natural e expressiva
+378|Mantém a voz de quem fala · com marca d'água no plano grátis
+379|As vozes mais naturais · ~{0} min grátis por mês
+380|Legenda e hashtags copiadas
+381|Pasta
+382|Legenda
+383|O que você quer ver? ex.: 'Uma floresta com neblina ao pôr do sol, cinematográfico'
+384|miniatura do vídeo
+385|sua própria imagem
+386|Imagens
+387|Texto atualizado
+388|Reposicionar o texto com o título e o estilo acima
+389|Atualizar texto
+390|Imagens prontas
+391|Vozes naturais do Microsoft Edge: totalmente grátis, sem chave.
+392|Gemini {0} TTS: no plano grátis com sua chave do Gemini. Muito natural e expressiva.
+393|Dublagem automática da ElevenLabs: mantém a voz de quem fala. ~{0} min por mês no plano grátis, com marca d'água.
+394|Dublagem adicionada à fila
+395|Chave salva
+396|Conectado
+397|Opcional
+398|Não conectado
+399|Pegar chave
+400|Funciona sem chave · sem logo com uma conta grátis
+401|~{0} imagens grátis por dia · qualidade FLUX
+402|Nano Banana · ~{0} $ por imagem
+403|Modelo SOUL · pague pelo uso
+404|Vídeo de banco
+405|Pexels · chave grátis
+406|Imagem IA
+407|Uma imagem animada gerada para cada cena
+408|Vídeo IA
+409|Higgsfield Seedance · um vídeo por cena
+410|Fundo simples
+411|Instantâneo · só texto e voz
+412|Na fila
+413|Cancelando…
+414|com legenda
+415|Preparando componentes…
+416|Serviço desconhecido.
+417|Analise o link primeiro.
+418|Selecione pelo menos um vídeo.
+419|Playlist
+420|Digite um link válido.
+421|Este vídeo não tem miniatura.
+422|Todos os arquivos (*.*)
+423|O fim precisa ser depois do início.
+424|Concluído
+425|Cancelado
+426|Não foi possível baixar a miniatura.
+427|Não foi possível atualizar: {0}
+428|— reabra o TekTıkla para aplicar.
+429|A instalação falhou: {0}
+430|Para tradução com IA, adicione uma chave do {name} em Configurações > Inteligência artificial. Para só transcrever, escolha 'Idioma original'.
+431|Atualizado:
+432|A atualização falhou: {0}
+433|Baixado: {title}
+434|Reels pronto: {title}
+435|Dublagem · {lang}
+436|Dublagem pronta: {title}
+437|Escreva uma ideia ou descrição primeiro.
+438|Escolha uma imagem primeiro.
+439|Analise um vídeo na aba Baixar primeiro.
+440|Escreva o título da miniatura.
+441|Adicione uma chave para este serviço em Configurações > Serviços.
+442|O fundo desta imagem não está mais disponível; gere de novo.
+443|Encontre os melhores momentos primeiro.
+444|Selecione pelo menos um clipe.
+445|Escreva a ideia ou o roteiro do vídeo.
+446|Adicione uma chave para esta voz nas Configurações.
+447|Para vídeo de banco, adicione uma chave grátis do Pexels em Configurações > Serviços.
+448|Para vídeo IA, adicione uma chave do Higgsfield em Configurações > Serviços (pago).
+449|Para a ElevenLabs, adicione uma chave em Configurações > Serviços.
+450|Para a voz do Gemini, adicione uma chave do Gemini em Configurações > Inteligência artificial.
+451|Transformando a ideia em prompt de imagem
+452|Masculina|Feminina
+453|Gerando imagem ({0}/{1})
+454|Juntando vídeo e áudio
+455|Convertendo para áudio
+456|Incorporando legendas
+457|Preparando legendas
+458|Adicionando a capa
+459|Adicionando metadados
+460|Cortando trechos de patrocínio
+461|Procurando trechos de patrocínio
+462|Legenda externa
+463|Tempo inválido: {0}
+464|Nenhum vídeo para baixar foi encontrado neste link.
+465|É preciso verificar a idade. Em Configurações > Cookies do navegador, escolha o navegador em que você está logado.
+466|O site pede login. Em Configurações > Cookies do navegador, escolha o navegador em que você está logado.
+467|Este site pede login. Entre no site pelo navegador e escolha esse navegador em Configurações > Cookies do navegador.
+468|Página não encontrada ({0}). Confira o link.
+469|Este vídeo ou lista não foi encontrado. Confira o link.
+470|Este vídeo é privado.
+471|Vídeo indisponível (pode ter sido apagado ou bloqueado na sua região).
+472|Este vídeo é protegido por DRM e não pode ser baixado.
+473|O site negou o acesso ({0}). Tente atualizar o yt-dlp nas Configurações.
+474|A qualidade escolhida não está disponível para este vídeo.
+475|O FFmpeg é necessário mas não foi encontrado. Instale pelo aviso no topo.
+476|Não foi possível conectar ao site. Confira sua internet.
+477|Melhor qualidade (automática)
+478|Adicionando legendas
+479|Procurando fonte de legenda
+480|{0} (tradução IA)
+481|Nenhuma fala para transcrever foi encontrada no vídeo.
+482|Traduzindo a legenda para {0}
+483|O FFmpeg é necessário para converter áudio.
+484|Erro do FFmpeg:
+485|Gravando a legenda no vídeo
+486|{0}Baixado, processando…
+487|Até {0}p
+488|Esta tarefa precisa do FFmpeg, mas ele não foi encontrado. Instale os componentes em Configurações > Sistema.
+489|Não foi possível ler o arquivo:
+490|Não foi possível ler o áudio:
+491|Lendo o vídeo
+492|O vídeo tem mais de {0} horas; escolha um mais curto para Reels.
+493|A parte mais intensa e animada da fala (escolhida sem chave de IA)
+494|Pontuando a fala (sem chave de IA)
+495|Baixando o trecho do clipe
+496|A IA está escrevendo o roteiro
+497|Não foi possível baixar o trecho do clipe.
+498|Editando o Reels
+499|Preparando a capa
+500|O roteiro veio vazio.
+501|Juntando o vídeo
+502|Não foi possível baixar o áudio do vídeo.
+503|Não foi possível preparar a capa: {0}
+504|Seu texto foi narrado como está porque não há chave de IA.
+505|O texto para narrar está vazio.
+506|Não deu para obter a imagem da cena {0}, foi usado um fundo simples: {1}
+507|Narrando ({0}/{1})
+508|Preparando imagens ({0}/{1})
+509|Rastreando rostos (corte inteligente)
+510|O corte inteligente falhou, foi cortado pelo centro ({0}).
+511|Dublagem ({0})
+512|Baixando o vídeo
+513|Enviando para a ElevenLabs
+514|Adicionando a dublagem ao vídeo
+515|Não foi possível baixar o vídeo.
+516|O vídeo não tem áudio; não há fala para dublar.
+517|Nenhuma fala encontrada no vídeo.
+518|Traduzindo a fala
+519|Para traduzir, adicione uma chave do Gemini em Configurações > Inteligência artificial (grátis).
+520|Geração de imagens
+521|Também funciona sem chave (lento, pequeno logo no canto). Com conta grátis: sem logo e mais rápido.
+522|sk_… (opcional)
+523|Geração de imagens (~{0} imagens grátis por dia)
+524|Crie uma conta grátis e um token em Workers AI > REST API. Digite como 'id-da-conta:token'.
+525|Vídeos de banco verticais para Reels de ideia
+526|Grátis: crie uma conta em pexels.com/api e copie sua chave ({0} buscas por hora).
+527|Chave de API do Pexels
+528|Dublagem com a voz original, narração natural
+529|Plano grátis: ~{0} min de voz e ~{1} min de dublagem com marca d'água por mês (sem uso comercial). Depois disso, pago.
+530|Imagens IA (SOUL) e vídeo IA (Seedance) - para Reels
+531|Pague pelo uso: coloque saldo em console.higgsfield.ai e crie uma chave de API. Digite como 'id-da-chave:chave-secreta'.
+532|Feminina · nítida
+533|Masculina · animada
+534|Masculina · informativa
+535|Feminina · leve
+536|Masculina · empolgada
+537|Feminina · jovem
+538|Masculina · firme
+539|Feminina · brilhante
+540|Feminina · calorosa
+541|Masculina · madura
+542|Masculina · simpática
+543|Feminina · suave
+544|O Higgsfield excedeu o tempo.
+545|A chave não pode ficar vazia.
+546|A chave parece curta demais.
+547|Para isso, adicione uma chave do Gemini em Configurações > Inteligência artificial (grátis).
+548|Limite da cota grátis do Gemini atingido; tente de novo em um minuto.
+549|O Gemini não retornou imagem (o prompt pode ter caído no filtro de segurança).
+550|O Gemini não retornou áudio.
+551|Para a Cloudflare, digite a chave como 'id-da-conta:token-da-api'.
+552|Nenhum vídeo encontrado no Pexels para '{0}'.
+553|Este vídeo do Pexels não tem um arquivo adequado.
+554|Digite a chave do Higgsfield como 'id-da-chave:chave-secreta'.
+555|Gerando no Higgsfield ({0} s)
+556|O Higgsfield não retornou imagem.
+557|O Higgsfield não retornou vídeo.
+558|Para isso, adicione uma chave da ElevenLabs em Configurações > Serviços.
+559|A ElevenLabs está dublando ({0} s)
+560|Este modelo do Gemini é pago: é preciso ativar o faturamento no Google AI Studio. Para algo grátis, escolha Pollinations ou Cloudflare.
+561|A Cloudflare não retornou imagem:
+562|Cancelado.
+563|caiu no filtro de conteúdo
+564|A geração no Higgsfield falhou: {0}
+565|A dublagem da ElevenLabs excedeu o tempo.
+566|Aguardando na fila grátis ({0} s)
+567|Feminina
+568|A dublagem da ElevenLabs falhou:
+569|O servidor grátis está ocupado, tentando de novo ({0} s)
+570|Vozes do Edge
+571|Babək · Masculina
+572|A narração do Edge não retornou áudio.
+573|Não foi possível acessar o serviço de voz do Edge: {0}
+574|O resumo IA funciona com um único vídeo, não com playlists.
+575|título e descrição (sem transcrição)
+576|reconhecimento de fala ({0})
+577|O resumo dos comentários funciona com um único vídeo.
+578|Não foi possível obter os comentários deste vídeo. No momento o resumo de comentários funciona melhor com vídeos do YouTube.
+579|Preparando o áudio
+580|Transcrevendo a fala ({0})
+581|Não foi possível baixar o modelo de reconhecimento de fala.
+582|O FFmpeg é necessário para transcrever a fala.
+583|Não foi possível ler o áudio do vídeo:
+584|Baixando o modelo de reconhecimento de fala (primeira vez) {0} MB
+585|Transcrevendo a fala palavra por palavra ({0})
+586|Não foi possível verificar o download do OpenCV (SHA-{0} não confere).
+587|Baixando o componente de corte inteligente (primeira vez) {0} MB
+588|{0} legendas ({1})
+589|Chaves de API da Anthropic começam com 'sk-ant-'.
+590|Isso não parece uma chave de API do Gemini (aistudio.google.com/apikey).
+591|Para os recursos de IA, adicione sua chave do {0} em Configurações > Inteligência artificial.
+592|O Claude se recusou a responder a este conteúdo.
+593|A resposta foi cortada por ser longa demais.
+594|Não foi possível ler a resposta da IA, tente de novo.
+595|O Gemini retornou um erro ({0}): {1}
+596|O Gemini se recusou a responder a este conteúdo.
+597|O Gemini retornou uma resposta vazia, tente de novo.
+598|Chave de API do Claude inválida. Confira em Configurações > Inteligência artificial.
+599|Esta chave de API não tem permissão para usar o Claude.
+600|Claude: pedidos demais. Tente daqui a pouco.
+601|O Claude recusou o pedido: {0}
+602|Não foi possível conectar ao Claude. Confira sua internet.
+603|O Claude teve um erro temporário ({0}). Tente daqui a pouco.
+604|Não foi possível conectar ao Gemini. Confira sua internet.
+605|Chave de API do Gemini inválida. Confira em Configurações > Inteligência artificial.
+606|A cota grátis do Gemini acabou. Espere um pouco ou tente amanhã (a cota diária renova à noite).
+607|Sua conta Anthropic não tem crédito suficiente (console.anthropic.com > Billing).
+608|O Windows Defender ou um programa de segurança bloqueou o arquivo de atualização. Você pode baixar e instalar a atualização manualmente pela página do GitHub.
+609|Não foi possível verificar a atualização baixada (SHA-{0} não confere).
+610|O pacote de atualização está faltando ou corrompido.
+611|Atualizações automáticas não rodam a partir do código-fonte; use git pull.
+612|Não foi possível baixar a atualização. Confira sua internet.
+613|Esta versão não tem arquivo de atualização para baixar.
+614|O yt-dlp já está atualizado ({0}).
+615|O yt-dlp já está atualizado.
+616|Não foi possível verificar o arquivo baixado (SHA-{0} não confere).
+617|O pip falhou
+618|Extraindo o FFmpeg…
+619|Extraindo o Deno…
+620|Masculina
+621|nítida
+622|animada
+623|informativa
+624|leve
+625|empolgada
+626|jovem
+627|firme
+628|brilhante
+629|calorosa
+630|madura
+631|simpática
+632|suave
+633|Detalhes

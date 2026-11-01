@@ -23,7 +23,10 @@
       <div class="nav-indicator" id="navIndicator"></div>
       <button class="nav-item active" data-page="download"><i data-ic="download"></i>İndir</button>
       <button class="nav-item" data-page="queue"><i data-ic="list"></i>İndirmeler<span class="badge hidden" id="queueBadge">0</span></button>
-      <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Stüdyo<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="reels"><i data-ic="reels"></i>Reels<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="image"><i data-ic="image"></i>Görsel<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="dub"><i data-ic="mic"></i>Dublaj<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Stüdyo</button>
       <button class="nav-item" data-page="history"><i data-ic="clock"></i>Geçmiş</button>
       <button class="nav-item" data-page="settings"><i data-ic="settings"></i>Ayarlar</button>
     </nav>
@@ -82,11 +85,27 @@
             <div class="meta-actions">
               <button class="btn ai" id="mAiBtn"><i data-ic="sparkles"></i>AI ile özetle</button>
               <button class="btn" id="mCommentsBtn"><i data-ic="chat"></i>Yorum özeti</button>
+              <button class="btn" id="mReelsBtn"><i data-ic="reels"></i>Reels yap</button>
+              <button class="btn" id="mDubBtn"><i data-ic="mic"></i>Dublajla</button>
+              <button class="btn" id="mCoverBtn"><i data-ic="wand"></i>Kapak tasarla</button>
               <button class="btn" id="mThumbBtn"><i data-ic="image"></i>Kapağı indir</button>
               <button class="btn" id="mSimilarBtn"><i data-ic="grid"></i>Benzer videolar</button>
               <button class="btn icon" id="mResetBtn" title="Temizle"><i data-ic="x"></i></button>
             </div>
           </div>
+        </div>
+
+        <div class="card hidden" id="plCard">
+          <div class="pl-head">
+            <h3>Listedeki videolar</h3>
+            <span class="chip accent" id="plCount"></span>
+            <div class="pl-tools">
+              <div class="pl-search"><i data-ic="search"></i><input id="plSearch" placeholder="Listede ara…" spellcheck="false" autocomplete="off"></div>
+              <button class="btn sm" id="plAll"><i data-ic="check"></i>Tümünü seç</button>
+              <button class="btn sm" id="plNone"><i data-ic="x"></i>Hiçbiri</button>
+            </div>
+          </div>
+          <div class="pl-list" id="plList"></div>
         </div>
 
         <div class="grid-2">
@@ -154,6 +173,7 @@
           </div>
           <div class="row hidden" id="playlistRow">
             <div class="txt"><b>Oynatma listesinin tamamını indir</b><small id="playlistHint">Linkteki listenin tüm videoları kendi klasörüne indirilir.</small></div>
+            <button class="btn sm" id="plOpenBtn"><i data-ic="list"></i>Videoları listele</button>
             <label class="switch"><input type="checkbox" id="playlistToggle"><span></span></label>
           </div>
           <div class="row">
@@ -164,7 +184,8 @@
 
         <div class="dl-bar">
           <div class="info"><b id="dlSummary"></b><small id="dlSummary2"></small></div>
-          <button class="btn primary xl" id="downloadBtn"><i data-ic="download"></i>İndir</button>
+          <button class="btn lg hidden" id="downloadAllBtn"><i data-ic="list"></i><span>Hepsini indir</span></button>
+          <button class="btn primary xl" id="downloadBtn"><i data-ic="download"></i><span>İndir</span></button>
         </div>
         <div class="card hidden" id="similarBox">
           <div class="sim-head"><h3>Benzer videolar</h3><button class="btn icon ghost" id="similarClose" title="Kapat"><i data-ic="x"></i></button></div>
@@ -253,6 +274,187 @@
       </div>
     </section>
 
+    <!-- ======================= REELS ======================= -->
+    <section class="page" id="page-reels">
+      <div class="page-head center">
+        <div><h1><span class="grad-text">Reels</span> Stüdyosu</h1>
+        <p>Uzun videodan ya da bir fikirden Instagram Reels, TikTok ve Shorts videoları.</p></div>
+      </div>
+      <div class="seg big" id="reelsModeSeg">
+        <button data-v="video"><i data-ic="film"></i>Videodan Reels</button>
+        <button data-v="idea"><i data-ic="bulb"></i>Fikirden Reels</button>
+      </div>
+
+      <div id="reelsVideoMode">
+        <div class="card hero">
+          <div class="ai-hero">
+            <div class="url-box"><i data-ic="link"></i><input id="reelsUrl" placeholder="Video linki yapıştır…" spellcheck="false" autocomplete="off"></div>
+            <button class="btn lg" id="reelsPickBtn"><i data-ic="folder"></i>Bilgisayardan</button>
+          </div>
+          <div class="opt-row">
+            <div class="opt"><label class="lbl">Klip süresi</label><div class="seg" id="reelsLenSeg"><button data-v="short">15–30 sn</button><button data-v="medium">30–60 sn</button><button data-v="long">60–90 sn</button></div></div>
+            <div class="opt"><label class="lbl">Klip sayısı</label><div class="seg" id="reelsCountSeg"><button data-v="3">3</button><button data-v="5">5</button><button data-v="8">8</button></div></div>
+            <button class="btn ai lg opt-go" id="reelsFindBtn"><i data-ic="sparkles"></i>En iyi anları bul</button>
+          </div>
+          <p class="hint">Yapay zekâ konuşmayı okuyup en çok izlenecek anları seçer (Gemini anahtarı ücretsiz). Anahtar yoksa konuşma yoğunluğuna göre seçilir.</p>
+        </div>
+        <div class="card hidden" id="reelsLoading"><h3>Çalışıyor</h3><div class="ai-steps" id="reelsSteps"></div></div>
+        <div class="card error-card hidden" id="reelsError"><i data-ic="alert"></i><p id="reelsErrorText"></p></div>
+        <div class="card hidden" id="reelsClipsCard">
+          <div class="pl-head"><h3>Bulunan anlar</h3><span class="chip accent" id="reelsSrcChip"></span>
+            <div class="pl-tools"><button class="btn sm" id="reelsAddClip"><i data-ic="plus"></i>Elle klip ekle</button></div></div>
+          <div class="clip-list" id="reelsClipList"></div>
+        </div>
+      </div>
+
+      <div id="reelsIdeaMode" class="hidden">
+        <div class="card hero">
+          <textarea class="textarea" id="ideaText" rows="4" placeholder="Fikrini yaz… ör. 'Sabah rutinini değiştirecek 3 alışkanlık'"></textarea>
+          <div class="row"><div class="txt"><b>Metni kendim yazdım</b><small>Yapay zekâ yazmasın, metnim olduğu gibi seslendirilsin</small></div><label class="switch"><input type="checkbox" id="ideaOwn"><span></span></label></div>
+          <div class="opt-row">
+            <div class="opt"><label class="lbl">Süre</label><div class="seg" id="ideaLenSeg"><button data-v="30">30 sn</button><button data-v="45">45 sn</button><button data-v="60">60 sn</button></div></div>
+            <div class="opt"><label class="lbl">Dil</label><select class="select" id="ideaLang"></select></div>
+          </div>
+        </div>
+        <div class="grid-2 even">
+          <div class="card">
+            <h3>Seslendirme</h3>
+            <div class="tiles" id="ideaVoiceEngine"></div>
+            <label class="lbl">Ses</label><select class="select" id="ideaVoice"></select>
+          </div>
+          <div class="card">
+            <h3>Görüntüler</h3>
+            <div class="tiles" id="ideaVisuals"></div>
+            <div id="ideaImgProvBox" class="hidden"><label class="lbl">Görsel servisi</label><select class="select" id="ideaImgProvider"></select></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="reelsEditCard">
+        <div class="card-title"><span class="ci"><i data-ic="wand"></i></span>Kurgu</div>
+        <div id="rFrameBox"><label class="lbl">Kadraj (dikey 9:16)</label>
+          <div class="seg" id="rFrameSeg"><button data-v="smart">Akıllı kırpma (yüz takibi)</button><button data-v="blur">Bulanık arka plan</button><button data-v="center">Ortadan kırp</button></div></div>
+        <label class="lbl">Altyazı stili</label>
+        <div class="cap-styles" id="rCapStyles">
+          <button data-v="pop"><span class="cs pop">BU <em>ÇOK</em> İYİ</span><small>Pop</small></button>
+          <button data-v="karaoke"><span class="cs karaoke"><em>Bu çok</em> iyi</span><small>Karaoke</small></button>
+          <button data-v="box"><span class="cs box">Bu <em>çok</em> iyi</span><small>Kutu</small></button>
+          <button data-v="minimal"><span class="cs minimal">Bu çok iyi</span><small>Sade</small></button>
+          <button data-v="none"><span class="cs none">—</span><small>Kapalı</small></button>
+        </div>
+        <div class="opt-row">
+          <div class="opt"><label class="lbl">Vurgu rengi</label><div class="swatches" id="rAccent"><button data-v="yellow"></button><button data-v="green"></button><button data-v="red"></button><button data-v="blue"></button><button data-v="pink"></button><button data-v="white"></button></div></div>
+          <div class="opt"><label class="lbl">Konum</label><div class="seg" id="rPosSeg"><button data-v="top">Üst</button><button data-v="middle">Orta</button><button data-v="bottom">Alt</button></div></div>
+          <div class="opt"><label class="lbl">Ekranda kelime</label><div class="seg" id="rWordsSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div></div>
+        </div>
+        <div class="toggle-grid">
+          <div class="row"><div class="txt"><b>BÜYÜK HARF</b></div><label class="switch"><input type="checkbox" id="rUpper" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>Kanca başlığı</b><small>İlk 3 saniye üstte</small></div><label class="switch"><input type="checkbox" id="rHook" checked><span></span></label></div>
+          <div class="row" id="rCutRow"><div class="txt"><b>Sessizlikleri kes</b><small>Duraklamalar atlanır</small></div><label class="switch"><input type="checkbox" id="rCut" checked><span></span></label></div>
+          <div class="row" id="rZoomRow"><div class="txt"><b>Dinamik zoom</b><small>Cümle geçişlerinde yakınlaşma</small></div><label class="switch"><input type="checkbox" id="rZoom" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>İlerleme çubuğu</b></div><label class="switch"><input type="checkbox" id="rBar" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>Kullanıcı adı</b><small>Üstte küçük filigran</small></div><input class="input sm wide" id="rWatermark" placeholder="@kullaniciadi"></div>
+        </div>
+        <div class="row music-row"><div class="txt"><b>Arka plan müziği</b><small>Konuşma başlayınca müzik otomatik kısılır</small></div>
+          <input type="range" id="rMusicVol" min="2" max="50" value="14" title="Müzik seviyesi">
+          <div class="file-row"><span class="name" id="rMusicName">Seçilmedi</span><button class="btn" id="rMusicBtn"><i data-ic="music"></i>Seç</button><button class="btn icon" id="rMusicClear" title="Kaldır"><i data-ic="x"></i></button></div>
+        </div>
+      </div>
+
+      <div class="dl-bar">
+        <div class="info"><b id="reelsSummary"></b><small id="reelsSummary2"></small></div>
+        <button class="btn primary xl" id="reelsGoBtn"><i data-ic="sparkles"></i><span>Reels oluştur</span></button>
+      </div>
+
+      <div class="card hidden" id="reelsResults">
+        <div class="sim-head"><h3>Hazır Reels</h3></div>
+        <div class="reel-grid" id="reelsResultGrid"></div>
+      </div>
+    </section>
+
+    <!-- ======================= GÖRSEL ======================= -->
+    <section class="page" id="page-image">
+      <div class="page-head center">
+        <div><h1><span class="grad-text">Görsel</span> Stüdyosu</h1>
+        <p>Fikirden kapak fotoğrafı ve görsel üret. Ücretsiz servisler her zaman önce gelir.</p></div>
+      </div>
+      <div class="seg big" id="imgModeSeg">
+        <button data-v="thumbnail"><i data-ic="wand"></i>Kapak hazırla</button>
+        <button data-v="image"><i data-ic="image"></i>Görsel üret</button>
+      </div>
+      <div class="card hero">
+        <textarea class="textarea" id="imgIdea" rows="3" placeholder="Fikrini yaz… ör. 'İstanbul'un en iyi 5 kahvecisi'"></textarea>
+        <div id="imgBgBox"><label class="lbl">Arka plan</label>
+          <div class="seg" id="imgBgSeg"><button data-v="ai">Yapay zekâ üretsin</button><button data-v="video">Analiz edilen videonun kapağı</button><button data-v="file">Kendi görselim</button></div>
+          <div class="file-row hidden" id="imgFileRow"><span class="name" id="imgFileName">Seçilmedi</span><button class="btn" id="imgFileBtn"><i data-ic="folder"></i>Seç</button></div>
+        </div>
+        <div class="opt-row">
+          <div class="opt"><label class="lbl">Oran</label><div class="seg" id="imgAspectSeg"><button data-v="16:9">16:9 YouTube</button><button data-v="9:16">9:16 Reels</button><button data-v="1:1">1:1 Kare</button><button data-v="4:5">4:5 Gönderi</button></div></div>
+          <div class="opt" id="imgCountBox"><label class="lbl">Adet</label><div class="seg" id="imgCountSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="4">4</button></div></div>
+        </div>
+        <div id="imgGenBox">
+          <label class="lbl">Stil</label>
+          <div class="seg wrap" id="imgStyleSeg"><button data-v="auto">Otomatik</button><button data-v="photo">Fotoğraf</button><button data-v="cinematic">Sinematik</button><button data-v="illustration">İllüstrasyon</button><button data-v="anime">Anime</button><button data-v="3d">3D</button><button data-v="minimal">Minimal</button></div>
+          <label class="lbl">Görsel servisi</label>
+          <div class="tiles four" id="imgProviders"></div>
+        </div>
+      </div>
+      <div class="card" id="imgTextCard">
+        <div class="card-title"><span class="ci"><i data-ic="type"></i></span>Kapak yazısı</div>
+        <div class="grid-2 even tight">
+          <div><label class="lbl">Başlık</label><input class="input" id="imgTitle" placeholder="Boş bırakırsan yapay zekâ yazar"></div>
+          <div><label class="lbl">Alt başlık (isteğe bağlı)</label><input class="input" id="imgSub" placeholder="ör. Gizli mekânlar"></div>
+        </div>
+        <div class="opt-row">
+          <div class="opt"><label class="lbl">Yerleşim</label><div class="seg" id="imgLayoutSeg"><button data-v="left">Sol</button><button data-v="bottom">Alt</button><button data-v="center">Orta</button></div></div>
+          <div class="opt"><label class="lbl">Yazı stili</label><div class="seg" id="imgTextSeg"><button data-v="bold">Kalın</button><button data-v="box">Kutu</button><button data-v="clean">Sade</button></div></div>
+          <div class="opt"><label class="lbl">Vurgu rengi</label><div class="swatches" id="imgAccent"><button data-v="yellow"></button><button data-v="green"></button><button data-v="red"></button><button data-v="blue"></button><button data-v="white"></button></div></div>
+        </div>
+      </div>
+      <div class="dl-bar">
+        <div class="info"><b id="imgSummary"></b><small id="imgSummary2"></small></div>
+        <button class="btn primary xl" id="imgGoBtn"><i data-ic="sparkles"></i><span>Oluştur</span></button>
+      </div>
+      <div class="card hidden" id="imgProgress"><h3>Çalışıyor</h3><div class="wait-text"><span class="btn loading icon ghost" style="border:0"></span><span id="imgStageText"></span></div><div class="progress slim"><i id="imgBar" style="width:0%"></i></div></div>
+      <div class="card error-card hidden" id="imgError"><i data-ic="alert"></i><p id="imgErrorText"></p></div>
+      <div class="img-gallery" id="imgGallery"></div>
+    </section>
+
+    <!-- ======================= DUBLAJ ======================= -->
+    <section class="page" id="page-dub">
+      <div class="page-head center">
+        <div><h1><span class="grad-text">Dublaj</span></h1>
+        <p>Videoyu başka bir dile çevirip seslendir. Ücretsiz sesler önce gelir.</p></div>
+      </div>
+      <div class="card hero">
+        <div class="ai-hero">
+          <div class="url-box"><i data-ic="link"></i><input id="dubUrl" placeholder="Video linki yapıştır…" spellcheck="false" autocomplete="off"></div>
+          <button class="btn lg" id="dubPickBtn"><i data-ic="folder"></i>Bilgisayardan</button>
+        </div>
+      </div>
+      <div class="grid-2 even">
+        <div class="card">
+          <h3>Hedef dil</h3>
+          <select class="select" id="dubLang"></select>
+          <h3>Ses</h3>
+          <div class="tiles" id="dubEngines"></div>
+          <div id="dubVoiceBox"><label class="lbl">Seslendiren</label><select class="select" id="dubVoice"></select></div>
+          <p class="hint" id="dubEngineHint"></p>
+        </div>
+        <div class="card">
+          <h3>Orijinal ses</h3>
+          <div class="seg" id="dubOrigSeg"><button data-v="duck">Arka planda kısık</button><button data-v="mute">Tamamen kaldır</button></div>
+          <div class="row"><div class="txt"><b>Orijinal sesi ayrı iz olarak sakla</b><small>Oynatıcıdan dil değiştirir gibi geçebilirsin</small></div><label class="switch"><input type="checkbox" id="dubKeep" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>Altyazı ekle</b><small>Hedef dilde, açılıp kapatılabilir</small></div><label class="switch"><input type="checkbox" id="dubSubs" checked><span></span></label></div>
+          <p class="hint">Çeviri için Ayarlar'daki Gemini (ücretsiz) ya da Claude anahtarı kullanılır. Her cümle zamanında seslendirilir; süreye sığmazsa hafifçe hızlandırılır.</p>
+        </div>
+      </div>
+      <div class="dl-bar">
+        <div class="info"><b id="dubSummary"></b><small id="dubSummary2"></small></div>
+        <button class="btn primary xl" id="dubGoBtn"><i data-ic="mic"></i><span>Dublajla</span></button>
+      </div>
+    </section>
+
     <!-- ======================= GEÇMİŞ ======================= -->
     <section class="page" id="page-history">
       <div class="page-head">
@@ -281,6 +483,7 @@
           </div>
           <div class="row font-row"><div class="txt"><b>Başlık yazı tipi</b><small>İkisini karşılaştır</small></div>
             <div class="seg" id="fontSeg"><button data-v="serif" class="f-serif">Serif</button><button data-v="grotesk" class="f-grotesk">Grotesk</button></div></div>
+          <div class="row"><div class="txt"><b>Dil</b><small>Language</small></div><select class="select lang-select" id="langSelect"></select></div>
         </div>
 
         <div class="card">
@@ -336,11 +539,26 @@
           <div class="row hidden" id="repairRow"><div class="txt"><b>Bileşenleri kur</b><small>Eksik bileşenler indirilir</small></div><button class="btn primary" id="repairBtn">Kur</button></div>
         </div>
       </div>
+      <div class="card services-card">
+        <div class="card-title"><span class="ci"><i data-ic="plug"></i></span>Servisler</div>
+        <p class="hint" style="margin-top:-6px">Görsel, ses ve video için bağlanabilecek servisler. Ücretsiz seçenekler her zaman önce gelir; anahtarlar bu bilgisayarda şifreli saklanır.</p>
+        <div class="svc-list" id="svcList"></div>
+      </div>
     </section>
   </main>
 </div>
 
 <div id="toasts"></div>
+
+<div class="overlay hidden" id="langOverlay">
+  <div class="card modal lang-modal">
+    <div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+    <h2 id="langTitle">TekTıkla'ya hoş geldin</h2>
+    <p id="langDesc">Uygulama dilini seç · Choose your language</p>
+    <div class="lang-grid" id="langGrid"></div>
+    <div class="btns"><button class="btn primary lg" id="langGo"><i data-ic="check"></i><span>Devam</span></button></div>
+  </div>
+</div>
 
 <div class="overlay hidden" id="setupOverlay">
   <div class="card modal">
@@ -357,5 +575,7 @@
 </div>
 
 <script src="app.js"></script>
+<script src="studio.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

@@ -45,11 +45,62 @@ DEFAULT_DIR = LOCAL / "Programs" / APP_NAME
 START_MENU = Path(os.environ.get("APPDATA", "")) / "Microsoft" / "Windows" / "Start Menu" / "Programs"
 DATA_DIRS = [Path(os.environ.get("APPDATA", "")) / "TekTikla", LOCAL / "TekTikla"]
 
-BG, PANEL, TEXT, MUTED, ACCENT = "#0B0A12", "#15131F", "#EEEDF6", "#9C99B4", "#7C5CFF"
+# Uygulamanın varsayılan "Siyah" temasıyla aynı renkler
+BG, PANEL, TEXT, MUTED, FAINT = "#0A0A0A", "#161616", "#F2F2F2", "#8E8E8E", "#4A4A4A"
+# düğme renkleri: (zemin, üzerine gelince, yazı)
+BTN_STYLES = {"primary": ("#FFFFFF", "#DCDCDC", "#0A0A0A"), "secondary": ("#1E1E1E", "#2A2A2A", "#F2F2F2")}
 
 
 def resource(name: str) -> Path:
     return Path(getattr(sys, "_MEIPASS", Path(__file__).parent)) / name
+
+
+class RoundButton(tk.Canvas):
+    """Yuvarlak köşeli, sabit boyutlu düğme. Kenar yumuşatması için build_release.py'nin ürettiği
+    btn_<tür>[_hover]_<en>x<boy>.png zeminlerini kullanır; bulamazsa köşeleri tuvalde çizer."""
+
+    def __init__(self, parent, text, command, kind="secondary", width=132, height=44, font_size=11):
+        super().__init__(parent, width=width, height=height, bg=parent["bg"], highlightthickness=0, bd=0,
+                         cursor="hand2")
+        self.action, self.enabled, self.kind = command, True, kind
+        self._bw, self._bh = width, height  # _w Tk'nin kendi iç adı, ezilmemeli
+        self._images = {}
+        for state in ("", "_hover"):
+            path = resource(f"btn_{kind}{state}_{width}x{height}.png")
+            if path.exists():
+                try:
+                    self._images[state] = tk.PhotoImage(file=str(path))
+                except tk.TclError:
+                    pass
+        self._bg_item = None
+        self._label = self.create_text(width / 2, height / 2, text=text, font=(FONT, font_size, "bold"),
+                                       fill=BTN_STYLES[kind][2])
+        self._paint(False)
+        self.bind("<Enter>", lambda e: self._paint(True))
+        self.bind("<Leave>", lambda e: self._paint(False))
+        self.bind("<Button-1>", lambda e: self.action() if self.enabled else None)
+
+    def _paint(self, hover: bool) -> None:
+        hover = hover and self.enabled
+        if self._bg_item:
+            self.delete(self._bg_item)
+        img = self._images.get("_hover" if hover else "")
+        if img:
+            self._bg_item = self.create_image(0, 0, image=img, anchor="nw")
+        else:
+            w, h, r = self._bw - 1, self._bh - 1, 12
+            pts = [r, 0, w - r, 0, w, 0, w, r, w, h - r, w, h, w - r, h, r, h, 0, h, 0, h - r, 0, r, 0, 0]
+            self._bg_item = self.create_polygon(pts, smooth=True, fill=BTN_STYLES[self.kind][1 if hover else 0])
+        self.tag_lower(self._bg_item)
+
+    def configure_text(self, text: str) -> None:
+        self.itemconfigure(self._label, text=text)
+
+    def set_enabled(self, on: bool) -> None:
+        self.enabled = on
+        self.itemconfigure(self._label, fill=BTN_STYLES[self.kind][2] if on else FAINT)
+        self.configure(cursor="hand2" if on else "arrow")
+        self._paint(False)
 
 
 def load_font() -> str:
@@ -220,7 +271,7 @@ class Wizard(tk.Tk):
         self.title(f"{APP_NAME} Kurulumu")
         self.configure(bg=BG)
         self.resizable(False, False)
-        w, h = 560, 420
+        w, h = 580, 440
         self.geometry(f"{w}x{h}+{(self.winfo_screenwidth() - w) // 2}+{(self.winfo_screenheight() - h) // 3}")
         try:
             self.iconbitmap(str(resource("tektikla.ico")))
@@ -230,40 +281,40 @@ class Wizard(tk.Tk):
 
         style = ttk.Style(self)
         style.theme_use("clam")
-        style.configure("TekTikla.Horizontal.TProgressbar", troughcolor=PANEL, background=ACCENT, bordercolor=BG,
-                        lightcolor=ACCENT, darkcolor=ACCENT, thickness=10)
+        style.configure("TekTikla.Horizontal.TProgressbar", troughcolor="#1E1E1E", background="#FFFFFF",
+                        bordercolor="#1E1E1E", lightcolor="#FFFFFF", darkcolor="#FFFFFF", thickness=8)
 
-        header = tk.Canvas(self, width=w, height=130, highlightthickness=0, bg=BG)
+        header = tk.Canvas(self, width=w, height=128, highlightthickness=0, bg=BG)
         header.pack()
-        for x in range(w):  # mor-pembe yatay degrade
-            t = x / w
-            c = tuple(int(a + (b - a) * t) for a, b in zip((124, 92, 255), (255, 77, 141)))
-            header.create_line(x, 0, x, 130, fill="#%02x%02x%02x" % c)
+        for y in range(128):  # koyu griden siyaha dikey degrade
+            c = int(26 - 16 * y / 127)
+            header.create_line(0, y, w, y, fill="#%02x%02x%02x" % (c, c, c))
+        header.create_line(0, 127, w, 127, fill="#202020")
         text_x = 40
         try:
             self.logo = tk.PhotoImage(file=str(resource("logo72.png")))
-            header.create_image(40, 65, image=self.logo, anchor="w")
-            text_x = 132
+            header.create_image(40, 64, image=self.logo, anchor="w")
+            text_x = 130
         except tk.TclError:
             pass
-        header.create_text(text_x, 50, text=APP_NAME, anchor="w", fill="white", font=(FONT, 28, "bold"))
-        header.create_text(text_x + 2, 90, text=f"Bütün sitelerden video indirici  ·  v{VERSION}", anchor="w",
-                           fill="white", font=(FONT, 11))
+        header.create_text(text_x, 50, text=APP_NAME, anchor="w", fill=TEXT, font=(FONT, 28, "bold"))
+        header.create_text(text_x + 2, 88, text=f"Bütün sitelerden video indirici  ·  v{VERSION}", anchor="w",
+                           fill=MUTED, font=(FONT, 11))
 
-        body = tk.Frame(self, bg=BG, padx=40, pady=22)
+        body = tk.Frame(self, bg=BG, padx=40, pady=24)
         body.pack(fill="both", expand=True)
         existing = installed_dir()
         self.title_lbl = tk.Label(body, text="TekTıkla güncellenecek" if existing else "TekTıkla bilgisayarınıza kurulacak",
-                                  bg=BG, fg=TEXT, font=(FONT,14, "bold"), anchor="w")
+                                  bg=BG, fg=TEXT, font=(FONT, 15, "bold"), anchor="w")
         self.title_lbl.pack(fill="x")
         self.target = existing or DEFAULT_DIR
-        row = tk.Frame(body, bg=BG)
-        row.pack(fill="x", pady=(10, 4))
+        self.path_row = row = tk.Frame(body, bg=BG)
+        row.pack(fill="x", pady=(12, 6))
         # düğme önce yerleşir ki uzun bir yol onu pencereden dışarı itmesin
-        self.change_btn = self._button(row, "Değiştir", self._pick_dir, small=True)
-        self.change_btn.pack(side="right", padx=(8, 0))
-        self.path_lbl = tk.Label(row, text=str(self.target), bg=PANEL, fg=MUTED, font=(FONT,9), anchor="w",
-                                 padx=10, pady=7, width=1)
+        self.change_btn = RoundButton(row, "Değiştir", self._pick_dir, width=104, height=36, font_size=10)
+        self.change_btn.pack(side="right", padx=(10, 0))
+        self.path_lbl = tk.Label(row, text=str(self.target), bg=PANEL, fg=MUTED, font=(FONT, 9), anchor="w",
+                                 padx=12, pady=9, width=1)
         self.path_lbl.pack(side="left", fill="x", expand=True)
 
         self.desktop_var = tk.BooleanVar(value=True)
@@ -271,21 +322,22 @@ class Wizard(tk.Tk):
         self.checks = []
         for text, var in (("Masaüstüne kısayol oluştur", self.desktop_var),
                           ("Kurulumdan sonra TekTıkla'yı başlat", self.launch_var)):
-            cb = tk.Checkbutton(body, text=text, variable=var, bg=BG, fg=TEXT, selectcolor=PANEL,
-                                activebackground=BG, activeforeground=TEXT, font=(FONT,10), anchor="w",
+            cb = tk.Checkbutton(body, text=text, variable=var, bg=BG, fg=TEXT, selectcolor="#1E1E1E",
+                                activebackground=BG, activeforeground=TEXT, font=(FONT, 10), anchor="w",
                                 bd=0, highlightthickness=0)
-            cb.pack(fill="x", pady=(6, 0))
+            cb.pack(fill="x", pady=(8, 0))
             self.checks.append(cb)
 
         self.bar = ttk.Progressbar(body, style="TekTikla.Horizontal.TProgressbar", maximum=1.0)
-        self.status = tk.Label(body, text="", bg=BG, fg=MUTED, font=(FONT,9), anchor="w")
+        self.status = tk.Label(body, text="", bg=BG, fg=MUTED, font=(FONT, 10), anchor="w", justify="left")
 
-        foot = tk.Frame(self, bg=BG, padx=40, pady=18)
+        foot = tk.Frame(self, bg=BG, padx=40, pady=22)
         foot.pack(fill="x", side="bottom")
-        self.cancel_btn = self._button(foot, "İptal", self.destroy)
-        self.cancel_btn.pack(side="right")
-        self.main_btn = self._button(foot, "Güncelle" if existing else "Kur", self._start, primary=True)
-        self.main_btn.pack(side="right", padx=(0, 10))
+        # iki düğme de aynı boyutta: "Bitir" de "Kur" kadar büyük ve belirgin
+        self.main_btn = RoundButton(foot, "Güncelle" if existing else "Kur", self._start, kind="primary")
+        self.main_btn.pack(side="right")
+        self.cancel_btn = RoundButton(foot, "İptal", self.destroy)
+        self.cancel_btn.pack(side="right", padx=(0, 12))
         self.exe: Path | None = None
 
         if not webview2_installed():
@@ -300,20 +352,9 @@ class Wizard(tk.Tk):
         except Exception:  # noqa: BLE001 - eski Windows'ta desteklenmeyebilir
             pass
 
-    def _button(self, parent, text, command, primary=False, small=False):
-        bg, hover = (ACCENT, "#6A48F0") if primary else ("#24212F", "#2F2B3D")
-        btn = tk.Label(parent, text=text, bg=bg, fg="white", cursor="hand2",
-                       font=(FONT,9 if small else 10, "bold"), padx=14 if small else 22, pady=6 if small else 9)
-        btn.action = command
-        btn.enabled = True
-        btn.bind("<Enter>", lambda e: btn.configure(bg=hover) if btn.enabled else None)
-        btn.bind("<Leave>", lambda e: btn.configure(bg=bg))
-        btn.bind("<Button-1>", lambda e: btn.action() if btn.enabled else None)
-        return btn
-
-    def _set_enabled(self, btn, on):
-        btn.enabled = on
-        btn.configure(fg="white" if on else "#6A6784")
+    @staticmethod
+    def _set_enabled(btn: RoundButton, on: bool) -> None:
+        btn.set_enabled(on)
 
     def _pick_dir(self):
         path = filedialog.askdirectory(initialdir=str(self.target.parent), title="Kurulum klasörü")
@@ -353,10 +394,16 @@ class Wizard(tk.Tk):
         threading.Thread(target=work, daemon=True).start()
 
     def _done(self):
-        self.title_lbl.configure(text="Kurulum tamamlandı")
-        self.status.configure(text="TekTıkla, Başlat menüsünde" + (" ve masaüstünde." if self.desktop_var.get() else "."))
+        self.title_lbl.configure(text="✓  Kurulum tamamlandı")
+        self.path_row.pack_forget()
+        self.checks[0].pack_forget()  # kısayol seçimi artık geçmişte kaldı; "başlat" seçeneği kalsın
+        self.checks[1].configure(state="normal", text="TekTıkla'yı şimdi başlat")
+        self.bar.pack_forget()
+        self.status.configure(fg=TEXT, text="TekTıkla, Başlat menüsünde" +
+                              (" ve masaüstünde hazır." if self.desktop_var.get() else " hazır."))
+        self.status.pack(fill="x", pady=(10, 4), after=self.title_lbl)
         self.cancel_btn.pack_forget()
-        self.main_btn.configure(text="Bitir")
+        self.main_btn.configure_text("Bitir")
         self.main_btn.action = self._finish
         self._set_enabled(self.main_btn, True)
 
