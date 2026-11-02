@@ -8,7 +8,7 @@
 >
 > **Nasıl başladı?** Her şey küçük bir fikirdi: "Bir linki yapıştırayım, tek tıkla insin." İlk günlerde yalnızca bir video indiriciydi. Sonra kullandıkça yeni ihtiyaçlar doğdu; özet çıkaran yapay zekâ, uzun videodan Reels kliplerini seçen kurgu, dublaj, kapak ve görsel üretimi, dosya dönüştürücü, izleme listesi, telefondan kullanım, Android uygulaması ve bir görsel düzenleyici geldi. Birkaç satırlık bir araç, 13 dilde konuşan küçük bir stüdyoya dönüştü. Bunun her satırı büyük bir keyifle, çoğu zaman da gece geç saatlere kadar yazıldı.
 >
-> **Son sürüm:** [v3.0.0](https://github.com/BurakCNKaya/TekTikla/releases/tag/v3.0.0). Kurulum dosyası, taşınabilir zip ve Android uygulaması bu sayfada duruyor ve indirilmeye devam edebilir.
+> **Son sürüm:** [v3.0.0](https://github.com/burakkayadev/TekTikla/releases/tag/v3.0.0). Kurulum dosyası, taşınabilir zip ve Android uygulaması bu sayfada duruyor ve indirilmeye devam edebilir.
 >
 > **Bundan sonra ne olacak? (Açık konuşayım)**
 > - Yeni özellik ve hata düzeltmesi gelmeyecek.
@@ -25,7 +25,7 @@
 >
 > Hoşça kalın, bol üretimli günler dilerim. ☕
 >
-> **Burak** ([@BurakCNKaya](https://github.com/BurakCNKaya)) · İsterseniz bir kahve: [buymeacoffee.com/vesperky](https://buymeacoffee.com/vesperky)
+> **Burak** ([@burakkayadev](https://github.com/burakkayadev)) · İsterseniz bir kahve: [buymeacoffee.com/burakkayadev](https://buymeacoffee.com/burakkayadev)
 
 ---
 
@@ -35,7 +35,7 @@ Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğ
 
 ## İndir
 
-**[En son sürümü indir (Windows 10/11)](https://github.com/BurakCNKaya/TekTikla/releases/latest)** — sayfadaki `TekTikla-Setup-<sürüm>.exe` dosyasını indirip çalıştırın.
+**[En son sürümü indir (Windows 10/11)](https://github.com/burakkayadev/TekTikla/releases/latest)** — sayfadaki `TekTikla-Setup-<sürüm>.exe` dosyasını indirip çalıştırın.
 
 **Android uygulaması (isteğe bağlı):** aynı sayfadaki `TekTikla-Android.apk`. Bilgisayardaki TekTıkla'yı telefondan kullanmaya yarar: QR kodu okutup bağlanır, YouTube/Instagram/TikTok'tan *Paylaş* ile link gönderilir, sonuçlar doğrudan Galeri'ye kaydedilir. Bilgisayarda TekTıkla açık olmalı ve iki cihaz aynı Wi-Fi'da olmalı (Android 10 ve üzeri). Uygulama kurmadan, telefonun tarayıcısından da kullanılabilir.
 
