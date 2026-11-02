@@ -117,3 +117,5 @@ server/welcome/     hoş geldin e-postası (Google Apps Script, 13 dil)
 
 ## Lisans
 Bu proje MIT Lisansı altında lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına bakın.
+
+Free code signing provided by SignPath.io, certificate by SignPath Foundation.
