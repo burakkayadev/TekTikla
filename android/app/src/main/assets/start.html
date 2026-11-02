@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TekTıkla</title>
+<!-- Android uygulamasının karşılama sayfası: bilgisayara bağlanma (MainActivity.page ?s=durum ile açar) -->
+<style>
+  :root { --bg: #050505; --panel: rgba(255, 255, 255, .035); --panel-2: rgba(255, 255, 255, .075); --border: rgba(255, 255, 255, .09);
+    --border-strong: rgba(255, 255, 255, .2); --text: #F2F2F2; --muted: #8E8E8E; --faint: #5E5E5E; --err: #FFA3A6;
+    --ease: cubic-bezier(.22, 1, .36, 1); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body { display: grid; place-items: center; padding: 28px 18px; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+  .glow { position: fixed; top: -30vh; left: 50%; width: 120vw; height: 70vh; transform: translateX(-50%); pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, .08), transparent); }
+  main { position: relative; width: min(420px, 100%); text-align: center; animation: rise .5s var(--ease); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  .logo { width: 74px; height: 74px; margin: 0 auto 22px; border-radius: 23px; display: grid; place-items: center;
+    background: linear-gradient(180deg, #232327, #060607); border: 1px solid rgba(255, 255, 255, .14);
+    box-shadow: 0 16px 44px -18px rgba(255, 255, 255, .35); }
+  .logo svg { width: 42px; height: 42px; fill: #fff; stroke: #fff; stroke-width: .5; stroke-linejoin: round; }
+  h1 { margin-bottom: 8px; font-size: 25px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  p { color: var(--muted); font-size: 14.5px; }
+  .spin { width: 44px; height: 44px; margin: 4px auto 22px; border-radius: 50%; border: 3px solid var(--panel-2);
+    border-top-color: #fff; animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .acts { margin-top: 22px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; margin-top: 10px;
+    border-radius: 15px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+    font: 650 15.5px system-ui, sans-serif; transition: transform .15s var(--ease); }
+  .btn.primary { background: #fff; color: #050505; border: 0; box-shadow: 0 12px 32px -18px rgba(255, 255, 255, .6); }
+  .btn:active { transform: scale(.97); }
+  .btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .or { display: flex; align-items: center; gap: 12px; margin: 24px 0 4px; color: var(--faint); font-size: 12.5px; }
+  .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  input { width: 100%; height: 50px; margin-top: 10px; padding: 0 16px; border-radius: 14px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--text); font: 16px system-ui, sans-serif; outline: none; transition: border-color .2s; }
+  input:focus { border-color: var(--border-strong); }
+  input::placeholder { color: var(--faint); }
+  #code { text-align: center; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  #addr { text-align: center; }
+  .err { margin-top: 14px; color: var(--err); font-size: 13.5px; }
+  .note { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 24px; color: var(--faint); font-size: 12.5px; }
+  .note svg { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main>
+  <div class="logo"><svg viewBox="0 0 24 24"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+  <div class="spin hidden" id="busy"></div>
+  <h1 id="title"></h1>
+  <p id="text"></p>
+  <p class="err hidden" id="err"></p>
+  <div class="acts" id="acts">
+    <button class="btn hidden" id="retry"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg><span data-t="retry"></span></button>
+    <button class="btn primary" id="scan"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M14 21h3M20.5 17.5V21"/></svg><span data-t="scan"></span></button>
+    <div class="or"><span data-t="or"></span></div>
+    <input id="addr" inputmode="url" autocomplete="off" spellcheck="false" autocapitalize="off">
+    <input id="code" maxlength="11" autocomplete="off" spellcheck="false" autocapitalize="characters">
+    <button class="btn" id="go"><span data-t="connect"></span></button>
+  </div>
+  <div class="note"><svg viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.4a10 10 0 0 1 14 0M8.5 15.9a5 5 0 0 1 7 0"/><path d="M12 19.3h.01"/></svg><span data-t="note"></span></div>
+</main>
+<script>
+"use strict";
+// "Telefondan kullan" adı her dilde bilgisayardaki arayüzle aynı yazılır
+const T = {
+  tr: { first_title: "Bilgisayarına bağlan", first_text: "Bilgisayardaki TekTıkla'da Telefondan kullan'ı aç, sonra QR kodu bu uygulamayla okut.", scan: "QR kodu tara", or: "ya da adresi ve kodu yaz", addr_ph: "Adres (ör. 192.168.1.34:8790)", code_ph: "Bağlanma kodu", connect: "Bağlan", note: "Telefon ve bilgisayar aynı Wi-Fi ağında olmalı.", connecting: "Bilgisayara bağlanılıyor…", searching_title: "Bilgisayar aranıyor…", searching_text: "Bilgisayarın ağdaki adresi değişmiş olabilir; aynı Wi-Fi'de aranıyor.", net_title: "Bilgisayara ulaşılamadı", net_text: "Bilgisayarda TekTıkla ve Telefondan kullan açık mı? Telefon aynı Wi-Fi'de mi?", retry: "Tekrar dene", key_title: "Bağlanma kodu değişmiş", key_text: "Bilgisayardaki Telefondan kullan penceresindeki yeni QR kodu okut.", wifi_title: "Wi-Fi'ye bağlan", wifi_text: "Telefonu bilgisayarla aynı Wi-Fi ağına bağla, sonra tekrar dene.", bad: "Adres ya da kod hatalı. Kod 10 karakterdir.", badqr: "Bu bir TekTıkla QR kodu değil. Bilgisayardaki Telefondan kullan penceresindeki kodu okut." },
+  en: { first_title: "Connect to your computer", first_text: "Turn on Use from phone in TekTıkla on your computer, then scan the QR code with this app.", scan: "Scan QR code", or: "or type the address and code", addr_ph: "Address (e.g. 192.168.1.34:8790)", code_ph: "Pairing code", connect: "Connect", note: "Your phone and computer must be on the same Wi-Fi network.", connecting: "Connecting to your computer…", searching_title: "Looking for your computer…", searching_text: "Its address on the network may have changed; searching on the same Wi-Fi.", net_title: "Can't reach your computer", net_text: "Is TekTıkla open with Use from phone turned on? Is your phone on the same Wi-Fi?", retry: "Try again", key_title: "The pairing code has changed", key_text: "Scan the new QR code in the Use from phone window on your computer.", wifi_title: "Connect to Wi-Fi", wifi_text: "Connect your phone to the same Wi-Fi network as your computer, then try again.", bad: "The address or code is wrong. The code has 10 characters.", badqr: "This isn't a TekTıkla QR code. Scan the code in the Use from phone window on your computer." },
+  es: { first_title: "Conéctate a tu ordenador", first_text: "Activa Usar desde el teléfono en TekTıkla en tu ordenador y escanea el código QR con esta app.", scan: "Escanear código QR", or: "o escribe la dirección y el código", addr_ph: "Dirección (p. ej. 192.168.1.34:8790)", code_ph: "Código de vinculación", connect: "Conectar", note: "El teléfono y el ordenador deben estar en la misma red Wi-Fi.", connecting: "Conectando con tu ordenador…", searching_title: "Buscando tu ordenador…", searching_text: "Puede que su dirección en la red haya cambiado; buscando en la misma Wi-Fi.", net_title: "No se puede acceder al ordenador", net_text: "¿Está abierto TekTıkla con Usar desde el teléfono activado? ¿Está el teléfono en la misma Wi-Fi?", retry: "Reintentar", key_title: "El código de vinculación ha cambiado", key_text: "Escanea el nuevo código QR de la ventana Usar desde el teléfono en tu ordenador.", wifi_title: "Conéctate a una red Wi-Fi", wifi_text: "Conecta el teléfono a la misma red Wi-Fi que el ordenador y vuelve a intentarlo.", bad: "La dirección o el código no son correctos. El código tiene 10 caracteres.", badqr: "Este no es un código QR de TekTıkla. Escanea el de la ventana Usar desde el teléfono en tu ordenador." },
+  pt: { first_title: "Conecte-se ao seu computador", first_text: "Ative Usar pelo celular no TekTıkla do seu computador e escaneie o QR code com este app.", scan: "Escanear QR code", or: "ou digite o endereço e o código", addr_ph: "Endereço (ex.: 192.168.1.34:8790)", code_ph: "Código de conexão", connect: "Conectar", note: "O celular e o computador precisam estar na mesma rede Wi-Fi.", connecting: "Conectando ao computador…", searching_title: "Procurando o computador…", searching_text: "O endereço dele na rede pode ter mudado; procurando na mesma Wi-Fi.", net_title: "Não foi possível acessar o computador", net_text: "O TekTıkla está aberto com Usar pelo celular ativado? O celular está na mesma Wi-Fi?", retry: "Tentar de novo", key_title: "O código de conexão mudou", key_text: "Escaneie o novo QR code na janela Usar pelo celular do computador.", wifi_title: "Conecte-se ao Wi-Fi", wifi_text: "Conecte o celular à mesma rede Wi-Fi do computador e tente de novo.", bad: "Endereço ou código incorreto. O código tem 10 caracteres.", badqr: "Este não é um QR code do TekTıkla. Escaneie o da janela Usar pelo celular no computador." },
+  fr: { first_title: "Connecte-toi à ton ordinateur", first_text: "Active Utiliser depuis le téléphone dans TekTıkla sur ton ordinateur, puis scanne le QR code avec cette appli.", scan: "Scanner le QR code", or: "ou saisis l’adresse et le code", addr_ph: "Adresse (ex. 192.168.1.34:8790)", code_ph: "Code d’association", connect: "Se connecter", note: "Le téléphone et l’ordinateur doivent être sur le même réseau Wi-Fi.", connecting: "Connexion à ton ordinateur…", searching_title: "Recherche de ton ordinateur…", searching_text: "Son adresse sur le réseau a peut-être changé ; recherche sur le même Wi-Fi.", net_title: "Ordinateur injoignable", net_text: "TekTıkla est-il ouvert avec Utiliser depuis le téléphone activé ? Le téléphone est-il sur le même Wi-Fi ?", retry: "Réessayer", key_title: "Le code d’association a changé", key_text: "Scanne le nouveau QR code dans la fenêtre Utiliser depuis le téléphone de ton ordinateur.", wifi_title: "Connecte-toi au Wi-Fi", wifi_text: "Connecte le téléphone au même réseau Wi-Fi que l’ordinateur, puis réessaie.", bad: "Adresse ou code incorrect. Le code comporte 10 caractères.", badqr: "Ce n’est pas un QR code TekTıkla. Scanne celui de la fenêtre Utiliser depuis le téléphone sur ton ordinateur." },
+  de: { first_title: "Mit deinem Computer verbinden", first_text: "Aktiviere in TekTıkla auf deinem Computer „Vom Handy nutzen“ und scanne dann den QR-Code mit dieser App.", scan: "QR-Code scannen", or: "oder Adresse und Code eingeben", addr_ph: "Adresse (z. B. 192.168.1.34:8790)", code_ph: "Kopplungscode", connect: "Verbinden", note: "Handy und Computer müssen im selben WLAN sein.", connecting: "Verbindung zum Computer wird hergestellt…", searching_title: "Computer wird gesucht…", searching_text: "Seine Adresse im Netzwerk hat sich vielleicht geändert; es wird im selben WLAN gesucht.", net_title: "Computer nicht erreichbar", net_text: "Ist TekTıkla mit „Vom Handy nutzen“ geöffnet? Ist das Handy im selben WLAN?", retry: "Erneut versuchen", key_title: "Der Kopplungscode hat sich geändert", key_text: "Scanne den neuen QR-Code im Fenster „Vom Handy nutzen“ auf deinem Computer.", wifi_title: "Mit WLAN verbinden", wifi_text: "Verbinde das Handy mit demselben WLAN wie den Computer und versuche es erneut.", bad: "Adresse oder Code ist falsch. Der Code hat 10 Zeichen.", badqr: "Das ist kein TekTıkla-QR-Code. Scanne den Code im Fenster „Vom Handy nutzen“ auf deinem Computer." },
+  ru: { first_title: "Подключись к компьютеру", first_text: "Включи «Использовать с телефона» в TekTıkla на компьютере и отсканируй QR-код этим приложением.", scan: "Сканировать QR-код", or: "или введи адрес и код", addr_ph: "Адрес (напр. 192.168.1.34:8790)", code_ph: "Код подключения", connect: "Подключиться", note: "Телефон и компьютер должны быть в одной сети Wi-Fi.", connecting: "Подключение к компьютеру…", searching_title: "Поиск компьютера…", searching_text: "Возможно, его адрес в сети изменился; ищем в той же сети Wi-Fi.", net_title: "Компьютер недоступен", net_text: "Открыт ли TekTıkla с включённым «Использовать с телефона»? Телефон в той же сети Wi-Fi?", retry: "Повторить", key_title: "Код подключения изменился", key_text: "Отсканируй новый QR-код в окне «Использовать с телефона» на компьютере.", wifi_title: "Подключись к Wi-Fi", wifi_text: "Подключи телефон к той же сети Wi-Fi, что и компьютер, и попробуй снова.", bad: "Неверный адрес или код. Код состоит из 10 символов.", badqr: "Это не QR-код TekTıkla. Отсканируй код в окне «Использовать с телефона» на компьютере." },
+  ar: { first_title: "اتصل بحاسوبك", first_text: "فعّل «الاستخدام من الهاتف» في TekTıkla على حاسوبك، ثم امسح رمز QR بهذا التطبيق.", scan: "مسح رمز QR", or: "أو اكتب العنوان والرمز", addr_ph: "العنوان (مثل 192.168.1.34:8790)", code_ph: "رمز الاقتران", connect: "اتصال", note: "يجب أن يكون الهاتف والحاسوب على شبكة Wi-Fi نفسها.", connecting: "جارٍ الاتصال بحاسوبك…", searching_title: "جارٍ البحث عن حاسوبك…", searching_text: "ربما تغيّر عنوانه على الشبكة؛ جارٍ البحث في شبكة Wi-Fi نفسها.", net_title: "تعذّر الوصول إلى الحاسوب", net_text: "هل TekTıkla مفتوح مع تفعيل «الاستخدام من الهاتف»؟ هل الهاتف على شبكة Wi-Fi نفسها؟", retry: "إعادة المحاولة", key_title: "تغيّر رمز الاقتران", key_text: "امسح رمز QR الجديد في نافذة «الاستخدام من الهاتف» على حاسوبك.", wifi_title: "اتصل بشبكة Wi-Fi", wifi_text: "صِل الهاتف بشبكة Wi-Fi نفسها التي يتصل بها الحاسوب، ثم أعد المحاولة.", bad: "العنوان أو الرمز غير صحيح. يتكون الرمز من 10 أحرف.", badqr: "هذا ليس رمز QR الخاص بـ TekTıkla. امسح الرمز الموجود في نافذة «الاستخدام من الهاتف» على حاسوبك." },
+  hi: { first_title: "अपने कंप्यूटर से जुड़ें", first_text: "कंप्यूटर पर TekTıkla में “फ़ोन से इस्तेमाल करें” चालू करें, फिर इस ऐप से QR कोड स्कैन करें।", scan: "QR कोड स्कैन करें", or: "या पता और कोड लिखें", addr_ph: "पता (जैसे 192.168.1.34:8790)", code_ph: "जोड़ने का कोड", connect: "जुड़ें", note: "फ़ोन और कंप्यूटर एक ही Wi-Fi नेटवर्क पर होने चाहिए।", connecting: "कंप्यूटर से जुड़ रहे हैं…", searching_title: "कंप्यूटर खोजा जा रहा है…", searching_text: "नेटवर्क पर इसका पता बदल गया हो सकता है; उसी Wi-Fi पर खोजा जा रहा है।", net_title: "कंप्यूटर तक नहीं पहुँच सके", net_text: "क्या TekTıkla “फ़ोन से इस्तेमाल करें” चालू करके खुला है? क्या फ़ोन उसी Wi-Fi पर है?", retry: "फिर कोशिश करें", key_title: "जोड़ने का कोड बदल गया है", key_text: "कंप्यूटर पर “फ़ोन से इस्तेमाल करें” विंडो में नया QR कोड स्कैन करें।", wifi_title: "Wi-Fi से जुड़ें", wifi_text: "फ़ोन को कंप्यूटर वाले Wi-Fi नेटवर्क से जोड़ें, फिर दोबारा कोशिश करें।", bad: "पता या कोड गलत है। कोड 10 अक्षरों का होता है।", badqr: "यह TekTıkla का QR कोड नहीं है। कंप्यूटर पर “फ़ोन से इस्तेमाल करें” विंडो वाला कोड स्कैन करें।" },
+  id: { first_title: "Hubungkan ke komputermu", first_text: "Aktifkan Gunakan dari ponsel di TekTıkla pada komputer, lalu pindai kode QR dengan aplikasi ini.", scan: "Pindai kode QR", or: "atau ketik alamat dan kode", addr_ph: "Alamat (mis. 192.168.1.34:8790)", code_ph: "Kode penyambungan", connect: "Hubungkan", note: "Ponsel dan komputer harus berada di jaringan Wi-Fi yang sama.", connecting: "Menghubungkan ke komputer…", searching_title: "Mencari komputer…", searching_text: "Alamatnya di jaringan mungkin berubah; mencari di Wi-Fi yang sama.", net_title: "Komputer tidak terjangkau", net_text: "Apakah TekTıkla terbuka dengan Gunakan dari ponsel aktif? Apakah ponsel di Wi-Fi yang sama?", retry: "Coba lagi", key_title: "Kode penyambungan berubah", key_text: "Pindai kode QR baru di jendela Gunakan dari ponsel pada komputer.", wifi_title: "Sambungkan ke Wi-Fi", wifi_text: "Sambungkan ponsel ke jaringan Wi-Fi yang sama dengan komputer, lalu coba lagi.", bad: "Alamat atau kode salah. Kode terdiri dari 10 karakter.", badqr: "Ini bukan kode QR TekTıkla. Pindai kode di jendela Gunakan dari ponsel pada komputer." },
+  zh: { first_title: "连接到你的电脑", first_text: "在电脑上的 TekTıkla 中打开“从手机使用”，然后用本应用扫描二维码。", scan: "扫描二维码", or: "或输入地址和配对码", addr_ph: "地址（例如 192.168.1.34:8790）", code_ph: "配对码", connect: "连接", note: "手机和电脑必须连接同一个 Wi-Fi 网络。", connecting: "正在连接电脑…", searching_title: "正在查找电脑…", searching_text: "电脑在网络中的地址可能已变化，正在同一 Wi-Fi 中查找。", net_title: "无法连接到电脑", net_text: "TekTıkla 是否已打开并开启“从手机使用”？手机是否连接同一 Wi-Fi？", retry: "重试", key_title: "配对码已更改", key_text: "请扫描电脑上“从手机使用”窗口中的新二维码。", wifi_title: "连接 Wi-Fi", wifi_text: "请将手机连接到与电脑相同的 Wi-Fi 网络，然后重试。", bad: "地址或配对码不正确。配对码为 10 个字符。", badqr: "这不是 TekTıkla 的二维码。请扫描电脑上“从手机使用”窗口中的二维码。" },
+  ja: { first_title: "パソコンに接続", first_text: "パソコンの TekTıkla で「スマホから使う」をオンにして、このアプリで QR コードを読み取ってください。", scan: "QR コードを読み取る", or: "またはアドレスとコードを入力", addr_ph: "アドレス（例: 192.168.1.34:8790）", code_ph: "ペアリングコード", connect: "接続", note: "スマホとパソコンは同じ Wi-Fi に接続している必要があります。", connecting: "パソコンに接続しています…", searching_title: "パソコンを探しています…", searching_text: "ネットワーク上のアドレスが変わった可能性があります。同じ Wi-Fi 内を探しています。", net_title: "パソコンに接続できません", net_text: "TekTıkla が開いていて「スマホから使う」がオンになっていますか？スマホは同じ Wi-Fi にありますか？", retry: "再試行", key_title: "ペアリングコードが変更されました", key_text: "パソコンの「スマホから使う」ウィンドウにある新しい QR コードを読み取ってください。", wifi_title: "Wi-Fi に接続", wifi_text: "スマホをパソコンと同じ Wi-Fi に接続してから、もう一度お試しください。", bad: "アドレスまたはコードが正しくありません。コードは 10 文字です。", badqr: "これは TekTıkla の QR コードではありません。パソコンの「スマホから使う」ウィンドウのコードを読み取ってください。" },
+  ko: { first_title: "컴퓨터에 연결", first_text: "컴퓨터의 TekTıkla에서 '휴대폰에서 사용'을 켠 다음 이 앱으로 QR 코드를 스캔하세요.", scan: "QR 코드 스캔", or: "또는 주소와 코드 입력", addr_ph: "주소 (예: 192.168.1.34:8790)", code_ph: "연결 코드", connect: "연결", note: "휴대폰과 컴퓨터가 같은 Wi-Fi 네트워크에 있어야 합니다.", connecting: "컴퓨터에 연결하는 중…", searching_title: "컴퓨터를 찾는 중…", searching_text: "네트워크 주소가 바뀌었을 수 있어 같은 Wi-Fi에서 찾고 있습니다.", net_title: "컴퓨터에 연결할 수 없음", net_text: "TekTıkla가 열려 있고 '휴대폰에서 사용'이 켜져 있나요? 휴대폰이 같은 Wi-Fi에 있나요?", retry: "다시 시도", key_title: "연결 코드가 변경됨", key_text: "컴퓨터의 '휴대폰에서 사용' 창에 있는 새 QR 코드를 스캔하세요.", wifi_title: "Wi-Fi에 연결", wifi_text: "휴대폰을 컴퓨터와 같은 Wi-Fi 네트워크에 연결한 다음 다시 시도하세요.", bad: "주소 또는 코드가 올바르지 않습니다. 코드는 10자입니다.", badqr: "TekTıkla QR 코드가 아닙니다. 컴퓨터의 '휴대폰에서 사용' 창에 있는 코드를 스캔하세요." },
+};
+// durum → [başlık, açıklama, görünüm]; görünüm: busy = bekleniyor, retry = "Tekrar dene" öne çıkar
+const VIEWS = {
+  first: ["first_title", "first_text", ""], connecting: ["connecting", "", "busy"], searching: ["searching_title", "searching_text", "busy"],
+  net: ["net_title", "net_text", "retry"], key: ["key_title", "key_text", ""], wifi: ["wifi_title", "wifi_text", "retry"],
+  bad: ["first_title", "first_text", ""], badqr: ["first_title", "first_text", ""],
+};
+const $ = (id) => document.getElementById(id);
+const app = window.TekTiklaAndroid;
+const lang = (navigator.language || "en").toLowerCase().slice(0, 2);
+const t = T[lang === "in" ? "id" : lang] || T.en;
+document.documentElement.lang = lang;
+if (lang === "ar") document.documentElement.dir = "rtl";
+document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t[el.dataset.t]; });
+$("addr").placeholder = t.addr_ph;
+$("code").placeholder = t.code_ph;
+
+function show(state) {
+  const [title, text, mode] = VIEWS[state] || VIEWS.first;
+  $("title").textContent = t[title];
+  $("text").textContent = text ? t[text] : "";
+  $("text").classList.toggle("hidden", !text);
+  $("busy").classList.toggle("hidden", mode !== "busy");
+  $("acts").classList.toggle("hidden", mode === "busy");
+  $("retry").classList.toggle("hidden", mode !== "retry");
+  $("retry").classList.toggle("primary", mode === "retry");
+  $("scan").classList.toggle("primary", mode !== "retry");
+  $("err").textContent = state === "bad" || state === "badqr" ? t[state] : "";
+  $("err").classList.toggle("hidden", !$("err").textContent);
+}
+
+$("code").addEventListener("input", (e) => {
+  const c = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  e.target.value = c.length > 5 ? c.slice(0, 5) + "-" + c.slice(5) : c;
+});
+$("scan").addEventListener("click", () => app && app.scan());
+$("retry").addEventListener("click", () => { show("connecting"); if (app) app.retry(); });
+$("go").addEventListener("click", () => {
+  if (!app) return;
+  show("connecting");
+  app.connect($("addr").value, $("code").value);
+});
+$("code").addEventListener("keydown", (e) => { if (e.key === "Enter") $("go").click(); });
+show(new URLSearchParams(location.search).get("s") || "first");
+</script>
+</body>
+</html>

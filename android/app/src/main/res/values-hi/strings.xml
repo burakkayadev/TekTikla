@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">अपने कंप्यूटर पर TekTıkla का QR कोड स्कैन करें</string>
+    <string name="saved">सहेजा गया: %1$s</string>
+    <string name="save_failed">फ़ाइल सहेजी नहीं जा सकी</string>
+    <string name="no_app">इसे खोलने के लिए कोई ऐप नहीं है</string>
+    <string name="where_gallery">गैलरी › TekTıkla</string>
+    <string name="where_music">संगीत › TekTıkla</string>
+    <string name="where_downloads">डाउनलोड › TekTıkla</string>
+</resources>

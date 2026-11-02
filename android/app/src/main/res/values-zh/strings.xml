@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">扫描电脑上的 TekTıkla 二维码</string>
+    <string name="saved">已保存：%1$s</string>
+    <string name="save_failed">无法保存文件</string>
+    <string name="no_app">没有可以打开此内容的应用</string>
+    <string name="where_gallery">相册 › TekTıkla</string>
+    <string name="where_music">音乐 › TekTıkla</string>
+    <string name="where_downloads">下载 › TekTıkla</string>
+</resources>

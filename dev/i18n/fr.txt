@@ -1,633 +1,1156 @@
-1|Télécharger
+1|Menu
 2|Téléchargements
-3|NOUVEAU
-4|Image
-5|Doublage
-6|Studio IA
-7|Historique
-8|Paramètres
-9|Mise à jour disponible
-10|Vérification…
-11|Que veux-tu
-12|télécharger ?
-13|Colle un lien ou copie-le simplement — TekTıkla le détecte tout seul.
-14|Lien de vidéo, chanson ou playlist…
-15|Coller
-16|Analyser
-17|Téléchargement rapide
-18|MP{0} rapide
-19|Résumer avec l'IA
-20|En attente d'un lien
-21|Après l'analyse, toutes les qualités, les sous-titres et le MP{0} apparaissent ici.
-22|Analyse du lien…
-23|Résumer avec l'IA
-24|Résumé des commentaires
-25|Créer des Reels
-26|Doubler
-27|Créer une miniature
-28|Télécharger la miniature
-29|Vidéos similaires
-30|Effacer
-31|Vidéos de la liste
-32|Rechercher dans la liste…
-33|Tout sélectionner
-34|Aucune
-35|Vidéo
-36|Audio seul
-37|Qualité
-38|Type de fichier
-39|Le MP{0} se lit partout. Le MKV garde la meilleure qualité.
-40|Avancé : tous les formats
-41|Format audio
-42|La pochette et les infos de l'artiste sont ajoutées au fichier automatiquement.
-43|Sous-titres
-44|Sous-titres par IA
-45|Traduit la parole de la vidéo dans la langue choisie et l'ajoute en sous-titres.
-46|Langue des sous-titres
-47|Traduit les sous-titres de la vidéo s'il y en a ; sinon transcrit la parole sur ton ordinateur (le premier usage télécharge un modèle d'environ {0} Mo), puis traduit.
-48|Sous-titres du site
-49|Ton propre fichier de sous-titres
-50|Aucun choisi (.srt, .vtt, .ass)
-51|Choisir
-52|Retirer
-53|Mode d'ajout
-54|Intégrer
-55|Incruster dans la vidéo
-56|.srt séparé
-57|Autres
-58|Télécharger seulement une partie
-59|Par exemple de {0}:{1} à {2}:{3}
-60|Début
-61|Fin
-62|Télécharger toute la playlist
-63|Toutes les vidéos de la liste sont téléchargées dans leur propre dossier.
-64|Lister les vidéos
-65|Emplacement
-66|Modifier
-67|Tout télécharger
-68|Fermer
-69|Téléchargements en attente et terminés.
-70|Tous
-71|En cours
-72|Terminés
-73|En erreur
-74|Ouvrir le dossier
-75|Effacer les terminés
-76|Aucun téléchargement pour l'instant
-77|Commence par analyser un lien dans l'onglet Télécharger.
-78|Studio
-79|Découvre le sujet d'une vidéo avant de la regarder.
-80|Ajoute d'abord une clé d'API
-81|La clé Google Gemini est gratuite : obtiens-la en quelques secondes sur aistudio.google.com/apikey, sans carte bancaire. Elle est stockée sur cet ordinateur avec le chiffrement de Windows.
-82|Aller aux paramètres
-83|Résumé de vidéo
-84|Idées de vidéos
-85|Lien de la vidéo à résumer…
-86|Résumer
-87|En cours
-88|Copier
-89|Résumé
-90|Points clés
-91|Sujets
-92|Apprécié
-93|Moins apprécié
-94|Problèmes signalés et solutions
-95|Points forts des commentaires
-96|Questions fréquentes
-97|Résumé détaillé
-98|Studio
-99|Des vidéos Instagram Reels, TikTok et Shorts à partir d'une longue vidéo ou d'une idée.
-100|Reels depuis une vidéo
-101|Reels depuis une idée
-102|Colle un lien de vidéo…
-103|Depuis l'ordinateur
-104|Durée du clip
-105|{0}–{1} s
-106|Nombre de clips
-107|Trouver les meilleurs moments
-108|L'IA lit la parole et choisit les moments les plus captivants (la clé Gemini est gratuite). Sans clé, le choix se fait selon la densité de parole.
-109|Moments trouvés
-110|Ajouter un clip à la main
-111|Écris ton idée… ex. '{0} habitudes qui vont changer ta routine du matin'
-112|J'ai écrit le texte moi-même
-113|Pas d'IA ; mon texte est lu tel quel
-114|Durée
-115|{0} s
-116|Langue
-117|Voix off
-118|Voix
-119|Visuels
-120|Service d'images
-121|Montage
-122|Cadrage (vertical {0}:{1})
-123|Recadrage intelligent (suivi du visage)
-124|Arrière-plan flou
-125|Recadrage centré
-126|Style des sous-titres
-127|C'EST
-128|TROP
-129|BIEN
-130|C'est trop
-131|bien
-132|C'est
-133|trop
-134|Encadré
-135|C'est trop bien
-136|Sobre
-137|Désactivé
-138|Couleur d'accent
-139|Position
-140|Haut
-141|Milieu
-142|Bas
-143|Mots à l'écran
-144|MAJUSCULES
-145|Titre d'accroche
-146|En haut pendant les {0} premières secondes
-147|Couper les silences
-148|Les pauses sont supprimées
-149|Zoom dynamique
-150|Zoom à chaque changement de phrase
-151|Barre de progression
-152|Nom d'utilisateur
-153|Petit filigrane en haut
-154|Musique de fond
-155|La musique baisse toute seule quand quelqu'un parle
-156|Volume de la musique
-157|Aucun choisi
-158|Créer des Reels
-159|Reels prêts
-160|Crée des miniatures et des images à partir d'une idée. Les services gratuits passent toujours en premier.
-161|Créer une miniature
-162|Générer une image
-163|Écris ton idée… ex. 'Les {0} meilleurs cafés d'Istanbul'
-164|Arrière-plan
-165|Laisser l'IA le générer
-166|Miniature de la vidéo analysée
-167|Ma propre image
-168|Format
-169|{0}:{1} YouTube
-170|{0}:{1} Reels
-171|{0}:{1} Carré
-172|{0}:{1} Publication
-173|Nombre
-174|Style
-175|Auto
-176|Photo
-177|Cinématique
-178|Illustration
-179|Texte de la miniature
-180|Titre
-181|Laisse vide et l'IA l'écrira
-182|Sous-titre (facultatif)
-183|ex. Adresses secrètes
-184|Disposition
-185|Gauche
-186|Style du texte
-187|Gras
-188|Créer
-189|Traduis une vidéo dans une autre langue et donne-lui une voix. Les voix gratuites passent en premier.
-190|Langue cible
-191|Narrateur
-192|Audio d'origine
-193|Baissé en arrière-plan
-194|Supprimer complètement
-195|Garder l'audio d'origine sur une piste séparée
-196|Passe de l'une à l'autre dans ton lecteur comme on change de langue
-197|Ajouter des sous-titres
-198|Dans la langue cible, activables et désactivables
-199|La traduction utilise la clé Gemini (gratuite) ou Claude des paramètres. Chaque phrase est lue au bon moment ; si elle dépasse, elle est un peu accélérée.
-200|Ce que tu as déjà téléchargé.
-201|Rechercher…
-202|L'historique est vide
-203|Les fichiers que tu télécharges apparaissent ici.
-204|Les modifications sont enregistrées automatiquement.
-205|Apparence
-206|Noir
-207|Papier
-208|Violet
-209|Océan
-210|Police des titres
-211|Compare les deux
-212|Général
-213|Dossier de téléchargement
-214|Surveiller le presse-papiers
-215|Les liens copiés sont détectés automatiquement
-216|Téléchargements simultanés
-217|Limite de vitesse
-218|Exemple : {0}M · vide = illimité
-219|illimité
-220|Formats par défaut
-221|Qualité audio
-222|Extras
-223|Intégrer la pochette
-224|Pochette de la vidéo dans le MP{0} et le MP{1}
-225|Intégrer les métadonnées
-226|Titre, artiste, chapitres
-227|Passer les sponsors
-228|Cookies du navigateur
-229|Pour les vidéos qui demandent une connexion
-230|Aucun
-231|Intelligence artificielle
-232|Service
-233|Résumés et traduction des sous-titres
-234|Enregistrer
-235|Stockée avec le chiffrement de Windows
-236|Supprimer
-237|Reconnaissance vocale
-238|Vidéos sans sous-titres · sur ton ordinateur
-239|Rapide
-240|Précis
-241|Système
-242|Version
-243|Moteur de téléchargement
-244|Source des mises à jour
-245|Vérifier les mises à jour au démarrage
-246|Mise à jour de l'appli
-247|Vérifier
-248|Mettre à jour
-249|Mettre à jour le moteur de téléchargement
-250|Si un site refuse le téléchargement
-251|Installer les composants
-252|Les composants manquants sont téléchargés
-253|Installer
-254|Services
-255|Services à connecter pour l'image, la voix et la vidéo. Les options gratuites passent toujours en premier ; les clés sont stockées chiffrées sur cet ordinateur.
-256|Bienvenue dans TekTıkla
-257|Choisis ta langue
-258|Continuer
-259|Préparation de TekTıkla
-260|Premier lancement seulement : installation des composants nécessaires pour assembler les vidéos et pour YouTube. Cela n'arrive qu'une fois.
-261|Démarrage…
-262|Continuer en arrière-plan
-263|Réessayer
-264|Saisis un lien valide (il doit commencer par http:// ou https://).
-265|Playlist · {0} éléments
-266|Source audio
-267|{0} qualités disponibles
-268|Téléchargeable
-269|{0} sous-titres
-270|Meilleure
-271|Ne pas utiliser (utiliser la qualité ci-dessus)
-272|Cette vidéo n'a pas de sous-titres
-273|Ce lien fait partie d'une liste. Si tu l'actives, toutes les vidéos de la liste sont téléchargées.
-274|Les sous-titres sont ajoutés dans la vidéo sur une piste séparée ; tu peux les activer ou non dans ton lecteur.
-275|Les sous-titres sont incrustés dans l'image et visibles partout. La vidéo est réencodée, donc cela prend un peu de temps ; la sortie est en MP{0}.
-276|(sans perte)
-277|Format personnalisé
-278|Meilleure qualité
-279|intégrés
-280|incrustés
-281|· toute la liste
-282|{0} / {1} vidéos sélectionnées ·
-283|{0} / {1} sélectionnées
-284|Télécharger la sélection ({0})
-285|Choisis des vidéos
-286|Tout télécharger ({0})
-287|Enregistré dans :
-288|Sélectionne au moins une vidéo de la liste.
-289|{0} vidéos ajoutées à la file
-290|Téléchargement lancé
-291|En file d'attente — démarre dès que les composants sont installés
-292|Téléchargement en MP{0}
-293|Téléchargement en meilleure qualité
-294|Ouvrir
-295|Afficher dans le dossier
-296|Annuler
-297|Retirer de la liste
-298|S'il y a des sous-titres, tout le discours est lu ; sinon (comme sur X/Twitter), l'audio est transcrit sur ton ordinateur puis résumé.
-299|Récupération des infos de la vidéo
-300|Extraction de la transcription
-301|L'IA résume la vidéo
-302|Ce que les spectateurs ont aimé, critiqué et quels problèmes ils ont résolus, en un coup d'œil.
-303|Lien de la vidéo dont résumer les commentaires…
-304|Résumer les commentaires
-305|Les {0} commentaires les plus aimés sont lus. Fonctionne mieux pour l'instant avec les vidéos YouTube.
-306|Récupération des commentaires
-307|L'IA résume les commentaires
-308|Donne un lien de vidéo ou décris un sujet ; l'IA propose des idées de contenu originales.
-309|Générer des idées
-310|Depuis un lien : des idées proches mais pas copiées ; depuis ton sujet : titres, phrases d'accroche et déroulés.
-311|L'IA génère des idées
-312|Téléchargement de l'audio de la vidéo
-313|Transcription de la parole
-314|Ajoute d'abord une clé d'API dans les paramètres.
-315|Écris un lien ou un sujet.
-316|Saisis un lien de vidéo valide.
-317|Requête invalide.
-318|Rien de notable
-319|Solution
-320|Résumé prêt
-321|Résumé des commentaires prêt
-322|Idées prêtes
-323|Problèmes et solutions
-324|Points forts
-325|Miniature enregistrée ({0})
-326|Aucune vidéo similaire trouvée.
-327|Gratuit : obtiens une clé sur aistudio.google.com/apikey avec ton compte Google, sans carte. Sur l'offre gratuite, Google peut utiliser le texte envoyé pour améliorer ses produits.
-328|Payant mais très bon marché (résumer une vidéo de {0} minutes coûte ~{1} $). Obtiens la clé sur console.anthropic.com ; le coût est débité de ton propre compte Anthropic.
-329|Obtenir une clé →
-330|✓ Clé {name} enregistrée
-331|Clé {name} non ajoutée
-332|Dossier de téléchargement modifié
-333|Prêt
-334|TekTıkla est prêt ! Tu peux tout télécharger maintenant.
-335|Installation des composants…
-336|L'installation a échoué
-337|Impossible de terminer l'installation
-338|Mise à jour disponible : v{0}
-339|Nouvelle version : v{0}
-340|TekTıkla v{0} est disponible
-341|Vérification impossible
-342|TekTıkla est à jour
-343|Installation des composants ; l'analyse démarrera ensuite…
-344|Lien détecté, analyse en cours
-345|Mise à jour impossible
-346|Ouvrir la page de téléchargement
-347|Impossible de lire le presse-papiers ; colle avec Ctrl+V.
-348|Copié dans le presse-papiers
-349|Impossible de copier
-350|Supprimer l'historique des téléchargements ? (Les fichiers ne sont pas supprimés)
-351|Clé d'API enregistrée
-352|Clé d'API supprimée
-353|Mise à jour…
-354|La source des mises à jour (dépôt GitHub) n'est pas encore configurée.
-355|Langue d'origine (sans traduction)
-356|TekTıkla v{0}
-357|Non configuré
-358|Gratuit
-359|Quota gratuit
-360|Gratuit + payant
-361|Payant
-362|Extraction d'une transcription mot à mot
-363|L'IA choisit les meilleurs moments
-364|Clé requise
-365|Colle un lien de vidéo ou choisis une vidéo sur ton ordinateur.
-366|choisi sans IA
-367|Nom du clip
-368|Texte d'accroche ({0} premières s)
-369|Score de potentiel viral
-370|Reels depuis une idée · {s} s
-371|{n} clips sélectionnés
-372|Trouve d'abord les meilleurs moments
-373|Créer les clips sélectionnés ({n})
-374|{n} clips ajoutés à la file
-375|Reels ajouté à la file
-376|Sans clé · {0}+ langues · synchronisé au mot
-377|Avec une clé Gemini · très naturelle et expressive
-378|Garde la voix de la personne · filigrane sur l'offre gratuite
-379|Les voix les plus naturelles · ~{0} min gratuites par mois
-380|Légende et hashtags copiés
-381|Dossier
-382|Légende
-383|Que veux-tu voir ? ex. 'Une forêt brumeuse au coucher du soleil, cinématique'
-384|miniature de la vidéo
-385|ta propre image
-386|Images
-387|Texte mis à jour
-388|Replacer le texte avec le titre et le style ci-dessus
-389|Mettre à jour le texte
-390|Images prêtes
-391|Voix naturelles de Microsoft Edge : entièrement gratuites, sans clé.
-392|Gemini {0} TTS : sur l'offre gratuite avec ta clé Gemini. Très naturelle et expressive.
-393|Doublage automatique ElevenLabs : garde la voix de la personne. ~{0} min par mois sur l'offre gratuite, avec filigrane.
-394|Doublage ajouté à la file
-395|Clé enregistrée
-396|Connecté
-397|Facultatif
-398|Non connecté
-399|Obtenir une clé
-400|Fonctionne sans clé · sans logo avec un compte gratuit
-401|~{0} images gratuites par jour · qualité FLUX
-402|Nano Banana · ~{0} $ par image
-403|Modèle SOUL · paiement à l'usage
-404|Vidéo de stock
-405|Pexels · clé gratuite
-406|Image IA
-407|Une image animée générée pour chaque scène
-408|Vidéo IA
-409|Higgsfield Seedance · une vidéo par scène
-410|Fond simple
-411|Instantané · texte et voix seulement
-412|En attente
-413|Annulation…
-414|sous-titré
-415|Préparation des composants…
-416|Service inconnu.
-417|Analyse d'abord le lien.
-418|Sélectionne au moins une vidéo.
-419|Playlist
-420|Saisis un lien valide.
-421|Cette vidéo n'a pas de miniature.
-422|Tous les fichiers (*.*)
-423|L'heure de fin doit être après celle du début.
-424|Terminé
-425|Annulé
-426|Impossible de télécharger la miniature.
-427|Mise à jour impossible : {0}
-428|— redémarre TekTıkla pour l'appliquer.
-429|L'installation a échoué : {0}
-430|Pour la traduction par IA, ajoute une clé {name} dans Paramètres > Intelligence artificielle. Pour seulement transcrire, choisis 'Langue d'origine'.
-431|Mis à jour :
-432|La mise à jour a échoué : {0}
-433|Téléchargé : {title}
-434|Reels prêt : {title}
-435|Doublage · {lang}
-436|Doublage prêt : {title}
-437|Écris d'abord une idée ou une description.
-438|Choisis d'abord une image.
-439|Analyse d'abord une vidéo dans l'onglet Télécharger.
-440|Écris le titre de la miniature.
-441|Ajoute une clé pour ce service dans Paramètres > Services.
-442|L'arrière-plan de cette image n'est plus disponible ; régénère-la.
-443|Trouve d'abord les meilleurs moments.
-444|Sélectionne au moins un clip.
-445|Écris l'idée ou le texte de la vidéo.
-446|Ajoute une clé pour cette voix dans les paramètres.
-447|Pour la vidéo de stock, ajoute une clé Pexels gratuite dans Paramètres > Services.
-448|Pour la vidéo IA, ajoute une clé Higgsfield dans Paramètres > Services (payant).
-449|Pour ElevenLabs, ajoute une clé dans Paramètres > Services.
-450|Pour la voix Gemini, ajoute une clé Gemini dans Paramètres > Intelligence artificielle.
-451|Transformation de l'idée en prompt d'image
-452|Homme|Femme
-453|Génération de l'image ({0}/{1})
-454|Assemblage de la vidéo et de l'audio
-455|Conversion en audio
-456|Intégration des sous-titres
-457|Préparation des sous-titres
-458|Ajout de la pochette
-459|Ajout des métadonnées
-460|Suppression des passages sponsorisés
-461|Recherche des passages sponsorisés
-462|Sous-titres externes
-463|Heure invalide : {0}
-464|Aucune vidéo téléchargeable trouvée à ce lien.
-465|Vérification de l'âge requise. Dans Paramètres > Cookies du navigateur, choisis le navigateur où tu es connecté.
-466|Le site demande une connexion. Dans Paramètres > Cookies du navigateur, choisis le navigateur où tu es connecté.
-467|Ce site demande une connexion. Connecte-toi au site dans ton navigateur puis choisis ce navigateur dans Paramètres > Cookies du navigateur.
-468|Page introuvable ({0}). Vérifie le lien.
-469|Cette vidéo ou liste est introuvable. Vérifie le lien.
-470|Cette vidéo est privée.
-471|Vidéo indisponible (elle a peut-être été supprimée ou est bloquée dans ta région).
-472|Cette vidéo est protégée par DRM et ne peut pas être téléchargée.
-473|Le site a refusé l'accès ({0}). Essaie de mettre à jour yt-dlp dans les paramètres.
-474|La qualité choisie n'est pas disponible pour cette vidéo.
-475|FFmpeg est nécessaire mais introuvable. Installe-le depuis l'alerte en haut.
-476|Connexion au site impossible. Vérifie ta connexion internet.
-477|Meilleure qualité (automatique)
-478|Ajout des sous-titres
-479|Recherche d'une source de sous-titres
-480|{0} (traduction IA)
-481|Aucune parole à transcrire dans la vidéo.
-482|Traduction des sous-titres en {0}
-483|FFmpeg est nécessaire pour convertir l'audio.
-484|Erreur FFmpeg :
-485|Incrustation des sous-titres dans la vidéo
-486|{0}Téléchargé, traitement…
-487|Jusqu'à {0}p
-488|Cette tâche a besoin de FFmpeg, introuvable. Installe les composants dans Paramètres > Système.
-489|Impossible de lire le fichier :
-490|Impossible de lire l'audio :
-491|Lecture de la vidéo
-492|La vidéo dure plus de {0} heures ; choisis-en une plus courte pour les Reels.
-493|Le passage le plus dense et le plus vivant (choisi sans clé d'IA)
-494|Évaluation de la parole (sans clé d'IA)
-495|Téléchargement de l'extrait
-496|L'IA écrit le script
-497|Impossible de télécharger l'extrait.
-498|Montage du Reels
-499|Préparation de la couverture
-500|Le script est revenu vide.
-501|Assemblage de la vidéo
-502|Impossible de télécharger l'audio de la vidéo.
-503|Impossible de préparer la couverture : {0}
-504|Ton texte a été lu tel quel car il n'y a pas de clé d'IA.
-505|Le texte à lire est vide.
-506|Impossible d'obtenir l'image de la scène {0}, un fond simple a été utilisé : {1}
-507|Narration ({0}/{1})
-508|Préparation des visuels ({0}/{1})
-509|Suivi des visages (recadrage intelligent)
-510|Le recadrage intelligent a échoué, recadrage centré ({0}).
-511|Doublage ({0})
-512|Téléchargement de la vidéo
-513|Envoi vers ElevenLabs
-514|Ajout du doublage à la vidéo
-515|Impossible de télécharger la vidéo.
-516|La vidéo n'a pas d'audio ; aucune parole à doubler.
-517|Aucune parole trouvée dans la vidéo.
-518|Traduction de la parole
-519|Pour traduire, ajoute une clé Gemini dans Paramètres > Intelligence artificielle (gratuit).
-520|Génération d'images
-521|Fonctionne aussi sans clé (lent, petit logo dans le coin). Avec un compte gratuit : sans logo et plus rapide.
-522|sk_… (facultatif)
-523|Génération d'images (~{0} images gratuites par jour)
-524|Crée un compte gratuit et un jeton dans Workers AI > REST API. Saisis-le sous la forme 'id-du-compte:jeton'.
-525|Vidéos de stock verticales pour les Reels depuis une idée
-526|Gratuit : crée un compte sur pexels.com/api et copie ta clé ({0} recherches par heure).
-527|Clé d'API Pexels
-528|Doublage avec la voix d'origine, voix off naturelle
-529|Offre gratuite : ~{0} min de voix et ~{1} min de doublage avec filigrane par mois (pas d'usage commercial). Payant ensuite.
-530|Images IA (SOUL) et vidéo IA (Seedance) - pour les Reels
-531|Paiement à l'usage : recharge ton solde sur console.higgsfield.ai et crée une clé d'API. Saisis-la sous la forme 'id-de-clé:clé-secrète'.
-532|Femme · nette
-533|Homme · enjouée
-534|Homme · informative
-535|Femme · légère
-536|Homme · enthousiaste
-537|Femme · jeune
-538|Homme · ferme
-539|Femme · lumineuse
-540|Femme · chaleureuse
-541|Homme · mûre
-542|Homme · amicale
-543|Femme · douce
-544|Délai dépassé chez Higgsfield.
-545|La clé ne peut pas être vide.
-546|La clé semble trop courte.
-547|Pour cela, ajoute une clé Gemini dans Paramètres > Intelligence artificielle (gratuit).
-548|Limite du quota gratuit Gemini atteinte ; réessaie dans une minute.
-549|Gemini n'a renvoyé aucune image (le prompt a peut-être déclenché le filtre de sécurité).
-550|Gemini n'a renvoyé aucun audio.
-551|Pour Cloudflare, saisis la clé sous la forme 'id-du-compte:jeton-api'.
-552|Aucune vidéo trouvée sur Pexels pour '{0}'.
-553|Cette vidéo Pexels n'a pas de fichier adapté.
-554|Saisis la clé Higgsfield sous la forme 'id-de-clé:clé-secrète'.
-555|Génération sur Higgsfield ({0} s)
-556|Higgsfield n'a renvoyé aucune image.
-557|Higgsfield n'a renvoyé aucune vidéo.
-558|Pour cela, ajoute une clé ElevenLabs dans Paramètres > Services.
-559|ElevenLabs double ({0} s)
-560|Ce modèle Gemini est payant : il faut activer la facturation dans Google AI Studio. Pour du gratuit, choisis Pollinations ou Cloudflare.
-561|Cloudflare n'a renvoyé aucune image :
-562|Annulé.
-563|bloqué par le filtre de contenu
-564|La génération Higgsfield a échoué : {0}
-565|Le doublage ElevenLabs a dépassé le délai.
-566|Attente dans la file gratuite ({0} s)
-567|Femme
-568|Le doublage ElevenLabs a échoué :
-569|Le serveur gratuit est occupé, nouvel essai ({0} s)
-570|Voix Edge
-571|Babək · Homme
-572|La voix Edge n'a renvoyé aucun audio.
-573|Impossible de joindre le service vocal Edge : {0}
-574|Le résumé IA fonctionne pour une seule vidéo, pas pour les playlists.
-575|titre et description (pas de transcription)
-576|reconnaissance vocale ({0})
-577|Le résumé des commentaires fonctionne pour une seule vidéo.
-578|Impossible d'obtenir les commentaires de cette vidéo. Le résumé des commentaires fonctionne mieux pour l'instant avec les vidéos YouTube.
-579|Préparation de l'audio
-580|Transcription de la parole ({0})
-581|Impossible de télécharger le modèle de reconnaissance vocale.
-582|FFmpeg est nécessaire pour transcrire la parole.
-583|Impossible de lire l'audio de la vidéo :
-584|Téléchargement du modèle de reconnaissance vocale (première fois) {0} Mo
-585|Transcription mot à mot ({0})
-586|Impossible de vérifier le téléchargement d'OpenCV (SHA-{0} différent).
-587|Téléchargement du composant de recadrage intelligent (première fois) {0} Mo
-588|Sous-titres {0} ({1})
-589|Les clés d'API Anthropic commencent par 'sk-ant-'.
-590|Cela ne ressemble pas à une clé d'API Gemini (aistudio.google.com/apikey).
-591|Pour les fonctions d'IA, ajoute ta clé {0} dans Paramètres > Intelligence artificielle.
-592|Claude a refusé de répondre à ce contenu.
-593|La réponse a été coupée car trop longue.
-594|Impossible de lire la réponse de l'IA, réessaie.
-595|Gemini a renvoyé une erreur ({0}) : {1}
-596|Gemini a refusé de répondre à ce contenu.
-597|Gemini a renvoyé une réponse vide, réessaie.
-598|Clé d'API Claude invalide. Vérifie-la dans Paramètres > Intelligence artificielle.
-599|Cette clé d'API n'a pas le droit d'utiliser Claude.
-600|Claude : trop de requêtes. Réessaie dans un moment.
-601|Claude a refusé la requête : {0}
-602|Connexion à Claude impossible. Vérifie ta connexion internet.
-603|Claude a eu une erreur temporaire ({0}). Réessaie dans un moment.
-604|Connexion à Gemini impossible. Vérifie ta connexion internet.
-605|Clé d'API Gemini invalide. Vérifie-la dans Paramètres > Intelligence artificielle.
-606|Le quota gratuit de Gemini est épuisé. Patiente un peu ou réessaie demain (le quota quotidien se renouvelle la nuit).
-607|Ton compte Anthropic n'a pas assez de crédit (console.anthropic.com > Billing).
-608|Windows Defender ou un logiciel de sécurité a bloqué le fichier de mise à jour. Tu peux télécharger et installer la mise à jour à la main depuis la page GitHub.
-609|Impossible de vérifier la mise à jour téléchargée (SHA-{0} différent).
-610|Le paquet de mise à jour est manquant ou corrompu.
-611|Les mises à jour automatiques ne fonctionnent pas depuis le code source ; utilise git pull.
-612|Impossible de télécharger la mise à jour. Vérifie ta connexion internet.
-613|Cette version n'a pas de fichier de mise à jour téléchargeable.
-614|yt-dlp est déjà à jour ({0}).
-615|yt-dlp est déjà à jour.
-616|Impossible de vérifier le fichier téléchargé (SHA-{0} différent).
-617|pip a échoué
-618|Extraction de FFmpeg…
-619|Extraction de Deno…
-620|Homme
-621|nette
-622|enjouée
-623|informative
-624|légère
-625|enthousiaste
-626|jeune
-627|ferme
-628|lumineuse
-629|chaleureuse
-630|mûre
-631|amicale
-632|douce
-633|Détails
+3|Masquer la barre latérale (Ctrl+B)
+4|Épingler la barre latérale (Ctrl+B)
+5|Télécharge · Crée · Monte
+6|Télécharger
+7|Liste à regarder
+8|NOUVEAU
+9|Image
+10|Doublage
+11|Convertir
+12|Studio IA
+13|Historique
+14|Paramètres
+15|Soutenir
+16|Utiliser depuis le téléphone
+17|Mise à jour disponible
+18|Vérification…
+19|Que veux-tu
+20|télécharger ?
+21|Colle un lien ou copie-le simplement — TekTıkla le détecte tout seul.
+22|Lien de vidéo, chanson ou playlist…
+23|Coller
+24|Analyser
+25|Téléchargement rapide
+26|MP{0} rapide
+27|Résumer avec l'IA
+28|En attente d'un lien
+29|Après l'analyse, toutes les qualités, les sous-titres et le MP{0} apparaissent ici.
+30|Analyse du lien…
+31|Résumer avec l'IA
+32|Regarder plus tard
+33|Résumé des commentaires
+34|Créer des Reels
+35|Doubler
+36|Créer une miniature
+37|Télécharger la miniature
+38|Vidéos similaires
+39|Effacer
+40|Vidéos de la liste
+41|Rechercher dans la liste…
+42|Tout sélectionner
+43|Aucune
+44|Vidéo
+45|Audio seul
+46|Qualité
+47|Type de fichier
+48|Le MP{0} se lit partout. Le MKV garde la meilleure qualité.
+49|Avancé : tous les formats
+50|Format audio
+51|La pochette et les infos de l'artiste sont ajoutées au fichier automatiquement.
+52|Sous-titres
+53|Sous-titres par IA
+54|Traduit la parole de la vidéo dans la langue choisie et l'ajoute en sous-titres.
+55|Langue des sous-titres
+56|Traduit les sous-titres de la vidéo s'il y en a ; sinon transcrit la parole sur ton ordinateur (le premier usage télécharge un modèle d'environ {0} Mo), puis traduit.
+57|Sous-titres du site
+58|Ton propre fichier de sous-titres
+59|Aucun choisi (.srt, .vtt, .ass)
+60|Choisir
+61|Retirer
+62|Mode d'ajout
+63|Intégrer
+64|Incruster dans la vidéo
+65|.srt séparé
+66|Autres
+67|Télécharger seulement une partie
+68|Par exemple de {0}:{1} à {2}:{3}
+69|Début
+70|Fin
+71|Télécharger toute la playlist
+72|Toutes les vidéos de la liste sont téléchargées dans leur propre dossier.
+73|Lister les vidéos
+74|Emplacement
+75|Modifier
+76|Tout télécharger
+77|Fermer
+78|Téléchargements en attente et terminés.
+79|Tous
+80|En cours
+81|Terminés
+82|En erreur
+83|Ouvrir le dossier
+84|Effacer les terminés
+85|Aucun téléchargement pour l'instant
+86|Commence par analyser un lien dans l'onglet Télécharger.
+87|Les vidéos à regarder plus tard t'attendent ici dans l'ordre ; elles restent même si tu fermes l'appli.
+88|Lien de vidéo ou de playlist (plusieurs liens possibles)
+89|Ajouter à la liste
+90|Importer depuis YouTube
+91|À regarder plus tard
+92|Vidéos J'aime
+93|À regarder
+94|Regardées
+95|Tri
+96|Mon ordre
+97|Les plus courtes d'abord
+98|Les plus récentes d'abord
+99|Effacer les vidéos regardées
+100|Ta liste est vide
+101|Ajoute un lien ; les vidéos que tu veux regarder plus tard se rangent ici.
+102|Convertis images, vidéos et sons vers d'autres formats ; redimensionne si tu veux en {0}K, {1}K ou à ta taille.
+103|Glisse des fichiers ici ou clique pour choisir
+104|PNG, JPG, WEBP, AVIF, HEIC, GIF · MP{0}, MOV, MKV, WEBM · MP{1}, WAV, FLAC, M{2}A et plus
+105|Ajouter un dossier entier
+106|Ajouter des fichiers
+107|Ajouter un dossier
+108|Vider la liste
+109|Préréglages
+110|Format, qualité et taille en un clic
+111|Format de sortie
+112|Qualité et taille
+113|Originale
+114|Haute
+115|Équilibrée
+116|Fichier le plus léger
+117|Légère
+118|Taille
+119|Grand côté {0} px
+120|HD
+121|{0}K
+122|Personnalisée
+123|Largeur
+124|Hauteur
+125|px
+126|Garder les proportions
+127|Remplir et recadrer
+128|Étirer
+129|Réglages avancés
+130|Rotation, découpe, images/s, son et nom du fichier
+131|Rotation
+132|Sens horaire. Les images pivotent sans perte.
+133|Couleur des zones transparentes
+134|Blanc
+135|Noir
+136|Gris clair
+137|Couleur personnalisée
+138|Les JPG et PDF ne gèrent pas la transparence ; les zones vides prennent cette couleur.
+139|Découper
+140|fin
+141|Seul cet intervalle est converti (min:s). Laisse vide pour tout le fichier.
+142|Images par seconde
+143|Moins d'images par seconde allège le fichier ; {0} convient aux vidéos de jeux et de sport.
+144|Supprimer le son
+145|Retire complètement le son de la vidéo
+146|Égaliser le volume
+147|Le niveau recommandé par Instagram et YouTube (-{0} LUFS)
+148|Passer en mono
+149|Un seul canal : pour la voix, le fichier pèse deux fois moins
+150|Ajouter la taille au nom du fichier
+151|Exemple : vacances-{0}x{1}.webp
+152|À côté du fichier
+153|Dans le dossier TekTıkla
+154|Effacer la position et les infos de l'appareil
+155|Les données cachées comme la position GPS de la photo ou le modèle d'appareil sont supprimées
+156|Fusionner en un seul PDF
+157|Les images deviennent, dans l'ordre, les pages d'un seul PDF
+158|Fichiers prêts
+159|Studio
+160|Découvre le sujet d'une vidéo avant de la regarder.
+161|Ajoute d'abord une clé d'API
+162|La clé Google Gemini est gratuite : obtiens-la en quelques secondes sur aistudio.google.com/apikey, sans carte bancaire. Elle est stockée sur cet ordinateur avec le chiffrement de Windows.
+163|Aller aux paramètres
+164|Résumé de vidéo
+165|Idées de vidéos
+166|Lien de la vidéo à résumer…
+167|Résumer
+168|En cours
+169|Copier
+170|Résumé
+171|Points clés
+172|Sujets
+173|Apprécié
+174|Moins apprécié
+175|Problèmes signalés et solutions
+176|Points forts des commentaires
+177|Questions fréquentes
+178|Résumé détaillé
+179|Studio
+180|Des vidéos Instagram Reels, TikTok et Shorts à partir d'une longue vidéo ou d'une idée.
+181|Reels depuis une vidéo
+182|Reels depuis une idée
+183|Colle un lien de vidéo…
+184|Depuis l'ordinateur
+185|Durée du clip
+186|{0}–{1} s
+187|Nombre de clips
+188|Trouver les meilleurs moments
+189|L'IA lit la parole et choisit les moments les plus captivants (la clé Gemini est gratuite). Sans clé, le choix se fait selon la densité de parole.
+190|Moments trouvés
+191|Ajouter un clip à la main
+192|Écris ton idée… ex. '{0} habitudes qui vont changer ta routine du matin'
+193|J'ai écrit le texte moi-même
+194|Pas d'IA ; mon texte est lu tel quel
+195|Durée
+196|{0} s
+197|Langue
+198|Voix off
+199|Voix
+200|Visuels
+201|Service d'images
+202|Montage
+203|Cadrage (vertical {0}:{1})
+204|Recadrage intelligent (suivi du visage)
+205|Arrière-plan flou
+206|Recadrage centré
+207|Style des sous-titres
+208|C'est
+209|trop
+210|bien
+211|Épuré
+212|C'EST
+213|TROP
+214|BIEN
+215|C'est trop
+216|Encadré
+217|C'est trop bien
+218|Sobre
+219|Désactivé
+220|Couleur d'accent
+221|Position
+222|Haut
+223|Milieu
+224|Bas
+225|Mots à l'écran
+226|MAJUSCULES
+227|Titre d'accroche
+228|En haut pendant les {0} premières secondes
+229|Couper les silences
+230|Les pauses sont supprimées
+231|Zoom fluide
+232|Plans larges et serrés, mouvement de caméra lent
+233|Barre de progression
+234|Fine barre en bas
+235|Nom d'utilisateur
+236|Petit filigrane en haut
+237|Plans de coupe (B-roll)
+238|Vidéo d'illustration · Pexels
+239|Vidéo IA · Higgsfield
+240|Musique de fond
+241|La musique baisse toute seule quand quelqu'un parle
+242|Volume de la musique
+243|Aucun choisi
+244|Créer des Reels
+245|Reels prêts
+246|Crée des miniatures et des images à partir d'une idée. Les services gratuits passent toujours en premier.
+247|Créer une miniature
+248|Générer une image
+249|Modifier l'image
+250|Ouvrir une image
+251|Annuler (Ctrl+Z)
+252|Rétablir (Ctrl+Y)
+253|Dézoomer
+254|Ajuster à l'écran (Ctrl+{0})
+255|Zoomer (Ctrl + molette)
+256|Affiche l'original tant que tu maintiens le bouton
+257|Avant
+258|Ouvrir l'image enregistrée
+259|Réinitialiser
+260|Enregistrer
+261|Ouvre une image à modifier
+262|Glisse-dépose, colle avec Ctrl+V ou choisis-en une sur ton ordinateur.
+263|Choisir une image
+264|Coller depuis le presse-papiers
+265|Tes images récentes
+266|Recadrer
+267|Réglages
+268|Filtre
+269|Texte
+270|Éléments
+271|Dessin
+272|Censure
+273|Calques
+274|Écris ton idée… ex. 'Les {0} meilleurs cafés d'Istanbul'
+275|Arrière-plan
+276|Laisser l'IA le générer
+277|Miniature de la vidéo analysée
+278|Ma propre image
+279|Format
+280|{0}:{1} YouTube
+281|{0}:{1} Reels
+282|{0}:{1} Carré
+283|{0}:{1} Publication
+284|Nombre
+285|Style
+286|Auto
+287|Photo
+288|Cinématique
+289|Illustration
+290|Texte de la miniature
+291|Titre
+292|Laisse vide et l'IA l'écrira
+293|Sous-titre (facultatif)
+294|ex. Adresses secrètes
+295|Disposition
+296|Gauche
+297|Style du texte
+298|Gras
+299|Créer
+300|Traduis une vidéo dans une autre langue et donne-lui une voix. Les voix gratuites passent en premier.
+301|Langue cible
+302|Narrateur
+303|Audio d'origine
+304|Baissé en arrière-plan
+305|Supprimer complètement
+306|Garder l'audio d'origine sur une piste séparée
+307|Passe de l'une à l'autre dans ton lecteur comme on change de langue
+308|Ajouter des sous-titres
+309|Dans la langue cible, activables et désactivables
+310|La traduction utilise la clé Gemini (gratuite) ou Claude des paramètres. Chaque phrase est lue au bon moment ; si elle dépasse, elle est un peu accélérée.
+311|Ce que tu as déjà téléchargé.
+312|Rechercher…
+313|L'historique est vide
+314|Les fichiers que tu télécharges apparaissent ici.
+315|Les modifications sont enregistrées automatiquement.
+316|Compte
+317|Apparence
+318|Papier
+319|Violet
+320|Océan
+321|Police des titres
+322|Utilisée pour les titres et le logo
+323|Aa
+324|Large
+325|Douce
+326|Barre latérale
+327|Masquée, elle s'ouvre quand la souris touche le bord · Ctrl+B
+328|Épinglée
+329|Masquer automatiquement
+330|Général
+331|Dossier de téléchargement
+332|Surveiller le presse-papiers
+333|Les liens copiés sont détectés automatiquement
+334|Téléchargements simultanés
+335|Désactivé · iPhone ou Android, sur le même Wi-Fi
+336|Connecter le téléphone
+337|Limite de vitesse
+338|Exemple : {0}M · vide = illimité
+339|illimité
+340|Formats par défaut
+341|Qualité audio
+342|Extras
+343|Intégrer la pochette
+344|Pochette de la vidéo dans le MP{0} et le MP{1}
+345|Intégrer les métadonnées
+346|Titre, artiste, chapitres
+347|Passer les sponsors
+348|Cookies du navigateur
+349|Pour les vidéos qui demandent une connexion
+350|Aucun
+351|Intelligence artificielle
+352|Service
+353|Résumés et traduction des sous-titres
+354|Stockée avec le chiffrement de Windows
+355|Supprimer
+356|Reconnaissance vocale
+357|Vidéos sans sous-titres · sur ton ordinateur
+358|Rapide
+359|Précis
+360|Système
+361|Version
+362|Moteur de téléchargement
+363|Source des mises à jour
+364|Soutenir TekTıkla
+365|Offre-moi un café ou suis-moi sur GitHub
+366|Vérifier les mises à jour au démarrage
+367|Mise à jour de l'appli
+368|Vérifier
+369|Mettre à jour
+370|Mettre à jour le moteur de téléchargement
+371|Si un site refuse le téléchargement
+372|Installer les composants
+373|Les composants manquants sont téléchargés
+374|Installer
+375|Services
+376|Services à connecter pour l'image, la voix et la vidéo. Les options gratuites passent toujours en premier ; les clés sont stockées chiffrées sur cet ordinateur.
+377|Dépose pour convertir
+378|Bienvenue dans TekTıkla
+379|Choisis ta langue
+380|Continuer
+381|Préparation de TekTıkla
+382|Premier lancement seulement : installation des composants nécessaires pour assembler les vidéos et pour YouTube. Cela n'arrive qu'une fois.
+383|Démarrage…
+384|Continuer en arrière-plan
+385|Réessayer
+386|Continuer sans compte
+387|Crée un compte ou connecte-toi. Des fonctions comme l'import de tes listes YouTube nécessitent un compte.
+388|Continuer avec Google
+389|Continuer avec GitHub
+390|ou par e-mail
+391|Se connecter
+392|Créer un compte
+393|Ton nom
+394|E-mail
+395|Mot de passe ({0} caractères minimum)
+396|Mot de passe oublié
+397|Si tu continues sans compte, tu ne pourras pas utiliser les fonctions du compte, comme importer ta liste YouTube « À regarder plus tard » et tes vidéos J'aime. Tu peux te connecter à tout moment dans Paramètres > Compte.
+398|Termine la connexion sur la page ouverte dans ton navigateur ; cette fenêtre se met à jour toute seule ensuite.
+399|Annuler
+400|Enregistrer l'image
+401|Nom du fichier
+402|Format
+403|Copier dans le presse-papiers
+404|Avant / après
+405|Fais glisser le curseur pour comparer le même endroit dans les deux versions.
+406|Tu aimes TekTıkla ?
+407|TekTıkla est gratuit et sans publicité. Si tu veux, tu peux le soutenir en m'offrant un café ou en suivant le projet et en lui donnant une étoile sur GitHub ; c'est ce qui fait arriver les nouveautés.
+408|Scanne un QR code avec l'appareil photo de ton téléphone ou clique sur une carte.
+409|Plus tard
+410|Offrir un café
+411|Ouvrir sur GitHub
+412|Tu peux toujours rouvrir cette fenêtre avec « Soutenir » dans la barre latérale.
+413|Ouvre TekTıkla dans le navigateur de ton téléphone : cet ordinateur fait les téléchargements, les Reels, le doublage et les conversions, et le résultat arrive sur ton téléphone. Marche sur iPhone et Android, sans rien installer.
+414|Connexion du téléphone
+415|Seuls les appareils de ce réseau domestique qui connaissent le code d'association peuvent se connecter
+416|Active la connexion et le QR code à scanner avec ton téléphone apparaîtra ici.
+417|Cet ordinateur ne semble pas connecté à un réseau. Le QR code apparaîtra une fois connecté en Wi-Fi ou par câble.
+418|Même Wi-Fi
+419|Le téléphone et l'ordinateur doivent être sur le même réseau.
+420|Scanne le QR code
+421|Vise le code avec l'appareil photo du téléphone et touche le lien qui apparaît.
+422|Ajouter à l'écran d'accueil
+423|iPhone : Partager › Sur l'écran d'accueil. Android : ⋮ › Ajouter à l'écran d'accueil. Ça s'ouvre comme une appli.
+424|Adresse
+425|Code d'association
+426|Nouveau code
+427|Appareils connectés
+428|Appli Android
+429|Envoie des liens depuis YouTube, Instagram ou TikTok avec Partager et enregistre les résultats directement dans la Galerie. Scanne le code, télécharge l'APK et installe-le.
+430|Si le téléphone ne se connecte pas : quand Windows le demande, autorise les « Réseaux privés ». Si ton Wi-Fi est en « Public », passe-le en « Privé » dans Paramètres Windows › Réseau.
+431|Tu m'offres un café ?
+432|Saisis un lien valide (il doit commencer par http:// ou https://).
+433|Playlist · {0} éléments
+434|Source audio
+435|{0} qualités disponibles
+436|Téléchargeable
+437|{0} sous-titres
+438|Meilleure
+439|Ne pas utiliser (utiliser la qualité ci-dessus)
+440|Cette vidéo n'a pas de sous-titres
+441|Ce lien fait partie d'une liste. Si tu l'actives, toutes les vidéos de la liste sont téléchargées.
+442|Les sous-titres sont ajoutés dans la vidéo sur une piste séparée ; tu peux les activer ou non dans ton lecteur.
+443|Les sous-titres sont incrustés dans l'image et visibles partout. La vidéo est réencodée, donc cela prend un peu de temps ; la sortie est en MP{0}.
+444|(sans perte)
+445|Format personnalisé
+446|Meilleure qualité
+447|intégrés
+448|incrustés
+449|· toute la liste
+450|{0} / {1} vidéos sélectionnées ·
+451|{0} / {1} sélectionnées
+452|Télécharger la sélection ({0})
+453|Choisis des vidéos
+454|Tout télécharger ({0})
+455|Enregistré dans :
+456|Sélectionne au moins une vidéo de la liste.
+457|{0} vidéos ajoutées à la file
+458|Téléchargement lancé
+459|En file d'attente — démarre dès que les composants sont installés
+460|Téléchargement en MP{0}
+461|Téléchargement en meilleure qualité
+462|Ouvrir
+463|Afficher dans le dossier
+464|Retirer de la liste
+465|S'il y a des sous-titres, tout le discours est lu ; sinon (comme sur X/Twitter), l'audio est transcrit sur ton ordinateur puis résumé.
+466|Récupération des infos de la vidéo
+467|Extraction de la transcription
+468|L'IA résume la vidéo
+469|Ce que les spectateurs ont aimé, critiqué et quels problèmes ils ont résolus, en un coup d'œil.
+470|Lien de la vidéo dont résumer les commentaires…
+471|Résumer les commentaires
+472|Les {0} commentaires les plus aimés sont lus. Fonctionne mieux pour l'instant avec les vidéos YouTube.
+473|Récupération des commentaires
+474|L'IA résume les commentaires
+475|Donne un lien de vidéo ou décris un sujet ; l'IA propose des idées de contenu originales.
+476|Générer des idées
+477|Depuis un lien : des idées proches mais pas copiées ; depuis ton sujet : titres, phrases d'accroche et déroulés.
+478|L'IA génère des idées
+479|Téléchargement de l'audio de la vidéo
+480|Transcription de la parole
+481|Ajoute d'abord une clé d'API dans les paramètres.
+482|Écris un lien ou un sujet.
+483|Saisis un lien de vidéo valide.
+484|Requête invalide.
+485|Rien de notable
+486|Solution
+487|Résumé prêt
+488|Résumé des commentaires prêt
+489|Idées prêtes
+490|Problèmes et solutions
+491|Points forts
+492|Miniature enregistrée ({0})
+493|Aucune vidéo similaire trouvée.
+494|Gratuit : obtiens une clé sur aistudio.google.com/apikey avec ton compte Google, sans carte. Sur l'offre gratuite, Google peut utiliser le texte envoyé pour améliorer ses produits.
+495|Payant mais très bon marché (résumer une vidéo de {0} minutes coûte ~{1} $). Obtiens la clé sur console.anthropic.com ; le coût est débité de ton propre compte Anthropic.
+496|Obtenir une clé →
+497|✓ Clé {name} enregistrée
+498|Clé {name} non ajoutée
+499|Dossier de téléchargement modifié
+500|Prêt
+501|TekTıkla est prêt ! Tu peux tout télécharger maintenant.
+502|Installation des composants…
+503|L'installation a échoué
+504|Impossible de terminer l'installation
+505|Mise à jour disponible : v{0}
+506|Nouvelle version : v{0}
+507|TekTıkla v{0} est disponible
+508|Vérification impossible
+509|TekTıkla est à jour
+510|Installation des composants ; l'analyse démarrera ensuite…
+511|Lien détecté, analyse en cours
+512|Mise à jour impossible
+513|Ouvrir la page de téléchargement
+514|Impossible de lire le presse-papiers ; colle avec Ctrl+V.
+515|Copié dans le presse-papiers
+516|Impossible de copier
+517|Supprimer l'historique des téléchargements ? (Les fichiers ne sont pas supprimés)
+518|Clé d'API enregistrée
+519|Clé d'API supprimée
+520|Mise à jour…
+521|La source des mises à jour (dépôt GitHub) n'est pas encore configurée.
+522|Langue d'origine (sans traduction)
+523|Non configuré
+524|Gratuit
+525|Quota gratuit
+526|Gratuit + payant
+527|Payant
+528|Extraction d'une transcription mot à mot
+529|L'IA choisit les meilleurs moments
+530|Clé requise
+531|Colle un lien de vidéo ou choisis une vidéo sur ton ordinateur.
+532|choisi sans IA
+533|Nom du clip
+534|Texte d'accroche ({0} premières s)
+535|Score de potentiel viral
+536|Les sous-titres seront dans la langue parlée dans la vidéo.
+537|La parole est traduite dans cette langue par l'IA ; la mise en avant mot à mot est conservée.
+538|La parole est traduite dans cette langue par une traduction gratuite ; ajoute une clé Gemini pour un rendu plus naturel.
+539|Des vidéos d'illustration gratuites montrant ce qui est dit sont insérées (Pexels). L'IA choisit où les placer.
+540|Gratuit : ajoute une clé Pexels dans Paramètres > Services.
+541|Payant : Higgsfield génère chaque plan de coupe par IA ({0} scènes par clip, consomme des crédits).
+542|Payant : ajoute une clé Higgsfield dans Paramètres > Services.
+543|La personne qui parle reste à l'écran pendant tout le clip.
+544|Reels depuis une idée · {s} s
+545|{n} clips sélectionnés
+546|Trouve d'abord les meilleurs moments
+547|Créer les clips sélectionnés ({n})
+548|{n} clips ajoutés à la file
+549|Reels ajouté à la file
+550|Sans clé · {0}+ langues · synchronisé au mot
+551|Très naturelle et expressive · finit avec la voix Edge si le quota gratuit du jour est épuisé
+552|Avec une clé Gemini · très naturelle et expressive
+553|Garde la voix de la personne · filigrane sur l'offre gratuite
+554|Les voix les plus naturelles · ~{0} min gratuites par mois
+555|Légende et hashtags copiés
+556|Dossier
+557|Légende
+558|Que veux-tu voir ? ex. 'Une forêt brumeuse au coucher du soleil, cinématique'
+559|miniature de la vidéo
+560|ta propre image
+561|Images
+562|Modifier
+563|Texte mis à jour
+564|Replacer le texte avec le titre et le style ci-dessus
+565|Mettre à jour le texte
+566|Images prêtes
+567|Voix naturelles de Microsoft Edge : entièrement gratuites, sans clé.
+568|Gemini {0} TTS : sur l'offre gratuite avec ta clé Gemini. Très naturelle et expressive.
+569|Doublage automatique ElevenLabs : garde la voix de la personne. ~{0} min par mois sur l'offre gratuite, avec filigrane.
+570|Doublage ajouté à la file
+571|Clé enregistrée
+572|Connecté
+573|Facultatif
+574|Non connecté
+575|Obtenir une clé
+576|Fonctionne sans clé · sans logo avec un compte gratuit
+577|~{0} images gratuites par jour · qualité FLUX
+578|Nano Banana · ~{0} $ par image
+579|Modèle SOUL · paiement à l'usage
+580|Vidéo de stock
+581|Pexels · clé gratuite
+582|Image IA
+583|Une image animée générée pour chaque scène
+584|Vidéo IA
+585|Higgsfield Seedance · une vidéo par scène
+586|Fond simple
+587|Instantané · texte et voix seulement
+588|Langue de la vidéo (sans traduction)
+589|à l'instant
+590|il y a {0} min
+591|il y a {0} h
+592|hier
+593|il y a {0} jours
+594|Rien de regardé pour l'instant
+595|Les vidéos que tu coches avec ✓ se retrouvent ici.
+596|Tu as tout regardé
+597|Plus aucune vidéo à regarder. Tu peux ajouter un nouveau lien.
+598|Récupération des infos…
+599|À suivre
+600|Impossible de récupérer les infos.
+601|Monter
+602|Descendre
+603|Revoir
+604|Regarder
+605|Marquer comme non regardée
+606|Marquer comme regardée
+607|Glisse pour réordonner
+608|Ouvert dans le navigateur.
+609|Ouvert dans le navigateur. Coche-la avec ✓ une fois regardée.
+610|Ajoutée à la liste à regarder
+611|Cette vidéo est déjà dans ta liste à regarder
+612|Ces vidéos sont déjà dans ta liste à regarder
+613|Aucun lien valide trouvé
+614|Connecte-toi avec Google pour importer tes listes YouTube.
+615|Choisis dans Paramètres > Cookies du navigateur le navigateur où tu es connecté à YouTube (Firefox conseillé).
+616|Ta session YouTube de {b} est utilisée ; un nouvel import n'ajoute que les nouvelles vidéos.
+617|Choisis d'abord le navigateur où tu es connecté à YouTube.
+618|Import de ta liste À regarder plus tard…
+619|Import de tes vidéos J'aime…
+620|Cette liste est en cours d'import.
+621|Tu es sûr ? Appuie encore
+622|Léger et de qualité · idéal pour le web
+623|Sans perte · garde la transparence
+624|Le plus compatible · photos
+625|Fichier le plus léger · appareils récents
+626|Animation · {0} couleurs
+627|En document
+628|Icône Windows
+629|Impression et archivage · sans perte
+630|Non compressé
+631|Le plus compatible · H.{0}
+632|Pour le web · VP{0}
+633|Appareils Apple
+634|Toutes les pistes audio et sous-titres sont conservés
+635|Image animée
+636|Son seul
+637|Son seul · AAC
+638|Son seul · sans perte
+639|Le plus compatible
+640|AAC · appareils Apple
+641|Sans perte · compressé
+642|Sans perte · non compressé
+643|Le plus efficace
+644|Format ouvert · Vorbis
+645|Alléger pour le web
+646|WEBP · Full HD · équilibré
+647|Publication Instagram
+648|Vidéo verticale
+649|Pour WhatsApp
+650|MP{0} · JPG · HD
+651|Pour un e-mail
+652|Fichier le plus léger · HD
+653|Archive sans perte
+654|PNG · FLAC · MKV
+655|Extraire la musique
+656|MP{0} depuis la vidéo · {1} kb/s
+657|Créer une icône
+658|sera agrandi
+659|En attente
+660|Retirer de la liste
+661|Recommandé
+662|Les proportions sont gardées ; tu peux laisser la largeur ou la hauteur vide.
+663|Exactement cette taille ; les bords en trop sont rognés depuis le centre.
+664|Exactement cette taille ; les proportions peuvent être déformées.
+665|La taille ne change pas.
+666|Le grand côté passe à {0} px ; pareil pour les fichiers en portrait ou en paysage.
+667|{0} fichiers seront agrandis.
+668|Le nouveau fichier est enregistré dans le dossier de l'original
+669|Enregistré dans le dossier « Convertis » de ton dossier de téléchargement
+670|Qualité originale
+671|Haute qualité
+672|Qualité équilibrée
+673|Fichier léger
+674|{0} px de large
+675|{0} px de haut
+676|Sans perte
+677|Le format choisi est sans perte ; pas besoin de régler la qualité.
+678|Copié sans réencodage quand c'est possible : sans perte et en quelques secondes.
+679|Aucune perte de qualité (WEBP/PNG sans perte, JPG à {0} %) ; le fichier peut être lourd.
+680|Une perte invisible et un fichier nettement plus léger.
+681|L'équilibre idéal pour partager et envoyer.
+682|Le fichier le plus léger ; le PNG est réduit à {0} couleurs (invisible sur les captures d'écran).
+683|Le fichier le plus léger ; les fins détails peuvent perdre un peu.
+684|Réglages {name} sélectionnés
+685|Ces fichiers sont déjà dans la liste
+686|Aucun fichier convertible dans ce dossier.
+687|Aucun nouveau fichier à convertir. Si tu as changé de format, ajoute à nouveau les fichiers.
+688|Indique une largeur ou une hauteur pour une taille personnalisée.
+689|La fin de la découpe doit être après le début.
+690|Comparer
+691|Impossible d'afficher un aperçu de ce fichier.
+692|Connecté avec Google
+693|Connecté avec GitHub
+694|Connecté par e-mail
+695|ou crée un compte
+696|Connecte-toi ou crée un compte
+697|Se déconnecter
+698|Supprimer le compte
+699|Ton adresse e-mail n'est pas encore vérifiée. Clique sur le lien reçu dans ta boîte de réception.
+700|Renvoyer
+701|Tu n'es pas connecté
+702|Avec un compte, tu peux importer ta liste YouTube « À regarder plus tard » et tes vidéos J'aime.
+703|Connecte-toi avec Google dans ton navigateur
+704|Connecte-toi avec GitHub dans ton navigateur
+705|Saisis ton e-mail et ton mot de passe.
+706|Le mot de passe doit faire au moins {0} caractères.
+707|Ton compte est prêt. Un e-mail de vérification a été envoyé.
+708|Bienvenue, {0} !
+709|Impossible de lancer la connexion.
+710|Saisis d'abord ton adresse e-mail.
+711|Un lien de réinitialisation du mot de passe a été envoyé à ton adresse e-mail.
+712|Déconnecté.
+713|E-mail de vérification envoyé.
+714|Envoi impossible.
+715|Impossible de supprimer le compte.
+716|Ton compte et tes données ont été supprimés.
+717|Activé · tu peux te connecter depuis ton téléphone
+718|Si ça ne s'ouvre pas, essaie : {list}
+719|Navigateur
+720|Aucun téléphone connecté pour l'instant
+721|Connexion du téléphone activée. Scanne le QR code avec ton téléphone.
+722|Nouveau code créé. Les téléphones doivent scanner à nouveau le QR code.
+723|Fichier introuvable ; il a peut-être été supprimé ou déplacé.
+724|Avec Enregistrer, les vidéos et photos vont dans la Galerie, les sons dans Musique et le reste dans Téléchargements.
+725|Pour l'enregistrer dans Photos, touche Ouvrir, puis Partager > Enregistrer la vidéo.
+726|Pour l'enregistrer dans Photos, touche Ouvrir, puis maintiens l'image appuyée > Ajouter à Photos.
+727|Avec Enregistrer, le fichier va dans le dossier Téléchargements du téléphone.
+728|Enregistrer sur le téléphone
+729|Enregistrement sur le téléphone
+730|Enregistré sur le téléphone : {where}
+731|Impossible d'enregistrer le fichier sur le téléphone.
+732|Envoi de {0} fichiers à l'ordinateur
+733|Envoi à l'ordinateur
+734|Le fichier est trop lourd ({0} Go maximum).
+735|Impossible d'envoyer le fichier à l'ordinateur.
+736|Cela se fait dans TekTıkla sur l'ordinateur.
+737|Le dossier de téléchargement se change dans TekTıkla sur l'ordinateur.
+738|Ordinateur injoignable · nouvelle tentative…
+739|Choisir sur le téléphone
+740|Touche pour choisir des fichiers
+741|Les actions du compte se font dans TekTıkla sur l'ordinateur.
+742|Connecté :
+743|Se connecter
+744|Connecte-toi à ton ordinateur
+745|Dans TekTıkla sur ton ordinateur, ouvre Paramètres > Utiliser depuis le téléphone et scanne le QR code avec l'appareil photo du téléphone.
+746|ou saisis le code d'association
+747|Le téléphone et l'ordinateur doivent être sur le même réseau Wi-Fi.
+748|Le code fait {0} caractères : il est affiché dans la fenêtre Utiliser depuis le téléphone de l'ordinateur.
+749|Code incorrect. Saisis le code affiché dans la fenêtre de l'ordinateur.
+750|Ordinateur injoignable. TekTıkla est-il ouvert, et le téléphone sur le même Wi-Fi ?
+751|Le code d'association a changé. Scanne à nouveau le QR code ou saisis le nouveau code.
+752|Lien partagé
+753|Téléchargement rapide
+754|Télécharger en MP{0}
+755|Cette vidéo est déjà dans la liste
+756|Luminosité
+757|Hautes lumières
+758|Ombres
+759|Délaver
+760|Température
+761|Teinte
+762|Vibrance
+763|Décalage de teinte
+764|Vif
+765|Chaud
+766|Froid
+767|Heure dorée
+768|Display
+769|TITRE
+770|Écris ton texte ici
+771|Rectangle
+772|Ligne
+773|Dupliquer (Ctrl+D)
+774|Dupliquer
+775|Avancer
+776|Reculer
+777|Supprimer (Suppr)
+778|Rotation et miroir
+779|Pivoter à gauche
+780|Pivoter à droite
+781|Miroir horizontal
+782|Miroir vertical
+783|Redresser
+784|Fais glisser le cadre par ses coins ou attrape-le à l'intérieur pour le déplacer. Remets une photo penchée d'aplomb avec Redresser.
+785|Réinitialiser le recadrage
+786|Amélioration auto
+787|Lumière
+788|Détails
+789|Réinitialiser les réglages
+790|Intensité
+791|Ajoute un style de texte. Pour modifier un texte existant, clique dessus dans l'image.
+792|Police
+793|Extra-gras
+794|Italique
+795|Majuscules
+796|Aligner à gauche
+797|Aligner à droite
+798|Épaisseur
+799|Ombre
+800|Fond encadré
+801|Opacité du fond
+802|Espacement des lettres
+803|Interligne
+804|Opacité
+805|Angle
+806|Ajouter une forme
+807|Fais glisser un élément pour le déplacer et tire ses coins pour le redimensionner. Les emojis se modifient comme du texte.
+808|Bordure
+809|Arrondi des coins
+810|Fais glisser sur l'image pour dessiner. Chaque trait devient un calque ; annule avec Ctrl+Z.
+811|Effacer tous les dessins
+812|Fais glisser sur la zone à masquer : visage, plaque d'immatriculation, adresse, numéro de téléphone…
+813|Pixeliser
+814|Flouter
+815|Force
+816|Aucun calque pour l'instant. Les textes, formes, dessins et zones censurées apparaissent ici dès que tu les ajoutes.
+817|Afficher
+818|Le calque en haut de la liste est aussi au premier plan dans l'image.
+819|Les outils de retouche apparaissent ici dès que tu ouvres une image.
+820|Aucune image ouverte
+821|Réglages automatiques appliqués
+822|Impossible d'ouvrir cette image.
+823|Le presse-papiers ne contient aucune image.
+824|Impossible d'accéder au presse-papiers. Copie l'image puis appuie sur Ctrl+V.
+825|Choisis une photo sur ton téléphone, retouche-la et enregistre-la sur ton ordinateur et ton téléphone.
+826|Toutes les modifications ont été réinitialisées. Appuie sur Ctrl+Z pour annuler.
+827|(modifiée)
+828|Impossible d'enregistrer l'image.
+829|Enregistrée : {name}
+830|Image copiée dans le presse-papiers
+831|Impossible de copier dans le presse-papiers.
+832|Annulation…
+833|sous-titré
+834|Préparation des composants…
+835|Service inconnu.
+836|Analyse d'abord le lien.
+837|Sélectionne au moins une vidéo.
+838|Playlist
+839|Saisis un lien valide.
+840|Cette vidéo n'a pas de miniature.
+841|Tous les fichiers (*.*)
+842|Le système de comptes n'est pas encore configuré.
+843|Bienvenue, {name} !
+844|Impossible de lancer la connexion du téléphone.
+845|L'heure de fin doit être après celle du début.
+846|Terminé
+847|Annulé
+848|Impossible de télécharger la miniature.
+849|Mise à jour impossible : {0}
+850|— redémarre TekTıkla pour l'appliquer.
+851|L'installation a échoué : {0}
+852|Impossible d'accéder à ta liste YouTube. Choisis dans Paramètres > Cookies du navigateur le navigateur où tu es connecté à YouTube (Firefox conseillé).
+853|Pour la traduction par IA, ajoute une clé {name} dans Paramètres > Intelligence artificielle. Pour seulement transcrire, choisis 'Langue d'origine'.
+854|Mis à jour :
+855|La mise à jour a échoué : {0}
+856|Téléchargé : {title}
+857|Reels prêt : {title}
+858|Doublage · {lang}
+859|Doublage prêt : {title}
+860|Ajoute d'abord les fichiers à convertir.
+861|Convertir · {fmt}
+862|Converti : {title}
+863|Écris d'abord une idée ou une description.
+864|Choisis d'abord une image.
+865|Analyse d'abord une vidéo dans l'onglet Télécharger.
+866|Écris le titre de la miniature.
+867|Ajoute une clé pour ce service dans Paramètres > Services.
+868|L'arrière-plan de cette image n'est plus disponible ; régénère-la.
+869|Image introuvable ; elle a peut-être été supprimée ou déplacée.
+870|Ce format ne s'ouvre pas dans l'éditeur. Convertis-le d'abord en JPG ou PNG avec Convertir.
+871|Trouve d'abord les meilleurs moments.
+872|Sélectionne au moins un clip.
+873|Pour la vidéo de stock, ajoute une clé Pexels gratuite dans Paramètres > Services.
+874|Pour la vidéo IA, ajoute une clé Higgsfield dans Paramètres > Services (payant).
+875|Écris l'idée ou le texte de la vidéo.
+876|Ajoute une clé pour cette voix dans les paramètres.
+877|Pour ElevenLabs, ajoute une clé dans Paramètres > Services.
+878|Pour la voix Gemini, ajoute une clé Gemini dans Paramètres > Intelligence artificielle.
+879|Convertis
+880|Transformation de l'idée en prompt d'image
+881|Homme|Femme
+882|Génération de l'image ({0}/{1})
+883|Assemblage de la vidéo et de l'audio
+884|Conversion en audio
+885|Intégration des sous-titres
+886|Préparation des sous-titres
+887|Ajout de la pochette
+888|Ajout des métadonnées
+889|Suppression des passages sponsorisés
+890|Recherche des passages sponsorisés
+891|Sous-titres externes
+892|Heure invalide : {0}
+893|Les cookies de Chrome et Edge ne sont pas lisibles sous Windows. Connecte-toi au site dans Firefox et choisis Firefox dans Paramètres > Cookies du navigateur.
+894|Le navigateur choisi n'est pas sur cet ordinateur ou n'a jamais été ouvert. Dans Paramètres > Cookies du navigateur, choisis celui où tu es connecté au site.
+895|Aucune vidéo téléchargeable trouvée à ce lien.
+896|Vérification de l'âge requise. Dans Paramètres > Cookies du navigateur, choisis le navigateur où tu es connecté.
+897|Le site demande une connexion. Dans Paramètres > Cookies du navigateur, choisis le navigateur où tu es connecté.
+898|Ce site demande une connexion. Connecte-toi au site dans ton navigateur puis choisis ce navigateur dans Paramètres > Cookies du navigateur.
+899|Page introuvable ({0}). Vérifie le lien.
+900|Cette vidéo ou liste est introuvable. Vérifie le lien.
+901|Cette vidéo est privée.
+902|Vidéo indisponible (elle a peut-être été supprimée ou est bloquée dans ta région).
+903|Cette vidéo est protégée par DRM et ne peut pas être téléchargée.
+904|Le site a refusé l'accès ({0}). Essaie de mettre à jour yt-dlp dans les paramètres.
+905|La qualité choisie n'est pas disponible pour cette vidéo.
+906|FFmpeg est nécessaire mais introuvable. Installe-le depuis l'alerte en haut.
+907|Connexion au site impossible. Vérifie ta connexion internet.
+908|Meilleure qualité (automatique)
+909|Ajout des sous-titres
+910|Recherche d'une source de sous-titres
+911|{0} (traduction IA)
+912|Aucune parole à transcrire dans la vidéo.
+913|Traduction des sous-titres en {0}
+914|FFmpeg est nécessaire pour convertir l'audio.
+915|Erreur FFmpeg :
+916|Incrustation des sous-titres dans la vidéo
+917|{0}Téléchargé, traitement…
+918|Jusqu'à {0}p
+919|Cette tâche a besoin de FFmpeg, introuvable. Installe les composants dans Paramètres > Système.
+920|Impossible de lire le fichier :
+921|Impossible de lire l'audio :
+922|Lecture de la vidéo
+923|La vidéo dure plus de {0} heures ; choisis-en une plus courte pour les Reels.
+924|Le passage le plus dense et le plus vivant (choisi sans clé d'IA)
+925|Évaluation de la parole (sans clé d'IA)
+926|Téléchargement de l'extrait
+927|Préparation des plans de coupe
+928|L'IA écrit le script
+929|Impossible de télécharger l'extrait.
+930|Montage du Reels
+931|Les plans de coupe nécessitent une clé d'IA (Gemini est gratuit).
+932|Préparation du plan de coupe ({0}/{1})
+933|Préparation de la couverture
+934|Le script est revenu vide.
+935|Assemblage de la vidéo
+936|Impossible de télécharger l'audio de la vidéo.
+937|Traduction des sous-titres
+938|Impossible de prévoir les plans de coupe : {0}
+939|Impossible de préparer la couverture : {0}
+940|Ton texte a été lu tel quel car il n'y a pas de clé d'IA.
+941|Le texte à lire est vide.
+942|Impossible d'obtenir l'image de la scène {0}, un fond simple a été utilisé : {1}
+943|Narration ({0}/{1})
+944|Préparation des visuels ({0}/{1})
+945|Suivi des visages (recadrage intelligent)
+946|Plan de coupe ignoré ({0}) : {1}
+947|Le recadrage intelligent a échoué, recadrage centré ({0}).
+948|Le quota vocal gratuit du jour de Gemini est épuisé ; la vidéo a été doublée avec la voix gratuite d'Edge.
+949|Quota Gemini : attente de {0} s
+950|Doublage ({0})
+951|Téléchargement de la vidéo
+952|Envoi vers ElevenLabs
+953|Ajout du doublage à la vidéo
+954|Impossible de télécharger la vidéo.
+955|La vidéo n'a pas d'audio ; aucune parole à doubler.
+956|Aucune parole trouvée dans la vidéo.
+957|Traduction de la parole
+958|Le quota vocal gratuit du jour de Gemini est épuisé ; le doublage a été terminé avec la voix gratuite d'Edge. Tu pourras réessayer la voix Gemini demain.
+959|La traduction par IA a échoué (le quota est peut-être épuisé) ; la traduction gratuite a été utilisée.
+960|Génération d'images
+961|Fonctionne aussi sans clé (lent, petit logo dans le coin). Avec un compte gratuit : sans logo et plus rapide.
+962|sk_… (facultatif)
+963|Génération d'images (~{0} images gratuites par jour)
+964|Crée un compte gratuit et un jeton dans Workers AI > REST API. Saisis-le sous la forme 'id-du-compte:jeton'.
+965|Vidéos de stock verticales pour les Reels depuis une idée
+966|Gratuit : crée un compte sur pexels.com/api et copie ta clé ({0} recherches par heure).
+967|Clé d'API Pexels
+968|Doublage avec la voix d'origine, voix off naturelle
+969|Offre gratuite : ~{0} min de voix et ~{1} min de doublage avec filigrane par mois (pas d'usage commercial). Payant ensuite.
+970|Images IA (SOUL) et vidéo IA (Seedance) - pour les Reels
+971|Paiement à l'usage : recharge ton solde sur console.higgsfield.ai et crée une clé d'API. Saisis-la sous la forme 'id-de-clé:clé-secrète'.
+972|Limite du quota gratuit Gemini atteinte ; réessaie dans une minute.
+973|Femme · nette
+974|Homme · enjouée
+975|Homme · informative
+976|Femme · légère
+977|Homme · enthousiaste
+978|Femme · jeune
+979|Homme · ferme
+980|Femme · lumineuse
+981|Femme · chaleureuse
+982|Homme · mûre
+983|Homme · amicale
+984|Femme · douce
+985|Délai dépassé chez Higgsfield.
+986|La clé ne peut pas être vide.
+987|La clé semble trop courte.
+988|Le quota gratuit du jour de Gemini est épuisé ; réessaie demain ou choisis la voix gratuite d'Edge.
+989|Pour cela, ajoute une clé Gemini dans Paramètres > Intelligence artificielle (gratuit).
+990|Gemini n'a renvoyé aucune image (le prompt a peut-être déclenché le filtre de sécurité).
+991|Gemini n'a renvoyé aucun audio.
+992|Pour Cloudflare, saisis la clé sous la forme 'id-du-compte:jeton-api'.
+993|Aucune vidéo trouvée sur Pexels pour '{0}'.
+994|Cette vidéo Pexels n'a pas de fichier adapté.
+995|Saisis la clé Higgsfield sous la forme 'id-de-clé:clé-secrète'.
+996|Génération sur Higgsfield ({0} s)
+997|Higgsfield n'a renvoyé aucune image.
+998|Higgsfield n'a renvoyé aucune vidéo.
+999|Pour cela, ajoute une clé ElevenLabs dans Paramètres > Services.
+1000|ElevenLabs double ({0} s)
+1001|Ce modèle Gemini est payant : il faut activer la facturation dans Google AI Studio. Pour du gratuit, choisis Pollinations ou Cloudflare.
+1002|Cloudflare n'a renvoyé aucune image :
+1003|Annulé.
+1004|bloqué par le filtre de contenu
+1005|La génération Higgsfield a échoué : {0}
+1006|Le doublage ElevenLabs a dépassé le délai.
+1007|Attente dans la file gratuite ({0} s)
+1008|Femme
+1009|Le doublage ElevenLabs a échoué :
+1010|Le serveur gratuit est occupé, nouvel essai ({0} s)
+1011|Voix Edge
+1012|La synthèse vocale de Gemini n'a pas répondu.
+1013|Babək · Homme
+1014|La voix Edge n'a renvoyé aucun audio.
+1015|Impossible de joindre le service vocal Edge : {0}
+1016|Le résumé IA fonctionne pour une seule vidéo, pas pour les playlists.
+1017|titre et description (pas de transcription)
+1018|reconnaissance vocale ({0})
+1019|Le résumé des commentaires fonctionne pour une seule vidéo.
+1020|Impossible d'obtenir les commentaires de cette vidéo. Le résumé des commentaires fonctionne mieux pour l'instant avec les vidéos YouTube.
+1021|Préparation de l'audio
+1022|Transcription de la parole ({0})
+1023|Impossible de télécharger le modèle de reconnaissance vocale.
+1024|FFmpeg est nécessaire pour transcrire la parole.
+1025|Impossible de lire l'audio de la vidéo :
+1026|Téléchargement du modèle de reconnaissance vocale (première fois) {0} Mo
+1027|Transcription mot à mot ({0})
+1028|Impossible de vérifier le téléchargement d'OpenCV (SHA-{0} différent).
+1029|Téléchargement du composant de recadrage intelligent (première fois) {0} Mo
+1030|Sous-titres {0} ({1})
+1031|La traduction gratuite a échoué : {0}
+1032|Les clés d'API Anthropic commencent par 'sk-ant-'.
+1033|Cela ne ressemble pas à une clé d'API Gemini (aistudio.google.com/apikey).
+1034|Pour les fonctions d'IA, ajoute ta clé {0} dans Paramètres > Intelligence artificielle.
+1035|Claude a refusé de répondre à ce contenu.
+1036|La réponse a été coupée car trop longue.
+1037|Impossible de lire la réponse de l'IA, réessaie.
+1038|Gemini a renvoyé une erreur ({0}) : {1}
+1039|Gemini a refusé de répondre à ce contenu.
+1040|Gemini a renvoyé une réponse vide, réessaie.
+1041|Clé d'API Claude invalide. Vérifie-la dans Paramètres > Intelligence artificielle.
+1042|Cette clé d'API n'a pas le droit d'utiliser Claude.
+1043|Claude : trop de requêtes. Réessaie dans un moment.
+1044|Claude a refusé la requête : {0}
+1045|Connexion à Claude impossible. Vérifie ta connexion internet.
+1046|Claude a eu une erreur temporaire ({0}). Réessaie dans un moment.
+1047|Connexion à Gemini impossible. Vérifie ta connexion internet.
+1048|Clé d'API Gemini invalide. Vérifie-la dans Paramètres > Intelligence artificielle.
+1049|Le quota gratuit de Gemini est épuisé. Patiente un peu ou réessaie demain (le quota quotidien se renouvelle la nuit).
+1050|Ton compte Anthropic n'a pas assez de crédit (console.anthropic.com > Billing).
+1051|Windows Defender ou un logiciel de sécurité a bloqué le fichier de mise à jour. Tu peux télécharger et installer la mise à jour à la main depuis la page GitHub.
+1052|Impossible de vérifier la mise à jour téléchargée (SHA-{0} différent).
+1053|Le paquet de mise à jour est manquant ou corrompu.
+1054|Les mises à jour automatiques ne fonctionnent pas depuis le code source ; utilise git pull.
+1055|Impossible de télécharger la mise à jour. Vérifie ta connexion internet.
+1056|Cette version n'a pas de fichier de mise à jour téléchargeable.
+1057|yt-dlp est déjà à jour ({0}).
+1058|yt-dlp est déjà à jour.
+1059|Impossible de vérifier le fichier téléchargé (SHA-{0} différent).
+1060|pip a échoué
+1061|Extraction de FFmpeg…
+1062|Extraction de Deno…
+1063|Ce fichier n'a pas de son.
+1064|Conversion : {name}
+1065|Conversion {i}/{n} : {name}
+1066|Création du PDF
+1067|Aucun fichier n'a pu être converti.
+1068|Introuvable : {name}
+1069|Un compte existe déjà avec cet e-mail. Essaie de te connecter.
+1070|Aucun compte avec cet e-mail.
+1071|Mot de passe incorrect.
+1072|E-mail ou mot de passe incorrect.
+1073|Saisis une adresse e-mail valide.
+1074|Saisis ton mot de passe.
+1075|Saisis ton adresse e-mail.
+1076|Trop de tentatives ; réessaie dans un moment.
+1077|Ce compte a été désactivé.
+1078|Compte introuvable ; reconnecte-toi.
+1079|Ta session a expiré ; reconnecte-toi.
+1080|Par sécurité, tu dois d'abord te déconnecter puis te reconnecter.
+1081|Cette méthode de connexion n'est pas encore activée.
+1082|La connexion par e-mail n'est pas encore activée.
+1083|Connexion à TekTıkla
+1084|Connexion…
+1085|Connecté
+1086|Tu peux revenir à TekTıkla ; tu peux fermer cet onglet.
+1087|Connexion impossible
+1088|La fenêtre pop-up a été bloquée ; appuie de nouveau sur le bouton.
+1089|Tu t'es inscrit avec cet e-mail par une autre méthode ; connecte-toi avec celle-ci.
+1090|La fenêtre de connexion a été fermée.
+1091|Ce lien a expiré. Réessaie depuis TekTıkla.
+1092|HTTP {0}
+1093|L'opération a échoué ({0}).
+1094|Impossible de terminer la connexion ; réessaie.
+1095|Serveur injoignable. Vérifie ta connexion Internet.
+1096|Studio média et IA
+1097|Homme
+1098|nette
+1099|enjouée
+1100|informative
+1101|légère
+1102|enthousiaste
+1103|jeune
+1104|ferme
+1105|lumineuse
+1106|chaleureuse
+1107|mûre
+1108|amicale
+1109|douce
+1110|Contraste
+1111|Exposition
+1112|Saturation
+1113|Netteté
+1114|Vignette
+1115|Grain
+1116|Couleur
+1117|Mat
+1118|Pastel
+1119|Drame
+1120|Vintage
+1121|Noir et blanc
+1122|Libre
+1123|Cercle
+1124|Flèche
+1125|Étiquette
+1126|Texte
+1127|Stylo
+1128|Surligneur
+1129|Remplissage
+1130|Contour
+1131|Normal
+1132|Centrer
+1133|Masquer
+1134|Étroite
+1135|{w} × {h} pixels
+1136|les zones transparentes deviennent blanches
+1137|Studio d'images
+1138|Studio Reels
+1139|Miniature
+1140|{n} ex.
+1141|{n} moment(s) trouvé(s)
+1142|Après
+1143|Problème
+1144|auto
+1145|✓ Installé
+1146|✗ Manquant
+1147|{0} fichier(s)
+1148|{t} à regarder
+1149|vu {d}
+1150|ajouté {d}
+1151|{0} min
+1152|{0} h {1} min
+1153|{0} h
+1154|{0} commentaires lus
+1155|{0} idées
+1156|{0} vidéos ajoutées à la liste à regarder

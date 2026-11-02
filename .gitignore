@@ -6,3 +6,12 @@ dist/
 bin/
 Kurulum/
 *.spec
+# Android uygulaması (android/): derleme çıktıları ve imza anahtarı depoya girmez
+android/.gradle/
+android/local.properties
+*.jks
+*.keystore
+keystore.properties
+
+# çeviri aracının iş listesi (dev/i18n_sync.py üretir)
+dev/i18n_todo.txt

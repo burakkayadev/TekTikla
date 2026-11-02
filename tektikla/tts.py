@@ -10,6 +10,7 @@ from __future__ import annotations
 import asyncio
 import re
 import tempfile
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -125,14 +126,34 @@ def estimate_words(text: str, samples: np.ndarray) -> list[Word]:
     return out
 
 
+def _gemini_wav(key: str, text: str, voice: str, style: str | None, on_wait, should_stop) -> bytes:
+    """Gemini ücretsiz katmanında dakikalık istek sınırı var: dolunca söylenen süre kadar bekleyip yeniden dener.
+    Günlük kota bittiyse beklemek işe yaramaz; QuotaError yukarı iletilir (çağıran ücretsiz Edge sesine geçer)."""
+    for attempt in range(5):
+        try:
+            return services.gemini_tts(key, text, voice, style)
+        except services.QuotaError as e:
+            if e.daily or attempt == 4:
+                raise
+            wait = min(max(e.retry_after or 20.0, 4.0), 65.0)
+            end = time.monotonic() + wait
+            while time.monotonic() < end:
+                if should_stop():
+                    raise
+                on_wait(max(1, round(end - time.monotonic())))
+                time.sleep(min(1.0, max(0.0, end - time.monotonic())))
+    raise services.ServiceError("Gemini seslendirme yanıt vermedi.")
+
+
 def synthesize(engine: str, text: str, voice: str, keys: dict, *, speed: float = 1.0,
-               style: str | None = None) -> Speech:
-    """Metni seslendirir. speed: Edge'de konuşma hızı (1.1 = %10 hızlı)."""
+               style: str | None = None, on_wait=lambda seconds: None, should_stop=lambda: False) -> Speech:
+    """Metni seslendirir. speed: Edge'de konuşma hızı (1.1 = %10 hızlı). on_wait: Gemini kotası için beklenirken
+    kalan saniye ile çağrılır."""
     text = re.sub(r"\s+", " ", text).strip()
     if not text:
         return Speech(np.zeros(0, np.float32))
     if engine == "gemini":
-        wav = services.gemini_tts(keys.get("gemini", ""), text, voice or "Kore", style)
+        wav = _gemini_wav(keys.get("gemini", ""), text, voice or "Kore", style, on_wait, should_stop)
         samples = _decode(wav, ".wav")
         return Speech(samples, estimate_words(text, samples))
     if engine == "elevenlabs":

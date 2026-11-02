@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">컴퓨터에 표시된 TekTıkla QR 코드를 스캔하세요</string>
+    <string name="saved">저장됨: %1$s</string>
+    <string name="save_failed">파일을 저장하지 못했습니다</string>
+    <string name="no_app">이것을 열 수 있는 앱이 없습니다</string>
+    <string name="where_gallery">갤러리 › TekTıkla</string>
+    <string name="where_music">음악 › TekTıkla</string>
+    <string name="where_downloads">다운로드 › TekTıkla</string>
+</resources>

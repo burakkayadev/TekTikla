@@ -12,7 +12,7 @@ import random
 import re
 import shutil
 import tempfile
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Callable
 
@@ -21,7 +21,7 @@ from PIL import Image
 from pydantic import BaseModel, Field
 from yt_dlp.utils import download_range_func
 
-from . import ai, captions, engine, imagegen, llm, media, services, vision, words as W
+from . import ai, captions, engine, imagegen, llm, media, services, subtitles, vision, words as W
 from .imagegen import FONTS_DIR
 
 OUT_W, OUT_H, FPS = 1080, 1920, 30
@@ -196,20 +196,33 @@ def find_clips(src: Source, *, provider: str, api_key: str, lo: float, hi: float
 class Edit:
     frame: str = "smart"  # smart (yüz takibi) | blur (bulanık arka plan) | center (ortadan kırp)
     caption: captions.Options = field(default_factory=captions.Options)
+    caption_lang: str = ""  # altyazı dili; boşsa videonun kendi dili (çevrilmez)
     hook: bool = True
     cut_silence: bool = True
     zoom: bool = True
-    progress_bar: bool = True
+    progress_bar: bool = False
     music: str | None = None
     music_volume: float = 0.14
     watermark: str = ""
+    broll: str = "off"  # ara görüntü: off | pexels (ücretsiz stok video) | higgsfield (ücretli AI video)
 
 
-def _shots(spans: list[tuple[float, float]], clip_words: list[W.Word], zoom: bool) -> list[tuple[float, float, float]]:
-    """Konuşulan aralıkları cümle sınırlarından 2-6 sn'lik çekimlere böler; zoom açıksa yakın/uzak sırayla."""
-    shots: list[tuple[float, float, float]] = []
+ZOOM_WIDE = (1.0, 1.045)  # geniş çekim: yavaşça yaklaşır
+ZOOM_CLOSE = (1.11, 1.075)  # yakın çekim ("punch-in"): yavaşça gevşer
+
+
+def _shots(spans: list[tuple[float, float]], clip_words: list[W.Word], zoom: bool) -> list[tuple[float, float, float, float]]:
+    """Konuşulan aralıkları cümle sınırlarından 2-6 sn'lik çekimlere böler: (başlangıç, bitiş, ilk zoom, son zoom).
+    Zoom açıksa çekimler sırayla geniş ve yakın kadrajlanır; her çekimin içinde yakınlaşma akıcı ve yavaştır."""
+    shots: list[tuple[float, float, float, float]] = []
     breaks = sorted({round(ln.end, 2) for ln in W.lines(clip_words, max_words=14)})
     level = 0
+
+    def add(a: float, b: float) -> None:
+        nonlocal level
+        shots.append((a, b, *((ZOOM_WIDE if level % 2 == 0 else ZOOM_CLOSE) if zoom else (1.0, 1.0))))
+        level += 1
+
     for a, b in spans:
         cur = a
         cuts = [t for t in breaks if a + 1.8 < t < b - 1.2]
@@ -217,13 +230,101 @@ def _shots(spans: list[tuple[float, float]], clip_words: list[W.Word], zoom: boo
             if t - cur < 1.8 and t != b:
                 continue
             while t - cur > 6.5 and zoom:  # uzun çekimleri böl ki görüntü canlı kalsın
-                shots.append((cur, cur + 4.0, 1.0 if level % 2 == 0 else 1.14))
+                add(cur, cur + 4.0)
                 cur += 4.0
-                level += 1
-            shots.append((cur, t, 1.0 if level % 2 == 0 or not zoom else 1.14))
+            add(cur, t)
             cur = t
-            level += 1
-    return shots or [(spans[0][0], spans[-1][1], 1.0)]
+    return shots or [(spans[0][0], spans[-1][1], 1.0, 1.0)]
+
+
+def _push(z0: float, z1: float, frames: int, cy: float = 0.42) -> str:
+    """Çekim boyunca z0'dan z1'e akıcı yakınlaşma. perspective filtresi piksel altı çalışır: zoompan gibi titremez.
+    Odak noktası biraz yukarıda (yüzler genelde üst yarıda)."""
+    if abs(z0 - 1) < 1e-3 and abs(z1 - 1) < 1e-3:
+        return ""
+    z = f"({z0:.4f}+{z1 - z0:.4f}*in/{frames})"
+    x0, x1 = f"W/2-W/2/{z}", f"W/2+W/2/{z}"
+    y0, y1 = f"H*{cy}-H*{cy}/{z}", f"H*{cy}+H*{1 - cy:.2f}/{z}"
+    return (f",perspective=x0='{x0}':y0='{y0}':x1='{x1}':y1='{y0}':x2='{x0}':y2='{y1}':x3='{x1}':y3='{y1}'"
+            ":interpolation=cubic:eval=frame")
+
+
+def _llm_key(settings: dict) -> tuple[str, str]:
+    """Kullanılabilir yapay zekâ servisi ve anahtarı (seçili olan önce)."""
+    keys = settings.get("_keys") or {}
+    for p in (settings.get("ai_provider"), "gemini", "claude"):
+        if p and keys.get(p):
+            return p, keys[p]
+    return "", ""
+
+
+def translate_words(words: list[W.Word], extra: list[str], target: str, settings: dict,
+                    source: str = "") -> tuple[list[W.Word], list[str]]:
+    """Konuşmayı hedef dile çevirir. Her cümlenin süresi çevirideki kelimelere uzunluklarına göre dağıtılır; böylece
+    kelime kelime vurgu çeviride de çalışır. extra: aynı istekle çevrilecek ek metinler (kanca başlığı)."""
+    lines = W.lines(words, max_words=12, gap=0.6)
+    texts = [ln.text for ln in lines] + list(extra)
+    provider, key = _llm_key(settings)
+    out_texts = None
+    if key:
+        try:
+            cues = [subtitles.Cue(i, i + 1, t) for i, t in enumerate(texts)]
+            out_texts = [c.text for c in subtitles.translate(cues, target, provider, key)]
+        except Exception:  # noqa: BLE001 - kota dolduysa anahtarsız çeviriyle devam
+            out_texts = None
+    if out_texts is None:
+        out_texts = subtitles.translate_free(texts, target, source)
+    result: list[W.Word] = []
+    for ln, text in zip(lines, out_texts):
+        toks = text.split()
+        if not toks:
+            continue
+        weights = [len(t) + 2 for t in toks]
+        total, span, cur = sum(weights), max(0.3, ln.end - ln.start), ln.start
+        for tok, weight in zip(toks, weights):
+            d = span * weight / total
+            result.append(W.Word(round(cur, 3), round(cur + d * 0.94, 3), tok))
+            cur += d
+    return result, out_texts[len(lines):]
+
+
+class BrollShot(BaseModel):
+    at: float = Field(description="Ara görüntünün başlayacağı saniye (verilen zaman çizelgesinde)")
+    seconds: float = Field(description="Süre: 1.6 ile 2.8 saniye arası")
+    query: str = Field(description="Stok video araması: 2-4 kelime, İngilizce, somut ve görselleştirilebilir")
+    prompt: str = Field(description="AI video için kısa İngilizce sahne tarifi: konu, mekân, ışık, kamera hareketi")
+
+
+class BrollPlan(BaseModel):
+    shots: list[BrollShot]
+
+
+BROLL_SYSTEM = """Sen kısa video kurgucususun. Konuşmalı bir Reels klibine, anlatılanı gösteren kısa ara görüntüler
+(B-roll) yerleştiriyorsun. Kurallar:
+- Somut bir nesne, mekân, eylem ya da duygu anlatılan anları seç; soyut cümlelere koyma.
+- İlk 2.5 saniyeye ve son 1.5 saniyeye koyma; iki ara görüntü arasında en az 5 saniye olsun.
+- Konuşmacının tepki ve vurgu anlarında yüzü görünsün; ara görüntü cümlenin içinde başlayıp kelime bitiminde bitsin."""
+
+
+def plan_broll(words: list[W.Word], duration: float, count: int, settings: dict) -> list[dict]:
+    """Yapay zekâ klibin dökümüne bakıp ara görüntülerin yerini ve aramasını seçer (anahtar yoksa boş)."""
+    provider, key = _llm_key(settings)
+    if not key or not words:
+        return []
+    transcript = "\n".join(f"[{ln.start:.1f}-{ln.end:.1f}] {ln.text}" for ln in W.lines(words, max_words=12))
+    prompt = f"Klip süresi: {duration:.1f} sn\nEn fazla {count} ara görüntü.\n\n<dokum>\n{transcript}\n</dokum>"
+    plan = llm.generate(provider, key, BROLL_SYSTEM, prompt, BrollPlan)
+    shots, last = [], -99.0
+    for s in sorted(plan.shots, key=lambda s: s.at):
+        dur = max(1.4, min(float(s.seconds), 3.0))
+        at = float(s.at)
+        if at < 2.5 or at + dur > duration - 1.5 or at - last < 5 or not s.query.strip():
+            continue
+        shots.append({"at": round(at, 2), "seconds": round(dur, 2), "query": s.query.strip(), "prompt": s.prompt.strip()})
+        last = at + dur
+        if len(shots) >= count:
+            break
+    return shots
 
 
 def _escape_path(p: str) -> str:
@@ -294,13 +395,20 @@ class ClipJob(media.Job):
                     self.stage("Yüzler takip ediliyor (akıllı kırpma)", 0.32)
                     track = vision.face_track(seg, lambda f, s: self.emit("progress", stage=s, frac=0.32 + f * 0.13),
                                               lambda: self.cancelled, start=offset, duration=dur)
-                    centers = vision.crop_centers(track, [(s, e) for s, e, _z in shots])
+                    centers = vision.crop_centers(track, [(s, e) for s, e, *_z in shots])
                 except Exception as e:  # noqa: BLE001 - kırpma başarısızsa ortadan devam
                     self.check()
                     self.warnings.append(f"Akıllı kırpma yapılamadı, ortadan kırpıldı ({str(e)[:120]}).")
 
-            ass = captions.build(out_words, out_dur, edit.caption, hook=clip.get("hook", "") if edit.hook else "",
-                                 progress_bar=edit.progress_bar, watermark=edit.watermark)
+            hook = clip.get("hook", "") if edit.hook else ""
+            cap = edit.caption
+            if edit.caption_lang and edit.caption_lang != self.src.lang and out_words:
+                self.stage("Altyazı çevriliyor", 0.3)
+                out_words, extra_texts = translate_words(out_words, [hook] if hook else [], edit.caption_lang,
+                                                           self.settings, self.src.lang)
+                hook = (extra_texts[0] if extra_texts else hook) if hook else ""
+                cap = replace(cap, lang=edit.caption_lang)  # büyük harf kuralları (Türkçe İ) çeviri diline göre
+            ass = captions.build(out_words, out_dur, cap, progress_bar=edit.progress_bar, watermark=edit.watermark)
             (tmp / "altyazi.ass").write_text(ass, encoding="utf-8")
             fonts = tmp / "fonts"
             fonts.mkdir()
@@ -308,20 +416,62 @@ class ClipJob(media.Job):
                 if (FONTS_DIR / name).exists():
                     shutil.copy2(FONTS_DIR / name, fonts / name)
 
-            graph, maps = self._graph(shots, centers, frame, src_w, src_h, offset, info["has_audio"], out_dur)
-            out = self._out_path()
             args = ["-ss", f"{offset:.3f}", "-t", f"{dur + 0.05:.3f}", "-i", str(seg)]
+            extra = {"music": None, "hook": None, "broll": []}
             if edit.music and Path(edit.music).exists():
                 args += ["-stream_loop", "-1", "-i", str(edit.music)]
+                extra["music"] = 1
+            if hook:  # kanca başlığı: tasarlanmış kart, üstten kayarak gelir
+                hw, hh = captions.hook_card(hook, cap.lang, tmp / "kanca.png", uppercase=cap.uppercase)
+                secs = min(3.2, out_dur)
+                extra["hook"] = (args.count("-i"), hw, hh, secs)
+                args += ["-loop", "1", "-framerate", str(FPS), "-t", f"{secs:.2f}", "-i", str(tmp / "kanca.png")]
+            for path, at, seconds in self._broll(out_words, out_dur, tmp):
+                extra["broll"].append((args.count("-i"), at, seconds))
+                args += ["-i", str(path)]
+            graph, maps = self._graph(shots, centers, frame, src_w, src_h, info["fps"], info["has_audio"], out_dur, extra)
+            out = self._out_path()
             args += ["-filter_complex", graph, *maps,
                      "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
                      "-profile:v", "high", "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-ar", "48000",
                      "-movflags", "+faststart", "-shortest", str(out)]
             self.ffmpeg(args, out_dur, "Reels kurgulanıyor", (0.45, 0.97), cwd=str(tmp))
             # ana video en sonda: kuyruktaki "Aç" son dosyayı açar
-            return self._extras(out, seg, offset, shots, centers, frame, src_w, src_h) + [str(out)]
+            return self._extras(out, seg, offset, shots, centers, frame, src_w, src_h, hook, cap.lang) + [str(out)]
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
+
+    def _broll(self, words: list[W.Word], duration: float, tmp: Path) -> list[tuple[Path, float, float]]:
+        """Ara görüntüler: Pexels'ten ücretsiz stok video ya da Higgsfield ile üretilen AI video (ücretli)."""
+        mode = self.edit.broll
+        keys = self.settings.get("_keys") or {}
+        if mode not in ("pexels", "higgsfield") or not keys.get(mode):
+            return []
+        self.stage("Ara görüntüler planlanıyor", 0.3)
+        try:
+            shots = plan_broll(words, duration, 3 if mode == "pexels" else 2, self.settings)
+        except Exception as e:  # noqa: BLE001
+            self.check()
+            self.warnings.append(f"Ara görüntü planlanamadı: {str(e)[:120]}")
+            return []
+        if not shots and not _llm_key(self.settings)[1]:
+            self.warnings.append("Ara görüntü için yapay zekâ anahtarı gerekir (Gemini ücretsiz).")
+        out, used = [], set()
+        for i, s in enumerate(shots):
+            self.stage(f"Ara görüntü hazırlanıyor ({i + 1}/{len(shots)})", 0.32 + 0.12 * i / len(shots))
+            try:
+                if mode == "pexels":
+                    data, _credit = services.pexels_video(keys["pexels"], s["query"], s["seconds"], "en", used)
+                else:
+                    data = services.higgsfield_video(keys["higgsfield"], s["prompt"] or s["query"], aspect="9:16",
+                                                     duration=4, should_stop=lambda: self.cancelled)
+                path = tmp / f"ara{i}.mp4"
+                path.write_bytes(data)
+                out.append((path, s["at"], s["seconds"]))
+            except Exception as e:  # noqa: BLE001 - biri olmazsa diğerleriyle devam
+                self.check()
+                self.warnings.append(f"Ara görüntü atlandı ({s['query']}): {str(e)[:100]}")
+        return out
 
     def ffmpeg(self, args, duration, stage, span=(0, 1), cwd=None):  # noqa: D401 - cwd destekli sürüm
         a, b = span
@@ -329,15 +479,15 @@ class ClipJob(media.Job):
         media.run_ffmpeg(args, duration=duration, job=self, cwd=cwd,
                          on_progress=lambda f: self.emit("progress", stage=stage, frac=a + (b - a) * f))
 
-    def _graph(self, shots, centers, frame, sw, sh, offset, has_audio, out_dur) -> tuple[str, list[str]]:
+    def _graph(self, shots, centers, frame, sw, sh, fps, has_audio, out_dur, extra) -> tuple[str, list[str]]:
         n = len(shots)
         parts = [f"[0:v]split={n}" + "".join(f"[s{i}]" for i in range(n))]
         if has_audio:
             parts.append(f"[0:a]asplit={n}" + "".join(f"[t{i}]" for i in range(n)))
-        for i, ((s, e, zoom), cx) in enumerate(zip(shots, centers)):
+        for i, ((s, e, z0, z1), cx) in enumerate(zip(shots, centers)):
             chain = f"[s{i}]trim=start={s:.3f}:end={e:.3f},setpts=PTS-STARTPTS,"
             if frame == "blur":
-                fw = int(OUT_W * zoom) // 2 * 2
+                fw = int(OUT_W * (1.06 if z0 > 1.05 else 1.0)) // 2 * 2
                 parts.append(chain + f"split[bg{i}][fg{i}]")
                 parts.append(f"[bg{i}]scale=270:480:force_original_aspect_ratio=increase,crop=270:480,"
                              f"boxblur=12:2,eq=brightness=-0.06,scale={OUT_W}:{OUT_H}[b{i}]")
@@ -345,30 +495,53 @@ class ClipJob(media.Job):
                 parts.append(f"[b{i}][f{i}]overlay=(W-w)/2:(H-h)/2,setsar=1[v{i}]")
             else:
                 if sw / sh >= 9 / 16:
-                    ch = int(sh / zoom) // 2 * 2
+                    ch = sh // 2 * 2
                     cw = int(ch * 9 / 16) // 2 * 2
                 else:
-                    cw = int(sw / zoom) // 2 * 2
+                    cw = sw // 2 * 2
                     ch = int(cw * 16 / 9) // 2 * 2
                 x = int(min(max(cx * sw - cw / 2, 0), sw - cw))
-                y = int(min(max((sh - ch) * (0.42 if zoom > 1 else 0.5), 0), sh - ch))
-                parts.append(chain + f"crop={cw}:{ch}:{x}:{y},scale={OUT_W}:{OUT_H}:flags=lanczos,setsar=1[v{i}]")
+                y = int(min(max((sh - ch) * 0.5, 0), sh - ch))
+                move = _push(z0, z1, max(1, round((e - s) * fps)))
+                parts.append(chain + f"crop={cw}:{ch}:{x}:{y},scale={OUT_W}:{OUT_H}:flags=lanczos{move},setsar=1[v{i}]")
             if has_audio:
                 parts.append(f"[t{i}]atrim=start={s:.3f}:end={e:.3f},asetpts=PTS-STARTPTS[a{i}]")
             else:
                 parts.append(f"anullsrc=r=48000:cl=stereo,atrim=duration={e - s:.3f}[a{i}]")
         parts.append("".join(f"[v{i}][a{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=1[vc][ac]")
-        parts.append(f"[vc]fps={FPS},ass=altyazi.ass:fontsdir=fonts,format=yuv420p[vout]")
+        # renk ve netlik: hafif kontrast ve doygunluk; dikey büyütmenin yumuşattığı ayrıntıyı geri kazandıran netleştirme
+        parts.append(f"[vc]fps={FPS},eq=contrast=1.04:saturation=1.07,unsharp=5:5:0.45:5:5:0[vg]")
+        cur = "vg"
+        for k, (idx, at, dur) in enumerate(extra["broll"]):  # ara görüntüler: yumuşak geçişle, konuşma sürerken
+            parts.append(f"[{idx}:v]trim=duration={dur:.2f},setpts=PTS-STARTPTS+{at:.3f}/TB,"
+                         f"scale={OUT_W}:{OUT_H}:force_original_aspect_ratio=increase,crop={OUT_W}:{OUT_H},setsar=1,"
+                         f"fps={FPS},eq=contrast=1.04:saturation=1.07,format=yuva420p,"
+                         f"fade=t=in:st={at:.3f}:d=0.2:alpha=1,fade=t=out:st={at + dur - 0.2:.3f}:d=0.2:alpha=1[br{k}]")
+            parts.append(f"[{cur}][br{k}]overlay=eof_action=pass:enable='between(t,{at:.3f},{at + dur:.3f})'[vb{k}]")
+            cur = f"vb{k}"
+        if extra["hook"]:
+            idx, _w, _h, secs = extra["hook"]
+            parts.append(f"[{idx}:v]format=rgba,fade=t=in:st=0:d=0.28:alpha=1,"
+                         f"fade=t=out:st={max(0.3, secs - 0.35):.2f}:d=0.35:alpha=1[hk]")
+            parts.append(f"[{cur}][hk]overlay=x=(W-w)/2:y=230+46*max(0\\,1-t/0.32):eof_action=pass[vh]")
+            cur = "vh"
+        parts.append(f"[{cur}]ass=altyazi.ass:fontsdir=fonts,format=yuv420p[vout]")
         fade = f"afade=t=out:st={max(0, out_dur - 0.35):.2f}:d=0.35"
-        if self.edit.music and Path(self.edit.music).exists():
+        if has_audio:  # konuşma netliği: uğultu kesilir, hafif gürültü azaltma ve sıkıştırma
+            parts.append("[ac]highpass=f=70,afftdn=nr=8:nf=-38,"
+                         "acompressor=threshold=-20dB:ratio=2.5:attack=10:release=200:makeup=1.6[acv]")
+            voice_in = "[acv]"
+        else:
+            voice_in = "[ac]"
+        if extra["music"] is not None:
             vol = max(0.02, min(self.edit.music_volume, 1.0))
-            parts.append(f"[1:a]aresample=48000,volume={vol:.3f}[mus]")
-            parts.append("[ac]aresample=48000,asplit=2[voice][key]")
+            parts.append(f"[{extra['music']}:a]aresample=48000,volume={vol:.3f}[mus]")
+            parts.append(f"{voice_in}aresample=48000,asplit=2[voice][key]")
             parts.append("[mus][key]sidechaincompress=threshold=0.02:ratio=8:attack=20:release=400[duck]")
             parts.append(f"[voice][duck]amix=inputs=2:duration=first:normalize=0,{fade},"
                          "loudnorm=I=-14:TP=-1.5:LRA=11[aout]")
         else:
-            parts.append(f"[ac]aresample=48000,{fade},loudnorm=I=-14:TP=-1.5:LRA=11[aout]")
+            parts.append(f"{voice_in}aresample=48000,{fade},loudnorm=I=-14:TP=-1.5:LRA=11[aout]")
         return ";".join(parts), ["-map", "[vout]", "-map", "[aout]"]
 
     def _out_path(self) -> Path:
@@ -381,7 +554,7 @@ class ClipJob(media.Job):
             n += 1
         return path
 
-    def _extras(self, out: Path, seg: Path, offset, shots, centers, frame, sw, sh) -> list[str]:
+    def _extras(self, out: Path, seg: Path, offset, shots, centers, frame, sw, sh, hook: str, lang: str) -> list[str]:
         """Gönderi açıklaması (.txt) ve kanca yazılı kapak görseli (.jpg)."""
         clip = self.clip
         tags = " ".join("#" + re.sub(r"\W+", "", t) for t in clip.get("hashtags") or [] if re.sub(r"\W+", "", t))
@@ -400,8 +573,8 @@ class ClipJob(media.Job):
                 cw = int(img.height * 9 / 16)
                 x = int(min(max(centers[0] * img.width - cw / 2, 0), img.width - cw))
                 img = img.crop((x, 0, x + cw, img.height))
-            cover = imagegen.compose(img, clip.get("hook") or clip.get("title", ""), aspect="9:16", layout="bottom",
-                                     style="bold", lang=self.edit.caption.lang)
+            cover = imagegen.compose(img, hook or clip.get("hook") or clip.get("title", ""), aspect="9:16",
+                                     layout="bottom", style="bold", lang=lang)
             jpg = out.with_name(out.stem + " (kapak).jpg")
             cover.save(jpg, "JPEG", quality=92)
             files.append(str(jpg))
@@ -554,11 +727,24 @@ class IdeaJob(media.Job):
         try:
             from . import tts
             voice = o.voice or tts.default_voice(o.voice_engine, o.language)
-            speeches, n = [], len(script.scenes)
-            for i, scene in enumerate(script.scenes):
+            speeches, n, engine_name = [], len(script.scenes), o.voice_engine
+            i = 0
+            while i < n:
+                scene = script.scenes[i]
                 self.stage(f"Seslendiriliyor ({i + 1}/{n})", 0.05 + 0.25 * i / n)
-                speeches.append(tts.synthesize(o.voice_engine, scene.narration, voice, keys,
-                                               speed=1.08 if o.voice_engine == "edge" else 1.0))
+                try:
+                    speeches.append(tts.synthesize(
+                        engine_name, scene.narration, voice, keys, speed=1.08 if engine_name == "edge" else 1.0,
+                        should_stop=lambda: self.cancelled,
+                        on_wait=lambda s: self.emit("progress", stage=f"Gemini kotası: {s} sn bekleniyor", frac=None)))
+                except services.QuotaError:
+                    if engine_name != "gemini":
+                        raise
+                    # günlük kota bitti: ses tutarlı kalsın diye baştan ücretsiz Edge sesiyle
+                    self.warnings.append("Gemini'nin günlük ücretsiz ses kotası doldu; video ücretsiz Edge sesiyle seslendirildi.")
+                    engine_name, voice, speeches, i = "edge", tts.default_voice("edge", o.language), [], 0
+                    continue
+                i += 1
             gap = 0.18
             durations = [max(1.6, s.duration + gap) for s in speeches]
             import numpy as np

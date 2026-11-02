@@ -1,633 +1,1156 @@
-1|Unduh
+1|Menu
 2|Unduhan
-3|BARU
-4|Gambar
-5|Sulih suara
-6|Studio AI
-7|Riwayat
-8|Pengaturan
-9|Ada pembaruan
-10|Memeriksa…
-11|Apa yang ingin
-12|kamu unduh?
-13|Tempel tautan atau cukup salin — TekTıkla mendeteksinya sendiri.
-14|Tautan video, lagu, atau playlist…
-15|Tempel
-16|Analisis
-17|Unduh cepat
-18|MP{0} cepat
-19|Ringkas dengan AI
-20|Menunggu tautan
-21|Setelah dianalisis, semua kualitas, subtitle, dan MP{0} akan muncul di sini.
-22|Menganalisis tautan…
-23|Ringkas dengan AI
-24|Ringkasan komentar
-25|Buat Reels
-26|Sulih suara
-27|Desain sampul
-28|Unduh thumbnail
-29|Video serupa
-30|Bersihkan
-31|Video dalam daftar
-32|Cari di daftar…
-33|Pilih semua
-34|Tidak ada
-35|Video
-36|Audio saja
-37|Kualitas
-38|Jenis file
-39|MP{0} bisa diputar di semua perangkat. MKV menjaga kualitas tertinggi.
-40|Lanjutan: semua format
-41|Format audio
-42|Sampul dan info artis ditambahkan ke file secara otomatis.
-43|Subtitle
-44|Subtitle AI
-45|Menerjemahkan ucapan dalam video ke bahasa pilihanmu dan menambahkannya sebagai subtitle.
-46|Bahasa subtitle
-47|Jika video punya subtitle, itu yang diterjemahkan; jika tidak, ucapan ditranskripsi di komputermu (pemakaian pertama mengunduh model ~{0} MB), lalu diterjemahkan.
-48|Subtitle dari situs
-49|File subtitle milikmu
-50|Belum dipilih (.srt, .vtt, .ass)
-51|Pilih
-52|Hapus
-53|Cara menambahkan
-54|Sematkan
-55|Bakar ke video
-56|.srt terpisah
-57|Lainnya
-58|Unduh sebagian saja
-59|Misalnya dari {0}:{1} sampai {2}:{3}
-60|Awal
-61|Akhir
-62|Unduh seluruh playlist
-63|Semua video di daftar diunduh ke foldernya sendiri.
-64|Tampilkan video
-65|Simpan ke
-66|Ubah
-67|Unduh semua
-68|Tutup
-69|Unduhan dalam antrean dan yang selesai.
-70|Semua
-71|Aktif
-72|Selesai
-73|Gagal
-74|Buka folder
-75|Hapus yang selesai
-76|Belum ada unduhan
-77|Mulailah dengan menganalisis tautan di tab Unduh.
-78|Studio
-79|Ketahui isi video sebelum menontonnya.
-80|Tambahkan kunci API dulu
-81|Kunci Google Gemini gratis: dapatkan dalam hitungan detik di aistudio.google.com/apikey tanpa kartu kredit. Kunci disimpan di komputer ini dengan enkripsi Windows.
-82|Buka Pengaturan
-83|Ringkasan video
-84|Ide video
-85|Tautan video yang ingin diringkas…
-86|Ringkas
-87|Sedang bekerja
-88|Salin
-89|Ringkasan
-90|Poin penting
-91|Topik
-92|Yang disukai
-93|Yang tidak disukai
-94|Masalah yang dilaporkan dan solusinya
-95|Sorotan dari komentar
-96|Pertanyaan yang sering diajukan
-97|Ringkasan lengkap
-98|Studio
-99|Video Instagram Reels, TikTok, dan Shorts dari video panjang atau dari ide.
-100|Reels dari video
-101|Reels dari ide
-102|Tempel tautan video…
-103|Dari komputer
-104|Durasi klip
-105|{0}–{1} dtk
-106|Jumlah klip
-107|Temukan momen terbaik
-108|AI membaca ucapan dan memilih momen yang paling menarik (kunci Gemini gratis). Tanpa kunci, momen dipilih berdasarkan kepadatan ucapan.
-109|Momen yang ditemukan
-110|Tambah klip manual
-111|Tulis idemu… mis. '{0} kebiasaan yang akan mengubah rutinitas pagimu'
-112|Naskah saya tulis sendiri
-113|Tanpa AI; teks saya dibacakan apa adanya
-114|Durasi
-115|{0} dtk
-116|Bahasa
-117|Sulih suara narasi
-118|Suara
-119|Visual
-120|Layanan gambar
-121|Penyuntingan
-122|Bingkai (vertikal {0}:{1})
-123|Potong pintar (lacak wajah)
-124|Latar buram
-125|Potong tengah
-126|Gaya teks
-127|INI
-128|KEREN
-129|BANGET
-130|Ini keren
-131|banget
-132|Ini
-133|keren
-134|Kotak
-135|Ini keren banget
-136|Polos
-137|Mati
-138|Warna sorotan
-139|Posisi
-140|Atas
-141|Tengah
-142|Bawah
-143|Kata di layar
-144|HURUF BESAR
-145|Judul pancingan
-146|Di atas selama {0} detik pertama
-147|Potong jeda hening
-148|Jeda dilewati
-149|Zoom dinamis
-150|Memperbesar saat kalimat berganti
-151|Bilah progres
-152|Nama pengguna
-153|Tanda air kecil di atas
-154|Musik latar
-155|Musik otomatis mengecil saat ada yang bicara
-156|Volume musik
-157|Belum dipilih
-158|Buat Reels
-159|Reels siap
-160|Buat thumbnail dan gambar dari ide. Layanan gratis selalu didahulukan.
-161|Buat thumbnail
-162|Buat gambar
-163|Tulis idemu… mis. '{0} kedai kopi terbaik di Istanbul'
-164|Latar
-165|Biarkan AI membuatnya
-166|Thumbnail video yang dianalisis
-167|Gambar milikku
-168|Rasio
-169|{0}:{1} YouTube
-170|{0}:{1} Reels
-171|{0}:{1} Persegi
-172|{0}:{1} Postingan
-173|Jumlah
-174|Gaya
-175|Otomatis
-176|Foto
-177|Sinematik
-178|Ilustrasi
-179|Teks thumbnail
-180|Judul
-181|Biarkan kosong, AI akan menulisnya
-182|Subjudul (opsional)
-183|mis. Tempat tersembunyi
-184|Tata letak
-185|Kiri
-186|Gaya teks
-187|Tebal
-188|Buat
-189|Terjemahkan video ke bahasa lain dan beri suara. Suara gratis didahulukan.
-190|Bahasa tujuan
-191|Narator
-192|Audio asli
-193|Pelan di latar
-194|Hapus sepenuhnya
-195|Simpan audio asli sebagai trek terpisah
-196|Ganti di pemutar seperti mengganti bahasa
-197|Tambah subtitle
-198|Dalam bahasa tujuan, bisa dinyalakan dan dimatikan
-199|Terjemahan memakai kunci Gemini (gratis) atau Claude dari Pengaturan. Tiap kalimat dibacakan tepat waktu; jika tidak muat, dipercepat sedikit.
-200|Yang pernah kamu unduh.
-201|Cari…
-202|Riwayat kosong
-203|File yang kamu unduh muncul di sini.
-204|Perubahan disimpan otomatis.
-205|Tampilan
-206|Hitam
-207|Kertas
-208|Ungu
-209|Samudra
-210|Font judul
-211|Bandingkan keduanya
-212|Umum
-213|Folder unduhan
-214|Pantau papan klip
-215|Tautan yang disalin terdeteksi otomatis
-216|Unduhan bersamaan
-217|Batas kecepatan
-218|Contoh: {0}M · kosong = tanpa batas
-219|tanpa batas
-220|Format bawaan
-221|Kualitas audio
-222|Tambahan
-223|Sematkan sampul
-224|Sampul video di MP{0} dan MP{1}
-225|Sematkan metadata
-226|Judul, artis, bab
-227|Lewati sponsor
-228|Cookie browser
-229|Untuk video yang perlu login
-230|Tidak ada
-231|Kecerdasan buatan
-232|Layanan
-233|Ringkasan dan terjemahan subtitle
-234|Simpan
-235|Disimpan dengan enkripsi Windows
-236|Hapus
-237|Pengenalan ucapan
-238|Video tanpa subtitle · di komputermu
-239|Cepat
-240|Akurat
-241|Sistem
-242|Versi
-243|Mesin unduhan
-244|Sumber pembaruan
-245|Periksa pembaruan saat dibuka
-246|Pembaruan aplikasi
-247|Periksa
-248|Perbarui
-249|Perbarui mesin unduhan
-250|Jika situs menolak unduhan
-251|Pasang komponen
-252|Komponen yang kurang akan diunduh
-253|Pasang
-254|Layanan
-255|Layanan yang bisa kamu hubungkan untuk gambar, suara, dan video. Opsi gratis selalu didahulukan; kunci disimpan terenkripsi di komputer ini.
-256|Selamat datang di TekTıkla
-257|Pilih bahasamu
-258|Lanjutkan
-259|Menyiapkan TekTıkla
-260|Hanya saat pertama dibuka: memasang komponen untuk menggabungkan video dan untuk YouTube. Ini hanya dilakukan sekali.
-261|Memulai…
-262|Lanjutkan di latar
-263|Coba lagi
-264|Masukkan tautan yang valid (harus diawali http:// atau https://).
-265|Playlist · {0} item
-266|Sumber audio
-267|{0} pilihan kualitas
-268|Bisa diunduh
-269|{0} subtitle
-270|Terbaik
-271|Jangan pakai (pakai kualitas di atas)
-272|Video ini tidak punya subtitle
-273|Tautan ini bagian dari daftar. Jika dinyalakan, semua video di daftar akan diunduh.
-274|Subtitle ditambahkan di dalam video sebagai trek terpisah; bisa dinyalakan dan dimatikan di pemutar.
-275|Subtitle dibakar ke gambar dan terlihat di semua perangkat. Video dienkode ulang jadi butuh waktu; hasilnya MP{0}.
-276|(lossless)
-277|Format khusus
-278|Kualitas terbaik
-279|tersemat
-280|terbakar
-281|· seluruh daftar
-282|{0} / {1} video dipilih ·
-283|{0} / {1} dipilih
-284|Unduh yang dipilih ({0})
-285|Pilih video
-286|Unduh semua ({0})
-287|Disimpan ke:
-288|Pilih minimal satu video dari daftar.
-289|{0} video masuk antrean
-290|Unduhan dimulai
-291|Dalam antrean — mulai setelah komponen terpasang
-292|Mengunduh sebagai MP{0}
-293|Mengunduh dalam kualitas terbaik
-294|Buka
-295|Tampilkan di folder
-296|Batal
-297|Hapus dari daftar
-298|Jika ada subtitle, seluruh ucapan dibaca; jika tidak (seperti X/Twitter), audio ditranskripsi di komputermu lalu diringkas.
-299|Mengambil info video
-300|Mengambil transkrip
-301|AI sedang meringkas video
-302|Apa yang disukai penonton, apa yang dikritik, dan masalah apa yang mereka selesaikan, sekilas.
-303|Tautan video yang komentarnya ingin diringkas…
-304|Ringkas komentar
-305|{0} komentar dengan suka terbanyak dibaca. Saat ini paling baik untuk video YouTube.
-306|Mengambil komentar
-307|AI sedang meringkas komentar
-308|Beri tautan video atau jelaskan topik; AI akan memberi ide konten orisinal.
-309|Buat ide
-310|Dari tautan: ide mirip tapi bukan tiruan; dari topikmu: judul, kalimat pembuka, dan alur.
-311|AI sedang membuat ide
-312|Mengunduh audio video
-313|Mentranskripsi ucapan
-314|Tambahkan kunci API di Pengaturan dulu.
-315|Tulis tautan atau topik.
-316|Masukkan tautan video yang valid.
-317|Permintaan tidak valid.
-318|Tidak ada yang menonjol
-319|Solusi
-320|Ringkasan siap
-321|Ringkasan komentar siap
-322|Ide siap
-323|Masalah dan solusi
-324|Sorotan
-325|Thumbnail disimpan ({0})
-326|Tidak ditemukan video serupa.
-327|Gratis: dapatkan kunci di aistudio.google.com/apikey dengan akun Google, tanpa kartu. Di tingkat gratis, Google dapat memakai teks yang dikirim untuk meningkatkan produknya.
-328|Berbayar tapi sangat murah (ringkasan video {0} menit ~{1} $). Dapatkan kunci di console.anthropic.com; biaya dibebankan ke akun Anthropic-mu.
-329|Dapatkan kunci →
-330|✓ Kunci {name} tersimpan
-331|Kunci {name} belum ditambahkan
-332|Folder unduhan diubah
-333|Siap
-334|TekTıkla siap! Sekarang kamu bisa mengunduh apa saja.
-335|Memasang komponen…
-336|Pemasangan gagal
-337|Pemasangan tidak dapat diselesaikan
-338|Ada pembaruan: v{0}
-339|Versi baru: v{0}
-340|TekTıkla v{0} sudah rilis
-341|Gagal memeriksa
-342|TekTıkla sudah terbaru
-343|Memasang komponen; analisis dimulai setelah selesai…
-344|Tautan terdeteksi, menganalisis
-345|Gagal memperbarui
-346|Buka halaman unduhan
-347|Papan klip tidak terbaca; tempel dengan Ctrl+V.
-348|Disalin ke papan klip
-349|Gagal menyalin
-350|Hapus riwayat unduhan? (File tidak dihapus)
-351|Kunci API disimpan
-352|Kunci API dihapus
-353|Memperbarui…
-354|Sumber pembaruan (repositori GitHub) belum diatur.
-355|Bahasa asli (tanpa terjemahan)
-356|TekTıkla v{0}
-357|Belum diatur
-358|Gratis
-359|Kuota gratis
-360|Gratis + berbayar
-361|Berbayar
-362|Mengambil transkrip kata demi kata
-363|AI sedang memilih momen terbaik
-364|Perlu kunci
-365|Tempel tautan video atau pilih video dari komputermu.
-366|dipilih tanpa AI
-367|Nama klip
-368|Teks pancingan ({0} dtk pertama)
-369|Skor potensi viral
-370|Reels dari ide · {s} dtk
-371|{n} klip dipilih
-372|Temukan momen terbaik dulu
-373|Buat klip yang dipilih ({n})
-374|{n} klip masuk antrean
-375|Reels masuk antrean
-376|Tanpa kunci · {0}+ bahasa · timing per kata
-377|Dengan kunci Gemini · sangat alami dan ekspresif
-378|Mempertahankan suara pembicara · ada tanda air di paket gratis
-379|Suara paling alami · ~{0} menit gratis per bulan
-380|Keterangan dan tagar disalin
-381|Folder
-382|Keterangan
-383|Apa yang ingin kamu lihat? mis. 'Hutan berkabut saat matahari terbenam, sinematik'
-384|thumbnail video
-385|gambar milikmu
-386|Gambar
-387|Teks diperbarui
-388|Tempatkan ulang teks dengan judul dan gaya di atas
-389|Perbarui teks
-390|Gambar siap
-391|Suara alami Microsoft Edge: sepenuhnya gratis, tanpa kunci.
-392|Gemini {0} TTS: di tingkat gratis dengan kunci Gemini-mu. Sangat alami dan ekspresif.
-393|Sulih suara otomatis ElevenLabs: mempertahankan suara pembicara. ~{0} menit per bulan di paket gratis, dengan tanda air.
-394|Sulih suara masuk antrean
-395|Kunci disimpan
-396|Terhubung
-397|Opsional
-398|Tidak terhubung
-399|Dapatkan kunci
-400|Bisa tanpa kunci · tanpa logo dengan akun gratis
-401|~{0} gambar gratis per hari · kualitas FLUX
-402|Nano Banana · ~{0} $ per gambar
-403|Model SOUL · bayar sesuai pemakaian
-404|Video stok
-405|Pexels · kunci gratis
-406|Gambar AI
-407|Gambar bergerak yang dibuat untuk setiap adegan
-408|Video AI
-409|Higgsfield Seedance · satu video per adegan
-410|Latar polos
-411|Instan · hanya teks dan suara
-412|Dalam antrean
-413|Membatalkan…
-414|bersubtitle
-415|Menyiapkan komponen…
-416|Layanan tidak dikenal.
-417|Analisis tautannya dulu.
-418|Pilih minimal satu video.
-419|Playlist
-420|Masukkan tautan yang valid.
-421|Video ini tidak punya thumbnail.
-422|Semua file (*.*)
-423|Waktu akhir harus setelah waktu mulai.
-424|Selesai
-425|Dibatalkan
-426|Thumbnail gagal diunduh.
-427|Gagal memperbarui: {0}
-428|— buka ulang TekTıkla agar berlaku.
-429|Pemasangan gagal: {0}
-430|Untuk terjemahan AI, tambahkan kunci {name} di Pengaturan > Kecerdasan buatan. Untuk transkripsi saja, pilih 'Bahasa asli'.
-431|Diperbarui:
-432|Pembaruan gagal: {0}
-433|Diunduh: {title}
-434|Reels siap: {title}
-435|Sulih suara · {lang}
-436|Sulih suara siap: {title}
-437|Tulis ide atau deskripsi dulu.
-438|Pilih gambar dulu.
-439|Analisis video di tab Unduh dulu.
-440|Tulis judul thumbnail.
-441|Tambahkan kunci untuk layanan ini di Pengaturan > Layanan.
-442|Latar gambar ini sudah tidak tersedia; buat ulang.
-443|Temukan momen terbaik dulu.
-444|Pilih minimal satu klip.
-445|Tulis ide atau naskah video.
-446|Tambahkan kunci untuk suara ini di Pengaturan.
-447|Untuk video stok, tambahkan kunci Pexels gratis di Pengaturan > Layanan.
-448|Untuk video AI, tambahkan kunci Higgsfield di Pengaturan > Layanan (berbayar).
-449|Untuk ElevenLabs, tambahkan kunci di Pengaturan > Layanan.
-450|Untuk suara Gemini, tambahkan kunci Gemini di Pengaturan > Kecerdasan buatan.
-451|Mengubah ide menjadi prompt gambar
-452|Pria|Wanita
-453|Membuat gambar ({0}/{1})
-454|Menggabungkan video dan audio
-455|Mengonversi ke audio
-456|Menyematkan subtitle
-457|Menyiapkan subtitle
-458|Menambahkan sampul
-459|Menambahkan metadata
-460|Memotong bagian sponsor
-461|Mencari bagian sponsor
-462|Subtitle eksternal
-463|Waktu tidak valid: {0}
-464|Tidak ada video yang bisa diunduh di tautan ini.
-465|Perlu verifikasi usia. Di Pengaturan > Cookie browser, pilih browser tempat kamu login.
-466|Situs meminta login. Di Pengaturan > Cookie browser, pilih browser tempat kamu login.
-467|Situs ini meminta login. Login ke situs di browsermu lalu pilih browser itu di Pengaturan > Cookie browser.
-468|Halaman tidak ditemukan ({0}). Periksa tautannya.
-469|Video atau daftar ini tidak ditemukan. Periksa tautannya.
-470|Video ini privat.
-471|Video tidak tersedia (mungkin dihapus atau diblokir di wilayahmu).
-472|Video ini dilindungi DRM dan tidak bisa diunduh.
-473|Situs menolak akses ({0}). Coba perbarui yt-dlp di Pengaturan.
-474|Kualitas yang dipilih tidak tersedia untuk video ini.
-475|FFmpeg diperlukan tapi tidak ditemukan. Pasang dari peringatan di atas.
-476|Tidak bisa terhubung ke situs. Periksa koneksi internetmu.
-477|Kualitas terbaik (otomatis)
-478|Menambahkan subtitle
-479|Mencari sumber subtitle
-480|{0} (terjemahan AI)
-481|Tidak ditemukan ucapan untuk ditranskripsi di video.
-482|Menerjemahkan subtitle ke {0}
-483|FFmpeg diperlukan untuk mengonversi audio.
-484|Galat FFmpeg:
-485|Membakar subtitle ke video
-486|{0}Diunduh, memproses…
-487|Hingga {0}p
-488|Tugas ini butuh FFmpeg tapi tidak ditemukan. Pasang komponen di Pengaturan > Sistem.
-489|File tidak bisa dibaca:
-490|Audio tidak bisa dibaca:
-491|Membaca video
-492|Video lebih dari {0} jam; pilih video yang lebih pendek untuk Reels.
-493|Bagian obrolan yang paling padat dan hidup (dipilih tanpa kunci AI)
-494|Menilai ucapan (tanpa kunci AI)
-495|Mengunduh bagian klip
-496|AI sedang menulis naskah
-497|Bagian klip gagal diunduh.
-498|Menyunting Reels
-499|Menyiapkan sampul
-500|Naskah kembali kosong.
-501|Menggabungkan video
-502|Audio video gagal diunduh.
-503|Sampul gagal disiapkan: {0}
-504|Teksmu dibacakan apa adanya karena tidak ada kunci AI.
-505|Teks yang akan dibacakan kosong.
-506|Gambar adegan {0} tidak didapat, latar polos dipakai: {1}
-507|Membacakan ({0}/{1})
-508|Menyiapkan visual ({0}/{1})
-509|Melacak wajah (potong pintar)
-510|Potong pintar gagal, dipotong di tengah ({0}).
-511|Sulih suara ({0})
-512|Mengunduh video
-513|Mengunggah ke ElevenLabs
-514|Menambahkan sulih suara ke video
-515|Video gagal diunduh.
-516|Video tidak punya audio; tidak ada ucapan untuk disulihsuarakan.
-517|Tidak ditemukan ucapan di video.
-518|Menerjemahkan ucapan
-519|Untuk terjemahan, tambahkan kunci Gemini di Pengaturan > Kecerdasan buatan (gratis).
-520|Pembuatan gambar
-521|Bisa juga tanpa kunci (lambat, logo kecil di sudut). Dengan akun gratis: tanpa logo dan lebih cepat.
-522|sk_… (opsional)
-523|Pembuatan gambar (~{0} gambar gratis per hari)
-524|Buat akun gratis dan token di Workers AI > REST API. Masukkan sebagai 'id-akun:token'.
-525|Video stok vertikal untuk Reels dari ide
-526|Gratis: buat akun di pexels.com/api dan salin kuncimu ({0} pencarian per jam).
-527|Kunci API Pexels
-528|Sulih suara dengan suara asli, narasi alami
-529|Paket gratis: ~{0} menit suara dan ~{1} menit sulih suara bertanda air per bulan (tanpa penggunaan komersial). Setelah itu berbayar.
-530|Gambar AI (SOUL) dan video AI (Seedance) - untuk Reels
-531|Bayar sesuai pemakaian: isi saldo di console.higgsfield.ai dan buat kunci API. Masukkan sebagai 'id-kunci:kunci-rahasia'.
-532|Wanita · jernih
-533|Pria · ceria
-534|Pria · informatif
-535|Wanita · segar
-536|Pria · bersemangat
-537|Wanita · muda
-538|Pria · tegas
-539|Wanita · cerah
-540|Wanita · hangat
-541|Pria · dewasa
-542|Pria · ramah
-543|Wanita · lembut
-544|Waktu Higgsfield habis.
-545|Kunci tidak boleh kosong.
-546|Kunci tampak terlalu pendek.
-547|Untuk ini, tambahkan kunci Gemini di Pengaturan > Kecerdasan buatan (gratis).
-548|Batas kuota gratis Gemini tercapai; coba lagi dalam semenit.
-549|Gemini tidak mengembalikan gambar (prompt mungkin terkena filter keamanan).
-550|Gemini tidak mengembalikan audio.
-551|Untuk Cloudflare, masukkan kunci sebagai 'id-akun:token-api'.
-552|Tidak ada video di Pexels untuk '{0}'.
-553|Video Pexels ini tidak punya file yang cocok.
-554|Masukkan kunci Higgsfield sebagai 'id-kunci:kunci-rahasia'.
-555|Membuat di Higgsfield ({0} dtk)
-556|Higgsfield tidak mengembalikan gambar.
-557|Higgsfield tidak mengembalikan video.
-558|Untuk ini, tambahkan kunci ElevenLabs di Pengaturan > Layanan.
-559|ElevenLabs sedang menyulih suara ({0} dtk)
-560|Model Gemini ini berbayar: kamu perlu mengaktifkan penagihan di Google AI Studio. Untuk gratis, pilih Pollinations atau Cloudflare.
-561|Cloudflare tidak mengembalikan gambar:
-562|Dibatalkan.
-563|terkena filter konten
-564|Pembuatan di Higgsfield gagal: {0}
-565|Waktu sulih suara ElevenLabs habis.
-566|Menunggu di antrean gratis ({0} dtk)
-567|Wanita
-568|Sulih suara ElevenLabs gagal:
-569|Server gratis sibuk, mencoba lagi ({0} dtk)
-570|Suara Edge
-571|Babək · Pria
-572|Suara Edge tidak mengembalikan audio.
-573|Tidak bisa menjangkau layanan suara Edge: {0}
-574|Ringkasan AI berlaku untuk satu video, bukan playlist.
-575|judul dan deskripsi (tanpa transkrip)
-576|pengenalan ucapan ({0})
-577|Ringkasan komentar berlaku untuk satu video.
-578|Komentar video ini tidak bisa diambil. Ringkasan komentar saat ini paling baik untuk video YouTube.
-579|Menyiapkan audio
-580|Mentranskripsi ucapan ({0})
-581|Model pengenalan ucapan gagal diunduh.
-582|FFmpeg diperlukan untuk mentranskripsi ucapan.
-583|Audio video tidak bisa dibaca:
-584|Mengunduh model pengenalan ucapan (pertama kali) {0} MB
-585|Mentranskripsi ucapan kata demi kata ({0})
-586|Unduhan OpenCV tidak dapat diverifikasi (SHA-{0} tidak cocok).
-587|Mengunduh komponen potong pintar (pertama kali) {0} MB
-588|Subtitle {0} ({1})
-589|Kunci API Anthropic diawali 'sk-ant-'.
-590|Ini tidak tampak seperti kunci API Gemini (aistudio.google.com/apikey).
-591|Untuk fitur AI, tambahkan kunci {0} di Pengaturan > Kecerdasan buatan.
-592|Claude menolak menanggapi konten ini.
-593|Jawaban terpotong karena terlalu panjang.
-594|Jawaban AI tidak terbaca, coba lagi.
-595|Gemini mengembalikan galat ({0}): {1}
-596|Gemini menolak menanggapi konten ini.
-597|Gemini mengembalikan jawaban kosong, coba lagi.
-598|Kunci API Claude tidak valid. Periksa di Pengaturan > Kecerdasan buatan.
-599|Kunci API ini tidak diizinkan memakai Claude.
-600|Claude: terlalu banyak permintaan. Coba lagi sebentar lagi.
-601|Claude menolak permintaan: {0}
-602|Tidak bisa terhubung ke Claude. Periksa koneksi internetmu.
-603|Claude mengalami galat sementara ({0}). Coba lagi sebentar lagi.
-604|Tidak bisa terhubung ke Gemini. Periksa koneksi internetmu.
-605|Kunci API Gemini tidak valid. Periksa di Pengaturan > Kecerdasan buatan.
-606|Kuota gratis Gemini habis. Tunggu sebentar atau coba besok (kuota harian direset malam hari).
-607|Akun Anthropic-mu tidak punya cukup kredit (console.anthropic.com > Billing).
-608|Windows Defender atau program keamanan memblokir file pembaruan. Kamu bisa mengunduh dan memasang pembaruan secara manual dari halaman GitHub.
-609|Pembaruan yang diunduh tidak dapat diverifikasi (SHA-{0} tidak cocok).
-610|Paket pembaruan hilang atau rusak.
-611|Pembaruan otomatis tidak berjalan dari kode sumber; gunakan git pull.
-612|Pembaruan gagal diunduh. Periksa koneksi internetmu.
-613|Rilis ini tidak punya file pembaruan untuk diunduh.
-614|yt-dlp sudah terbaru ({0}).
-615|yt-dlp sudah terbaru.
-616|File yang diunduh tidak dapat diverifikasi (SHA-{0} tidak cocok).
-617|pip gagal
-618|Mengekstrak FFmpeg…
-619|Mengekstrak Deno…
-620|Pria
-621|jernih
-622|ceria
-623|informatif
-624|segar
-625|bersemangat
-626|muda
-627|tegas
-628|cerah
-629|hangat
-630|dewasa
-631|ramah
-632|lembut
-633|Detail
+3|Sembunyikan bilah samping (Ctrl+B)
+4|Sematkan bilah samping (Ctrl+B)
+5|Unduh · Buat · Sunting
+6|Unduh
+7|Daftar tontonan
+8|BARU
+9|Gambar
+10|Sulih suara
+11|Konversi
+12|Studio AI
+13|Riwayat
+14|Pengaturan
+15|Dukung
+16|Gunakan dari ponsel
+17|Ada pembaruan
+18|Memeriksa…
+19|Apa yang ingin
+20|kamu unduh?
+21|Tempel tautan atau cukup salin — TekTıkla mendeteksinya sendiri.
+22|Tautan video, lagu, atau playlist…
+23|Tempel
+24|Analisis
+25|Unduh cepat
+26|MP{0} cepat
+27|Ringkas dengan AI
+28|Menunggu tautan
+29|Setelah dianalisis, semua kualitas, subtitle, dan MP{0} akan muncul di sini.
+30|Menganalisis tautan…
+31|Ringkas dengan AI
+32|Tonton nanti
+33|Ringkasan komentar
+34|Buat Reels
+35|Sulih suara
+36|Desain sampul
+37|Unduh thumbnail
+38|Video serupa
+39|Bersihkan
+40|Video dalam daftar
+41|Cari di daftar…
+42|Pilih semua
+43|Tidak ada
+44|Video
+45|Audio saja
+46|Kualitas
+47|Jenis file
+48|MP{0} bisa diputar di semua perangkat. MKV menjaga kualitas tertinggi.
+49|Lanjutan: semua format
+50|Format audio
+51|Sampul dan info artis ditambahkan ke file secara otomatis.
+52|Subtitle
+53|Subtitle AI
+54|Menerjemahkan ucapan dalam video ke bahasa pilihanmu dan menambahkannya sebagai subtitle.
+55|Bahasa subtitle
+56|Jika video punya subtitle, itu yang diterjemahkan; jika tidak, ucapan ditranskripsi di komputermu (pemakaian pertama mengunduh model ~{0} MB), lalu diterjemahkan.
+57|Subtitle dari situs
+58|File subtitle milikmu
+59|Belum dipilih (.srt, .vtt, .ass)
+60|Pilih
+61|Hapus
+62|Cara menambahkan
+63|Sematkan
+64|Bakar ke video
+65|.srt terpisah
+66|Lainnya
+67|Unduh sebagian saja
+68|Misalnya dari {0}:{1} sampai {2}:{3}
+69|Awal
+70|Akhir
+71|Unduh seluruh playlist
+72|Semua video di daftar diunduh ke foldernya sendiri.
+73|Tampilkan video
+74|Simpan ke
+75|Ubah
+76|Unduh semua
+77|Tutup
+78|Unduhan dalam antrean dan yang selesai.
+79|Semua
+80|Aktif
+81|Selesai
+82|Gagal
+83|Buka folder
+84|Hapus yang selesai
+85|Belum ada unduhan
+86|Mulailah dengan menganalisis tautan di tab Unduh.
+87|Video yang ingin kamu tonton nanti menunggu di sini secara berurutan; tetap ada meski aplikasi ditutup.
+88|Tautan video atau playlist (bisa beberapa tautan)
+89|Tambahkan ke daftar
+90|Impor dari YouTube
+91|Tonton Nanti
+92|Video yang disukai
+93|Akan ditonton
+94|Sudah ditonton
+95|Urutan
+96|Urutanku
+97|Terpendek dulu
+98|Terbaru dulu
+99|Hapus yang sudah ditonton
+100|Daftarmu kosong
+101|Tambahkan tautan; video yang ingin kamu tonton nanti akan mengantre di sini.
+102|Ubah gambar, video, dan audio ke format lain; kalau mau, ubah ukurannya ke {0}K, {1}K, atau ukuranmu sendiri.
+103|Seret file ke sini atau klik untuk memilih
+104|PNG, JPG, WEBP, AVIF, HEIC, GIF · MP{0}, MOV, MKV, WEBM · MP{1}, WAV, FLAC, M{2}A, dan lainnya
+105|Tambahkan seluruh folder
+106|Tambah file
+107|Tambah folder
+108|Kosongkan daftar
+109|Preset
+110|Format, kualitas, dan ukuran sekali klik
+111|Format tujuan
+112|Kualitas dan ukuran
+113|Asli
+114|Tinggi
+115|Seimbang
+116|File terkecil
+117|Kecil
+118|Ukuran
+119|Sisi panjang {0} px
+120|HD
+121|{0}K
+122|Kustom
+123|Lebar
+124|Tinggi
+125|px
+126|Pertahankan rasio
+127|Isi dan potong
+128|Regangkan
+129|Pengaturan lanjutan
+130|Putar, potong, frame rate, audio, dan nama file
+131|Putar
+132|Searah jarum jam. Gambar diputar tanpa kehilangan kualitas.
+133|Warna area transparan
+134|Putih
+135|Hitam
+136|Abu-abu muda
+137|Warna kustom
+138|JPG dan PDF tidak mendukung transparansi; area kosong diisi dengan warna ini.
+139|Potong
+140|akhir
+141|Hanya rentang ini yang dikonversi (mnt:dtk). Kosongkan untuk seluruh file.
+142|Frame rate
+143|Frame rate lebih rendah membuat file lebih kecil; {0} untuk video game dan olahraga.
+144|Hapus audio
+145|Menghapus audio dari video sepenuhnya
+146|Seimbangkan volume
+147|Level yang direkomendasikan Instagram dan YouTube (-{0} LUFS)
+148|Jadikan mono
+149|Satu kanal: untuk rekaman suara, file jadi setengahnya
+150|Tambahkan ukuran ke nama file
+151|Contoh: liburan-{0}x{1}.webp
+152|Di samping file
+153|Ke folder TekTıkla
+154|Hapus lokasi dan info perangkat
+155|Data tersembunyi seperti lokasi GPS foto dan model kamera dihapus
+156|Gabungkan jadi satu PDF
+157|Gambar menjadi halaman-halaman satu PDF, sesuai urutan
+158|File siap
+159|Studio
+160|Ketahui isi video sebelum menontonnya.
+161|Tambahkan kunci API dulu
+162|Kunci Google Gemini gratis: dapatkan dalam hitungan detik di aistudio.google.com/apikey tanpa kartu kredit. Kunci disimpan di komputer ini dengan enkripsi Windows.
+163|Buka Pengaturan
+164|Ringkasan video
+165|Ide video
+166|Tautan video yang ingin diringkas…
+167|Ringkas
+168|Sedang bekerja
+169|Salin
+170|Ringkasan
+171|Poin penting
+172|Topik
+173|Yang disukai
+174|Yang tidak disukai
+175|Masalah yang dilaporkan dan solusinya
+176|Sorotan dari komentar
+177|Pertanyaan yang sering diajukan
+178|Ringkasan lengkap
+179|Studio
+180|Video Instagram Reels, TikTok, dan Shorts dari video panjang atau dari ide.
+181|Reels dari video
+182|Reels dari ide
+183|Tempel tautan video…
+184|Dari komputer
+185|Durasi klip
+186|{0}–{1} dtk
+187|Jumlah klip
+188|Temukan momen terbaik
+189|AI membaca ucapan dan memilih momen yang paling menarik (kunci Gemini gratis). Tanpa kunci, momen dipilih berdasarkan kepadatan ucapan.
+190|Momen yang ditemukan
+191|Tambah klip manual
+192|Tulis idemu… mis. '{0} kebiasaan yang akan mengubah rutinitas pagimu'
+193|Naskah saya tulis sendiri
+194|Tanpa AI; teks saya dibacakan apa adanya
+195|Durasi
+196|{0} dtk
+197|Bahasa
+198|Sulih suara narasi
+199|Suara
+200|Visual
+201|Layanan gambar
+202|Penyuntingan
+203|Bingkai (vertikal {0}:{1})
+204|Potong pintar (lacak wajah)
+205|Latar buram
+206|Potong tengah
+207|Gaya teks
+208|Ini
+209|keren
+210|banget
+211|Bersih
+212|INI
+213|KEREN
+214|BANGET
+215|Ini keren
+216|Kotak
+217|Ini keren banget
+218|Polos
+219|Mati
+220|Warna sorotan
+221|Posisi
+222|Atas
+223|Tengah
+224|Bawah
+225|Kata di layar
+226|HURUF BESAR
+227|Judul pancingan
+228|Di atas selama {0} detik pertama
+229|Potong jeda hening
+230|Jeda dilewati
+231|Zoom halus
+232|Bidikan lebar dan dekat, gerakan kamera pelan
+233|Bilah progres
+234|Garis tipis di bawah
+235|Nama pengguna
+236|Tanda air kecil di atas
+237|B-roll
+238|Video stok · Pexels
+239|Video AI · Higgsfield
+240|Musik latar
+241|Musik otomatis mengecil saat ada yang bicara
+242|Volume musik
+243|Belum dipilih
+244|Buat Reels
+245|Reels siap
+246|Buat thumbnail dan gambar dari ide. Layanan gratis selalu didahulukan.
+247|Buat thumbnail
+248|Buat gambar
+249|Edit gambar
+250|Buka gambar
+251|Urungkan (Ctrl+Z)
+252|Ulangi (Ctrl+Y)
+253|Perkecil
+254|Sesuaikan layar (Ctrl+{0})
+255|Perbesar (Ctrl + roda mouse)
+256|Menampilkan aslinya selama ditekan
+257|Sebelum
+258|Buka gambar tersimpan
+259|Atur ulang
+260|Simpan
+261|Buka gambar untuk diedit
+262|Seret dan lepas, tempel dengan Ctrl+V, atau pilih dari komputermu.
+263|Pilih gambar
+264|Tempel dari papan klip
+265|Gambar terbarumu
+266|Pangkas
+267|Sesuaikan
+268|Filter
+269|Teks
+270|Elemen
+271|Menggambar
+272|Sensor
+273|Lapisan
+274|Tulis idemu… mis. '{0} kedai kopi terbaik di Istanbul'
+275|Latar
+276|Biarkan AI membuatnya
+277|Thumbnail video yang dianalisis
+278|Gambar milikku
+279|Rasio
+280|{0}:{1} YouTube
+281|{0}:{1} Reels
+282|{0}:{1} Persegi
+283|{0}:{1} Postingan
+284|Jumlah
+285|Gaya
+286|Otomatis
+287|Foto
+288|Sinematik
+289|Ilustrasi
+290|Teks thumbnail
+291|Judul
+292|Biarkan kosong, AI akan menulisnya
+293|Subjudul (opsional)
+294|mis. Tempat tersembunyi
+295|Tata letak
+296|Kiri
+297|Gaya teks
+298|Tebal
+299|Buat
+300|Terjemahkan video ke bahasa lain dan beri suara. Suara gratis didahulukan.
+301|Bahasa tujuan
+302|Narator
+303|Audio asli
+304|Pelan di latar
+305|Hapus sepenuhnya
+306|Simpan audio asli sebagai trek terpisah
+307|Ganti di pemutar seperti mengganti bahasa
+308|Tambah subtitle
+309|Dalam bahasa tujuan, bisa dinyalakan dan dimatikan
+310|Terjemahan memakai kunci Gemini (gratis) atau Claude dari Pengaturan. Tiap kalimat dibacakan tepat waktu; jika tidak muat, dipercepat sedikit.
+311|Yang pernah kamu unduh.
+312|Cari…
+313|Riwayat kosong
+314|File yang kamu unduh muncul di sini.
+315|Perubahan disimpan otomatis.
+316|Akun
+317|Tampilan
+318|Kertas
+319|Ungu
+320|Samudra
+321|Font judul
+322|Dipakai untuk judul dan tulisan logo
+323|Aa
+324|Lebar
+325|Lembut
+326|Bilah samping
+327|Saat disembunyikan, terbuka ketika mouse dibawa ke tepi · Ctrl+B
+328|Disematkan
+329|Sembunyikan otomatis
+330|Umum
+331|Folder unduhan
+332|Pantau papan klip
+333|Tautan yang disalin terdeteksi otomatis
+334|Unduhan bersamaan
+335|Mati · iPhone atau Android di Wi-Fi yang sama
+336|Hubungkan ponsel
+337|Batas kecepatan
+338|Contoh: {0}M · kosong = tanpa batas
+339|tanpa batas
+340|Format bawaan
+341|Kualitas audio
+342|Tambahan
+343|Sematkan sampul
+344|Sampul video di MP{0} dan MP{1}
+345|Sematkan metadata
+346|Judul, artis, bab
+347|Lewati sponsor
+348|Cookie browser
+349|Untuk video yang perlu login
+350|Tidak ada
+351|Kecerdasan buatan
+352|Layanan
+353|Ringkasan dan terjemahan subtitle
+354|Disimpan dengan enkripsi Windows
+355|Hapus
+356|Pengenalan ucapan
+357|Video tanpa subtitle · di komputermu
+358|Cepat
+359|Akurat
+360|Sistem
+361|Versi
+362|Mesin unduhan
+363|Sumber pembaruan
+364|Dukung TekTıkla
+365|Traktir aku kopi atau ikuti di GitHub
+366|Periksa pembaruan saat dibuka
+367|Pembaruan aplikasi
+368|Periksa
+369|Perbarui
+370|Perbarui mesin unduhan
+371|Jika situs menolak unduhan
+372|Pasang komponen
+373|Komponen yang kurang akan diunduh
+374|Pasang
+375|Layanan
+376|Layanan yang bisa kamu hubungkan untuk gambar, suara, dan video. Opsi gratis selalu didahulukan; kunci disimpan terenkripsi di komputer ini.
+377|Lepaskan untuk mengonversi
+378|Selamat datang di TekTıkla
+379|Pilih bahasamu
+380|Lanjutkan
+381|Menyiapkan TekTıkla
+382|Hanya saat pertama dibuka: memasang komponen untuk menggabungkan video dan untuk YouTube. Ini hanya dilakukan sekali.
+383|Memulai…
+384|Lanjutkan di latar
+385|Coba lagi
+386|Lanjut tanpa akun
+387|Buat akun atau masuk. Fitur seperti mengimpor daftar YouTube memerlukan akun.
+388|Lanjutkan dengan Google
+389|Lanjutkan dengan GitHub
+390|atau dengan email
+391|Masuk
+392|Buat akun
+393|Namamu
+394|Email
+395|Kata sandi (minimal {0} karakter)
+396|Lupa kata sandi
+397|Jika lanjut tanpa akun, kamu tidak bisa memakai fitur akun seperti mengimpor daftar "Tonton Nanti" dan video yang kamu sukai dari YouTube. Kamu bisa masuk kapan saja di Pengaturan > Akun.
+398|Selesaikan proses masuk di halaman yang terbuka di browser; bagian ini akan diperbarui sendiri setelahnya.
+399|Batal
+400|Simpan gambar
+401|Nama file
+402|Format
+403|Salin ke papan klip
+404|Sebelum / sesudah
+405|Geser penggeser untuk membandingkan titik yang sama di kedua versi.
+406|Suka TekTıkla?
+407|TekTıkla gratis dan tanpa iklan. Kalau mau, kamu bisa mendukung dengan mentraktirku kopi atau mengikuti proyek ini dan memberinya bintang di GitHub; begitulah fitur baru terus hadir.
+408|Pindai kode QR dengan kamera ponsel atau klik salah satu kartu.
+409|Nanti
+410|Traktir kopi
+411|Buka di GitHub
+412|Jendela ini selalu bisa dibuka lagi lewat “Dukung” di bilah samping.
+413|Buka TekTıkla di browser ponselmu: komputer ini yang mengerjakan unduhan, Reels, sulih suara, dan konversi, lalu hasilnya masuk ke ponselmu. Berfungsi di iPhone dan Android, tanpa perlu memasang aplikasi.
+414|Koneksi ponsel
+415|Hanya perangkat di jaringan rumah ini yang tahu kode penyambungan yang bisa terhubung
+416|Nyalakan koneksi, lalu kode QR untuk dipindai ponsel akan muncul di sini.
+417|Komputer ini tampaknya tidak terhubung ke jaringan. Kode QR muncul setelah tersambung lewat Wi-Fi atau kabel.
+418|Wi-Fi yang sama
+419|Ponsel dan komputer harus berada di jaringan yang sama.
+420|Pindai kode QR
+421|Arahkan kamera ponsel ke kode, lalu ketuk tautan yang muncul.
+422|Tambahkan ke layar utama
+423|iPhone: Bagikan › Tambah ke Layar Utama. Android: ⋮ › Tambahkan ke layar utama. Terbuka seperti aplikasi.
+424|Alamat
+425|Kode penyambungan
+426|Kode baru
+427|Perangkat terhubung
+428|Aplikasi Android
+429|Kirim tautan dari YouTube, Instagram, atau TikTok lewat Bagikan dan simpan hasilnya langsung ke Galeri. Pindai kode, unduh APK, lalu pasang.
+430|Jika ponsel tidak bisa terhubung: saat Windows bertanya, izinkan “Jaringan pribadi”. Jika Wi-Fi tampil sebagai “Publik”, ubah menjadi “Pribadi” di Setelan Windows › Jaringan.
+431|Traktir aku kopi?
+432|Masukkan tautan yang valid (harus diawali http:// atau https://).
+433|Playlist · {0} item
+434|Sumber audio
+435|{0} pilihan kualitas
+436|Bisa diunduh
+437|{0} subtitle
+438|Terbaik
+439|Jangan pakai (pakai kualitas di atas)
+440|Video ini tidak punya subtitle
+441|Tautan ini bagian dari daftar. Jika dinyalakan, semua video di daftar akan diunduh.
+442|Subtitle ditambahkan di dalam video sebagai trek terpisah; bisa dinyalakan dan dimatikan di pemutar.
+443|Subtitle dibakar ke gambar dan terlihat di semua perangkat. Video dienkode ulang jadi butuh waktu; hasilnya MP{0}.
+444|(lossless)
+445|Format khusus
+446|Kualitas terbaik
+447|tersemat
+448|terbakar
+449|· seluruh daftar
+450|{0} / {1} video dipilih ·
+451|{0} / {1} dipilih
+452|Unduh yang dipilih ({0})
+453|Pilih video
+454|Unduh semua ({0})
+455|Disimpan ke:
+456|Pilih minimal satu video dari daftar.
+457|{0} video masuk antrean
+458|Unduhan dimulai
+459|Dalam antrean — mulai setelah komponen terpasang
+460|Mengunduh sebagai MP{0}
+461|Mengunduh dalam kualitas terbaik
+462|Buka
+463|Tampilkan di folder
+464|Hapus dari daftar
+465|Jika ada subtitle, seluruh ucapan dibaca; jika tidak (seperti X/Twitter), audio ditranskripsi di komputermu lalu diringkas.
+466|Mengambil info video
+467|Mengambil transkrip
+468|AI sedang meringkas video
+469|Apa yang disukai penonton, apa yang dikritik, dan masalah apa yang mereka selesaikan, sekilas.
+470|Tautan video yang komentarnya ingin diringkas…
+471|Ringkas komentar
+472|{0} komentar dengan suka terbanyak dibaca. Saat ini paling baik untuk video YouTube.
+473|Mengambil komentar
+474|AI sedang meringkas komentar
+475|Beri tautan video atau jelaskan topik; AI akan memberi ide konten orisinal.
+476|Buat ide
+477|Dari tautan: ide mirip tapi bukan tiruan; dari topikmu: judul, kalimat pembuka, dan alur.
+478|AI sedang membuat ide
+479|Mengunduh audio video
+480|Mentranskripsi ucapan
+481|Tambahkan kunci API di Pengaturan dulu.
+482|Tulis tautan atau topik.
+483|Masukkan tautan video yang valid.
+484|Permintaan tidak valid.
+485|Tidak ada yang menonjol
+486|Solusi
+487|Ringkasan siap
+488|Ringkasan komentar siap
+489|Ide siap
+490|Masalah dan solusi
+491|Sorotan
+492|Thumbnail disimpan ({0})
+493|Tidak ditemukan video serupa.
+494|Gratis: dapatkan kunci di aistudio.google.com/apikey dengan akun Google, tanpa kartu. Di tingkat gratis, Google dapat memakai teks yang dikirim untuk meningkatkan produknya.
+495|Berbayar tapi sangat murah (ringkasan video {0} menit ~{1} $). Dapatkan kunci di console.anthropic.com; biaya dibebankan ke akun Anthropic-mu.
+496|Dapatkan kunci →
+497|✓ Kunci {name} tersimpan
+498|Kunci {name} belum ditambahkan
+499|Folder unduhan diubah
+500|Siap
+501|TekTıkla siap! Sekarang kamu bisa mengunduh apa saja.
+502|Memasang komponen…
+503|Pemasangan gagal
+504|Pemasangan tidak dapat diselesaikan
+505|Ada pembaruan: v{0}
+506|Versi baru: v{0}
+507|TekTıkla v{0} sudah rilis
+508|Gagal memeriksa
+509|TekTıkla sudah terbaru
+510|Memasang komponen; analisis dimulai setelah selesai…
+511|Tautan terdeteksi, menganalisis
+512|Gagal memperbarui
+513|Buka halaman unduhan
+514|Papan klip tidak terbaca; tempel dengan Ctrl+V.
+515|Disalin ke papan klip
+516|Gagal menyalin
+517|Hapus riwayat unduhan? (File tidak dihapus)
+518|Kunci API disimpan
+519|Kunci API dihapus
+520|Memperbarui…
+521|Sumber pembaruan (repositori GitHub) belum diatur.
+522|Bahasa asli (tanpa terjemahan)
+523|Belum diatur
+524|Gratis
+525|Kuota gratis
+526|Gratis + berbayar
+527|Berbayar
+528|Mengambil transkrip kata demi kata
+529|AI sedang memilih momen terbaik
+530|Perlu kunci
+531|Tempel tautan video atau pilih video dari komputermu.
+532|dipilih tanpa AI
+533|Nama klip
+534|Teks pancingan ({0} dtk pertama)
+535|Skor potensi viral
+536|Teks akan memakai bahasa yang diucapkan di video.
+537|Ucapan diterjemahkan ke bahasa ini dengan AI; sorotan kata per kata tetap ada.
+538|Ucapan diterjemahkan ke bahasa ini dengan terjemahan gratis; tambahkan kunci Gemini agar hasilnya lebih alami.
+539|Video stok gratis yang menggambarkan apa yang diucapkan disisipkan (Pexels). AI yang memilih tempatnya.
+540|Gratis: tambahkan kunci Pexels di Pengaturan > Layanan.
+541|Berbayar: Higgsfield membuat setiap B-roll dengan AI ({0} adegan per klip, memakai kredit).
+542|Berbayar: tambahkan kunci Higgsfield di Pengaturan > Layanan.
+543|Pembicara terlihat sepanjang klip.
+544|Reels dari ide · {s} dtk
+545|{n} klip dipilih
+546|Temukan momen terbaik dulu
+547|Buat klip yang dipilih ({n})
+548|{n} klip masuk antrean
+549|Reels masuk antrean
+550|Tanpa kunci · {0}+ bahasa · timing per kata
+551|Sangat alami dan ekspresif · jika kuota gratis harian habis, dilanjutkan dengan suara Edge
+552|Dengan kunci Gemini · sangat alami dan ekspresif
+553|Mempertahankan suara pembicara · ada tanda air di paket gratis
+554|Suara paling alami · ~{0} menit gratis per bulan
+555|Keterangan dan tagar disalin
+556|Folder
+557|Keterangan
+558|Apa yang ingin kamu lihat? mis. 'Hutan berkabut saat matahari terbenam, sinematik'
+559|thumbnail video
+560|gambar milikmu
+561|Gambar
+562|Edit
+563|Teks diperbarui
+564|Tempatkan ulang teks dengan judul dan gaya di atas
+565|Perbarui teks
+566|Gambar siap
+567|Suara alami Microsoft Edge: sepenuhnya gratis, tanpa kunci.
+568|Gemini {0} TTS: di tingkat gratis dengan kunci Gemini-mu. Sangat alami dan ekspresif.
+569|Sulih suara otomatis ElevenLabs: mempertahankan suara pembicara. ~{0} menit per bulan di paket gratis, dengan tanda air.
+570|Sulih suara masuk antrean
+571|Kunci disimpan
+572|Terhubung
+573|Opsional
+574|Tidak terhubung
+575|Dapatkan kunci
+576|Bisa tanpa kunci · tanpa logo dengan akun gratis
+577|~{0} gambar gratis per hari · kualitas FLUX
+578|Nano Banana · ~{0} $ per gambar
+579|Model SOUL · bayar sesuai pemakaian
+580|Video stok
+581|Pexels · kunci gratis
+582|Gambar AI
+583|Gambar bergerak yang dibuat untuk setiap adegan
+584|Video AI
+585|Higgsfield Seedance · satu video per adegan
+586|Latar polos
+587|Instan · hanya teks dan suara
+588|Bahasa video (tanpa terjemahan)
+589|baru saja
+590|{0} mnt lalu
+591|{0} jam lalu
+592|kemarin
+593|{0} hari lalu
+594|Belum ada yang ditonton
+595|Video yang kamu tandai dengan ✓ berkumpul di sini.
+596|Semua sudah kamu tonton
+597|Tidak ada lagi video untuk ditonton. Kamu bisa menambahkan tautan baru.
+598|Mengambil info…
+599|Berikutnya
+600|Info tidak dapat diambil.
+601|Pindah ke atas
+602|Pindah ke bawah
+603|Tonton lagi
+604|Tonton
+605|Tandai belum ditonton
+606|Tandai sudah ditonton
+607|Seret untuk mengurutkan
+608|Dibuka di browser.
+609|Dibuka di browser. Tandai dengan ✓ setelah kamu tonton.
+610|Ditambahkan ke daftar tontonan
+611|Video ini sudah ada di daftar tontonanmu
+612|Video-video ini sudah ada di daftar tontonanmu
+613|Tidak ada tautan yang valid
+614|Masuk dengan Google untuk mengimpor daftar YouTube.
+615|Pilih browser tempat kamu masuk ke YouTube di Pengaturan > Cookie browser (disarankan Firefox).
+616|Sesi YouTube di {b} yang dipakai; impor ulang hanya menambahkan video baru.
+617|Pilih dulu browser tempat kamu masuk ke YouTube.
+618|Mengimpor daftar Tonton Nanti…
+619|Mengimpor video yang kamu sukai…
+620|Daftar ini sedang diimpor.
+621|Yakin? Tekan lagi
+622|Kecil dan berkualitas · ideal untuk web
+623|Lossless · transparansi tetap ada
+624|Paling kompatibel · foto
+625|File terkecil · perangkat baru
+626|Animasi · {0} warna
+627|Sebagai dokumen
+628|Ikon Windows
+629|Cetak dan arsip · lossless
+630|Tanpa kompresi
+631|Paling kompatibel · H.{0}
+632|Untuk web · VP{0}
+633|Perangkat Apple
+634|Semua trek audio dan subtitle tetap ada
+635|Gambar animasi
+636|Hanya audio
+637|Hanya audio · AAC
+638|Hanya audio · lossless
+639|Paling kompatibel
+640|AAC · perangkat Apple
+641|Lossless · terkompresi
+642|Lossless · tanpa kompresi
+643|Paling efisien
+644|Format terbuka · Vorbis
+645|Perkecil untuk web
+646|WEBP · Full HD · seimbang
+647|Postingan Instagram
+648|Video vertikal
+649|Untuk WhatsApp
+650|MP{0} · JPG · HD
+651|Muat untuk email
+652|File terkecil · HD
+653|Arsip lossless
+654|PNG · FLAC · MKV
+655|Ambil musiknya
+656|MP{0} dari video · {1} kbps
+657|Jadikan ikon
+658|akan diperbesar
+659|Dalam antrean
+660|Hapus dari daftar
+661|Disarankan
+662|Rasio dipertahankan; lebar atau tinggi boleh dikosongkan.
+663|Tepat ukuran ini; tepi yang berlebih dipotong dari tengah.
+664|Tepat ukuran ini; rasio bisa berubah.
+665|Ukuran tidak berubah.
+666|Sisi panjang menjadi {0} px; sama untuk file potret dan lanskap.
+667|{0} file akan diperbesar.
+668|File baru disimpan di folder file aslinya
+669|Disimpan di folder “Hasil konversi” di dalam folder unduhan
+670|Kualitas asli
+671|Kualitas tinggi
+672|Kualitas seimbang
+673|File kecil
+674|Lebar {0} px
+675|Tinggi {0} px
+676|Lossless
+677|Format yang kamu pilih lossless; tidak perlu mengatur kualitas.
+678|Jika bisa, disalin tanpa encode ulang: lossless dan hanya beberapa detik.
+679|Tanpa penurunan kualitas (WEBP/PNG lossless, JPG {0}%); file bisa besar.
+680|Penurunan yang tidak terlihat, file jauh lebih kecil.
+681|Keseimbangan ideal untuk berbagi dan mengirim.
+682|File terkecil; PNG dikurangi menjadi {0} warna (tidak terlihat di tangkapan layar).
+683|File terkecil; detail halus bisa sedikit berkurang.
+684|Pengaturan {name} dipilih
+685|File-file ini sudah ada di daftar
+686|Tidak ada file yang bisa dikonversi di folder ini.
+687|Tidak ada file baru untuk dikonversi. Jika kamu mengubah format, tambahkan lagi file-nya.
+688|Masukkan lebar atau tinggi untuk ukuran kustom.
+689|Akhir potongan harus setelah awal.
+690|Bandingkan
+691|File ini tidak bisa dipratinjau.
+692|Masuk dengan Google
+693|Masuk dengan GitHub
+694|Masuk dengan email
+695|atau buat akun
+696|Masuk atau buat akun
+697|Keluar
+698|Hapus akun
+699|Email-mu belum diverifikasi. Klik tautan di kotak masukmu.
+700|Kirim ulang
+701|Kamu belum masuk
+702|Dengan akun, kamu bisa mengimpor daftar "Tonton Nanti" dan video yang kamu sukai dari YouTube.
+703|Masuk dengan Google di browser
+704|Masuk dengan GitHub di browser
+705|Masukkan email dan kata sandimu.
+706|Kata sandi minimal {0} karakter.
+707|Akunmu sudah dibuat. Email verifikasi telah dikirim.
+708|Selamat datang, {0}!
+709|Tidak dapat memulai proses masuk.
+710|Masukkan alamat email dulu.
+711|Tautan untuk mengatur ulang kata sandi telah dikirim ke email-mu.
+712|Kamu sudah keluar.
+713|Email verifikasi terkirim.
+714|Gagal mengirim.
+715|Akun tidak dapat dihapus.
+716|Akun dan datamu telah dihapus.
+717|Aktif · kamu bisa terhubung dari ponsel
+718|Jika tidak terbuka, coba: {list}
+719|Browser
+720|Belum ada ponsel yang terhubung
+721|Koneksi ponsel aktif. Pindai kode QR dengan ponselmu.
+722|Kode baru dibuat. Ponsel perlu memindai kode QR lagi.
+723|File tidak ditemukan; mungkin sudah dihapus atau dipindahkan.
+724|Ketuk Simpan: video dan foto masuk ke Galeri, audio ke Musik, file lain ke Unduhan.
+725|Untuk menyimpan ke Foto, ketuk Buka, lalu Bagikan > Simpan Video.
+726|Untuk menyimpan ke Foto, ketuk Buka, lalu tekan lama gambarnya > Tambah ke Foto.
+727|Ketuk Simpan untuk mengunduh file ke folder Unduhan di ponsel.
+728|Simpan ke ponsel
+729|Menyimpan ke ponsel
+730|Tersimpan di ponsel: {where}
+731|File tidak dapat disimpan ke ponsel.
+732|Mengirim {0} file ke komputer
+733|Mengirim ke komputer
+734|File terlalu besar (maksimal {0} GB).
+735|File tidak dapat dikirim ke komputer.
+736|Ini dilakukan di TekTıkla pada komputer.
+737|Folder unduhan diubah di TekTıkla pada komputer.
+738|Komputer tidak terjangkau · mencoba lagi…
+739|Pilih dari ponsel
+740|Ketuk untuk memilih file
+741|Tindakan akun dilakukan di TekTıkla pada komputer.
+742|Terhubung:
+743|Hubungkan
+744|Hubungkan ke komputermu
+745|Di TekTıkla pada komputermu, buka Pengaturan > Gunakan dari ponsel, lalu pindai kode QR dengan kamera ponsel.
+746|atau ketik kode penyambungan
+747|Ponsel dan komputer harus berada di jaringan Wi-Fi yang sama.
+748|Kode terdiri dari {0} karakter: tertulis di jendela Gunakan dari ponsel pada komputer.
+749|Kode salah. Ketik kode yang tampil di jendela pada komputer.
+750|Komputer tidak terjangkau. Apakah TekTıkla terbuka dan ponsel di Wi-Fi yang sama?
+751|Kode penyambungan berubah. Pindai lagi kode QR atau ketik kode baru.
+752|Tautan yang dibagikan
+753|Unduh cepat
+754|Unduh MP{0}
+755|Video ini sudah ada di daftar
+756|Kecerahan
+757|Sorotan
+758|Bayangan
+759|Pudar
+760|Suhu
+761|Rona
+762|Vibrance
+763|Geser rona
+764|Cerah
+765|Hangat
+766|Sejuk
+767|Jam emas
+768|Display
+769|JUDUL
+770|Tulis teksmu di sini
+771|Persegi panjang
+772|Garis
+773|Duplikat (Ctrl+D)
+774|Duplikat
+775|Bawa ke depan
+776|Kirim ke belakang
+777|Hapus (Del)
+778|Putar dan balik
+779|Putar ke kiri
+780|Putar ke kanan
+781|Balik horizontal
+782|Balik vertikal
+783|Luruskan
+784|Seret bingkai dari sudutnya atau pegang bagian dalamnya untuk memindahkan. Luruskan foto yang miring dengan Luruskan.
+785|Atur ulang pangkasan
+786|Tingkatkan otomatis
+787|Cahaya
+788|Detail
+789|Atur ulang penyesuaian
+790|Intensitas
+791|Tambahkan gaya teks. Untuk mengedit teks yang ada, klik teks itu di gambar.
+792|Font
+793|Ekstra tebal
+794|Miring
+795|Huruf kapital
+796|Rata kiri
+797|Rata kanan
+798|Ketebalan
+799|Bayangan
+800|Kotak latar
+801|Opasitas kotak
+802|Jarak huruf
+803|Jarak baris
+804|Opasitas
+805|Sudut
+806|Tambah bentuk
+807|Seret elemen untuk memindahkannya dan tarik sudutnya untuk mengubah ukuran. Emoji diedit seperti teks.
+808|Bingkai
+809|Kelengkungan sudut
+810|Seret di atas gambar untuk menggambar. Setiap goresan jadi lapisan sendiri; urungkan dengan Ctrl+Z.
+811|Hapus semua coretan
+812|Seret di atas area yang ingin disembunyikan: wajah, pelat nomor, alamat, nomor telepon…
+813|Pikselkan
+814|Buramkan
+815|Kekuatan
+816|Belum ada lapisan. Teks, bentuk, coretan, dan area sensor akan muncul di sini setelah kamu menambahkannya.
+817|Tampilkan
+818|Lapisan teratas di daftar juga berada paling atas di gambar.
+819|Alat edit akan muncul di sini setelah kamu membuka gambar.
+820|Belum ada gambar yang dibuka
+821|Penyesuaian otomatis diterapkan
+822|Gambar ini tidak bisa dibuka.
+823|Tidak ada gambar di papan klip.
+824|Papan klip tidak bisa diakses. Salin gambarnya lalu tekan Ctrl+V.
+825|Pilih foto dari ponselmu; edit lalu simpan ke komputer dan ponselmu.
+826|Semua editan diatur ulang. Tekan Ctrl+Z untuk mengurungkan.
+827|(diedit)
+828|Gambar tidak bisa disimpan.
+829|Tersimpan: {name}
+830|Gambar disalin ke papan klip
+831|Tidak bisa menyalin ke papan klip.
+832|Membatalkan…
+833|bersubtitle
+834|Menyiapkan komponen…
+835|Layanan tidak dikenal.
+836|Analisis tautannya dulu.
+837|Pilih minimal satu video.
+838|Playlist
+839|Masukkan tautan yang valid.
+840|Video ini tidak punya thumbnail.
+841|Semua file (*.*)
+842|Sistem akun belum disiapkan.
+843|Selamat datang, {name}!
+844|Koneksi ponsel tidak dapat dimulai.
+845|Waktu akhir harus setelah waktu mulai.
+846|Selesai
+847|Dibatalkan
+848|Thumbnail gagal diunduh.
+849|Gagal memperbarui: {0}
+850|— buka ulang TekTıkla agar berlaku.
+851|Pemasangan gagal: {0}
+852|Daftar YouTube-mu tidak dapat diakses. Pilih browser tempat kamu masuk ke YouTube di Pengaturan > Cookie browser (disarankan Firefox).
+853|Untuk terjemahan AI, tambahkan kunci {name} di Pengaturan > Kecerdasan buatan. Untuk transkripsi saja, pilih 'Bahasa asli'.
+854|Diperbarui:
+855|Pembaruan gagal: {0}
+856|Diunduh: {title}
+857|Reels siap: {title}
+858|Sulih suara · {lang}
+859|Sulih suara siap: {title}
+860|Tambahkan dulu file yang akan dikonversi.
+861|Konversi · {fmt}
+862|Dikonversi: {title}
+863|Tulis ide atau deskripsi dulu.
+864|Pilih gambar dulu.
+865|Analisis video di tab Unduh dulu.
+866|Tulis judul thumbnail.
+867|Tambahkan kunci untuk layanan ini di Pengaturan > Layanan.
+868|Latar gambar ini sudah tidak tersedia; buat ulang.
+869|Gambar tidak ditemukan; mungkin sudah dihapus atau dipindahkan.
+870|Format ini tidak bisa dibuka di editor. Ubah dulu ke JPG atau PNG lewat Konversi.
+871|Temukan momen terbaik dulu.
+872|Pilih minimal satu klip.
+873|Untuk video stok, tambahkan kunci Pexels gratis di Pengaturan > Layanan.
+874|Untuk video AI, tambahkan kunci Higgsfield di Pengaturan > Layanan (berbayar).
+875|Tulis ide atau naskah video.
+876|Tambahkan kunci untuk suara ini di Pengaturan.
+877|Untuk ElevenLabs, tambahkan kunci di Pengaturan > Layanan.
+878|Untuk suara Gemini, tambahkan kunci Gemini di Pengaturan > Kecerdasan buatan.
+879|Hasil konversi
+880|Mengubah ide menjadi prompt gambar
+881|Pria|Wanita
+882|Membuat gambar ({0}/{1})
+883|Menggabungkan video dan audio
+884|Mengonversi ke audio
+885|Menyematkan subtitle
+886|Menyiapkan subtitle
+887|Menambahkan sampul
+888|Menambahkan metadata
+889|Memotong bagian sponsor
+890|Mencari bagian sponsor
+891|Subtitle eksternal
+892|Waktu tidak valid: {0}
+893|Cookie Chrome dan Edge tidak bisa dibaca di Windows. Masuk ke situsnya di Firefox, lalu pilih Firefox di Pengaturan > Cookie browser.
+894|Browser yang kamu pilih tidak ada di komputer ini atau belum pernah dibuka. Di Pengaturan > Cookie browser, pilih browser tempat kamu masuk ke situs itu.
+895|Tidak ada video yang bisa diunduh di tautan ini.
+896|Perlu verifikasi usia. Di Pengaturan > Cookie browser, pilih browser tempat kamu login.
+897|Situs meminta login. Di Pengaturan > Cookie browser, pilih browser tempat kamu login.
+898|Situs ini meminta login. Login ke situs di browsermu lalu pilih browser itu di Pengaturan > Cookie browser.
+899|Halaman tidak ditemukan ({0}). Periksa tautannya.
+900|Video atau daftar ini tidak ditemukan. Periksa tautannya.
+901|Video ini privat.
+902|Video tidak tersedia (mungkin dihapus atau diblokir di wilayahmu).
+903|Video ini dilindungi DRM dan tidak bisa diunduh.
+904|Situs menolak akses ({0}). Coba perbarui yt-dlp di Pengaturan.
+905|Kualitas yang dipilih tidak tersedia untuk video ini.
+906|FFmpeg diperlukan tapi tidak ditemukan. Pasang dari peringatan di atas.
+907|Tidak bisa terhubung ke situs. Periksa koneksi internetmu.
+908|Kualitas terbaik (otomatis)
+909|Menambahkan subtitle
+910|Mencari sumber subtitle
+911|{0} (terjemahan AI)
+912|Tidak ditemukan ucapan untuk ditranskripsi di video.
+913|Menerjemahkan subtitle ke {0}
+914|FFmpeg diperlukan untuk mengonversi audio.
+915|Galat FFmpeg:
+916|Membakar subtitle ke video
+917|{0}Diunduh, memproses…
+918|Hingga {0}p
+919|Tugas ini butuh FFmpeg tapi tidak ditemukan. Pasang komponen di Pengaturan > Sistem.
+920|File tidak bisa dibaca:
+921|Audio tidak bisa dibaca:
+922|Membaca video
+923|Video lebih dari {0} jam; pilih video yang lebih pendek untuk Reels.
+924|Bagian obrolan yang paling padat dan hidup (dipilih tanpa kunci AI)
+925|Menilai ucapan (tanpa kunci AI)
+926|Mengunduh bagian klip
+927|Merencanakan B-roll
+928|AI sedang menulis naskah
+929|Bagian klip gagal diunduh.
+930|Menyunting Reels
+931|B-roll memerlukan kunci AI (Gemini gratis).
+932|Menyiapkan B-roll ({0}/{1})
+933|Menyiapkan sampul
+934|Naskah kembali kosong.
+935|Menggabungkan video
+936|Audio video gagal diunduh.
+937|Menerjemahkan teks
+938|B-roll tidak dapat direncanakan: {0}
+939|Sampul gagal disiapkan: {0}
+940|Teksmu dibacakan apa adanya karena tidak ada kunci AI.
+941|Teks yang akan dibacakan kosong.
+942|Gambar adegan {0} tidak didapat, latar polos dipakai: {1}
+943|Membacakan ({0}/{1})
+944|Menyiapkan visual ({0}/{1})
+945|Melacak wajah (potong pintar)
+946|B-roll dilewati ({0}): {1}
+947|Potong pintar gagal, dipotong di tengah ({0}).
+948|Kuota suara gratis harian Gemini habis; video diisi suara Edge gratis.
+949|Kuota Gemini: menunggu {0} dtk
+950|Sulih suara ({0})
+951|Mengunduh video
+952|Mengunggah ke ElevenLabs
+953|Menambahkan sulih suara ke video
+954|Video gagal diunduh.
+955|Video tidak punya audio; tidak ada ucapan untuk disulihsuarakan.
+956|Tidak ditemukan ucapan di video.
+957|Menerjemahkan ucapan
+958|Kuota suara gratis harian Gemini habis; sulih suara diselesaikan dengan suara Edge gratis. Kamu bisa mencoba suara Gemini lagi besok.
+959|Terjemahan AI gagal (kuota mungkin habis); terjemahan gratis yang dipakai.
+960|Pembuatan gambar
+961|Bisa juga tanpa kunci (lambat, logo kecil di sudut). Dengan akun gratis: tanpa logo dan lebih cepat.
+962|sk_… (opsional)
+963|Pembuatan gambar (~{0} gambar gratis per hari)
+964|Buat akun gratis dan token di Workers AI > REST API. Masukkan sebagai 'id-akun:token'.
+965|Video stok vertikal untuk Reels dari ide
+966|Gratis: buat akun di pexels.com/api dan salin kuncimu ({0} pencarian per jam).
+967|Kunci API Pexels
+968|Sulih suara dengan suara asli, narasi alami
+969|Paket gratis: ~{0} menit suara dan ~{1} menit sulih suara bertanda air per bulan (tanpa penggunaan komersial). Setelah itu berbayar.
+970|Gambar AI (SOUL) dan video AI (Seedance) - untuk Reels
+971|Bayar sesuai pemakaian: isi saldo di console.higgsfield.ai dan buat kunci API. Masukkan sebagai 'id-kunci:kunci-rahasia'.
+972|Batas kuota gratis Gemini tercapai; coba lagi dalam semenit.
+973|Wanita · jernih
+974|Pria · ceria
+975|Pria · informatif
+976|Wanita · segar
+977|Pria · bersemangat
+978|Wanita · muda
+979|Pria · tegas
+980|Wanita · cerah
+981|Wanita · hangat
+982|Pria · dewasa
+983|Pria · ramah
+984|Wanita · lembut
+985|Waktu Higgsfield habis.
+986|Kunci tidak boleh kosong.
+987|Kunci tampak terlalu pendek.
+988|Kuota gratis harian Gemini habis; coba lagi besok atau pilih suara Edge gratis.
+989|Untuk ini, tambahkan kunci Gemini di Pengaturan > Kecerdasan buatan (gratis).
+990|Gemini tidak mengembalikan gambar (prompt mungkin terkena filter keamanan).
+991|Gemini tidak mengembalikan audio.
+992|Untuk Cloudflare, masukkan kunci sebagai 'id-akun:token-api'.
+993|Tidak ada video di Pexels untuk '{0}'.
+994|Video Pexels ini tidak punya file yang cocok.
+995|Masukkan kunci Higgsfield sebagai 'id-kunci:kunci-rahasia'.
+996|Membuat di Higgsfield ({0} dtk)
+997|Higgsfield tidak mengembalikan gambar.
+998|Higgsfield tidak mengembalikan video.
+999|Untuk ini, tambahkan kunci ElevenLabs di Pengaturan > Layanan.
+1000|ElevenLabs sedang menyulih suara ({0} dtk)
+1001|Model Gemini ini berbayar: kamu perlu mengaktifkan penagihan di Google AI Studio. Untuk gratis, pilih Pollinations atau Cloudflare.
+1002|Cloudflare tidak mengembalikan gambar:
+1003|Dibatalkan.
+1004|terkena filter konten
+1005|Pembuatan di Higgsfield gagal: {0}
+1006|Waktu sulih suara ElevenLabs habis.
+1007|Menunggu di antrean gratis ({0} dtk)
+1008|Wanita
+1009|Sulih suara ElevenLabs gagal:
+1010|Server gratis sibuk, mencoba lagi ({0} dtk)
+1011|Suara Edge
+1012|Suara Gemini tidak merespons.
+1013|Babək · Pria
+1014|Suara Edge tidak mengembalikan audio.
+1015|Tidak bisa menjangkau layanan suara Edge: {0}
+1016|Ringkasan AI berlaku untuk satu video, bukan playlist.
+1017|judul dan deskripsi (tanpa transkrip)
+1018|pengenalan ucapan ({0})
+1019|Ringkasan komentar berlaku untuk satu video.
+1020|Komentar video ini tidak bisa diambil. Ringkasan komentar saat ini paling baik untuk video YouTube.
+1021|Menyiapkan audio
+1022|Mentranskripsi ucapan ({0})
+1023|Model pengenalan ucapan gagal diunduh.
+1024|FFmpeg diperlukan untuk mentranskripsi ucapan.
+1025|Audio video tidak bisa dibaca:
+1026|Mengunduh model pengenalan ucapan (pertama kali) {0} MB
+1027|Mentranskripsi ucapan kata demi kata ({0})
+1028|Unduhan OpenCV tidak dapat diverifikasi (SHA-{0} tidak cocok).
+1029|Mengunduh komponen potong pintar (pertama kali) {0} MB
+1030|Subtitle {0} ({1})
+1031|Terjemahan gratis gagal: {0}
+1032|Kunci API Anthropic diawali 'sk-ant-'.
+1033|Ini tidak tampak seperti kunci API Gemini (aistudio.google.com/apikey).
+1034|Untuk fitur AI, tambahkan kunci {0} di Pengaturan > Kecerdasan buatan.
+1035|Claude menolak menanggapi konten ini.
+1036|Jawaban terpotong karena terlalu panjang.
+1037|Jawaban AI tidak terbaca, coba lagi.
+1038|Gemini mengembalikan galat ({0}): {1}
+1039|Gemini menolak menanggapi konten ini.
+1040|Gemini mengembalikan jawaban kosong, coba lagi.
+1041|Kunci API Claude tidak valid. Periksa di Pengaturan > Kecerdasan buatan.
+1042|Kunci API ini tidak diizinkan memakai Claude.
+1043|Claude: terlalu banyak permintaan. Coba lagi sebentar lagi.
+1044|Claude menolak permintaan: {0}
+1045|Tidak bisa terhubung ke Claude. Periksa koneksi internetmu.
+1046|Claude mengalami galat sementara ({0}). Coba lagi sebentar lagi.
+1047|Tidak bisa terhubung ke Gemini. Periksa koneksi internetmu.
+1048|Kunci API Gemini tidak valid. Periksa di Pengaturan > Kecerdasan buatan.
+1049|Kuota gratis Gemini habis. Tunggu sebentar atau coba besok (kuota harian direset malam hari).
+1050|Akun Anthropic-mu tidak punya cukup kredit (console.anthropic.com > Billing).
+1051|Windows Defender atau program keamanan memblokir file pembaruan. Kamu bisa mengunduh dan memasang pembaruan secara manual dari halaman GitHub.
+1052|Pembaruan yang diunduh tidak dapat diverifikasi (SHA-{0} tidak cocok).
+1053|Paket pembaruan hilang atau rusak.
+1054|Pembaruan otomatis tidak berjalan dari kode sumber; gunakan git pull.
+1055|Pembaruan gagal diunduh. Periksa koneksi internetmu.
+1056|Rilis ini tidak punya file pembaruan untuk diunduh.
+1057|yt-dlp sudah terbaru ({0}).
+1058|yt-dlp sudah terbaru.
+1059|File yang diunduh tidak dapat diverifikasi (SHA-{0} tidak cocok).
+1060|pip gagal
+1061|Mengekstrak FFmpeg…
+1062|Mengekstrak Deno…
+1063|File ini tidak punya audio.
+1064|Mengonversi: {name}
+1065|Mengonversi {i}/{n}: {name}
+1066|Membuat PDF
+1067|Tidak ada file yang berhasil dikonversi.
+1068|Tidak ditemukan: {name}
+1069|Sudah ada akun dengan email ini. Coba masuk.
+1070|Tidak ada akun dengan email ini.
+1071|Kata sandi salah.
+1072|Email atau kata sandi salah.
+1073|Masukkan alamat email yang valid.
+1074|Masukkan kata sandimu.
+1075|Masukkan alamat email.
+1076|Terlalu banyak percobaan; coba lagi sebentar lagi.
+1077|Akun ini telah dinonaktifkan.
+1078|Akun tidak ditemukan; masuk lagi.
+1079|Sesimu berakhir; masuk lagi.
+1080|Demi keamanan, kamu perlu keluar lalu masuk lagi.
+1081|Metode masuk ini belum diaktifkan.
+1082|Masuk dengan email belum diaktifkan.
+1083|Masuk ke TekTıkla
+1084|Sedang masuk…
+1085|Berhasil masuk
+1086|Kamu bisa kembali ke TekTıkla; tab ini boleh ditutup.
+1087|Gagal masuk
+1088|Pop-up diblokir; tekan tombolnya lagi.
+1089|Kamu mendaftar dengan email ini lewat metode lain; masuk dengan metode itu.
+1090|Jendela masuk ditutup.
+1091|Tautan ini sudah kedaluwarsa. Coba lagi dari TekTıkla.
+1092|HTTP {0}
+1093|Tindakan gagal ({0}).
+1094|Proses masuk tidak selesai; coba lagi.
+1095|Server tidak terjangkau. Periksa koneksi internetmu.
+1096|Studio media dan AI
+1097|Pria
+1098|jernih
+1099|ceria
+1100|informatif
+1101|segar
+1102|bersemangat
+1103|muda
+1104|tegas
+1105|cerah
+1106|hangat
+1107|dewasa
+1108|ramah
+1109|lembut
+1110|Kontras
+1111|Eksposur
+1112|Saturasi
+1113|Ketajaman
+1114|Vignet
+1115|Butiran
+1116|Warna
+1117|Matte
+1118|Pastel
+1119|Drama
+1120|Vintage
+1121|Hitam putih
+1122|Bebas
+1123|Lingkaran
+1124|Panah
+1125|Label
+1126|Teks
+1127|Pena
+1128|Stabilo
+1129|Isian
+1130|Garis tepi
+1131|Normal
+1132|Tengah
+1133|Sembunyikan
+1134|Ramping
+1135|{w} × {h} piksel
+1136|area transparan menjadi putih
+1137|Studio Gambar
+1138|Studio Reels
+1139|Thumbnail
+1140|{n} buah
+1141|{n} momen ditemukan
+1142|Sesudah
+1143|Masalah
+1144|otomatis
+1145|✓ Terpasang
+1146|✗ Tidak ada
+1147|{0} file
+1148|{t} untuk ditonton
+1149|ditonton {d}
+1150|ditambahkan {d}
+1151|{0} mnt
+1152|{0} j {1} mnt
+1153|{0} j
+1154|{0} komentar dibaca
+1155|{0} ide
+1156|{0} video ditambahkan ke daftar tontonan

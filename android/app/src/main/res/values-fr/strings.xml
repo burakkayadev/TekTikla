@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">Scanne le QR code TekTıkla affiché sur ton ordinateur</string>
+    <string name="saved">Enregistré : %1$s</string>
+    <string name="save_failed">Impossible d’enregistrer le fichier</string>
+    <string name="no_app">Aucune application ne peut ouvrir ceci</string>
+    <string name="where_gallery">Galerie › TekTıkla</string>
+    <string name="where_music">Musique › TekTıkla</string>
+    <string name="where_downloads">Téléchargements › TekTıkla</string>
+</resources>

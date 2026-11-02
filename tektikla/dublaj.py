@@ -101,6 +101,34 @@ class DubJob(media.Job):
         out.write_bytes(data)
         return [str(out)]
 
+    def _voice(self, cues: list[subtitles.Cue], engine_name: str, voice: str, keys: dict, total: float) -> np.ndarray:
+        """Cümleleri seslendirip zamanlarına yerleştirir. Gemini'de yakın cümleler tek istekte birleşir: ücretsiz
+        katmandaki istek sınırına daha geç takılır. Sığmayan konuşma en fazla 1.6 kat hızlanır."""
+        groups = _merge(cues) if engine_name == "gemini" else [[c] for c in cues]
+        track = np.zeros(int((total + 2) * RATE), np.float32)
+        for i, group in enumerate(groups):
+            stage = f"Seslendiriliyor ({i + 1}/{len(groups)})"
+            self.stage(stage, 0.6 + 0.3 * i / len(groups))
+            speech = tts.synthesize(
+                engine_name, " ".join(c.text for c in group), voice, keys, should_stop=lambda: self.cancelled,
+                on_wait=lambda s, stage=stage: self.emit("progress", stage=f"Gemini kotası: {s} sn bekleniyor", frac=None))
+            self.check()
+            samples = speech.samples
+            start_t = group[0].start
+            slot_end = groups[i + 1][0].start if i + 1 < len(groups) else total
+            slot = max(0.4, slot_end - start_t - 0.05)
+            if len(samples) / RATE > slot:
+                samples = media.speed_up(samples, min(len(samples) / RATE / slot, 1.6), RATE)
+            limit = int(slot * RATE)
+            if len(samples) > limit:  # yine sığmadıysa sonunu yumuşakça kes
+                fade = min(int(0.08 * RATE), limit)
+                samples = samples[:limit].copy()
+                samples[-fade:] *= np.linspace(1, 0, fade)
+            start = int(start_t * RATE)
+            end = min(len(track), start + len(samples))
+            track[start:end] += samples[:end - start]
+        return track
+
     def _local(self, video: Path, info: dict | None, tmp: Path) -> list[str]:
         o = self.opts
         keys = self.settings.get("_keys", {})
@@ -121,37 +149,37 @@ class DubJob(media.Job):
         if not lines:
             raise RuntimeError("Videoda konuşma bulunamadı.")
 
-        # 2) çeviri
+        # 2) çeviri: yapay zekâ anahtarı varsa onunla (daha doğal), yoksa ya da kotası dolduysa ücretsiz çeviriyle
         cues = [subtitles.Cue(ln.start, ln.end, ln.text) for ln in lines]
-        if src_lang.split("-")[0] != o.target:
-            if not o.api_key:
-                raise RuntimeError("Çeviri için Ayarlar > Yapay Zekâ bölümüne Gemini anahtarı girin (ücretsiz).")
+        source = src_lang.split("-")[0]
+        if source != o.target:
             self.stage("Konuşma çevriliyor", 0.47)
-            cues = subtitles.translate(cues, o.target, o.provider, o.api_key,
-                                       lambda f: self.emit("progress", stage="Konuşma çevriliyor",
-                                                           frac=0.47 + f * 0.13), lambda: self.cancelled)
+            translated = None
+            if o.api_key:
+                try:
+                    translated = subtitles.translate(cues, o.target, o.provider, o.api_key,
+                                                     lambda f: self.emit("progress", stage="Konuşma çevriliyor",
+                                                                         frac=0.47 + f * 0.13), lambda: self.cancelled)
+                except Exception:  # noqa: BLE001
+                    self.check()
+                    self.warnings.append("Yapay zekâ çevirisi yapılamadı (kota dolmuş olabilir); ücretsiz çeviri kullanıldı.")
+            if translated is None:
+                texts = subtitles.translate_free([c.text for c in cues], o.target, source)
+                translated = [subtitles.Cue(c.start, c.end, t) for c, t in zip(cues, texts)]
+            cues = translated
         self.check()
 
         # 3) seslendirme ve zamanlama
-        voice = o.voice or tts.default_voice(o.engine, o.target)
         total = meta["duration"] or (cues[-1].end + 1)
-        track = np.zeros(int((total + 2) * RATE), np.float32)
-        for i, cue in enumerate(cues):
-            self.stage(f"Seslendiriliyor ({i + 1}/{len(cues)})", 0.6 + 0.3 * i / len(cues))
-            speech = tts.synthesize(o.engine, cue.text, voice, keys)
-            samples = speech.samples
-            slot_end = cues[i + 1].start if i + 1 < len(cues) else total
-            slot = max(0.4, slot_end - cue.start - 0.05)
-            if len(samples) / RATE > slot:
-                samples = media.speed_up(samples, min(len(samples) / RATE / slot, 1.6), RATE)
-            limit = int(slot * RATE)
-            if len(samples) > limit:  # yine sığmadıysa sonunu yumuşakça kes
-                fade = min(int(0.08 * RATE), limit)
-                samples = samples[:limit].copy()
-                samples[-fade:] *= np.linspace(1, 0, fade)
-            start = int(cue.start * RATE)
-            end = min(len(track), start + len(samples))
-            track[start:end] += samples[:end - start]
+        try:
+            track = self._voice(cues, o.engine, o.voice or tts.default_voice(o.engine, o.target), keys, total)
+        except services.QuotaError:
+            if o.engine != "gemini":
+                raise
+            # Gemini'nin günlük ücretsiz kotası bitti: ses baştan sona aynı kalsın diye tamamı Edge sesiyle
+            self.warnings.append("Gemini'nin günlük ücretsiz ses kotası doldu; dublaj ücretsiz Edge sesiyle tamamlandı. "
+                                 "Gemini sesini yarın yeniden deneyebilirsin.")
+            track = self._voice(cues, "edge", tts.default_voice("edge", o.target), keys, total)
         peak = float(np.abs(track).max() or 1)
         if peak > 0.98:
             track *= 0.98 / peak
@@ -184,3 +212,18 @@ class DubJob(media.Job):
         args += ["-c:v", "copy", "-c:a", "aac", "-b:a", "192k", *meta_args, "-movflags", "+faststart", str(out)]
         self.ffmpeg(args, total, "Dublaj videoya ekleniyor", (0.9, 1.0))
         return [str(out)]
+
+
+def _merge(cues: list[subtitles.Cue], max_words: int = 40, max_gap: float = 0.35) -> list[list[subtitles.Cue]]:
+    """Aralarında kısa duraklama olan cümleleri tek seslendirme isteğinde toplar (en fazla max_words kelime)."""
+    groups: list[list[subtitles.Cue]] = []
+    cur: list[subtitles.Cue] = []
+    for c in cues:
+        words = sum(len(x.text.split()) for x in cur)
+        if cur and (c.start - cur[-1].end > max_gap or words + len(c.text.split()) > max_words):
+            groups.append(cur)
+            cur = []
+        cur.append(c)
+    if cur:
+        groups.append(cur)
+    return groups

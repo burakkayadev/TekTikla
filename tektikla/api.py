@@ -9,9 +9,11 @@ import base64
 import ctypes
 import io
 import itertools
+import json
 import os
 import queue
 import re
+import socket
 import subprocess
 import threading
 import time
@@ -26,7 +28,7 @@ import requests
 import webview
 from PIL import Image
 
-from . import APP_VERSION, GITHUB_REPO, ai, engine, i18n, llm, media, subtitles, tools, updater
+from . import APP_NAME, APP_TAGLINE, APP_VERSION, GITHUB_REPO, SUPPORT_DONATE, SUPPORT_GITHUB, WELCOME_URL, ai, engine, i18n, llm, media, qr, remote, subtitles, tools, updater, watchlist, account
 from .studio_api import SERVICE_KEYS, SERVICE_URLS, StudioApi
 from .config import APP_DIR, DEFAULTS, History, Settings, decrypt_secret, encrypt_secret
 
@@ -37,13 +39,17 @@ EXTERNAL_URLS = {
     "anthropic_billing": "https://console.anthropic.com/settings/billing",
     "releases": f"https://github.com/{GITHUB_REPO}/releases" if GITHUB_REPO else "",
     **SERVICE_URLS,
+    "support_github": SUPPORT_GITHUB,
+    "support_donate": SUPPORT_DONATE,
 }
 BOOL_KEYS = {k for k, v in DEFAULTS.items() if isinstance(v, bool)}
-PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc", *SERVICE_KEYS.values()}
+PRIVATE_KEYS = {"api_key_enc", "gemini_key_enc", "account_enc", "remote_key_enc", *SERVICE_KEYS.values()}
+INTERNAL_KEYS = {"remote_enabled", "support_seen", "account_user", "account_skipped"}  # kendi metotlarıyla değişir
 KEY_SETTINGS = {"claude": ("api_key_enc", "ANTHROPIC_API_KEY"), "gemini": ("gemini_key_enc", "GEMINI_API_KEY")}
 CHOICES = {"ai_provider": set(llm.PROVIDERS), "whisper_model": {"base", "small"},
            "ai_sub_lang": {c for c, _, _ in subtitles.LANGUAGES} | {"orig"},
-           "theme": {"mono", "paper", "violet", "ocean"}, "font": {"serif", "grotesk"}}
+           "theme": {"mono", "paper", "violet", "ocean"}, "font": {"serif", "grotesk", "wide", "soft"},
+           "sidebar": {"pinned", "auto"}}
 THEME_BARS = {"mono": ("#050505", True), "paper": ("#F3F2EE", False), "violet": ("#0B0A12", True),
               "ocean": ("#04101A", True)}  # başlık çubuğu rengi, koyu mod
 FINISHED = ("done", "error", "cancelled")
@@ -65,6 +71,20 @@ def _thumb_data(url: str | None) -> str | None:
         return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
     except Exception:  # noqa: BLE001 - kapak olmasa da olur
         return None
+
+
+def _save_thumb(url: str, path: Path) -> bool:
+    """Kapak resmini küçültüp dosyaya kaydeder (izleme listesi; YouTube dışı siteler)."""
+    try:
+        r = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        r.raise_for_status()
+        img = Image.open(io.BytesIO(r.content)).convert("RGB")
+        img.thumbnail((480, 270))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(path, "JPEG", quality=85)
+        return True
+    except Exception:  # noqa: BLE001 - kapak olmasa da olur
+        return False
 
 
 def _safe_name(text: str, limit: int = 100) -> str:
@@ -164,6 +184,8 @@ class Api(StudioApi):
         self._studio_init()
         self._history = History()
         self._events: queue.Queue = queue.Queue()
+        self._remote: remote.RemoteServer | None = None  # telefondan kullanım açıksa ev ağındaki sunucu
+        self._remote_lock = threading.Lock()
         self._items: dict[str, _Item] = {}
         self._ids = itertools.count(1)
         self._lock = threading.RLock()
@@ -177,10 +199,18 @@ class Api(StudioApi):
         self._started = False
         self._hwnd = 0
         self._thumb_files: set[str] = set()
+        self._acct = self._account_load()  # oturum: yenileme anahtarı ve kısa ömürlü kimlik anahtarı
+        self._acct_wait: str | None = None  # tarayıcıda Google/GitHub girişi bekleniyor
+        self._auth_srv: account.BrowserSignIn | None = None
+        self._wl = watchlist.Watchlist()
+        self._wl_pool = ThreadPoolExecutor(max_workers=3, thread_name_prefix="izleme")
 
     # -- iç yardımcılar
     def _emit(self, event_type: str, /, **data) -> None:
-        self._events.put({"type": event_type, **data})
+        event = {"type": event_type, **data}
+        self._events.put(event)
+        if self._remote:  # telefondan bağlı sayfalar da aynı olayları alır
+            self._remote.broadcast(event)
 
     def _bg(self, fn, *args) -> None:
         threading.Thread(target=fn, args=args, daemon=True).start()
@@ -202,12 +232,22 @@ class Api(StudioApi):
         self._window = window
 
     def _start_background(self) -> None:
-        """Pencere açıldıktan sonra: bileşen kontrolü, pano izleme, güncelleme kontrolü."""
+        """Sayfa her yüklendiğinde sürükle-bırak bağlanır; ilk açılışta bileşen kontrolü, pano izleme, güncelleme kontrolü."""
+        try:  # F5 ile yenilenen sayfada eski dinleyiciler silinir, her yüklemede yeniden bağlanır
+            self._wire_drop()
+        except Exception:  # noqa: BLE001 - sürükle-bırak olmasa da dosya seçici çalışır
+            pass
         if self._started:  # sayfa yeniden yüklenirse iş parçacıkları ikinci kez başlamasın
             return
         self._started = True
         self._check_setup(auto_install=True)
+        self._bg(self._account_check)
         self._bg(self._watch_clipboard)
+        if self._settings.get("remote_enabled"):
+            self._bg(self._remote_start)
+        for item in list(self._wl.items):  # kapanırken bilgisi gelmeyen izleme listesi öğeleri
+            if item.get("status") in ("loading", "retry"):
+                self._wl_fetch(item["id"])
         if GITHUB_REPO and self._settings.get("auto_update_check", True):
             self._bg(self._check_update, False)
 
@@ -232,7 +272,13 @@ class Api(StudioApi):
             "ui_languages": i18n.LANGUAGES,
             "i18n": i18n.table(i18n.current()),
             "rtl": i18n.current() in i18n.RTL,
+            "support": self._settings.get("support_seen") != APP_VERSION,
+            "watch": self.watch_list(),
+            "account": self._account_state(),
         }
+
+    def _window_title(self) -> str:
+        return f"{APP_NAME} — {i18n.t(APP_TAGLINE)}"
 
     def set_language(self, code: str) -> dict:
         if code not in i18n.NAMES:
@@ -240,6 +286,8 @@ class Api(StudioApi):
         self._settings["language"] = code
         self._settings.save()
         i18n.load(code)
+        if self._window:
+            self._window.set_title(self._window_title())
         return {"ok": True, "lang": code, "i18n": i18n.table(code), "rtl": code in i18n.RTL,
                 "studio": self.studio_init()}
 
@@ -290,7 +338,7 @@ class Api(StudioApi):
 
     # -- ayarlar
     def set_setting(self, key: str, value) -> dict:
-        if key not in DEFAULTS or key in PRIVATE_KEYS:
+        if key not in DEFAULTS or key in PRIVATE_KEYS or key in INTERNAL_KEYS:
             return self._public_settings()
         if key in BOOL_KEYS:
             value = bool(value)
@@ -379,6 +427,387 @@ class Api(StudioApi):
         url = EXTERNAL_URLS.get(name)
         if url:
             webbrowser.open(url)
+
+    # -- destek penceresi: ilk açılışta ve her yeni sürümde bir kez kendiliğinden açılır
+    def support_info(self) -> dict:
+        def label(key: str, url: str) -> str:
+            path = url.split("://", 1)[-1].rstrip("/")
+            return "@" + path.rsplit("/", 1)[-1] if key == "github" else path
+
+        links = [("github", SUPPORT_GITHUB), ("donate", SUPPORT_DONATE)]
+        return {"links": [{"id": key, "label": label(key, url), "qr": qr.data_uri(url, glyph="coffee" if key == "donate" else "tt")}
+                          for key, url in links if url]}
+
+    def support_seen(self) -> None:
+        self._settings["support_seen"] = APP_VERSION
+        self._settings.save()
+
+    # -- hesap (tektikla/account.py): e-posta, Google, GitHub ile giriş; kayıt olmadan devam
+    def _account_load(self) -> dict | None:
+        raw = decrypt_secret(self._settings.get("account_enc") or "")
+        try:
+            data = json.loads(raw) if raw else None
+        except ValueError:
+            data = None
+        return data if isinstance(data, dict) and data.get("refresh_token") else None
+
+    def _account_state(self) -> dict:
+        user = self._settings.get("account_user") or None
+        return {"configured": account.configured(), "user": user if self._acct else None,
+                "skipped": bool(self._settings.get("account_skipped")), "waiting": self._acct_wait}
+
+    def _account_save(self, sess: dict | None, user: dict | None) -> dict:
+        """Oturumu saklar (yalnızca yenileme anahtarı, şifreli) ya da sess None ise çıkış yapar."""
+        self._acct = sess
+        self._settings["account_enc"] = encrypt_secret(json.dumps(
+            {"refresh_token": sess["refresh_token"], "provider": sess["provider"]})) if sess else ""
+        self._settings["account_user"] = user or {}
+        if sess:
+            self._settings["account_skipped"] = False
+        self._settings.save()
+        state = self._account_state()
+        self._emit("account", state=state)
+        return state
+
+    def _account_check(self) -> None:
+        """Açılışta oturumu doğrular ve hesap bilgisini tazeler (ad ya da fotoğraf değişmiş olabilir)."""
+        if not self._acct or not account.configured():
+            return
+        try:
+            sess = account.fresh(self._acct)
+            user = account.profile(sess["id_token"], sess.get("provider", ""))
+        except account.AccountError as e:
+            if e.code in account.EXPIRED:  # hesap silinmiş, şifre değişmiş…: çıkış yapılır
+                self._account_save(None, None)
+                self._emit("notify", kind="err", text=i18n.t(str(e)))
+            return  # internet yoksa oturum olduğu gibi kalır
+        self._account_save(sess, user)
+
+    def _focus_window(self) -> None:
+        try:
+            self._window.restore()
+            self._window.on_top = True  # tarayıcıdan dönünce pencere öne gelsin
+            self._window.on_top = False
+        except Exception:  # noqa: BLE001
+            pass
+
+    def account_state(self) -> dict:
+        return self._account_state()
+
+    def account_email(self, mode: str, email: str, password: str, name: str = "") -> dict:
+        email = (email or "").strip()
+        try:
+            if mode == "signup":
+                sess, user = account.sign_up(email, password or "", (name or "").strip()[:60])
+            else:
+                sess, user = account.sign_in(email, password or "")
+        except account.AccountError as e:
+            return {"ok": False, "error": i18n.t(str(e))}
+        if mode == "signup":
+            self._bg(self._send_welcome, sess)
+        return {"ok": True, "state": self._account_save(sess, user)}
+
+    def _send_welcome(self, sess: dict) -> None:
+        """Yeni üyeye hoş geldin e-postası (server/welcome: anahtar orada doğrulanır, üye başına bir kez gider)."""
+        if not WELCOME_URL:
+            return
+        try:
+            requests.post(WELCOME_URL, json={"idToken": account.fresh(sess)["id_token"], "lang": i18n.current()},
+                          timeout=30)
+        except Exception:  # noqa: BLE001 - e-posta gitmese de hesap açıldı
+            pass
+
+    def account_provider(self, provider: str) -> dict:
+        if provider not in ("google", "github"):
+            return {"ok": False}
+        if not account.configured():
+            return {"ok": False, "error": i18n.t("Hesap sistemi henüz kurulmadı.")}
+        if self._auth_srv is None:
+            self._auth_srv = account.BrowserSignIn(Path(account.__file__).parent / "web" / "auth.html",
+                                                   self._account_browser_done)
+        self._acct_wait = provider
+        webbrowser.open(self._auth_srv.start(provider))
+        return {"ok": True, "state": self._account_state()}
+
+    def _account_browser_done(self, data: dict) -> None:
+        self._acct_wait = None
+        try:
+            sess, user = account.from_browser(data)
+        except account.AccountError as e:
+            self._emit("account", state=self._account_state())
+            self._emit("account_error", message=i18n.t(str(e)))
+            return
+        self._account_save(sess, user)
+        if data.get("isNewUser"):
+            self._bg(self._send_welcome, sess)
+        self._emit("notify", kind="ok", text=i18n.t("Hoş geldin, {name}!", name=user["name"]))
+        self._focus_window()
+
+    def account_cancel(self) -> dict:
+        if self._auth_srv:
+            self._auth_srv.cancel()
+        self._acct_wait = None
+        return self._account_state()
+
+    def account_reset(self, email: str) -> dict:
+        try:
+            account.send_reset((email or "").strip())
+        except account.AccountError as e:
+            return {"ok": False, "error": i18n.t(str(e))}
+        return {"ok": True}
+
+    def account_verify(self) -> dict:
+        if not self._acct:
+            return {"ok": False}
+        try:
+            account.send_verify(self._acct)
+        except account.AccountError as e:
+            return {"ok": False, "error": i18n.t(str(e))}
+        return {"ok": True}
+
+    def account_signout(self) -> dict:
+        return self._account_save(None, None)
+
+    def account_delete(self) -> dict:
+        """Hesabı Firebase'den kalıcı olarak siler (kişisel verilerin silinmesi hakkı)."""
+        if not self._acct:
+            return {"ok": False}
+        try:
+            account.delete(self._acct)
+        except account.AccountError as e:
+            return {"ok": False, "error": i18n.t(str(e))}
+        return {"ok": True, "state": self._account_save(None, None)}
+
+    def account_skip(self) -> dict:
+        self._settings["account_skipped"] = True
+        self._settings.save()
+        return self._account_state()
+
+    # -- izleme listesi: sonra izlenecekler (tektikla/watchlist.py); uygulama kapansa da kalır
+    def _wl_view(self, item: dict) -> dict:
+        view = {k: v for k, v in item.items() if k != "thumb_file"}
+        if item.get("thumb_file"):
+            view["thumb"] = self._media_urls([item["thumb_file"]]).get(item["thumb_file"]) or view.get("thumb")
+        view["duration_text"] = engine.human_time(item["duration"]) if item.get("duration") else ""
+        return view
+
+    def _wl_changed(self) -> list[dict]:
+        items = self.watch_list()
+        self._emit("watch", items=items)
+        return items
+
+    def _wl_forget(self, item: dict) -> None:
+        path = item.get("thumb_file")
+        if path and Path(path).parent == watchlist.THUMB_DIR:
+            Path(path).unlink(missing_ok=True)
+
+    def _wl_fetch(self, item_id: str) -> None:
+        """Başlık, kanal, süre ve kapağı arka planda doldurur; oynatma listesini videolarına açar."""
+        def work():
+            self._ready.wait()  # yt-dlp ve JavaScript çalışma ortamı hazır olmadan sitelere gidilmez
+            item = self._wl.get(item_id)
+            if not item:
+                return
+            try:
+                info = engine.analyze(item["url"], dict(self._settings))
+            except Exception as e:  # noqa: BLE001
+                # yalnızca anlaşılır kısım; yt-dlp'nin teknik ayrıntısı satıra sığmaz
+                message = engine.friendly_error(e).split("\n\n")[0]
+                low = str(e).lower()
+                if watchlist.is_youtube_private_list(item["url"]) and ("does not exist" in low or "sign in" in low):
+                    # oturum yokken YouTube kişisel listeler için "liste yok" der
+                    message = i18n.t("YouTube listene ulaşılamadı. YouTube'a giriş yaptığın tarayıcıyı Ayarlar > "
+                                     "Tarayıcı çerezleri'nden seç (Firefox önerilir).")
+                self._wl.update(item_id, status="error", error=message)
+            else:
+                if info.is_playlist:
+                    self._wl.replace(item_id, [{"url": e["url"], "title": e["title"], "channel": e["channel"],
+                                                "duration": e.get("seconds"), "thumb": e["thumb"], "site": info.site}
+                                               for e in info.entries if e.get("available")])
+                else:
+                    fields = {"title": info.title, "channel": info.uploader, "duration": info.duration,
+                              "site": info.site, "status": "ready", "error": None}
+                    if not watchlist.youtube_id(item["url"]) and info.thumbnail:
+                        path = watchlist.THUMB_DIR / f"{item_id}.jpg"
+                        if _save_thumb(info.thumbnail, path):
+                            fields["thumb_file"] = str(path)
+                    self._wl.update(item_id, **fields)
+            self._wl_changed()
+
+        self._wl_pool.submit(work)
+
+    def watch_list(self) -> list[dict]:
+        return [self._wl_view(i) for i in self._wl.items]
+
+    def watch_add(self, text: str, entries: list | None = None) -> dict:
+        """Yapıştırılan linkleri ya da oynatma listesi kartında seçilen videoları (bilgileriyle) sona ekler."""
+        added = dupes = 0
+        if entries:
+            for e in entries[:watchlist.LIMIT]:
+                url = str(e.get("url") or "") if isinstance(e, dict) else ""
+                if not url.startswith(("http://", "https://")):
+                    continue
+                thumb = str(e.get("thumb") or "")
+                seconds = e.get("seconds")
+                item = self._wl.add(url, title=e.get("title"), channel=e.get("channel"),
+                                    duration=seconds if isinstance(seconds, (int, float)) else None,
+                                    thumb=thumb if thumb.startswith("https://") else None,
+                                    status="ready" if e.get("title") else "loading")
+                if not item:
+                    dupes += 1
+                    continue
+                added += 1
+                if item["status"] == "loading":
+                    self._wl_fetch(item["id"])
+        else:
+            for url in watchlist.links(text):
+                item = self._wl.add(url)
+                if item:
+                    added += 1
+                    self._wl_fetch(item["id"])
+                else:
+                    dupes += 1
+        return {"added": added, "dupes": dupes, "items": self._wl_changed() if added else self.watch_list()}
+
+    def watch_set(self, item_id: str, watched: bool) -> list[dict]:
+        self._wl.update(item_id, watched=bool(watched))
+        return self._wl_changed()
+
+    def watch_move(self, item_id: str, index: int) -> list[dict]:
+        self._wl.move(item_id, int(index))
+        return self._wl_changed()
+
+    def watch_remove(self, item_id: str) -> list[dict]:
+        item = self._wl.remove(item_id)
+        if item:
+            self._wl_forget(item)
+        return self._wl_changed()
+
+    def watch_clear(self) -> list[dict]:
+        for item in self._wl.clear_watched():
+            self._wl_forget(item)
+        return self._wl_changed()
+
+    def watch_retry(self, item_id: str) -> list[dict]:
+        if self._wl.update(item_id, status="loading", error=None):
+            self._wl_fetch(item_id)
+        return self._wl_changed()
+
+    def watch_open(self, item_id: str) -> bool:
+        item = self._wl.get(item_id)
+        if not item or not item["url"].startswith(("http://", "https://")):
+            return False
+        webbrowser.open(item["url"])
+        return True
+
+    # -- telefondan kullanım (tektikla/remote.py): aynı Wi-Fi'deki telefon QR kodu okutup bağlanır
+    def _remote_key(self) -> str:
+        key = decrypt_secret(self._settings.get("remote_key_enc") or "")
+        if not key:
+            key = remote.new_key()
+            self._settings["remote_key_enc"] = encrypt_secret(key)
+            self._settings.save()
+        return key
+
+    def _remote_start(self) -> bool:
+        with self._remote_lock:
+            if not self._remote:
+                try:
+                    self._remote = remote.RemoteServer(self, self._remote_key())
+                except OSError:
+                    return False
+        return True
+
+    def _remote_stop(self) -> None:
+        with self._remote_lock:
+            srv, self._remote = self._remote, None
+        if srv:
+            srv.stop()
+
+    def remote_info(self) -> dict:
+        """Masaüstündeki "Telefondan kullan" penceresi: QR kod, adres, bağlanma kodu, bağlı telefonlar."""
+        srv = self._remote
+        if not srv:
+            return {"on": False}
+        host = srv.httpd.server_address[0]  # testte yalnızca 127.0.0.1'e bağlanır
+        urls = [f"http://{ip}:{srv.port}" for ip in (remote.lan_ips() if host == "0.0.0.0" else [host])]
+        if not urls:
+            return {"on": True, "offline": True}
+        return {"on": True, "url": urls[0], "others": urls[1:4], "code": f"{srv.key[:5]}-{srv.key[5:]}",
+                "qr": qr.data_uri(f"{urls[0]}/#k={srv.key}"), "devices": srv.connected(), "apk": self._apk_qr()}
+
+    def _apk_qr(self) -> str:
+        """Android uygulamasının (GitHub'daki son sürüm) indirme bağlantısının QR kodu."""
+        if not GITHUB_REPO:
+            return ""
+        if not getattr(self, "_apk_qr_cache", ""):
+            self._apk_qr_cache = qr.data_uri(f"https://github.com/{GITHUB_REPO}/releases/latest/download/TekTikla-Android.apk")
+        return self._apk_qr_cache
+
+    def remote_set(self, on: bool) -> dict:
+        if on and not self._remote_start():
+            return {"on": False, "error": i18n.t("Telefon bağlantısı başlatılamadı.")}
+        if not on:
+            self._remote_stop()
+        self._settings["remote_enabled"] = bool(on)
+        self._settings.save()
+        return self.remote_info()
+
+    def remote_reset(self) -> dict:
+        """Yeni bağlanma kodu: eski kodla bağlanan telefonlar QR kodu yeniden okutmalı."""
+        key = remote.new_key()
+        self._settings["remote_key_enc"] = encrypt_secret(key)
+        self._settings.save()
+        srv = self._remote
+        if srv:
+            srv.key = key
+            srv.downloads.clear()
+            with srv.cond:
+                srv.clients.clear()
+        return self.remote_info()
+
+    def _remote_hello(self) -> dict:
+        return {"ok": True, "pc": socket.gethostname()}
+
+    def _remote_urls(self) -> dict:
+        return {k: v for k, v in EXTERNAL_URLS.items() if v}
+
+    def _remote_i18n(self, code: str) -> dict:
+        """Telefonun kendi dili; bilgisayardaki uygulamanın dili değişmez."""
+        if code not in i18n.NAMES:
+            return {"ok": False}
+        with i18n.using(code):
+            return {"ok": True, "lang": code, "i18n": i18n.table(code), "rtl": code in i18n.RTL,
+                    "studio": self.studio_init()}
+
+    def _remote_file(self, kind: str, ref) -> str | None:
+        """Telefona indirilebilecek dosya: yalnızca TekTıkla'nın indirdiği ya da ürettiği dosyalar."""
+        path = ""
+        if kind == "item":
+            item = self._items.get(str(ref))
+            path = item.files[-1] if item and item.files else ""
+        elif kind == "history" and isinstance(ref, int) and 0 <= ref < len(self._history.items):
+            path = self._history.items[ref].get("path", "")
+        elif kind == "made" and ref in self._made_files:
+            path = ref
+        elif kind == "file" and ref in self._thumb_files:
+            path = ref
+        return path if path and os.path.isfile(path) else None
+
+    def _remote_uploaded(self, kind: str, paths: list[str]):
+        """Telefondan yüklenen dosyalar, masaüstünde dosya seçilmiş gibi kullanılır."""
+        if kind == "convert":
+            items = self._convert_add(paths)
+            return {"items": items, "skipped": len(paths) - len(items)}
+        if not paths:
+            return None
+        if kind == "subtitle":
+            self._picked_subs.add(paths[0])
+        elif kind in ("video", "audio", "image"):
+            self._picked_media.add(paths[0])
+        else:
+            return None
+        return paths[0]
 
     # -- analiz
     def analyze(self, url: str, token: int) -> bool:
@@ -544,13 +973,15 @@ class Api(StudioApi):
             })
             self._emit("history", history=self._history.items[:300])
             item.error = data.get("warning", "")  # ör. video indi ama AI altyazı eklenemedi
-            if item.error:
-                self._emit("notify", kind="err", text=item.error.splitlines()[0])
-            elif isinstance(item.req, media.StudioTask):
+            if isinstance(item.req, media.StudioTask):
+                # uyarı olsa da üretilen dosyalar kullanılabilir (ör. beş resimden biri bozuktu)
                 self._made_files.update(item.files)
-                self._emit("notify", kind="ok", text=item.req.done_text)
+                self._emit("notify", kind="err" if item.error else "ok",
+                           text=item.error.splitlines()[0] if item.error else item.req.done_text)
                 self._emit("studio_done", kind=item.req.kind, id=item.id, files=item.files,
                            urls=self._media_urls(item.files))
+            elif item.error:
+                self._emit("notify", kind="err", text=item.error.splitlines()[0])
             else:
                 self._emit("notify", kind="ok", text=i18n.t("İndirildi: {title}", title=item.req.title))
         else:

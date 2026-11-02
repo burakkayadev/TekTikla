@@ -1,12 +1,14 @@
 """Zaman bilgili altyazı işlemleri: sitedeki altyazıyı okuma, birleştirme, .srt yazma ve AI çevirisi."""
 from __future__ import annotations
 
+import html
 import json
 import re
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
+import requests
 import yt_dlp
 from pydantic import BaseModel, Field
 
@@ -233,3 +235,61 @@ def translate(cues: list[Cue], target_code: str, provider: str, api_key: str, on
             done += 1
             on_progress(done / len(batches))
     return [Cue(c.start, c.end, translated.get(i, c.text)) for i, c in indexed]
+
+
+MYMEMORY_URL = "https://api.mymemory.translated.net/get"
+GOOGLE_URL = "https://translate.googleapis.com/translate_a/single"
+FREE_CODES = {"zh": "zh-CN", "he": "iw"}
+
+
+def _mymemory(text: str, source: str, target: str) -> str:
+    r = requests.get(MYMEMORY_URL, params={"q": text, "langpair": f"{source}|{FREE_CODES.get(target, target)}"},
+                     timeout=30)
+    r.raise_for_status()
+    data = r.json()
+    if data.get("quotaFinished") or str(data.get("responseStatus")) != "200":
+        raise RuntimeError(str(data.get("responseDetails") or "MyMemory"))
+    return html.unescape(data["responseData"]["translatedText"])
+
+
+def _google(text: str, source: str, target: str) -> str:
+    r = requests.get(GOOGLE_URL, params={"client": "gtx", "sl": source or "auto", "tl": FREE_CODES.get(target, target),
+                                         "dt": "t", "q": text}, timeout=30)
+    r.raise_for_status()
+    return "".join(seg[0] for seg in r.json()[0] if seg and seg[0])
+
+
+def translate_free(texts: list[str], target: str, source: str = "") -> list[str]:
+    """Anahtar gerektirmeyen yedek çeviri: MyMemory (kaynak dil biliniyorsa), olmazsa Google Çeviri'nin açık adresi.
+    Satır sırası korunur; satırlar birleşirse tek tek çevrilir. Yapay zekâ anahtarı yoksa ya da kotası dolduysa kullanılır."""
+    services = [lambda t: _google(t, source, target)]
+    if source and source != "auto":
+        services.insert(0, lambda t: _mymemory(t, source, target))
+
+    def one(text: str) -> str:
+        last = None
+        for fn in services:
+            try:
+                return fn(text)
+            except Exception as e:  # noqa: BLE001 - sıradaki servisi dene
+                last = e
+        raise RuntimeError(f"Ücretsiz çeviri yapılamadı: {last}")
+
+    out: list[str] = []
+    batch: list[str] = []
+
+    def flush() -> None:
+        if not batch:
+            return
+        parts = one("\n".join(t.replace("\n", " ") for t in batch)).split("\n")
+        if len(parts) != len(batch):
+            parts = [one(t) for t in batch]
+        out.extend(p.strip() for p in parts)
+        batch.clear()
+
+    for t in texts:
+        if batch and sum(len(x) + 1 for x in batch) + len(t) > 440:  # MyMemory istek başına 500 karakter
+            flush()
+        batch.append(t)
+    flush()
+    return out

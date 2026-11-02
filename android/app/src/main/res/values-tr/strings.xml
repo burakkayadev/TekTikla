@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">Bilgisayardaki TekTıkla QR kodunu okut</string>
+    <string name="saved">Kaydedildi: %1$s</string>
+    <string name="save_failed">Dosya kaydedilemedi</string>
+    <string name="no_app">Bunu açabilecek bir uygulama yok</string>
+    <string name="where_gallery">Galeri › TekTıkla</string>
+    <string name="where_music">Müzik › TekTıkla</string>
+    <string name="where_downloads">İndirilenler › TekTıkla</string>
+</resources>

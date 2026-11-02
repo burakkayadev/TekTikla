@@ -18,7 +18,7 @@ TR_CHARS = set("çğıöşüÇĞİÖŞÜâÂ")
 NUM = re.compile(r"\d+(?:[.,]\d+)?")
 PY_FILES = ["api.py", "studio_api.py", "engine.py", "media.py", "reels.py", "dublaj.py", "services.py",
             "imagegen.py", "tts.py", "ai.py", "transcribe.py", "words.py", "vision.py", "subtitles.py", "llm.py",
-            "updater.py", "tools.py"]
+            "updater.py", "tools.py", "convert.py", "watchlist.py", "account.py", "remote.py", "__init__.py"]
 
 
 HOLE = "\x00"  # şablondaki ${…} / f-string {…} yerleri; sayılarla birlikte sırayla {0}, {1}… olur
@@ -31,7 +31,9 @@ IGNORE = re.compile(
     r"^(Français|Türkçe|Bahasa Indonesia|Full HD|Firefox|Edge|Chrome|Brave|Opera|Vivaldi|FFmpeg|MKV|WEBM|OPUS|FLAC|WAV|"
     r"AIza…|@kullaniciadi|kbps|Gemini|Claude|Serif|Grotesk|Pop|Karaoke|Anime|Minimal|Reels|TekTıkla|AI|"
     r"JavaScript \(YouTube\)|YouTube · SponsorBlock|MP\{0\}|M\{0\}A|\{0\}D|\{0\} kbps|Language)$|"
-    r"^[A-ZÀ-Ýa-zà-ýĀ-žÇĞİÖŞÜçğıöşü]+ · (Erkek|Kadın)( \(\w+\))?$")
+    r"^[A-ZÀ-Ýa-zà-ýĀ-žÇĞİÖŞÜçğıöşü]+ · (Erkek|Kadın)( \(\w+\))?$|"
+    r"^(JPG|PNG|WEBP|AVIF|\{0\} px|TekTıkla v|Bricolage Grotesque|TekTikla (Black|Condensed|Display)|Instrument Serif|"
+    r"Comic Sans( MS)?|Segoe (Script|UI|UI Emoji))$")
 
 
 def normalize(text: str) -> str:
@@ -162,7 +164,7 @@ def from_python(path: Path) -> list[str]:
 
 def collect() -> list[str]:
     found = from_html()
-    for js in ("app.js", "studio.js"):
+    for js in ("app.js", "studio.js", "watch.js", "convert.js", "account.js", "phone.js", "remote.js", "editor.js"):
         found += from_js(WEB / js)
     for py in PY_FILES:
         found += from_python(ROOT / "tektikla" / py)
@@ -180,7 +182,18 @@ def collect() -> list[str]:
 
 # Parça parça çevrilen metinler (ses adlarındaki cinsiyet ve Gemini ses tarifleri)
 EXTRA = ["Erkek", "Kadın", "net", "neşeli", "bilgilendirici", "ferah", "heyecanlı", "genç", "kararlı", "parlak",
-         "sıcak", "olgun", "samimi", "nazik", "Ayrıntı"]
+         "sıcak", "olgun", "samimi", "nazik", "Ayrıntı",
+         # görsel düzenleyicinin tek kelimelik etiketleri (Türkçe harf içermedikleri için yukarıdaki süzgeç atlar)
+         "Kontrast", "Pozlama", "Doygunluk", "Netlik", "Vinyet", "Gren", "Renk", "Mat", "Pastel", "Dram", "Sinematik",
+         "Eskitme", "Siyah-beyaz", "Oran", "Serbest", "Kutu", "Daire", "Ok", "Etiket", "Metin", "Kalem", "Fosforlu",
+         "Dolgu", "Kontur", "Normal", "Ortala", "Gizle", "Sil", "Dar", "Boyut", "Orijinal", "Filtre",
+         "{w} × {h} piksel", "saydam alanlar beyaz olur",
+         # iki parçalı sayfa başlıkları bütün olarak çevrilir (index.html data-i18n-whole)
+         "Görsel Stüdyosu", "Reels Stüdyosu",
+         # tr() ile çevrilen ama süzgece takılmayan kısa metinler (sayaç, birim, tek kelime)
+         "Kapak", "{n} adet", "{n} an bulundu", "Sonra", "Sorun", "otomatik", "✓ Kurulu", "✗ Eksik", "{0} dosya",
+         "{t} izlenecek", "{d} izlendi", "{d} eklendi", "{0} dk", "{0} sa {1} dk", "{0} sa", "{0} yorum okundu",
+         "{0} fikir", "{0} video izleme listesine eklendi"]
 
 
 if __name__ == "__main__":

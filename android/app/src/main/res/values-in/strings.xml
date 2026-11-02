@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">Pindai kode QR TekTıkla di komputer Anda</string>
+    <string name="saved">Tersimpan: %1$s</string>
+    <string name="save_failed">File tidak dapat disimpan</string>
+    <string name="no_app">Tidak ada aplikasi untuk membuka ini</string>
+    <string name="where_gallery">Galeri › TekTıkla</string>
+    <string name="where_music">Musik › TekTıkla</string>
+    <string name="where_downloads">Unduhan › TekTıkla</string>
+</resources>

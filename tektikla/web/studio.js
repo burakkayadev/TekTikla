@@ -78,7 +78,8 @@ function reelsMode(v) {
   const idea = v === "idea";
   $("#reelsVideoMode").classList.toggle("hidden", idea);
   $("#reelsIdeaMode").classList.toggle("hidden", !idea);
-  for (const id of ["rFrameBox", "rCutRow", "rZoomRow"]) $("#" + id).classList.toggle("hidden", idea);
+  // fikirden Reels zaten seçilen dilde konuşur ve kendi görüntülerini kullanır
+  for (const id of ["rFrameBox", "rCutRow", "rZoomRow", "rCapLangRow", "rBrollBox"]) $("#" + id).classList.toggle("hidden", idea);
   setTimeout(() => Object.values(segs).forEach((s) => s.refresh()), 20);
   reelsSummary();
 }
@@ -166,7 +167,24 @@ function editOpts() {
     position: segs.rPosSeg.value, words: Number(segs.rWordsSeg.value), uppercase: $("#rUpper").checked,
     hook: $("#rHook").checked, cut: $("#rCut").checked, zoom: $("#rZoom").checked, bar: $("#rBar").checked,
     music: studio.music, music_volume: Number($("#rMusicVol").value) / 100, watermark: $("#rWatermark").value.trim(),
+    cap_lang: $("#rCapLang").value, broll: segs.rBrollSeg.value,
   };
+}
+
+function reelsHints() {
+  const lang = $("#rCapLang").value, ai = state.keys.gemini || state.keys.claude;
+  $("#rCapLangHint").textContent = tr(!lang ? "Altyazı, videoda konuşulan dilde olur."
+    : ai ? "Konuşma bu dile yapay zekâyla çevrilir; kelime kelime vurgu korunur."
+      : "Konuşma bu dile ücretsiz çeviriyle çevrilir; Gemini anahtarı eklersen çeviri daha doğal olur.");
+  const b = segs.rBrollSeg ? segs.rBrollSeg.value : "off";
+  const svc = studio.svcKeys || {};
+  $("#rBrollHint").textContent = tr(b === "pexels"
+    ? (svc.pexels ? "Konuşmada anlatılanı gösteren ücretsiz stok videolar araya girer (Pexels). Yerleri yapay zekâ seçer."
+      : "Ücretsiz: Ayarlar > Servisler'den Pexels anahtarı ekle.")
+    : b === "higgsfield"
+      ? (svc.higgsfield ? "Ücretli: Higgsfield her ara görüntüyü yapay zekâyla üretir (klip başına 2 sahne, kredi harcar)."
+        : "Ücretli: Ayarlar > Servisler'den Higgsfield anahtarı ekle.")
+      : "Klip boyunca konuşmacı görünür.");
 }
 
 function reelsSummary() {
@@ -222,7 +240,8 @@ async function loadVoices(engine, lang, select) {
 function engineTiles(id, onChange, forDub = false) {
   const desc = {
     edge: "Anahtarsız · 70+ dil · kelime zamanlı",
-    gemini: "Gemini anahtarıyla · çok doğal ve duygulu",
+    gemini: forDub ? "Çok doğal ve duygulu · günlük ücretsiz kota dolarsa Edge sesiyle tamamlanır"
+      : "Gemini anahtarıyla · çok doğal ve duygulu",
     elevenlabs: forDub ? "Konuşmacının kendi sesini korur · ücretsizde filigranlı" : "En doğal sesler · ayda ~10 dk ücretsiz",
   };
   return tiles(id, Object.entries(studio.data.tts_engines).map(([v, m]) =>
@@ -245,7 +264,7 @@ function addResult(files, urls = {}) {
     h("div", { class: "reel-meta" }, h("b", { title: video }, video.split(/[\\/]/).pop().replace(/\.mp4$/i, "")),
       h("div", { class: "reel-acts" },
         h("button", { class: "btn sm", onclick: () => api.open_made(video) }, icon("play"), "Aç"),
-        h("button", { class: "btn sm", onclick: () => api.reveal_made(video) }, icon("folder"), "Klasör"),
+        h("button", { class: "btn sm rv", onclick: () => api.reveal_made(video) }, icon("folder"), "Klasör"),
         txt ? h("button", { class: "btn sm", onclick: copy }, icon("copy"), "Açıklama") : null)));
   $("#reelsResultGrid").prepend(card);
   $("#reelsResults").classList.remove("hidden");
@@ -253,6 +272,11 @@ function addResult(files, urls = {}) {
 
 /* ================================================================ GÖRSEL */
 function imgMode(v) {
+  $("#page-image").classList.toggle("editing", v === "edit");
+  if (v === "edit") {  // görsel düzenleyici (editor.js); üretim ayarlarına dokunulmaz
+    edShow();
+    return;
+  }
   const thumb = v === "thumbnail";
   $("#imgTextCard").classList.toggle("hidden", !thumb);
   $("#imgBgBox").classList.toggle("hidden", !thumb);
@@ -317,7 +341,8 @@ function onImgItem(ev) {
   let path = ev.path;
   const acts = h("div", { class: "img-acts" },
     h("button", { class: "btn sm", onclick: () => api.open_made(path) }, icon("image"), "Aç"),
-    h("button", { class: "btn sm", onclick: () => api.reveal_made(path) }, icon("folder"), "Klasör"));
+    h("button", { class: "btn sm", onclick: () => edOpenPath(path) }, icon("pen"), "Düzenle"),
+    h("button", { class: "btn sm rv", onclick: () => api.reveal_made(path) }, icon("folder"), "Klasör"));
   if (ev.mode === "thumbnail") {
     const redo = async (e) => {
       const b = e.currentTarget;
@@ -477,7 +502,10 @@ async function changeLanguage(code) {
   renderSettings();
   renderQueue();
   renderHistory();
-  reelsSummary(); imgSummary(); dubSummary();
+  renderWatch();
+  convRender();
+  renderConvResults();
+  reelsSummary(); imgSummary(); dubSummary(); reelsHints();
   if (state.media) updateSummary();
 }
 
@@ -491,7 +519,9 @@ function studioWire() {
   seg("rPosSeg").set("bottom");
   seg("rWordsSeg").set("3");
   studio.ctl.cap = picker("rCapStyles");
-  studio.ctl.cap.set("pop");
+  studio.ctl.cap.set("clean");
+  seg("rBrollSeg", reelsHints).set("off");
+  $("#rCapLang").addEventListener("change", reelsHints);
   studio.ctl.accent = picker("rAccent");
   studio.ctl.accent.set("yellow");
   seg("imgModeSeg", imgMode);
@@ -578,6 +608,10 @@ function studioInit(init) {
   studio.svcKeys = init.studio.service_keys;
   const langs = init.studio.dub_languages;
   $("#dubLang").replaceChildren(...langs.map(([c, n]) => h("option", { value: c }, n)));
+  $("#rCapLang").replaceChildren(h("option", { value: "" }, "Videonun dili (çevirmeden)"),
+    ...langs.map(([c, n]) => h("option", { value: c, "data-no-i18n": true }, txt(n))));
+  $("#rCapLang").value = langs.some(([c]) => c === (init.lang || init.system_lang)) ? (init.lang || init.system_lang) : "";
+  reelsHints();
   $("#ideaLang").replaceChildren(...langs.map(([c, n]) => h("option", { value: c }, n)));
   const ui = init.lang || init.system_lang || "tr";
   $("#dubLang").value = langs.some(([c]) => c === ui) ? ui : "tr";

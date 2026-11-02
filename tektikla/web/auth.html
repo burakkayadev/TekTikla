@@ -1,0 +1,129 @@
+<!doctype html>
+<!-- TekTıkla: Google/GitHub ile giriş sayfası. Uygulama bu sayfayı sistem tarayıcısında, kendi yerel sunucusundan
+     (http://localhost) açar; giriş bitince oturum aynı sunucuya geri gönderilir. Başlangıç verisini sunucu yerleştirir. -->
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>TekTıkla</title>
+<style>
+  :root { --bg: #050505; --card: #0f0f11; --line: rgba(255,255,255,.09); --text: #f4f4f5; --muted: #a1a1aa; --ok: #34d399; --err: #fca5a5; color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { display: grid; place-items: center; padding: 24px; background: radial-gradient(1200px 600px at 50% -10%, #1b1b22, var(--bg));
+         color: var(--text); font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  main { width: min(420px, 100%); padding: 36px 32px 30px; border-radius: 24px; background: var(--card); border: 1px solid var(--line);
+         box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); text-align: center; animation: rise .45s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  .logo { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 19px; display: grid; place-items: center;
+          background: linear-gradient(180deg, #26262b, #0a0a0b); border: 1px solid rgba(255,255,255,.16); }
+  .logo svg { width: 36px; height: 36px; fill: #fff; stroke: #fff; stroke-width: .5; stroke-linejoin: round; }
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 22px; }
+  button { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; gap: 12px; border-radius: 14px;
+           border: 1px solid var(--line); font: 600 15px "Segoe UI", system-ui, sans-serif; cursor: pointer;
+           transition: transform .2s cubic-bezier(.22,1,.36,1), filter .2s, opacity .2s; }
+  button:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); }
+  button:disabled { opacity: .6; cursor: default; }
+  button.google { background: #fff; color: #1f1f1f; border-color: #dadce0; }
+  button.github { background: #24292f; color: #fff; }
+  button svg { width: 20px; height: 20px; flex: none; }
+  .msg { min-height: 22px; margin-top: 16px; color: var(--muted); font-size: 13.5px; }
+  .msg.err { color: var(--err); }
+  .done { display: none; }
+  .done .check { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center;
+                 background: var(--ok); color: #04130c; animation: pop .4s cubic-bezier(.22,1,.36,1) both; }
+  .done .check svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } }
+  .done p { color: var(--muted); }
+  body.ok .start { display: none; }
+  body.ok .done { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <div class="start">
+    <div class="logo"><svg viewBox="0 0 24 24"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+    <h1 id="title"></h1>
+    <button id="go" disabled></button>
+    <p class="msg" id="msg"></p>
+  </div>
+  <div class="done">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h1 id="doneTitle"></h1>
+    <p id="doneText"></p>
+  </div>
+</main>
+<script type="module">
+const BOOT = /*BOOT*/null;
+const T = (s) => (BOOT && BOOT.text && BOOT.text[s]) || s;
+const $ = (id) => document.getElementById(id);
+const ICONS = {
+  google: '<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>',
+  github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>',
+};
+
+function fail(text) {
+  $("msg").className = "msg err";
+  $("msg").textContent = text;
+}
+
+if (!BOOT) {
+  fail("TekTıkla");
+} else {
+  document.documentElement.lang = BOOT.lang || "tr";
+  if (BOOT.rtl) document.documentElement.dir = "rtl";
+  const google = BOOT.provider === "google";
+  $("title").textContent = T("TekTıkla'ya giriş");
+  $("doneTitle").textContent = T("Giriş yapıldı");
+  $("doneText").textContent = T("TekTıkla'ya dönebilirsin; bu sekmeyi kapatabilirsin.");
+  const go = $("go");
+  const label = T(google ? "Google ile devam et" : "GitHub ile devam et");
+  go.className = google ? "google" : "github";
+  go.innerHTML = ICONS[google ? "google" : "github"];  // sabit, güvenilir içerik
+  go.append(document.createTextNode(label));
+  try {
+    const base = `https://www.gstatic.com/firebasejs/${BOOT.sdk}`;
+    const { initializeApp } = await import(`${base}/firebase-app.js`);
+    const fa = await import(`${base}/firebase-auth.js`);
+    const auth = fa.getAuth(initializeApp(BOOT.config));
+    if (BOOT.config.emulator) fa.connectAuthEmulator(auth, BOOT.config.emulator, { disableWarnings: true });
+    await fa.setPersistence(auth, fa.inMemoryPersistence);  // tarayıcıda oturum bırakılmaz
+    go.disabled = false;
+    // açılır pencere engellenmesin diye giriş kullanıcının tıklamasıyla başlar
+    go.addEventListener("click", async () => {
+      go.disabled = true;
+      $("msg").className = "msg";
+      $("msg").textContent = T("Giriş yapılıyor…");
+      try {
+        const provider = google ? new fa.GoogleAuthProvider() : new fa.GithubAuthProvider();
+        if (google) provider.setCustomParameters({ prompt: "select_account" });
+        const result = await fa.signInWithPopup(auth, provider);
+        const user = result.user;
+        const info = fa.getAdditionalUserInfo(result);
+        const body = { nonce: BOOT.nonce, providerId: google ? "google.com" : "github.com",
+                       idToken: await user.getIdToken(), refreshToken: user.refreshToken,
+                       isNewUser: !!(info && info.isNewUser) };  // ilk girişte hoş geldin e-postası
+        const r = await fetch("/auth/done", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        if (!r.ok) throw Object.assign(new Error("expired"), { code: "expired" });
+        document.body.classList.add("ok");
+        setTimeout(() => window.close(), 1200);
+      } catch (e) {
+        const code = (e && e.code) || "";
+        fail(code === "auth/popup-blocked" ? T("Açılır pencere engellendi; düğmeye yeniden bas.")
+          : code === "auth/account-exists-with-different-credential" ? T("Bu e-postayla başka bir yöntemle kayıt olmuşsun; o yöntemle giriş yap.")
+          : code === "auth/operation-not-allowed" ? T("Bu giriş yöntemi henüz açılmamış.")
+          : code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request" ? T("Giriş penceresi kapatıldı.")
+          : code === "expired" ? T("Bu bağlantının süresi doldu. TekTıkla'dan yeniden deneyin.")
+          : `${T("Giriş yapılamadı")}${code ? ` (${code})` : ""}`);
+        go.disabled = false;
+        go.lastChild.textContent = T("Tekrar dene");
+      }
+    });
+  } catch (e) {
+    fail(`${T("Giriş yapılamadı")} (${(e && e.message) || "SDK"})`);
+  }
+}
+</script>
+</body>
+</html>

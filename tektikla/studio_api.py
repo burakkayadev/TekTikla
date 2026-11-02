@@ -9,17 +9,19 @@ import mimetypes
 import os
 import re
 import secrets
+import shutil
 import tempfile
 import threading
 import urllib.parse
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import requests
 import webview
 from PIL import Image
 
-from . import captions, dublaj, engine, i18n, imagegen, media, reels, services, subtitles, tts
-from .config import decrypt_secret, encrypt_secret
+from . import captions, convert, dublaj, engine, i18n, imagegen, media, reels, services, subtitles, tts
+from .config import UPLOAD_DIR, decrypt_secret, encrypt_secret
 
 SERVICE_KEYS = {"pollinations": "pollinations_key_enc", "cloudflare": "cloudflare_key_enc", "pexels": "pexels_key_enc",
                 "elevenlabs": "elevenlabs_key_enc", "higgsfield": "higgsfield_key_enc"}
@@ -33,6 +35,8 @@ SERVICE_URLS = {
 VIDEO_TYPES = ("Videolar (*.mp4;*.mov;*.mkv;*.webm;*.avi;*.m4v)", "Tüm dosyalar (*.*)")
 AUDIO_TYPES = ("Ses dosyaları (*.mp3;*.m4a;*.wav;*.aac;*.ogg;*.flac)", "Tüm dosyalar (*.*)")
 IMAGE_TYPES = ("Görseller (*.jpg;*.jpeg;*.png;*.webp)", "Tüm dosyalar (*.*)")
+EDIT_EXT = (".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".bmp")  # düzenleyicinin (tarayıcının) açabildikleri
+EDIT_FORMATS = {"jpg": "JPEG", "png": "PNG", "webp": "WEBP", "avif": "AVIF"}
 
 
 class _MediaServer:
@@ -67,6 +71,7 @@ class _MediaServer:
                 else:
                     self.send_response(200)
                 self.send_header("Content-Type", mimetypes.guess_type(path)[0] or "application/octet-stream")
+                self.send_header("Access-Control-Allow-Origin", "*")  # düzenleyicinin tuvali görseli dışa aktarabilsin
                 self.send_header("Accept-Ranges", "bytes")
                 self.send_header("Content-Length", str(end - start + 1))
                 self.end_headers()
@@ -112,6 +117,7 @@ class StudioApi:
     def _studio_init(self) -> None:
         self._made_files: set[str] = set()  # TekTıkla'nın ürettiği, açılmasına izin verilen dosyalar
         self._picked_media: set[str] = set()  # kullanıcının seçtiği video/ses/görsel dosyaları
+        self._convert_ok: set[str] = set()  # dönüştürücüye seçilen ya da bırakılan dosyalar
         self._img_bgs: dict[str, str] = {}  # kapak arka planları (yazıyı yeniden düzenlemek için)
         self._img_ids = itertools.count(1)
         self._reels_src: dict[int, reels.Source] = {}
@@ -122,7 +128,8 @@ class StudioApi:
         """Önizlenecek video/kapak dosyaları için yerel sunucu adresleri."""
         if self._media_srv is None:
             self._media_srv = _MediaServer()
-        return {f: self._media_srv.url(f) for f in files if f.lower().endswith((".mp4", ".jpg", ".jpeg"))}
+        return {f: self._media_srv.url(f) for f in files
+                if f.lower().endswith((".mp4", ".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".bmp"))}
 
     # -- anahtarlar
     def _service_key(self, name: str) -> str:
@@ -203,6 +210,134 @@ class StudioApi:
         if path in self._made_files and path.lower().endswith(".txt") and os.path.exists(path):
             return Path(path).read_text(encoding="utf-8")
         return ""
+
+    # -- dönüştürücü: resim, video ve ses dosyalarını başka biçime çevirir (tektikla/convert.py)
+    def _convert_add(self, paths: list[str]) -> list[dict]:
+        clean = list(dict.fromkeys(os.path.normpath(p) for p in paths if p))[:300]
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            infos = list(pool.map(convert.inspect, clean))
+        items = []
+        for info in infos:
+            if not info:
+                continue
+            self._convert_ok.add(info["path"])
+            if info.get("thumb"):
+                info["thumb"] = self._media_urls([info["thumb"]]).get(info["thumb"])
+            items.append(info)
+        return items
+
+    def convert_pick(self) -> dict:
+        exts = ";".join("*" + e for e in sorted(convert.IMAGE_EXT | convert.VIDEO_EXT | convert.AUDIO_EXT))
+        types = (f"{i18n.t('Resim, video ve ses')} ({exts})", f"{i18n.t('Tüm dosyalar')} (*.*)")
+        result = self._window.create_file_dialog(webview.FileDialog.OPEN, allow_multiple=True, file_types=types)
+        paths = list(result) if isinstance(result, (list, tuple)) else [result] if result else []
+        items = self._convert_add(paths)
+        return {"items": items, "skipped": len(paths) - len(items)}
+
+    def _on_drop(self, event: dict) -> None:
+        files = [f.get("pywebviewFullPath") for f in (event.get("dataTransfer") or {}).get("files") or []]
+        files = [f for f in files if f]
+        if files:
+            items = self._convert_add(files)
+            self._emit("convert_files", items=items, skipped=len(files) - len(items))
+
+    def _wire_drop(self) -> None:
+        """Pencereye bırakılan dosyalar dönüştürücüye gelir (dosyanın tam yolunu yalnızca pywebview verebilir).
+
+        Sayfa her yüklendiğinde çağrılır. Bırakmayı sayfa kendisi kabul eder (convert.js, dragover). pywebview belge
+        nesnesini işleyicileriyle saklar; yenilenen sayfada her bırakma iki kez işlenmesin diye önce eskisi atılır.
+        """
+        from webview.dom import DOMEventHandler
+        getattr(self._window.dom, "_elements", {}).pop("document", None)
+        self._window.dom.document.events.drop += DOMEventHandler(self._on_drop, prevent_default=True)
+
+    def _convert_options(self, opts: dict) -> convert.Options:
+        targets = {k: v for k, v in (opts.get("targets") or {}).items()
+                   if k in convert.TARGETS and v in convert.TARGETS[k]}
+        bg = str(opts.get("background") or "#ffffff")
+        return convert.Options(
+            targets=targets,
+            quality=opts.get("quality") if opts.get("quality") in convert.QUALITIES else "high",
+            size=opts.get("size") if opts.get("size") in (*convert.SIZES, "custom") else "original",
+            width=_num(opts.get("width"), 0, 12000, 0), height=_num(opts.get("height"), 0, 12000, 0),
+            fit=opts.get("fit") if opts.get("fit") in convert.FITS else "keep",
+            place="folder" if opts.get("place") == "folder" else "beside",
+            strip=bool(opts.get("strip")), merge_pdf=bool(opts.get("merge_pdf")),
+            rotate=opts.get("rotate") if opts.get("rotate") in convert.ROTATIONS else 0,
+            background=bg if re.fullmatch(r"#[0-9a-fA-F]{6}", bg) else "#ffffff",
+            trim_start=_num(opts.get("trim_start"), 0.0, 86400.0, 0.0), trim_end=_num(opts.get("trim_end"), 0.0, 86400.0, 0.0),
+            fps=opts.get("fps") if opts.get("fps") in convert.FPS_CHOICES else 0,
+            mute=bool(opts.get("mute")), normalize=bool(opts.get("normalize")), mono=bool(opts.get("mono")),
+            suffix=bool(opts.get("suffix")))
+
+    def convert_estimate(self, opts: dict) -> list[dict]:
+        """Seçilen ayarlarla her dosyanın tahmini sonuç boyutu (resimlerin ilk birkaçı gerçekten kodlanır)."""
+        o = self._convert_options(opts)
+        out, encoded = [], 0
+        tmp = Path(tempfile.mkdtemp(prefix="tt_est_"))
+        try:
+            for item in (opts.get("files") or [])[:60]:
+                if not isinstance(item, dict) or item.get("path") not in self._convert_ok:
+                    continue
+                if item.get("kind") == "image":
+                    if encoded >= 6:  # çok sayıda resimde arayüz beklemesin
+                        continue
+                    encoded += 1
+                try:
+                    est = convert.estimate(item, o, tmp)
+                except Exception:  # noqa: BLE001 - tahmin olmasa da olur
+                    est = None
+                if est:
+                    out.append({"path": item["path"], **est})
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+        return out
+
+    def convert_pick_folder(self) -> dict:
+        """Bir klasördeki (alt klasörler dahil) desteklenen bütün dosyaları ekler."""
+        result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+        folder = Path(result[0] if isinstance(result, (list, tuple)) else result) if result else None
+        if not folder or not folder.is_dir():
+            return {"items": [], "skipped": 0}
+        exts = convert.IMAGE_EXT | convert.VIDEO_EXT | convert.AUDIO_EXT
+        paths = [str(p) for p in sorted(folder.rglob("*")) if p.is_file() and p.suffix.lower() in exts][:300]
+        return {"items": self._convert_add(paths), "skipped": 0}
+
+    def convert_preview(self, paths: list[str]) -> dict:
+        """Karşılaştırma ekranı için tam boy resim adresleri (yalnızca eklenen ya da üretilen dosyalar)."""
+        allowed = [p for p in paths or [] if (p in self._convert_ok or p in self._made_files) and os.path.isfile(p)]
+        return self._media_urls(allowed)
+
+    def convert_start(self, opts: dict) -> dict:
+        o = self._convert_options(opts)
+        targets = o.targets
+        files = [{"path": f["path"], "kind": f["kind"], "width": f.get("width"), "height": f.get("height")}
+                 for f in opts.get("files") or []
+                 if isinstance(f, dict) and f.get("path") in self._convert_ok and f.get("kind") in targets]
+        if not files:
+            return {"ok": False, "error": i18n.t("Önce dönüştürülecek dosyaları ekleyin.")}
+        # resimler tek işte (hızlı), her video ve ses kendi işinde (uzun sürer, ayrı ilerleme)
+        images = [f for f in files if f["kind"] == "image"]
+        groups = ([images] if images else []) + [[f] for f in files if f["kind"] != "image"]
+        ids = []
+        for group in groups:
+            first = Path(group[0]["path"])
+            fmt = targets[group[0]["kind"]].upper()
+            title = first.name if len(group) == 1 else i18n.t("{n} resim", n=len(group))
+            beside = o.place == "beside" and UPLOAD_DIR not in first.parents  # telefondan gelenler: indirme klasörüne
+            out_dir = first.parent if beside else self._out_dir(i18n.t("Dönüştürülenler"))
+            task = media.StudioTask("convert", title, "", str(out_dir), i18n.t("Dönüştür · {fmt}", fmt=fmt),
+                                    i18n.t("Dönüştürüldü: {title}", title=title),
+                                    lambda s, emit, g=group: convert.ConvertJob(s, emit, g, o))
+            thumb = convert.thumb_path(first) if first.exists() else None
+            thumb_url = self._media_urls([str(thumb)]).get(str(thumb)) if thumb and thumb.exists() else None
+            ids.append({"id": self._enqueue(task, thumb_url), "paths": [f["path"] for f in group]})
+        return {"ok": True, "tasks": ids}
+
+    def convert_info(self, paths: list[str]) -> list[dict]:
+        """Hazır dosyaların boyutu (sonuç kartında önce/sonra karşılaştırması için)."""
+        return [{"path": p, "name": os.path.basename(p), "bytes": os.path.getsize(p)}
+                for p in paths or [] if p in self._made_files and os.path.isfile(p)]
 
     def tts_voices(self, engine_name: str, lang: str) -> dict:
         try:
@@ -311,19 +446,104 @@ class StudioApi:
         self._made_files.add(str(path))
         return {"ok": True, "path": str(path), "data": _preview(img)}
 
+    # -- görsel düzenleyici (web/editor.js): düzenleme tarayıcıda yapılır; burada yalnızca açma ve kaydetme var
+    def editor_pick(self) -> dict | None:
+        exts = ";".join("*" + e for e in EDIT_EXT)
+        path = self._pick((f"{i18n.t('Görseller')} ({exts})", f"{i18n.t('Tüm dosyalar')} (*.*)"))
+        return self.editor_url(path) if path else None
+
+    def editor_url(self, path: str) -> dict:
+        """Düzenleyicide açılacak dosyanın önizleme adresi; yalnızca uygulamanın ürettiği ya da seçilen dosyalar."""
+        if path not in (self._made_files | self._convert_ok | self._picked_media) or not os.path.isfile(path):
+            return {"ok": False, "error": i18n.t("Görsel bulunamadı; silinmiş ya da taşınmış olabilir.")}
+        if Path(path).suffix.lower() not in EDIT_EXT:
+            return {"ok": False, "error": i18n.t("Bu biçim düzenleyicide açılamıyor. Önce Dönüştür ile JPG ya da PNG'ye çevir.")}
+        return {"ok": True, "url": self._media_urls([path])[path], "name": Path(path).stem}
+
+    def editor_recent(self) -> list[dict]:
+        """Görseller klasöründeki son 6 görsel (düzenleyicinin boş ekranında küçük önizlemelerle tek tıkla açılır)."""
+        try:
+            files = sorted((p for p in self._out_dir(i18n.t("Görseller")).iterdir()
+                            if p.suffix.lower() in EDIT_EXT and p.is_file()), key=lambda p: p.stat().st_mtime, reverse=True)
+        except OSError:
+            return []
+        out = []
+        for p in files[:6]:
+            try:
+                with Image.open(p) as im:
+                    im.draft("RGB", (480, 480))
+                    if im.mode in ("RGBA", "LA", "P"):  # saydam alanlar siyah değil koyu gri görünsün
+                        rgba = im.convert("RGBA")
+                        im = Image.new("RGB", rgba.size, (58, 58, 58))
+                        im.paste(rgba, mask=rgba.getchannel("A"))
+                    thumb = _preview(im, 240)
+            except (OSError, ValueError):
+                continue
+            self._made_files.add(str(p))
+            out.append({"path": str(p), "name": p.name, "thumb": thumb})
+        return out
+
+    def editor_save(self, source: str, opts: dict) -> dict:
+        """Düzenlenen görseli Görseller klasörüne kaydeder. Masaüstünde görsel veri adresiyle (data:) gelir; telefonda
+        önce /upload ile bilgisayara gönderilir, yolu gelir. Tarayıcı istenen biçimi kodlayamadıysa (AVIF her yerde,
+        iPhone'da WEBP) Pillow yeniden kodlar."""
+        fmt = opts.get("format") if opts.get("format") in EDIT_FORMATS else "jpg"
+        quality = _num(opts.get("quality"), 30, 100, 92)
+        upload = None
+        try:
+            if str(source).startswith("data:"):
+                data = base64.b64decode(str(source).split(",", 1)[1])
+            else:
+                upload = Path(source).resolve()
+                if not upload.is_relative_to(UPLOAD_DIR.resolve()) or not upload.is_file():
+                    raise ValueError(source)
+                data = upload.read_bytes()
+            img = Image.open(io.BytesIO(data))
+            img.load()
+        except (OSError, ValueError, IndexError):
+            return {"ok": False, "error": i18n.t("Görsel kaydedilemedi.")}
+        folder = self._out_dir(i18n.t("Görseller"))
+        folder.mkdir(parents=True, exist_ok=True)
+        stem = re.sub(r'[\\/:*?"<>|\x00-\x1f]+', " ", str(opts.get("name") or "")).strip()[:80] or "gorsel"
+        path, n = folder / f"{stem}.{fmt}", 2
+        while path.exists():
+            path, n = folder / f"{stem} ({n}).{fmt}", n + 1
+        if img.format == EDIT_FORMATS[fmt]:
+            path.write_bytes(data)  # tarayıcının kodladığı dosya olduğu gibi yazılır
+        elif fmt == "jpg":
+            if img.mode in ("RGBA", "LA", "P"):  # JPG saydamlığı desteklemez: boş alanlar beyaz olur
+                img = img.convert("RGBA")
+                flat = Image.new("RGB", img.size, "white")
+                flat.paste(img, mask=img.getchannel("A"))
+                img = flat
+            img.convert("RGB").save(path, "JPEG", quality=quality, optimize=True)
+        elif fmt == "png":
+            img.save(path, "PNG", optimize=True)
+        else:
+            img.save(path, EDIT_FORMATS[fmt], quality=quality, **({"method": 5} if fmt == "webp" else {"speed": 5}))
+        if upload:
+            upload.unlink(missing_ok=True)
+        self._made_files.add(str(path))
+        return {"ok": True, "path": str(path), "name": path.name, "size": path.stat().st_size}
+
     # -- Reels
     def _edit(self, opts: dict, lang: str) -> reels.Edit:
         cap = captions.Options(
-            style=opts.get("cap_style") if opts.get("cap_style") in ("pop", "karaoke", "box", "minimal", "none") else "pop",
+            style=opts.get("cap_style") if opts.get("cap_style") in captions.STYLES else "clean",
             accent=opts.get("accent") if opts.get("accent") in captions.ACCENTS else "yellow",
             position=opts.get("position") if opts.get("position") in captions.POSITIONS else "bottom",
-            words_per_chunk=_num(opts.get("words"), 1, 4, 3), uppercase=bool(opts.get("uppercase", True)), lang=lang)
+            words_per_chunk=_num(opts.get("words"), 1, 4, 3), uppercase=bool(opts.get("uppercase", False)), lang=lang)
         music = opts.get("music") if opts.get("music") in self._picked_media else None
         return reels.Edit(frame=opts.get("frame") if opts.get("frame") in ("smart", "blur", "center") else "smart",
                           caption=cap, hook=bool(opts.get("hook", True)), cut_silence=bool(opts.get("cut", True)),
-                          zoom=bool(opts.get("zoom", True)), progress_bar=bool(opts.get("bar", True)), music=music,
+                          zoom=bool(opts.get("zoom", True)), progress_bar=bool(opts.get("bar", False)), music=music,
                           music_volume=_num(opts.get("music_volume"), 0.02, 1.0, 0.14),
-                          watermark=(opts.get("watermark") or "").strip()[:40])
+                          watermark=(opts.get("watermark") or "").strip()[:40],
+                          caption_lang=opts.get("cap_lang") if opts.get("cap_lang") in self._caption_langs() else "",
+                          broll=opts.get("broll") if opts.get("broll") in ("pexels", "higgsfield") else "off")
+
+    def _caption_langs(self) -> set[str]:
+        return {c for c, _n in self.studio_init()["dub_languages"]}
 
     def reels_analyze(self, opts: dict, token: int) -> dict:
         source = (opts.get("source") or "").strip()
@@ -366,6 +586,11 @@ class StudioApi:
         if not clips:
             return {"ok": False, "error": i18n.t("En az bir klip seçin.")}
         edit = self._edit(opts, src.lang)
+        keys = self._all_keys()
+        if edit.broll == "pexels" and not keys.get("pexels"):
+            return {"ok": False, "error": i18n.t("Stok video için Ayarlar > Servisler'e ücretsiz Pexels anahtarı girin.")}
+        if edit.broll == "higgsfield" and not keys.get("higgsfield"):
+            return {"ok": False, "error": i18n.t("AI video için Ayarlar > Servisler'e Higgsfield anahtarı girin (ücretli).")}
         out_dir = self._out_dir("Reels")
         thumb = self._media.get(src.key, (None, None))[1] if not src.is_local else None
         for n, c in enumerate(clips, 1):

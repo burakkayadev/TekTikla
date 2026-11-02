@@ -298,7 +298,7 @@ class Wizard(tk.Tk):
         except tk.TclError:
             pass
         header.create_text(text_x, 50, text=APP_NAME, anchor="w", fill=TEXT, font=(FONT, 28, "bold"))
-        header.create_text(text_x + 2, 88, text=f"Bütün sitelerden video indirici  ·  v{VERSION}", anchor="w",
+        header.create_text(text_x + 2, 88, text=f"İndir · Üret · Kurgula  ·  v{VERSION}", anchor="w",
                            fill=MUTED, font=(FONT, 11))
 
         body = tk.Frame(self, bg=BG, padx=40, pady=24)

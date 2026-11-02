@@ -1,11 +1,19 @@
-İndir
+Menü
 İndirmeler
+Kenar çubuğunu gizle (Ctrl+B)
+Kenar çubuğunu sabitle (Ctrl+B)
+İndir · Üret · Kurgula
+İndir
+İzleme listesi
 YENİ
 Görsel
 Dublaj
+Dönüştür
 AI Stüdyo
 Geçmiş
 Ayarlar
+Destek ol
+Telefondan kullan
 Güncelleme var
 Kontrol ediliyor…
 Ne indirmek
@@ -21,6 +29,7 @@ Bir link bekleniyor
 Analiz edince tüm kalite seçenekleri, altyazılar ve MP{0} burada görünecek.
 Link analiz ediliyor…
 AI ile özetle
+Sonra izle
 Yorum özeti
 Reels yap
 Dublajla
@@ -75,6 +84,78 @@ Klasörü aç
 Bitenleri temizle
 Henüz indirme yok
 İndir sekmesinden bir link analiz ederek başla.
+Sonra izleyeceğin videolar sırayla burada durur; uygulamayı kapatsan da kaybolmaz.
+Video ya da oynatma listesi linki (birden fazla link de olur)
+Listeye ekle
+YouTube'dan çek
+Daha sonra izle
+Beğendiklerim
+İzlenecek
+İzlenenler
+Sıralama
+Benim sıram
+Önce kısa olanlar
+Önce yeni eklenenler
+İzlenenleri temizle
+Listen boş
+Bir link ekle; sonra izlemek istediğin videolar burada sıraya girer.
+Resim, video ve ses dosyalarını başka biçime çevir; istersen {0}K, {1}K ya da kendi ölçünde yeniden boyutlandır.
+Dosyaları buraya sürükle ya da seçmek için tıkla
+PNG, JPG, WEBP, AVIF, HEIC, GIF · MP{0}, MOV, MKV, WEBM · MP{1}, WAV, FLAC, M{2}A ve dahası
+Bir klasörün tamamını ekle
+Dosya ekle
+Klasör ekle
+Listeyi temizle
+Hazır ayarlar
+Tek tıkla biçim, kalite ve ölçü
+Hedef biçim
+Kalite ve boyut
+Orijinal
+Yüksek
+Dengeli
+En küçük dosya
+Küçük
+Boyut
+Uzun kenar {0} px
+HD
+{0}K
+Özel
+Genişlik
+Yükseklik
+px
+Oranı koru
+Kırparak doldur
+Esnet
+Gelişmiş ayarlar
+Döndür, kes, kare hızı, ses ve dosya adı
+Döndür
+Saat yönünde. Resimler kayıpsız döner.
+Şeffaf alanların rengi
+Beyaz
+Siyah
+Açık gri
+Özel renk
+JPG ve PDF şeffaflığı desteklemez; boş alanlar bu renkle dolar.
+Kes
+sonu
+Yalnızca bu aralık dönüştürülür (dk:sn). Boş bırakırsan tamamı.
+Kare hızı
+Düşük kare hızı dosyayı küçültür; {0} oyun ve spor videoları için.
+Sesi kaldır
+Videodaki sesi tamamen çıkarır
+Ses seviyesini dengele
+Instagram ve YouTube'un önerdiği seviye (-{0} LUFS)
+Mono yap
+Tek kanal: konuşma kayıtlarında dosya yarı yarıya küçülür
+Dosya adına ölçüyü ekle
+Örnek: tatil-{0}x{1}.webp
+Dosyanın yanına
+TekTıkla klasörüne
+Konum ve cihaz bilgilerini sil
+Fotoğraftaki GPS konumu, kamera modeli gibi gizli bilgiler kaldırılır
+Tek PDF'te birleştir
+Resimler sırayla tek bir PDF'in sayfaları olur
+Hazır dosyalar
 Stüdyo
 İzlemeden önce videonun ne anlattığını öğren.
 Önce API anahtarını ekle
@@ -124,13 +205,14 @@ Akıllı kırpma (yüz takibi)
 Bulanık arka plan
 Ortadan kırp
 Altyazı stili
+Bu
+çok
+iyi
+Temiz
 BU
 ÇOK
 İYİ
 Bu çok
-iyi
-Bu
-çok
 Kutu
 Bu çok iyi
 Sade
@@ -146,11 +228,15 @@ Kanca başlığı
 İlk {0} saniye üstte
 Sessizlikleri kes
 Duraklamalar atlanır
-Dinamik zoom
-Cümle geçişlerinde yakınlaşma
+Akıcı yakınlaşma
+Geniş ve yakın çekimler, yavaş kamera hareketi
 İlerleme çubuğu
+Altta ince çizgi
 Kullanıcı adı
 Üstte küçük filigran
+Ara görüntü (B-roll)
+Stok video · Pexels
+AI video · Higgsfield
 Arka plan müziği
 Konuşma başlayınca müzik otomatik kısılır
 Müzik seviyesi
@@ -160,6 +246,31 @@ Hazır Reels
 Fikirden kapak fotoğrafı ve görsel üret. Ücretsiz servisler her zaman önce gelir.
 Kapak hazırla
 Görsel üret
+Görseli düzenle
+Görsel aç
+Geri al (Ctrl+Z)
+Yinele (Ctrl+Y)
+Uzaklaştır
+Ekrana sığdır (Ctrl+{0})
+Yakınlaştır (Ctrl + fare tekerleği)
+Basılı tuttuğun sürece orijinali gösterir
+Önce
+Kaydedileni aç
+Sıfırla
+Kaydet
+Düzenlemek için bir görsel aç
+Sürükleyip bırak, Ctrl+V ile yapıştır ya da bilgisayarından seç.
+Görsel seç
+Panodan yapıştır
+Son görsellerin
+Kırp
+Ayarla
+Filtre
+Yazı
+Öğeler
+Çizim
+Sansür
+Katmanlar
 Fikrini yaz… ör. 'İstanbul'un en iyi {0} kahvecisi'
 Arka plan
 Yapay zekâ üretsin
@@ -202,18 +313,27 @@ Ara…
 Geçmiş boş
 İndirdiğin dosyalar burada listelenir.
 Değişiklikler otomatik kaydedilir.
+Hesap
 Görünüm
-Siyah
 Kâğıt
 Mor
 Okyanus
 Başlık yazı tipi
-İkisini karşılaştır
+Başlıklarda ve marka yazısında kullanılır
+Aa
+Geniş
+Yumuşak
+Kenar çubuğu
+Gizliyken fareyi kenara getirince açılır · Ctrl+B
+Sabit
+Otomatik gizle
 Genel
 Kayıt klasörü
 Panoyu izle
 Kopyalanan link otomatik algılanır
 Aynı anda indirme
+Kapalı · iPhone ya da Android, aynı Wi-Fi'den
+Telefonu bağla
 Hız sınırı
 Örnek: {0}M · boş = sınırsız
 sınırsız
@@ -231,7 +351,6 @@ Yok
 Yapay Zekâ
 Servis
 Özet ve altyazı çevirisi
-Kaydet
 Windows şifrelemesiyle saklanır
 Sil
 Konuşma tanıma
@@ -242,6 +361,8 @@ Sistem
 Sürüm
 İndirme motoru
 Güncelleme kaynağı
+TekTıkla'ya destek ol
+Bir kahve ısmarla ya da GitHub'da takip et
 Açılışta güncelleme denetle
 Uygulama güncellemesi
 Denetle
@@ -253,6 +374,7 @@ Eksik bileşenler indirilir
 Kur
 Servisler
 Görsel, ses ve video için bağlanabilecek servisler. Ücretsiz seçenekler her zaman önce gelir; anahtarlar bu bilgisayarda şifreli saklanır.
+Dönüştürmek için bırak
 TekTıkla'ya hoş geldin
 Uygulama dilini seç · Choose your language
 Devam
@@ -261,6 +383,52 @@ TekTıkla hazırlanıyor
 Başlıyor…
 Arka planda devam et
 Tekrar dene
+Kayıt olmadan devam et
+Hesap aç ya da giriş yap. YouTube listelerini uygulamaya çekmek gibi özellikler hesapla çalışır.
+Google ile devam et
+GitHub ile devam et
+ya da e-postayla
+Giriş yap
+Hesap aç
+Adın
+E-posta
+Şifre (en az {0} karakter)
+Şifremi unuttum
+Kayıt olmadan devam edersen YouTube "Daha sonra izle" listeni ve beğendiklerini uygulamaya çekme gibi hesap özelliklerini kullanamazsın. İstediğin zaman Ayarlar > Hesap'tan giriş yapabilirsin.
+Tarayıcında açılan sayfadan girişi tamamla; bitince burası kendiliğinden güncellenir.
+İptal
+Görseli kaydet
+Dosya adı
+Biçim
+Panoya kopyala
+Önce / sonra
+Sürgüyü kaydırarak aynı yeri iki sürümde karşılaştır.
+TekTıkla'yı beğendin mi?
+TekTıkla ücretsiz ve reklamsız. İstersen bana bir kahve ısmarlayarak ya da GitHub'da takip edip projeye yıldız vererek destek olabilirsin; yeni özellikler böyle gelmeye devam ediyor.
+QR kodu telefonunun kamerasıyla okut ya da karta tıkla.
+Daha sonra
+Kahve ısmarla
+GitHub'da aç
+Bu pencereye kenar çubuğundaki “Destek ol” ile her zaman ulaşabilirsin.
+TekTıkla'yı telefonunun tarayıcısında aç: indirme, Reels, dublaj ve dönüştürme işlerini bu bilgisayar yapar, sonuç telefonuna iner. iPhone ve Android'de çalışır, uygulama kurmak gerekmez.
+Telefon bağlantısı
+Yalnızca bu ev ağındaki ve bağlanma kodunu bilen cihazlar bağlanabilir
+Bağlantıyı açınca burada telefonunla okutacağın QR kod çıkar.
+Bu bilgisayar bir ağa bağlı görünmüyor. Wi-Fi ya da kabloyla ağa bağlanınca QR kod çıkar.
+Aynı Wi-Fi
+Telefon ve bilgisayar aynı ağda olsun.
+QR kodu okut
+Telefonunun kamerasını koda tut, çıkan bağlantıya dokun.
+Ana ekrana ekle
+iPhone: Paylaş › Ana Ekrana Ekle. Android: ⋮ › Ana ekrana ekle. Uygulama gibi açılır.
+Adres
+Bağlanma kodu
+Yeni kod
+Bağlı cihazlar
+Android uygulaması
+YouTube, Instagram ya da TikTok'tan Paylaş ile link gönder, sonuçları doğrudan Galeri'ye kaydet. Kodu okut, APK'yı indir ve kur.
+Telefon bağlanamıyorsa: Windows izin sorarsa “Özel ağlar”a izin ver. Wi-Fi ağın “Ortak” görünüyorsa Windows Ayarlar › Ağ'dan “Özel” yap.
+Bana bir kahve alır mısın?
 Geçerli bir link girin (http:// veya https:// ile başlamalı).
 Oynatma listesi · {0} öğe
 Ses kaynağı
@@ -293,7 +461,6 @@ MP{0} olarak indiriliyor
 En iyi kalitede indiriliyor
 Aç
 Klasörde göster
-İptal
 Listeden kaldır
 Altyazı varsa konuşmanın tamamı okunur; yoksa (X/Twitter gibi) ses bilgisayarında yazıya dökülüp özetlenir.
 Video bilgileri alınıyor
@@ -353,7 +520,6 @@ API anahtarı silindi
 Güncelleniyor…
 Güncelleme kaynağı (GitHub deposu) henüz ayarlanmadı.
 Orijinal dil (çevirmeden)
-TekTıkla v{0}
 Ayarlanmadı
 Ücretsiz
 Ücretsiz kota
@@ -367,6 +533,14 @@ yapay zekâsız seçim
 Klip adı
 Kanca yazısı (ilk {0} sn)
 Viral olma puanı
+Altyazı, videoda konuşulan dilde olur.
+Konuşma bu dile yapay zekâyla çevrilir; kelime kelime vurgu korunur.
+Konuşma bu dile ücretsiz çeviriyle çevrilir; Gemini anahtarı eklersen çeviri daha doğal olur.
+Konuşmada anlatılanı gösteren ücretsiz stok videolar araya girer (Pexels). Yerleri yapay zekâ seçer.
+Ücretsiz: Ayarlar > Servisler'den Pexels anahtarı ekle.
+Ücretli: Higgsfield her ara görüntüyü yapay zekâyla üretir (klip başına {0} sahne, kredi harcar).
+Ücretli: Ayarlar > Servisler'den Higgsfield anahtarı ekle.
+Klip boyunca konuşmacı görünür.
 Fikirden Reels · {s} sn
 {n} klip seçili
 Önce en iyi anları bulun
@@ -374,6 +548,7 @@ Seçilen klipleri oluştur ({n})
 {n} klip kuyruğa alındı
 Reels kuyruğa alındı
 Anahtarsız · {0}+ dil · kelime zamanlı
+Çok doğal ve duygulu · günlük ücretsiz kota dolarsa Edge sesiyle tamamlanır
 Gemini anahtarıyla · çok doğal ve duygulu
 Konuşmacının kendi sesini korur · ücretsizde filigranlı
 En doğal sesler · ayda ~{0} dk ücretsiz
@@ -384,6 +559,7 @@ Ne görmek istiyorsun? ör. 'Gün batımında sisli bir orman, sinematik'
 videonun kapağı
 kendi görselin
 Görseller
+Düzenle
 Yazı güncellendi
 Yukarıdaki başlık ve stil ayarlarıyla yazıyı yeniden yerleştir
 Yazıyı güncelle
@@ -409,7 +585,250 @@ AI video
 Higgsfield Seedance · sahne başı video
 Sade arka plan
 Anında · yalnızca yazı ve ses
+Videonun dili (çevirmeden)
+az önce
+{0} dk önce
+{0} sa önce
+dün
+{0} gün önce
+Henüz izlediğin yok
+İzlediğin videoları ✓ ile işaretleyince burada toplanır.
+Hepsini izledin
+Listede izlenecek video kalmadı. Yeni bir link ekleyebilirsin.
+Bilgiler alınıyor…
+Sıradaki
+Bilgiler alınamadı.
+Yukarı taşı
+Aşağı taşı
+Tekrar izle
+İzle
+İzlenmedi olarak işaretle
+İzledim olarak işaretle
+Sürükleyerek sırala
+Tarayıcıda açıldı.
+Tarayıcıda açıldı. İzleyince ✓ ile işaretleyebilirsin.
+İzleme listesine eklendi
+Bu video zaten izleme listende
+Bu videolar zaten izleme listende
+Geçerli bir link bulunamadı
+YouTube listelerini çekmek için Google ile giriş yap.
+YouTube'da oturumu açık tarayıcını Ayarlar > Tarayıcı çerezleri'nden seç (Firefox önerilir).
+{b} tarayıcısındaki YouTube oturumu kullanılır; yeniden çekince yalnızca yeni videolar eklenir.
+Önce YouTube'da oturumu açık tarayıcını seç.
+Daha sonra izle listen çekiliyor…
+Beğendiğin videolar çekiliyor…
+Bu liste şu an çekiliyor.
+Emin misin? Tekrar bas
+Küçük ve kaliteli · web için ideal
+Kayıpsız · şeffaflık korunur
+En uyumlu · fotoğraflar
+En küçük dosya · yeni cihazlar
+Animasyon · {0} renk
+Belge olarak
+Windows simgesi
+Baskı ve arşiv · kayıpsız
+Sıkıştırmasız
+En uyumlu · H.{0}
+Web için · VP{0}
+Apple cihazlar
+Tüm ses ve altyazılar korunur
+Hareketli resim
+Sadece ses
+Sadece ses · AAC
+Sadece ses · kayıpsız
+En uyumlu
+AAC · Apple cihazlar
+Kayıpsız · sıkıştırılmış
+Kayıpsız · sıkıştırmasız
+En verimli
+Açık biçim · Vorbis
+Web için küçült
+WEBP · Full HD · dengeli
+Instagram gönderisi
+Dikey video
+WhatsApp için
+MP{0} · JPG · HD
+E-postaya sığdır
+En küçük dosya · HD
+Kayıpsız arşiv
+PNG · FLAC · MKV
+Müziği çıkar
+Videodan MP{0} · {1} kb/sn
+Simge yap
+büyütülecek
 Sırada
+Listeden çıkar
+Önerilen
+Oran korunur; en ya da boydan birini boş bırakabilirsin.
+Tam bu ölçü olur; taşan kenarlar ortadan kırpılır.
+Tam bu ölçü olur; oran bozulabilir.
+Ölçü değişmez.
+Uzun kenar {0} px olur; dikey ve yatay dosyada aynı.
+{0} dosya büyütülecek.
+Yeni dosya, aslının bulunduğu klasöre kaydedilir
+İndirme klasöründeki “Dönüştürülenler” klasörüne kaydedilir
+Orijinal kalite
+Yüksek kalite
+Dengeli kalite
+Küçük dosya
+{0} px genişlik
+{0} px yükseklik
+Kayıpsız
+Seçtiğin biçim kayıpsız; kalite ayarı gerekmez.
+Mümkünse yeniden kodlamadan aktarılır: kayıpsız ve saniyeler sürer.
+Hiç kalite kaybı olmaz (WEBP/PNG kayıpsız, JPG %{0}); dosya büyük olabilir.
+Gözle fark edilmeyen kayıp, belirgin şekilde küçük dosya.
+Paylaşmak ve göndermek için ideal denge.
+En küçük dosya; PNG {0} renge indirilir (ekran görüntülerinde fark edilmez).
+En küçük dosya; ince ayrıntılarda hafif kayıp olabilir.
+{name} ayarları seçildi
+Bu dosyalar zaten listede
+Bu klasörde dönüştürülebilir dosya bulunamadı.
+Dönüştürülecek yeni dosya yok. Biçimi değiştirdiysen dosyaları yeniden ekle.
+Özel boyut için en ya da boy girin.
+Kesme bitişi başlangıçtan sonra olmalı.
+Karşılaştır
+Bu dosya önizlenemiyor.
+Google ile giriş yapıldı
+GitHub ile giriş yapıldı
+E-postayla giriş yapıldı
+ya da hesap aç
+Giriş yap ya da hesap aç
+Çıkış yap
+Hesabı sil
+E-posta adresin henüz doğrulanmadı. Gelen kutundaki bağlantıya tıkla.
+Yeniden gönder
+Giriş yapmadın
+Hesapla YouTube "Daha sonra izle" ve beğendiklerini uygulamaya çekebilirsin.
+Tarayıcıda Google ile giriş yap
+Tarayıcıda GitHub ile giriş yap
+E-posta ve şifreni yaz.
+Şifre en az {0} karakter olmalı.
+Hesabın açıldı. Doğrulama e-postası gönderildi.
+Hoş geldin, {0}!
+Giriş başlatılamadı.
+Önce e-posta adresini yaz.
+Şifre sıfırlama bağlantısı e-postana gönderildi.
+Çıkış yapıldı.
+Doğrulama e-postası gönderildi.
+Gönderilemedi.
+Hesap silinemedi.
+Hesabın ve bilgilerin silindi.
+Açık · telefonundan bağlanabilirsin
+Açılmazsa şu adresi dene: {list}
+Tarayıcı
+Henüz bağlı telefon yok
+Telefon bağlantısı açıldı. QR kodu telefonunla okut.
+Yeni kod oluşturuldu. Telefonların QR kodu yeniden okutmalı.
+Dosya bulunamadı; silinmiş ya da taşınmış olabilir.
+Kaydet'e dokununca videolar ve fotoğraflar Galeri'ye, sesler Müzik'e, diğer dosyalar İndirilenler'e kaydedilir.
+Fotoğraflar'a kaydetmek için Aç'a dokun, sonra Paylaş > Videoyu Kaydet.
+Fotoğraflar'a kaydetmek için Aç'a dokun, sonra resme basılı tut > Fotoğraflar'a Ekle.
+Kaydet'e dokununca dosya telefonun İndirilenler klasörüne iner.
+Telefona kaydet
+Telefona kaydediliyor
+Telefona kaydedildi: {where}
+Dosya telefona kaydedilemedi.
+{0} dosya bilgisayara gönderiliyor
+Bilgisayara gönderiliyor
+Dosya çok büyük (en fazla {0} GB).
+Dosya bilgisayara gönderilemedi.
+Bu işlem bilgisayardaki TekTıkla'dan yapılır.
+Kayıt klasörü bilgisayardaki TekTıkla'dan değiştirilir.
+Bilgisayara ulaşılamıyor · yeniden deneniyor…
+Telefondan seç
+Dosya seçmek için dokun
+Hesap işlemleri bilgisayardaki TekTıkla'dan yapılır.
+Bağlı:
+Bağlan
+Bilgisayarına bağlan
+Bilgisayardaki TekTıkla'da Ayarlar > Telefondan kullan'ı aç ve QR kodu telefonunun kamerasıyla okut.
+ya da bağlanma kodunu yaz
+Telefon ve bilgisayar aynı Wi-Fi ağında olmalı.
+Kod {0} karakter: bilgisayardaki Telefondan kullan penceresinde yazıyor.
+Kod yanlış. Bilgisayardaki pencerede görünen kodu yaz.
+Bilgisayara ulaşılamadı. TekTıkla açık mı, telefon aynı Wi-Fi'de mi?
+Bağlanma kodu değişmiş. QR kodu yeniden okut ya da yeni kodu yaz.
+Paylaşılan link
+Hızlı indir
+MP{0} indir
+Bu video zaten listede
+Parlaklık
+Açık tonlar
+Gölgeler
+Soluklaştır
+Sıcaklık
+Renk tonu
+Canlılık
+Ton kaydırma
+Canlı
+Sıcak
+Soğuk
+Altın saat
+Gösteriş
+BAŞLIK
+Metnini buraya yaz
+Dikdörtgen
+Çizgi
+Çoğalt (Ctrl+D)
+Çoğalt
+Öne getir
+Arkaya gönder
+Sil (Delete)
+Döndür ve çevir
+Sola döndür
+Sağa döndür
+Yatay çevir
+Dikey çevir
+Düzelt
+Çerçeveyi köşelerinden sürükle ya da içinden tutup taşı. Eğik fotoğrafı Düzelt ile hizala.
+Kırpmayı sıfırla
+Otomatik iyileştir
+Işık
+Ayrıntı
+Ayarları sıfırla
+Yoğunluk
+Bir yazı stili ekle. Var olan yazıyı düzenlemek için görselde üstüne tıkla.
+Yazı tipi
+Çok kalın
+Eğik
+Büyük harf
+Sola hizala
+Sağa hizala
+Kalınlık
+Gölge
+Arka plan kutusu
+Kutu opaklığı
+Harf aralığı
+Satır aralığı
+Opaklık
+Açı
+Şekil ekle
+Eklediğin öğeyi sürükleyerek taşı, köşelerinden büyüt. Emoji, yazı gibi düzenlenir.
+Çerçeve
+Köşe yuvarlaklığı
+Görselin üstünde sürükleyerek çiz. Her çizgi ayrı katman olur; Ctrl+Z ile geri alınır.
+Tüm çizimleri sil
+Gizlemek istediğin alanı sürükleyerek seç: yüz, plaka, adres, telefon numarası…
+Pikselleştir
+Bulanıklaştır
+Güç
+Henüz katman yok. Yazı, şekil, çizim ya da sansür ekleyince burada görünür.
+Göster
+Listede üstteki katman görselde de üstte durur.
+Bir görsel açınca düzenleme araçları burada görünür.
+Görsel açılmadı
+Otomatik ayarlar uygulandı
+Bu görsel açılamadı.
+Panoda görsel yok.
+Panoya erişilemedi. Görseli kopyalayıp Ctrl+V'ye bas.
+Telefonundan bir fotoğraf seç; düzenleyip bilgisayarına ve telefonuna kaydet.
+Tüm düzenlemeler sıfırlandı. Geri almak için Ctrl+Z.
+(düzenlendi)
+Görsel kaydedilemedi.
+Kaydedildi: {name}
+Görsel panoya kopyalandı
+Panoya kopyalanamadı.
 İptal ediliyor…
 altyazılı
 Bileşenler hazırlanıyor…
@@ -420,6 +839,9 @@ Oynatma listesi
 Geçerli bir link girin.
 Bu videonun kapak fotoğrafı yok.
 Tüm dosyalar (*.*)
+Hesap sistemi henüz kurulmadı.
+Hoş geldin, {name}!
+Telefon bağlantısı başlatılamadı.
 Bitiş zamanı başlangıçtan büyük olmalı.
 Tamamlandı
 İptal edildi
@@ -427,6 +849,7 @@ Kapak fotoğrafı indirilemedi.
 Güncellenemedi: {0}
 — etkin olması için TekTıkla'yı yeniden açın.
 Kurulum başarısız: {0}
+YouTube listene ulaşılamadı. YouTube'a giriş yaptığın tarayıcıyı Ayarlar > Tarayıcı çerezleri'nden seç (Firefox önerilir).
 AI çeviri için Ayarlar > Yapay Zekâ bölümüne {name} anahtarı girin. Sadece yazıya dökmek için dil olarak 'Orijinal dil'i seçin.
 Güncellendi:
 Güncelleme başarısız: {0}
@@ -434,20 +857,26 @@ Güncelleme başarısız: {0}
 Reels hazır: {title}
 Dublaj · {lang}
 Dublaj hazır: {title}
+Önce dönüştürülecek dosyaları ekleyin.
+Dönüştür · {fmt}
+Dönüştürüldü: {title}
 Önce bir fikir ya da açıklama yazın.
 Önce bir görsel seçin.
 Önce İndir sekmesinde bir video analiz edin.
 Kapak başlığını yazın.
 Bu servis için Ayarlar > Servisler'den anahtar girin.
 Bu görselin arka planı artık yok, yeniden üretin.
+Görsel bulunamadı; silinmiş ya da taşınmış olabilir.
+Bu biçim düzenleyicide açılamıyor. Önce Dönüştür ile JPG ya da PNG'ye çevir.
 Önce en iyi anları bulun.
 En az bir klip seçin.
-Videonun fikrini ya da metnini yazın.
-Bu ses için Ayarlar'dan anahtar girin.
 Stok video için Ayarlar > Servisler'e ücretsiz Pexels anahtarı girin.
 AI video için Ayarlar > Servisler'e Higgsfield anahtarı girin (ücretli).
+Videonun fikrini ya da metnini yazın.
+Bu ses için Ayarlar'dan anahtar girin.
 ElevenLabs için Ayarlar > Servisler'e anahtar girin.
 Gemini sesi için Ayarlar > Yapay Zekâ'ya Gemini anahtarı girin.
+Dönüştürülenler
 Fikir görsel istemine çevriliyor
 Erkek|Kadın
 Görsel üretiliyor ({0}/{1})
@@ -461,6 +890,8 @@ Sponsor bölümleri kesiliyor
 Sponsor bölümleri aranıyor
 Harici altyazı
 Geçersiz zaman: {0}
+Chrome ve Edge çerezleri Windows'ta okunamıyor. Firefox'ta siteye giriş yapıp Ayarlar > Tarayıcı çerezleri'nden Firefox'u seçin.
+Seçtiğin tarayıcı bu bilgisayarda bulunamadı ya da hiç açılmamış. Ayarlar > Tarayıcı çerezleri'nden siteye giriş yaptığın tarayıcıyı seç.
 Bu linkte indirilebilir video bulunamadı.
 Yaş doğrulaması gerekiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin.
 Site giriş istiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin.
@@ -493,13 +924,18 @@ Video {0} saatten uzun; Reels için daha kısa bir video seçin.
 Konuşmanın en yoğun ve hareketli bölümü (yapay zekâ anahtarı olmadan seçildi)
 Konuşma puanlanıyor (yapay zekâ anahtarı yok)
 Klip bölümü indiriliyor
+Ara görüntüler planlanıyor
 Yapay zekâ senaryoyu yazıyor
 Klip bölümü indirilemedi.
 Reels kurgulanıyor
+Ara görüntü için yapay zekâ anahtarı gerekir (Gemini ücretsiz).
+Ara görüntü hazırlanıyor ({0}/{1})
 Kapak hazırlanıyor
 Senaryo boş geldi.
 Video birleştiriliyor
 Videonun sesi indirilemedi.
+Altyazı çevriliyor
+Ara görüntü planlanamadı: {0}
 Kapak hazırlanamadı: {0}
 Yapay zekâ anahtarı olmadığı için yazdığın metin olduğu gibi seslendirildi.
 Seslendirilecek metin boş.
@@ -507,7 +943,10 @@ Sahne {0} görseli alınamadı, sade arka plan kullanıldı: {1}
 Seslendiriliyor ({0}/{1})
 Görüntüler hazırlanıyor ({0}/{1})
 Yüzler takip ediliyor (akıllı kırpma)
+Ara görüntü atlandı ({0}): {1}
 Akıllı kırpma yapılamadı, ortadan kırpıldı ({0}).
+Gemini'nin günlük ücretsiz ses kotası doldu; video ücretsiz Edge sesiyle seslendirildi.
+Gemini kotası: {0} sn bekleniyor
 Dublaj ({0})
 Video indiriliyor
 ElevenLabs'e yükleniyor
@@ -516,7 +955,8 @@ Video indirilemedi.
 Videoda ses yok; dublajlanacak konuşma bulunamadı.
 Videoda konuşma bulunamadı.
 Konuşma çevriliyor
-Çeviri için Ayarlar > Yapay Zekâ bölümüne Gemini anahtarı girin (ücretsiz).
+Gemini'nin günlük ücretsiz ses kotası doldu; dublaj ücretsiz Edge sesiyle tamamlandı. Gemini sesini yarın yeniden deneyebilirsin.
+Yapay zekâ çevirisi yapılamadı (kota dolmuş olabilir); ücretsiz çeviri kullanıldı.
 Görsel üretme
 Anahtarsız da çalışır (yavaş, köşede küçük logo). Ücretsiz hesapla logosuz ve daha hızlı.
 sk_… (isteğe bağlı)
@@ -529,6 +969,7 @@ Orijinal sesle dublaj, doğal seslendirme
 Ücretsiz planda ayda ~{0} dk ses ve ~{1} dk filigranlı dublaj (ticari kullanım yok). Sonrası ücretli.
 AI görsel (SOUL) ve AI video (Seedance) - Reels için
 Kullandıkça öde: console.higgsfield.ai'den bakiye yükleyip API anahtarı oluştur. 'anahtar-id:gizli-anahtar' biçiminde gir.
+Gemini ücretsiz kota sınırına ulaşıldı; bir dakika sonra tekrar deneyin.
 Kadın · net
 Erkek · neşeli
 Erkek · bilgilendirici
@@ -544,8 +985,8 @@ Kadın · nazik
 Higgsfield zaman aşımına uğradı.
 Anahtar boş olamaz.
 Anahtar çok kısa görünüyor.
+Gemini'nin günlük ücretsiz kotası doldu; yarın tekrar deneyin ya da ücretsiz Edge sesini seçin.
 Bunun için Ayarlar > Yapay Zekâ bölümüne Gemini anahtarı girin (ücretsiz).
-Gemini ücretsiz kota sınırına ulaşıldı; bir dakika sonra tekrar deneyin.
 Gemini görsel döndürmedi (istem güvenlik filtresine takılmış olabilir).
 Gemini ses döndürmedi.
 Cloudflare için 'hesap-id:api-token' biçiminde anahtar girin.
@@ -568,6 +1009,7 @@ Kadın
 ElevenLabs dublajı başarısız:
 Ücretsiz sunucu yoğun, tekrar deneniyor ({0} sn)
 Edge sesleri
+Gemini seslendirme yanıt vermedi.
 Babək · Erkek
 Edge seslendirme ses döndürmedi.
 Edge seslendirme servisine ulaşılamadı: {0}
@@ -586,6 +1028,7 @@ Konuşma kelime kelime yazıya dökülüyor ({0})
 OpenCV indirmesi doğrulanamadı (SHA-{0} uyuşmuyor).
 Akıllı kırpma bileşeni indiriliyor (ilk sefer) {0} MB
 {0} altyazı ({1})
+Ücretsiz çeviri yapılamadı: {0}
 Anthropic API anahtarı 'sk-ant-' ile başlar.
 Bu bir Gemini API anahtarına benzemiyor (aistudio.google.com/apikey).
 Yapay zekâ özellikleri için Ayarlar > Yapay Zekâ bölümüne {0} anahtarınızı girin.
@@ -617,6 +1060,40 @@ yt-dlp zaten güncel.
 pip başarısız oldu
 FFmpeg açılıyor…
 Deno açılıyor…
+Bu dosyada ses yok.
+Dönüştürülüyor: {name}
+{i}/{n} dönüştürülüyor: {name}
+PDF oluşturuluyor
+Hiçbir dosya dönüştürülemedi.
+Bulunamadı: {name}
+Bu e-postayla zaten bir hesap var. Giriş yapmayı dene.
+Bu e-postayla kayıtlı hesap yok.
+Şifre yanlış.
+E-posta ya da şifre yanlış.
+Geçerli bir e-posta adresi yaz.
+Şifreni yaz.
+E-posta adresini yaz.
+Çok fazla deneme yapıldı; biraz sonra tekrar dene.
+Bu hesap devre dışı bırakılmış.
+Hesap bulunamadı; yeniden giriş yap.
+Oturumun süresi doldu; yeniden giriş yap.
+Güvenlik için önce çıkış yapıp yeniden giriş yapman gerekiyor.
+Bu giriş yöntemi henüz açılmamış.
+E-postayla giriş henüz açılmamış.
+TekTıkla'ya giriş
+Giriş yapılıyor…
+Giriş yapıldı
+TekTıkla'ya dönebilirsin; bu sekmeyi kapatabilirsin.
+Giriş yapılamadı
+Açılır pencere engellendi; düğmeye yeniden bas.
+Bu e-postayla başka bir yöntemle kayıt olmuşsun; o yöntemle giriş yap.
+Giriş penceresi kapatıldı.
+Bu bağlantının süresi doldu. TekTıkla'dan yeniden deneyin.
+HTTP {0}
+İşlem yapılamadı ({0}).
+Giriş tamamlanamadı; yeniden dene.
+Sunucuya ulaşılamadı. İnternet bağlantını kontrol et.
+Medya ve Yapay Zekâ Stüdyosu
 Erkek
 net
 neşeli
@@ -630,4 +1107,50 @@ sıcak
 olgun
 samimi
 nazik
-Ayrıntı
+Kontrast
+Pozlama
+Doygunluk
+Netlik
+Vinyet
+Gren
+Renk
+Mat
+Pastel
+Dram
+Eskitme
+Siyah-beyaz
+Serbest
+Daire
+Ok
+Etiket
+Metin
+Kalem
+Fosforlu
+Dolgu
+Kontur
+Normal
+Ortala
+Gizle
+Dar
+{w} × {h} piksel
+saydam alanlar beyaz olur
+Görsel Stüdyosu
+Reels Stüdyosu
+Kapak
+{n} adet
+{n} an bulundu
+Sonra
+Sorun
+otomatik
+✓ Kurulu
+✗ Eksik
+{0} dosya
+{t} izlenecek
+{d} izlendi
+{d} eklendi
+{0} dk
+{0} sa {1} dk
+{0} sa
+{0} yorum okundu
+{0} fikir
+{0} video izleme listesine eklendi

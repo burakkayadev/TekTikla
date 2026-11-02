@@ -13,29 +13,52 @@
 <div class="aurora"><span></span><span></span><span></span></div>
 
 <div class="app">
+  <!-- telefon düzeni: üst çubuk (menü, marka, indirmeler); masaüstünde gizli -->
+  <header class="m-bar">
+    <button class="btn icon ghost" id="mMenuBtn" title="Menü"><i data-ic="menu"></i></button>
+    <div class="m-brand"><div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div><b>TekTıkla</b></div>
+    <button class="btn icon ghost m-queue" id="mQueueBtn" title="İndirmeler"><i data-ic="list"></i><span class="badge hidden" id="mQueueBadge">0</span></button>
+  </header>
+  <div class="m-scrim" id="mScrim"></div>
   <!-- ======================= YAN MENÜ ======================= -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
+    <!-- panel düğmesi: sabitken gizler; gizliyken fare kenara gelince açılır, düğmeyle yeniden sabitlenir (Ctrl+B) -->
+    <button class="sb-btn sb-hide" id="sbHide" title="Kenar çubuğunu gizle (Ctrl+B)"><i data-ic="panelClose"></i></button>
+    <button class="sb-btn sb-pin" id="sbPin" title="Kenar çubuğunu sabitle (Ctrl+B)"><i data-ic="panelOpen"></i></button>
+    <button class="sb-handle" id="sbHandle" title="Kenar çubuğunu sabitle (Ctrl+B)"><i data-ic="chevronRight"></i></button>
     <div class="brand">
       <div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
       <b>TekTıkla</b>
+      <small class="tagline">İndir · Üret · Kurgula</small>
     </div>
     <nav id="nav">
       <div class="nav-indicator" id="navIndicator"></div>
       <button class="nav-item active" data-page="download"><i data-ic="download"></i>İndir</button>
       <button class="nav-item" data-page="queue"><i data-ic="list"></i>İndirmeler<span class="badge hidden" id="queueBadge">0</span></button>
+      <button class="nav-item" data-page="watch"><i data-ic="bookmark"></i>İzleme listesi<span class="badge hidden" id="watchBadge">0</span></button>
       <button class="nav-item" data-page="reels"><i data-ic="reels"></i>Reels<span class="tag">YENİ</span></button>
       <button class="nav-item" data-page="image"><i data-ic="image"></i>Görsel<span class="tag">YENİ</span></button>
       <button class="nav-item" data-page="dub"><i data-ic="mic"></i>Dublaj<span class="tag">YENİ</span></button>
+      <button class="nav-item" data-page="convert"><i data-ic="convert"></i>Dönüştür<span class="tag">YENİ</span></button>
       <button class="nav-item" data-page="ai"><i data-ic="sparkles"></i>AI Stüdyo</button>
       <button class="nav-item" data-page="history"><i data-ic="clock"></i>Geçmiş</button>
       <button class="nav-item" data-page="settings"><i data-ic="settings"></i>Ayarlar</button>
     </nav>
+    <!-- alt bölüm: menüden ince bir çizgiyle ayrılır; hesap ayrı bir kart, durum ve sürüm tek satır -->
     <div class="side-foot">
+      <div class="foot-links">
+        <button class="support-link" id="supportBtn"><i data-ic="heart"></i><span>Destek ol</span></button>
+        <button class="support-link phone-link pc-only" id="remoteBtn"><i data-ic="phone"></i><span>Telefondan kullan</span><span class="dot"></span></button>
+      </div>
       <div class="status-chip update hidden" id="updateChip"><span class="dot"></span><span id="updateChipText">Güncelleme var</span></div>
-      <div class="status-chip busy" id="setupChip"><span class="dot"></span><span id="setupChipText">Kontrol ediliyor…</span></div>
-      <small id="versionText"></small>
+      <button class="acct-chip hidden" id="acctChip"></button>
+      <div class="foot-status">
+        <div class="status-chip busy" id="setupChip"><span class="dot"></span><span id="setupChipText">Kontrol ediliyor…</span></div>
+        <small id="versionText"></small>
+      </div>
     </div>
   </aside>
+  <div class="sb-edge" id="sbEdge"></div>
 
   <main id="main">
     <!-- ======================= İNDİR ======================= -->
@@ -84,6 +107,7 @@
             <p id="mUploader"></p>
             <div class="meta-actions">
               <button class="btn ai" id="mAiBtn"><i data-ic="sparkles"></i>AI ile özetle</button>
+              <button class="btn" id="mWatchBtn"><i data-ic="bookmark"></i>Sonra izle</button>
               <button class="btn" id="mCommentsBtn"><i data-ic="chat"></i>Yorum özeti</button>
               <button class="btn" id="mReelsBtn"><i data-ic="reels"></i>Reels yap</button>
               <button class="btn" id="mDubBtn"><i data-ic="mic"></i>Dublajla</button>
@@ -103,6 +127,7 @@
               <div class="pl-search"><i data-ic="search"></i><input id="plSearch" placeholder="Listede ara…" spellcheck="false" autocomplete="off"></div>
               <button class="btn sm" id="plAll"><i data-ic="check"></i>Tümünü seç</button>
               <button class="btn sm" id="plNone"><i data-ic="x"></i>Hiçbiri</button>
+              <button class="btn sm" id="plWatchBtn"><i data-ic="bookmark"></i>Sonra izle</button>
             </div>
           </div>
           <div class="pl-list" id="plList"></div>
@@ -178,7 +203,7 @@
           </div>
           <div class="row">
             <div class="txt"><b>Kayıt yeri</b><small id="folderText"></small></div>
-            <button class="btn" id="folderBtn"><i data-ic="folder"></i>Değiştir</button>
+            <button class="btn pc-only" id="folderBtn"><i data-ic="folder"></i>Değiştir</button>
           </div>
         </div>
 
@@ -200,7 +225,7 @@
         <div><h1>İndirmeler</h1><p id="queueSub">Kuyruktaki ve biten indirmeler.</p></div>
         <div class="right">
           <div class="seg" id="queueFilter"><button data-v="all">Tümü</button><button data-v="active">Aktif</button><button data-v="done">Biten</button><button data-v="failed">Hatalı</button></div>
-          <button class="btn" id="openDirBtn"><i data-ic="folder"></i>Klasörü aç</button>
+          <button class="btn pc-only" id="openDirBtn"><i data-ic="folder"></i>Klasörü aç</button>
           <button class="btn danger" id="clearDoneBtn"><i data-ic="trash"></i>Bitenleri temizle</button>
         </div>
       </div>
@@ -212,10 +237,133 @@
       </div>
     </section>
 
+    <!-- ======================= İZLEME LİSTESİ ======================= -->
+    <section class="page" id="page-watch">
+      <div class="page-head">
+        <div><h1>İzleme listesi</h1><p>Sonra izleyeceğin videolar sırayla burada durur; uygulamayı kapatsan da kaybolmaz.</p></div>
+      </div>
+      <div class="card watch-add">
+        <div class="url-box">
+          <i data-ic="link"></i>
+          <input id="watchInput" placeholder="Video ya da oynatma listesi linki (birden fazla link de olur)" spellcheck="false" autocomplete="off">
+          <button class="btn sm" id="watchPasteBtn"><i data-ic="clipboard"></i>Yapıştır</button>
+        </div>
+        <button class="btn primary" id="watchAddBtn"><i data-ic="plus"></i>Listeye ekle</button>
+        <div class="watch-yt" id="watchYt">
+          <span class="wy-label"><i data-ic="youtube"></i>YouTube'dan çek</span>
+          <button class="btn sm" id="watchYtLater"><i data-ic="clock"></i>Daha sonra izle</button>
+          <button class="btn sm" id="watchYtLiked"><i data-ic="heart"></i>Beğendiklerim</button>
+          <small class="wy-hint" id="watchYtHint"></small>
+        </div>
+      </div>
+      <div class="watch-bar">
+        <div class="seg" id="watchFilter"><button data-v="todo">İzlenecek<span class="cnt" id="watchCntTodo"></span></button><button data-v="done">İzlenenler<span class="cnt" id="watchCntDone"></span></button><button data-v="all">Tümü</button></div>
+        <span class="watch-total" id="watchTotal"></span>
+        <select class="select" id="watchSort" title="Sıralama">
+          <option value="mine">Benim sıram</option>
+          <option value="short">Önce kısa olanlar</option>
+          <option value="new">Önce yeni eklenenler</option>
+        </select>
+        <button class="btn danger hidden" id="watchClearBtn"><i data-ic="trash"></i><span>İzlenenleri temizle</span></button>
+      </div>
+      <div class="w-list" id="watchList"></div>
+      <div class="empty hidden" id="watchEmpty">
+        <div class="art"><i data-ic="bookmark"></i></div>
+        <h2 id="watchEmptyTitle">Listen boş</h2>
+        <p id="watchEmptyText">Bir link ekle; sonra izlemek istediğin videolar burada sıraya girer.</p>
+      </div>
+    </section>
+
+    <!-- ======================= DÖNÜŞTÜR ======================= -->
+    <section class="page" id="page-convert">
+      <div class="page-head">
+        <div><h1>Dönüştür</h1><p>Resim, video ve ses dosyalarını başka biçime çevir; istersen 2K, 4K ya da kendi ölçünde yeniden boyutlandır.</p></div>
+      </div>
+      <button class="card conv-drop" id="convDrop">
+        <span class="conv-drop-ic"><i data-ic="upload"></i></span>
+        <b>Dosyaları buraya sürükle ya da seçmek için tıkla</b>
+        <small>PNG, JPG, WEBP, AVIF, HEIC, GIF · MP4, MOV, MKV, WEBM · MP3, WAV, FLAC, M4A ve dahası</small>
+        <span class="conv-drop-alt pc-only" id="convDropFolder"><i data-ic="folder"></i>Bir klasörün tamamını ekle</span>
+      </button>
+      <div class="hidden" id="convWork">
+        <div class="card conv-files-card">
+          <div class="conv-files-head"><b id="convCount"></b>
+            <button class="btn sm" id="convAddMore"><i data-ic="plus"></i>Dosya ekle</button>
+            <button class="btn sm pc-only" id="convAddFolder"><i data-ic="folder"></i>Klasör ekle</button>
+            <button class="btn sm ghost" id="convClear"><i data-ic="x"></i>Listeyi temizle</button></div>
+          <div class="conv-files" id="convFiles"></div>
+        </div>
+        <div class="conv-sec-title"><i data-ic="zap"></i><b>Hazır ayarlar</b><small>Tek tıkla biçim, kalite ve ölçü</small></div>
+        <div class="conv-presets" id="convPresets"></div>
+        <div class="grid-2 conv-grid">
+          <div class="card">
+            <div class="card-title"><span class="ci"><i data-ic="file"></i></span>Hedef biçim</div>
+            <div id="convFormats"></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="ci"><i data-ic="sliders"></i></span>Kalite ve boyut</div>
+            <div class="conv-opt"><label>Kalite</label>
+              <div class="seg" id="convQuality"><button data-v="original">Orijinal</button><button data-v="high">Yüksek</button><button data-v="balanced">Dengeli</button><button data-v="small" title="En küçük dosya">Küçük</button></div>
+              <p class="hint" id="convQualityHint"></p></div>
+            <div class="conv-opt" id="convSizeRow"><label>Boyut</label>
+              <div class="seg" id="convSize"><button data-v="original">Orijinal</button><button data-v="hd" title="Uzun kenar 1280 px">HD</button><button data-v="fhd" title="Uzun kenar 1920 px">Full HD</button><button data-v="2k" title="Uzun kenar 2560 px">2K</button><button data-v="4k" title="Uzun kenar 3840 px">4K</button><button data-v="custom">Özel</button></div>
+              <div class="conv-custom hidden" id="convCustom">
+                <div class="conv-wh"><input class="input" id="convW" type="number" min="1" max="12000" placeholder="Genişlik"><span>×</span><input class="input" id="convH" type="number" min="1" max="12000" placeholder="Yükseklik"><span class="px">px</span></div>
+                <div class="seg" id="convFit"><button data-v="keep">Oranı koru</button><button data-v="crop">Kırparak doldur</button><button data-v="stretch">Esnet</button></div>
+              </div>
+              <p class="hint" id="convSizeHint"></p></div>
+          </div>
+        </div>
+        <details class="card conv-adv" id="convAdv">
+          <summary><span class="ci"><i data-ic="sliders"></i></span><b>Gelişmiş ayarlar</b><span class="badge hidden" id="convAdvBadge"></span>
+            <small>Döndür, kes, kare hızı, ses ve dosya adı</small><span class="chev"><i data-ic="chevronRight"></i></span></summary>
+          <div class="conv-adv-grid">
+            <div class="conv-opt" id="convAdvRotate"><label>Döndür</label>
+              <div class="seg" id="convRotate"><button data-v="0">0°</button><button data-v="90">90°</button><button data-v="180">180°</button><button data-v="270">270°</button></div>
+              <p class="hint">Saat yönünde. Resimler kayıpsız döner.</p></div>
+            <div class="conv-opt hidden" id="convAdvBg"><label>Şeffaf alanların rengi</label>
+              <div class="swatches conv-bg" id="convBgSwatches"><button data-v="#ffffff" style="background:#ffffff" title="Beyaz"></button><button data-v="#000000" style="background:#000000" title="Siyah"></button><button data-v="#f4f4f5" style="background:#f4f4f5" title="Açık gri"></button><button class="pick" data-v="#ff3b30" title="Özel renk"><i data-ic="palette"></i></button></div>
+              <input type="color" id="convBgCustom" value="#ff3b30" class="color-hidden" tabindex="-1">
+              <p class="hint">JPG ve PDF şeffaflığı desteklemez; boş alanlar bu renkle dolar.</p></div>
+            <div class="conv-opt" id="convAdvTrim"><label>Kes</label>
+              <div class="conv-trim"><input class="input" id="convTrimStart" placeholder="0:00" spellcheck="false"><span>–</span><input class="input" id="convTrimEnd" placeholder="sonu" spellcheck="false"></div>
+              <p class="hint">Yalnızca bu aralık dönüştürülür (dk:sn). Boş bırakırsan tamamı.</p></div>
+            <div class="conv-opt" id="convAdvFps"><label>Kare hızı</label>
+              <div class="seg" id="convFps"><button data-v="0">Orijinal</button><button data-v="24">24</button><button data-v="30">30</button><button data-v="60">60</button></div>
+              <p class="hint">Düşük kare hızı dosyayı küçültür; 60 oyun ve spor videoları için.</p></div>
+          </div>
+          <div class="conv-adv-toggles">
+            <div class="row" id="convMuteRow"><div class="txt"><b>Sesi kaldır</b><small>Videodaki sesi tamamen çıkarır</small></div><label class="switch"><input type="checkbox" id="convMute"><span></span></label></div>
+            <div class="row" id="convNormalizeRow"><div class="txt"><b>Ses seviyesini dengele</b><small>Instagram ve YouTube'un önerdiği seviye (-14 LUFS)</small></div><label class="switch"><input type="checkbox" id="convNormalize"><span></span></label></div>
+            <div class="row" id="convMonoRow"><div class="txt"><b>Mono yap</b><small>Tek kanal: konuşma kayıtlarında dosya yarı yarıya küçülür</small></div><label class="switch"><input type="checkbox" id="convMono"><span></span></label></div>
+            <div class="row"><div class="txt"><b>Dosya adına ölçüyü ekle</b><small>Örnek: tatil-3840x2160.webp</small></div><label class="switch"><input type="checkbox" id="convSuffix"><span></span></label></div>
+          </div>
+        </details>
+        <div class="card conv-more">
+          <div class="row"><div class="txt"><b>Kayıt yeri</b><small id="convPlaceHint"></small></div>
+            <div class="seg" id="convPlace"><button data-v="beside">Dosyanın yanına</button><button data-v="folder">TekTıkla klasörüne</button></div></div>
+          <div class="row"><div class="txt"><b>Konum ve cihaz bilgilerini sil</b><small>Fotoğraftaki GPS konumu, kamera modeli gibi gizli bilgiler kaldırılır</small></div>
+            <label class="switch"><input type="checkbox" id="convStrip"><span></span></label></div>
+          <div class="row hidden" id="convMergeRow"><div class="txt"><b>Tek PDF'te birleştir</b><small>Resimler sırayla tek bir PDF'in sayfaları olur</small></div>
+            <label class="switch"><input type="checkbox" id="convMerge" checked><span></span></label></div>
+        </div>
+        <div class="dl-bar">
+          <div class="info"><b id="convSummary"></b><small id="convSummary2"></small></div>
+          <button class="btn primary xl" id="convGo"><i data-ic="convert"></i><span>Dönüştür</span></button>
+        </div>
+        <div class="card hidden" id="convResults">
+          <div class="conv-res-head"><div class="card-title"><span class="ci"><i data-ic="check"></i></span>Hazır dosyalar</div>
+            <span class="conv-res-sum" id="convResultsSum"></span>
+            <button class="btn sm pc-only" id="convOpenFolder"><i data-ic="folder"></i>Klasörü aç</button></div>
+          <div class="conv-results" id="convResultList"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ======================= AI ÖZET ======================= -->
     <section class="page" id="page-ai">
       <div class="page-head">
-        <div><h1><span class="grad-text">AI</span> Stüdyo</h1>
+        <div><h1 data-i18n-whole="AI Stüdyo"><span class="grad-text">AI</span> Stüdyo</h1>
         <p id="aiSub">İzlemeden önce videonun ne anlattığını öğren.</p></div>
       </div>
       <div class="card callout hidden" id="aiNoKey">
@@ -277,7 +425,7 @@
     <!-- ======================= REELS ======================= -->
     <section class="page" id="page-reels">
       <div class="page-head center">
-        <div><h1><span class="grad-text">Reels</span> Stüdyosu</h1>
+        <div><h1 data-i18n-whole="Reels Stüdyosu"><span class="grad-text">Reels</span> Stüdyosu</h1>
         <p>Uzun videodan ya da bir fikirden Instagram Reels, TikTok ve Shorts videoları.</p></div>
       </div>
       <div class="seg big" id="reelsModeSeg">
@@ -336,25 +484,31 @@
           <div class="seg" id="rFrameSeg"><button data-v="smart">Akıllı kırpma (yüz takibi)</button><button data-v="blur">Bulanık arka plan</button><button data-v="center">Ortadan kırp</button></div></div>
         <label class="lbl">Altyazı stili</label>
         <div class="cap-styles" id="rCapStyles">
+          <button data-v="clean"><span class="cs clean">Bu <em>çok</em> iyi</span><small>Temiz</small></button>
           <button data-v="pop"><span class="cs pop">BU <em>ÇOK</em> İYİ</span><small>Pop</small></button>
           <button data-v="karaoke"><span class="cs karaoke"><em>Bu çok</em> iyi</span><small>Karaoke</small></button>
           <button data-v="box"><span class="cs box">Bu <em>çok</em> iyi</span><small>Kutu</small></button>
           <button data-v="minimal"><span class="cs minimal">Bu çok iyi</span><small>Sade</small></button>
           <button data-v="none"><span class="cs none">—</span><small>Kapalı</small></button>
         </div>
+        <div class="cap-lang" id="rCapLangRow"><label class="lbl">Altyazı dili</label>
+          <select class="select" id="rCapLang"></select><small class="hint" id="rCapLangHint"></small></div>
         <div class="opt-row">
           <div class="opt"><label class="lbl">Vurgu rengi</label><div class="swatches" id="rAccent"><button data-v="yellow"></button><button data-v="green"></button><button data-v="red"></button><button data-v="blue"></button><button data-v="pink"></button><button data-v="white"></button></div></div>
           <div class="opt"><label class="lbl">Konum</label><div class="seg" id="rPosSeg"><button data-v="top">Üst</button><button data-v="middle">Orta</button><button data-v="bottom">Alt</button></div></div>
           <div class="opt"><label class="lbl">Ekranda kelime</label><div class="seg" id="rWordsSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div></div>
         </div>
         <div class="toggle-grid">
-          <div class="row"><div class="txt"><b>BÜYÜK HARF</b></div><label class="switch"><input type="checkbox" id="rUpper" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>BÜYÜK HARF</b></div><label class="switch"><input type="checkbox" id="rUpper"><span></span></label></div>
           <div class="row"><div class="txt"><b>Kanca başlığı</b><small>İlk 3 saniye üstte</small></div><label class="switch"><input type="checkbox" id="rHook" checked><span></span></label></div>
           <div class="row" id="rCutRow"><div class="txt"><b>Sessizlikleri kes</b><small>Duraklamalar atlanır</small></div><label class="switch"><input type="checkbox" id="rCut" checked><span></span></label></div>
-          <div class="row" id="rZoomRow"><div class="txt"><b>Dinamik zoom</b><small>Cümle geçişlerinde yakınlaşma</small></div><label class="switch"><input type="checkbox" id="rZoom" checked><span></span></label></div>
-          <div class="row"><div class="txt"><b>İlerleme çubuğu</b></div><label class="switch"><input type="checkbox" id="rBar" checked><span></span></label></div>
+          <div class="row" id="rZoomRow"><div class="txt"><b>Akıcı yakınlaşma</b><small>Geniş ve yakın çekimler, yavaş kamera hareketi</small></div><label class="switch"><input type="checkbox" id="rZoom" checked><span></span></label></div>
+          <div class="row"><div class="txt"><b>İlerleme çubuğu</b><small>Altta ince çizgi</small></div><label class="switch"><input type="checkbox" id="rBar"><span></span></label></div>
           <div class="row"><div class="txt"><b>Kullanıcı adı</b><small>Üstte küçük filigran</small></div><input class="input sm wide" id="rWatermark" placeholder="@kullaniciadi"></div>
         </div>
+        <div class="broll" id="rBrollBox"><label class="lbl">Ara görüntü (B-roll)</label>
+          <div class="seg" id="rBrollSeg"><button data-v="off">Kapalı</button><button data-v="pexels">Stok video · Pexels</button><button data-v="higgsfield">AI video · Higgsfield</button></div>
+          <small class="hint" id="rBrollHint"></small></div>
         <div class="row music-row"><div class="txt"><b>Arka plan müziği</b><small>Konuşma başlayınca müzik otomatik kısılır</small></div>
           <input type="range" id="rMusicVol" min="2" max="50" value="14" title="Müzik seviyesi">
           <div class="file-row"><span class="name" id="rMusicName">Seçilmedi</span><button class="btn" id="rMusicBtn"><i data-ic="music"></i>Seç</button><button class="btn icon" id="rMusicClear" title="Kaldır"><i data-ic="x"></i></button></div>
@@ -375,12 +529,63 @@
     <!-- ======================= GÖRSEL ======================= -->
     <section class="page" id="page-image">
       <div class="page-head center">
-        <div><h1><span class="grad-text">Görsel</span> Stüdyosu</h1>
+        <div><h1 data-i18n-whole="Görsel Stüdyosu"><span class="grad-text">Görsel</span> Stüdyosu</h1>
         <p>Fikirden kapak fotoğrafı ve görsel üret. Ücretsiz servisler her zaman önce gelir.</p></div>
       </div>
       <div class="seg big" id="imgModeSeg">
         <button data-v="thumbnail"><i data-ic="wand"></i>Kapak hazırla</button>
         <button data-v="image"><i data-ic="image"></i>Görsel üret</button>
+        <button data-v="edit"><i data-ic="pen"></i>Görseli düzenle</button>
+      </div>
+      <!-- görsel düzenleyici (web/editor.js) -->
+      <div class="ed" id="imgEditor">
+        <div class="card ed-bar">
+          <button class="btn sm" id="edOpenBtn"><i data-ic="folder"></i>Görsel aç</button>
+          <div class="ed-file"><b id="edName" data-no-i18n></b><small id="edDims" data-no-i18n></small></div>
+          <div class="ed-tools">
+            <button class="btn icon sm" id="edUndo" title="Geri al (Ctrl+Z)"><i data-ic="undo"></i></button>
+            <button class="btn icon sm" id="edRedo" title="Yinele (Ctrl+Y)"><i data-ic="redo"></i></button>
+            <span class="ed-sep"></span>
+            <button class="btn icon sm" id="edZoomOut" title="Uzaklaştır"><i data-ic="minus"></i></button>
+            <button class="btn sm ed-zoom" id="edZoomFit" title="Ekrana sığdır (Ctrl+0)" data-no-i18n>100%</button>
+            <button class="btn icon sm" id="edZoomIn" title="Yakınlaştır (Ctrl + fare tekerleği)"><i data-ic="plus"></i></button>
+            <span class="ed-sep"></span>
+            <button class="btn sm" id="edCompare" title="Basılı tuttuğun sürece orijinali gösterir"><i data-ic="compare"></i>Önce</button>
+          </div>
+          <div class="ed-actions">
+            <button class="btn icon sm hidden" id="edShowBtn" title="Kaydedileni aç"><i data-ic="image"></i></button>
+            <button class="btn sm ghost" id="edReset"><i data-ic="refresh"></i>Sıfırla</button>
+            <button class="btn sm primary" id="edSaveBtn"><i data-ic="download"></i>Kaydet</button>
+          </div>
+        </div>
+        <div class="ed-body">
+          <div class="ed-stage" id="edStage">
+            <div class="ed-view hidden" id="edView"><canvas id="edCanvas"></canvas><div class="ed-overlay" id="edOverlay"></div></div>
+            <div class="ed-empty" id="edEmpty">
+              <div class="ed-empty-ic"><i data-ic="image"></i></div>
+              <h3>Düzenlemek için bir görsel aç</h3>
+              <p id="edEmptyText">Sürükleyip bırak, Ctrl+V ile yapıştır ya da bilgisayarından seç.</p>
+              <div class="ed-empty-btns">
+                <button class="btn primary" id="edOpenBtn2"><i data-ic="folder"></i>Görsel seç</button>
+                <button class="btn" id="edPasteBtn"><i data-ic="clipboard"></i>Panodan yapıştır</button>
+              </div>
+              <div class="ed-recent hidden" id="edRecentBox"><small>Son görsellerin</small><div class="ed-recent-row" id="edRecent"></div></div>
+            </div>
+          </div>
+          <div class="ed-side">
+            <div class="ed-rail" id="edRail">
+              <button data-t="crop"><i data-ic="crop"></i><span>Kırp</span></button>
+              <button data-t="adjust"><i data-ic="sliders"></i><span>Ayarla</span></button>
+              <button data-t="filter"><i data-ic="palette"></i><span>Filtre</span></button>
+              <button data-t="text"><i data-ic="type"></i><span>Yazı</span></button>
+              <button data-t="shape"><i data-ic="shapes"></i><span>Öğeler</span></button>
+              <button data-t="draw"><i data-ic="brush"></i><span>Çizim</span></button>
+              <button data-t="censor"><i data-ic="pixels"></i><span>Sansür</span></button>
+              <button data-t="layers"><i data-ic="layers"></i><span>Katmanlar</span></button>
+            </div>
+            <div class="ed-panel scroll" id="edPanel"></div>
+          </div>
+        </div>
       </div>
       <div class="card hero">
         <textarea class="textarea" id="imgIdea" rows="3" placeholder="Fikrini yaz… ör. 'İstanbul'un en iyi 5 kahvecisi'"></textarea>
@@ -473,6 +678,10 @@
     <section class="page" id="page-settings">
       <div class="page-head center"><div><h1>Ayarlar</h1><p>Değişiklikler otomatik kaydedilir.</p></div></div>
       <div class="settings-grid">
+        <div class="card acct-card hidden" id="acctCard">
+          <div class="card-title"><span class="ci"><i data-ic="user"></i></span>Hesap</div>
+          <div id="acctBody"></div>
+        </div>
         <div class="card">
           <div class="card-title"><span class="ci"><i data-ic="palette"></i></span>Görünüm</div>
           <div class="theme-grid" id="themeGrid">
@@ -481,16 +690,25 @@
             <button class="theme-opt" data-theme-opt="violet"><span class="sw violet"><i></i><i></i></span><span class="nm">Mor</span></button>
             <button class="theme-opt" data-theme-opt="ocean"><span class="sw ocean"><i></i><i></i></span><span class="nm">Okyanus</span></button>
           </div>
-          <div class="row font-row"><div class="txt"><b>Başlık yazı tipi</b><small>İkisini karşılaştır</small></div>
-            <div class="seg" id="fontSeg"><button data-v="serif" class="f-serif">Serif</button><button data-v="grotesk" class="f-grotesk">Grotesk</button></div></div>
+          <div class="row font-row stack"><div class="txt"><b>Başlık yazı tipi</b><small>Başlıklarda ve marka yazısında kullanılır</small></div>
+            <div class="font-grid">
+              <button class="font-opt f-serif" data-font-opt="serif"><span class="aa">Aa</span><span class="nm">Serif</span></button>
+              <button class="font-opt f-grotesk" data-font-opt="grotesk"><span class="aa">Aa</span><span class="nm">Grotesk</span></button>
+              <button class="font-opt f-wide" data-font-opt="wide"><span class="aa">Aa</span><span class="nm">Geniş</span></button>
+              <button class="font-opt f-soft" data-font-opt="soft"><span class="aa">Aa</span><span class="nm">Yumuşak</span></button>
+            </div></div>
+          <div class="row pc-only"><div class="txt"><b>Kenar çubuğu</b><small>Gizliyken fareyi kenara getirince açılır · Ctrl+B</small></div>
+            <div class="seg" id="sidebarSeg"><button data-v="pinned">Sabit</button><button data-v="auto">Otomatik gizle</button></div></div>
           <div class="row"><div class="txt"><b>Dil</b><small>Language</small></div><select class="select lang-select" id="langSelect"></select></div>
         </div>
 
         <div class="card">
           <div class="card-title"><span class="ci"><i data-ic="settings"></i></span>Genel</div>
-          <div class="row"><div class="txt"><b>Kayıt klasörü</b><small id="setFolder"></small></div><button class="btn" id="setFolderBtn">Değiştir</button></div>
-          <div class="row"><div class="txt"><b>Panoyu izle</b><small>Kopyalanan link otomatik algılanır</small></div><label class="switch"><input type="checkbox" data-setting="clipboard_watch"><span></span></label></div>
+          <div class="row"><div class="txt"><b>Kayıt klasörü</b><small id="setFolder"></small></div><button class="btn pc-only" id="setFolderBtn">Değiştir</button></div>
+          <div class="row pc-only"><div class="txt"><b>Panoyu izle</b><small>Kopyalanan link otomatik algılanır</small></div><label class="switch"><input type="checkbox" data-setting="clipboard_watch"><span></span></label></div>
           <div class="row"><div class="txt"><b>Aynı anda indirme</b></div><div class="seg" id="parallelSeg"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button></div></div>
+          <div class="row pc-only"><div class="txt"><b>Telefondan kullan</b><small id="remoteSetState">Kapalı · iPhone ya da Android, aynı Wi-Fi'den</small></div>
+            <button class="btn" id="remoteSetBtn"><i data-ic="phone"></i>Telefonu bağla</button></div>
           <div class="row"><div class="txt"><b>Hız sınırı</b><small>Örnek: 2M · boş = sınırsız</small></div><input class="input sm" id="rateInput" placeholder="sınırsız"></div>
         </div>
 
@@ -531,12 +749,14 @@
           <div class="kv"><span>FFmpeg</span><b id="tFfmpeg"></b></div>
           <div class="kv"><span>JavaScript (YouTube)</span><b id="tJs"></b></div>
           <div class="kv"><span>Güncelleme kaynağı</span><b id="repoText"></b></div>
-          <div class="row"><div class="txt"><b>Açılışta güncelleme denetle</b></div><label class="switch"><input type="checkbox" data-setting="auto_update_check"><span></span></label></div>
-          <div class="row"><div class="txt"><b id="updateStatus">Uygulama güncellemesi</b><small id="updateNotes"></small></div>
+          <div class="row"><div class="txt"><b>TekTıkla'ya destek ol</b><small>Bir kahve ısmarla ya da GitHub'da takip et</small></div>
+            <button class="btn" id="supportSettingsBtn"><i data-ic="heart"></i>Destek ol</button></div>
+          <div class="row pc-only"><div class="txt"><b>Açılışta güncelleme denetle</b></div><label class="switch"><input type="checkbox" data-setting="auto_update_check"><span></span></label></div>
+          <div class="row pc-only"><div class="txt"><b id="updateStatus">Uygulama güncellemesi</b><small id="updateNotes"></small></div>
             <button class="btn" id="checkUpdateBtn"><i data-ic="refresh"></i>Denetle</button>
             <button class="btn primary hidden" id="installUpdateBtn"><i data-ic="download"></i>Güncelle</button></div>
-          <div class="row"><div class="txt"><b>İndirme motorunu güncelle</b><small id="ytdlpMsg">Bir site indirmeyi reddederse</small></div><button class="btn" id="ytdlpBtn"><i data-ic="refresh"></i>Güncelle</button></div>
-          <div class="row hidden" id="repairRow"><div class="txt"><b>Bileşenleri kur</b><small>Eksik bileşenler indirilir</small></div><button class="btn primary" id="repairBtn">Kur</button></div>
+          <div class="row pc-only"><div class="txt"><b>İndirme motorunu güncelle</b><small id="ytdlpMsg">Bir site indirmeyi reddederse</small></div><button class="btn" id="ytdlpBtn"><i data-ic="refresh"></i>Güncelle</button></div>
+          <div class="row hidden pc-only" id="repairRow"><div class="txt"><b>Bileşenleri kur</b><small>Eksik bileşenler indirilir</small></div><button class="btn primary" id="repairBtn">Kur</button></div>
         </div>
       </div>
       <div class="card services-card">
@@ -549,6 +769,7 @@
 </div>
 
 <div id="toasts"></div>
+<div class="drop-veil"><div><i data-ic="upload"></i><b>Dönüştürmek için bırak</b></div></div>
 
 <div class="overlay hidden" id="langOverlay">
   <div class="card modal lang-modal">
@@ -574,8 +795,132 @@
   </div>
 </div>
 
+<div class="overlay hidden" id="authOverlay">
+  <div class="card modal auth-modal">
+    <button class="btn icon modal-close" id="authClose" title="Kayıt olmadan devam et"><i data-ic="x"></i></button>
+    <div id="authMain">
+      <div class="logo"><svg viewBox="0 0 24 24" class="tt"><rect x="3.6" y="5.2" width="16.8" height="3.2" rx="1.6"/><rect x="6.4" y="5.2" width="3.2" height="14" rx="1.6"/><rect x="14.4" y="5.2" width="3.2" height="9.4" rx="1"/><path d="M12.4 13.8h7.2L16 19.2z"/></svg></div>
+      <h2>TekTıkla'ya hoş geldin</h2>
+      <p class="auth-sub">Hesap aç ya da giriş yap. YouTube listelerini uygulamaya çekmek gibi özellikler hesapla çalışır.</p>
+      <div class="auth-providers">
+        <button class="auth-btn google" id="authGoogle"><span class="auth-ic"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></span><span>Google ile devam et</span></button>
+        <button class="auth-btn github" id="authGithub"><span class="auth-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></span><span>GitHub ile devam et</span></button>
+      </div>
+      <div class="auth-or"><span>ya da e-postayla</span></div>
+      <div class="seg" id="authModeSeg"><button data-v="signin">Giriş yap</button><button data-v="signup">Hesap aç</button></div>
+      <form class="auth-form" id="authForm" novalidate>
+        <input class="input hidden" id="authName" placeholder="Adın" autocomplete="name" maxlength="60">
+        <input class="input" id="authEmail" type="email" placeholder="E-posta" autocomplete="email" spellcheck="false">
+        <input class="input" id="authPass" type="password" placeholder="Şifre (en az 6 karakter)" autocomplete="current-password">
+        <p class="auth-err hidden" id="authErr"></p>
+        <button class="btn primary lg" type="submit" id="authSubmit"><span>Giriş yap</span></button>
+        <button class="linkish" type="button" id="authForgot">Şifremi unuttum</button>
+      </form>
+      <button class="auth-skip" id="authSkip">Kayıt olmadan devam et</button>
+      <p class="auth-warn"><i data-ic="alert"></i><span>Kayıt olmadan devam edersen YouTube "Daha sonra izle" listeni ve beğendiklerini uygulamaya çekme gibi hesap özelliklerini kullanamazsın. İstediğin zaman Ayarlar &gt; Hesap'tan giriş yapabilirsin.</span></p>
+    </div>
+    <div class="auth-waiting hidden" id="authWaiting">
+      <div class="auth-spin"></div>
+      <h2 id="authWaitText"></h2>
+      <p>Tarayıcında açılan sayfadan girişi tamamla; bitince burası kendiliğinden güncellenir.</p>
+      <button class="btn" id="authCancel">İptal</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="edExportOverlay">
+  <div class="card modal ed-export">
+    <button class="btn icon modal-close" id="edExportClose" title="Kapat"><i data-ic="x"></i></button>
+    <h2>Görseli kaydet</h2>
+    <label class="lbl" for="edExportName">Dosya adı</label>
+    <input class="input" id="edExportName" spellcheck="false" autocomplete="off">
+    <label class="lbl">Biçim</label>
+    <div class="seg" id="edFmtSeg"><button data-v="jpg">JPG</button><button data-v="png">PNG</button><button data-v="webp">WEBP</button><button data-v="avif">AVIF</button></div>
+    <div id="edQualBox"><label class="lbl">Kalite <b id="edQualVal" data-no-i18n></b></label><input type="range" class="ed-range" id="edQual" min="40" max="100" step="1" value="92"></div>
+    <label class="lbl">Boyut</label>
+    <div class="seg" id="edSizeSeg"><button data-v="orig">Orijinal</button><button data-v="3840">4K</button><button data-v="1920">Full HD</button><button data-v="1080">1080 px</button></div>
+    <small class="ed-export-info" id="edExportInfo" data-no-i18n></small>
+    <div class="btns">
+      <button class="btn" id="edCopyBtn"><i data-ic="copy"></i>Panoya kopyala</button>
+      <button class="btn primary" id="edExportGo"><i data-ic="download"></i>Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="cmpOverlay">
+  <div class="card modal cmp-modal">
+    <button class="btn icon modal-close" id="cmpClose" title="Kapat"><i data-ic="x"></i></button>
+    <h2>Önce / sonra</h2>
+    <div class="cmp-stage">
+      <img id="cmpBefore" alt="">
+      <div class="cmp-after" id="cmpAfterWrap"><img id="cmpAfter" alt=""></div>
+      <span class="cmp-handle" id="cmpHandle"></span>
+      <span class="cmp-label l" id="cmpBeforeLabel"></span><span class="cmp-label r" id="cmpAfterLabel"></span>
+      <input type="range" id="cmpRange" min="0" max="100" value="50" aria-label="Karşılaştırma sürgüsü">
+    </div>
+    <p class="hint">Sürgüyü kaydırarak aynı yeri iki sürümde karşılaştır.</p>
+  </div>
+</div>
+
+<div class="overlay hidden" id="supportOverlay">
+  <div class="card modal support-modal">
+    <button class="btn icon modal-close" id="supportClose" title="Kapat"><i data-ic="x"></i></button>
+    <div class="support-heart"><i data-ic="heart"></i></div>
+    <h2>TekTıkla'yı beğendin mi?</h2>
+    <p>TekTıkla ücretsiz ve reklamsız. İstersen bana bir kahve ısmarlayarak ya da GitHub'da takip edip projeye yıldız vererek destek olabilirsin; yeni özellikler böyle gelmeye devam ediyor.</p>
+    <div class="qr-cards" id="supportCards"></div>
+    <small class="support-hint">QR kodu telefonunun kamerasıyla okut ya da karta tıkla.</small>
+    <div class="btns">
+      <button class="btn" id="supportLater">Daha sonra</button>
+      <button class="btn coffee-btn hidden" id="supportDonate"><i data-ic="coffee"></i><span>Kahve ısmarla</span></button>
+      <button class="btn primary" id="supportGo"><i data-ic="github"></i><span>GitHub'da aç</span></button>
+    </div>
+    <small class="support-foot">Bu pencereye kenar çubuğundaki “Destek ol” ile her zaman ulaşabilirsin.</small>
+  </div>
+</div>
+
+<div class="overlay hidden" id="remoteOverlay">
+  <div class="card modal remote-modal">
+    <button class="btn icon modal-close" id="remoteClose" title="Kapat"><i data-ic="x"></i></button>
+    <div class="remote-badge"><i data-ic="phone"></i></div>
+    <h2>Telefondan kullan</h2>
+    <p class="remote-sub">TekTıkla'yı telefonunun tarayıcısında aç: indirme, Reels, dublaj ve dönüştürme işlerini bu bilgisayar yapar, sonuç telefonuna iner. iPhone ve Android'de çalışır, uygulama kurmak gerekmez.</p>
+    <label class="remote-switch"><span class="txt"><b>Telefon bağlantısı</b><small>Yalnızca bu ev ağındaki ve bağlanma kodunu bilen cihazlar bağlanabilir</small></span>
+      <span class="switch"><input type="checkbox" id="remoteToggle"><span></span></span></label>
+    <div class="remote-note" id="remoteOff"><i data-ic="wifi"></i><span>Bağlantıyı açınca burada telefonunla okutacağın QR kod çıkar.</span></div>
+    <div class="remote-note warn hidden" id="remoteNoNet"><i data-ic="alert"></i><span>Bu bilgisayar bir ağa bağlı görünmüyor. Wi-Fi ya da kabloyla ağa bağlanınca QR kod çıkar.</span></div>
+    <div class="remote-body hidden" id="remoteBody">
+      <div class="remote-main">
+        <span class="qr-img remote-qr"><img id="remoteQr" alt="QR"></span>
+        <ol class="remote-steps">
+          <li><b>Aynı Wi-Fi</b><span>Telefon ve bilgisayar aynı ağda olsun.</span></li>
+          <li><b>QR kodu okut</b><span>Telefonunun kamerasını koda tut, çıkan bağlantıya dokun.</span></li>
+          <li><b>Ana ekrana ekle</b><span>iPhone: Paylaş › Ana Ekrana Ekle. Android: ⋮ › Ana ekrana ekle. Uygulama gibi açılır.</span></li>
+        </ol>
+      </div>
+      <div class="remote-meta">
+        <div><small>Adres</small><b id="remoteUrl" data-no-i18n></b></div>
+        <div><small>Bağlanma kodu</small><b id="remoteCode" data-no-i18n></b></div>
+        <button class="btn sm" id="remoteReset"><i data-ic="refresh"></i><span>Yeni kod</span></button>
+      </div>
+      <small class="remote-others hidden" id="remoteOthers"></small>
+      <div class="remote-devs"><small>Bağlı cihazlar <b id="remoteDevCount" data-no-i18n></b></small><div id="remoteDevices"></div></div>
+      <div class="remote-apk hidden" id="remoteApk">
+        <span class="qr-img remote-apk-qr"><img id="remoteApkQr" alt="QR"></span>
+        <div class="txt"><b>Android uygulaması</b><small>YouTube, Instagram ya da TikTok'tan Paylaş ile link gönder, sonuçları doğrudan Galeri'ye kaydet. Kodu okut, APK'yı indir ve kur.</small></div>
+      </div>
+      <p class="remote-fw"><i data-ic="alert"></i><span>Telefon bağlanamıyorsa: Windows izin sorarsa “Özel ağlar”a izin ver. Wi-Fi ağın “Ortak” görünüyorsa Windows Ayarlar › Ağ'dan “Özel” yap.</span></p>
+    </div>
+  </div>
+</div>
+
 <script src="app.js"></script>
 <script src="studio.js"></script>
+<script src="watch.js"></script>
+<script src="convert.js"></script>
+<script src="account.js"></script>
+<script src="phone.js"></script>
+<script src="editor.js"></script>
 <script src="i18n.js"></script>
 </body>
 </html>

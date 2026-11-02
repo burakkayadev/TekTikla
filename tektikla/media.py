@@ -50,7 +50,10 @@ def probe(path: Path | str) -> dict:
                   and not (s.get("disposition") or {}).get("attached_pic")), None)
     audio = next((s for s in data.get("streams", []) if s.get("codec_type") == "audio"), None)
     info = {"duration": float(data.get("format", {}).get("duration") or 0), "has_audio": audio is not None,
-            "width": 0, "height": 0, "fps": 30.0}
+            "width": 0, "height": 0, "fps": 30.0,
+            # dönüştürücü: yeniden kodlamadan kap değiştirilebilir mi, WAV kaç bit olsun
+            "vcodec": video.get("codec_name") if video else None, "acodec": audio.get("codec_name") if audio else None,
+            "abits": int((audio or {}).get("bits_per_raw_sample") or 0)}
     if video:
         w, h = int(video.get("width") or 0), int(video.get("height") or 0)
         side = (video.get("side_data_list") or [{}])[0]

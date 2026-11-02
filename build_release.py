@@ -86,7 +86,7 @@ def main() -> None:
     shutil.rmtree(DIST / "TekTikla", ignore_errors=True)
     pyinstaller(
         "--onedir", "--windowed", "--name", "TekTikla", "--contents-directory", "_internal",
-        "--icon", str(icon), "--version-file", str(version_file("TekTikla", "TekTıkla - Video İndirici")),
+        "--icon", str(icon), "--version-file", str(version_file("TekTikla", "TekTıkla - Medya ve Yapay Zekâ Stüdyosu")),
         "--add-data", f"{ROOT / 'assets'};assets",
         "--add-data", f"{ROOT / 'tektikla' / 'web'};tektikla/web",
         "--collect-all", "yt_dlp_ejs", "--collect-all", "pywhispercpp", "--hidden-import", "_pywhispercpp",
@@ -130,7 +130,7 @@ def main() -> None:
         str(ROOT / "installer" / "setup.py"),
     )
     (OUT / "OKU BENİ.txt").write_text(
-        f"TekTıkla v{APP_VERSION} — Bütün sitelerden video indirici\r\n\r\n"
+        f"TekTıkla v{APP_VERSION} — Medya ve yapay zekâ stüdyosu: indir, üret, kurgula\r\n\r\n"
         f"Kurmak için {setup_name}.exe dosyasına çift tıklayın ve \"Kur\"a basın.\r\n"
         "Yönetici izni gerekmez. TekTıkla, Başlat menüsüne ve masaüstüne eklenir.\r\n\r\n"
         "Windows \"Bilinmeyen yayımcı\" uyarısı verirse: Ek bilgi > Yine de çalıştır.\r\n"

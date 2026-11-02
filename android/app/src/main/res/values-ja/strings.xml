@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">パソコンに表示された TekTıkla の QR コードを読み取ってください</string>
+    <string name="saved">保存しました：%1$s</string>
+    <string name="save_failed">ファイルを保存できませんでした</string>
+    <string name="no_app">これを開けるアプリがありません</string>
+    <string name="where_gallery">ギャラリー › TekTıkla</string>
+    <string name="where_music">ミュージック › TekTıkla</string>
+    <string name="where_downloads">ダウンロード › TekTıkla</string>
+</resources>

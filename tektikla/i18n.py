@@ -6,6 +6,8 @@ from __future__ import annotations
 import ctypes
 import json
 import re
+import threading
+from contextlib import contextmanager
 from pathlib import Path
 
 from .config import APP_DIR
@@ -23,6 +25,8 @@ I18N_DIR = APP_DIR / "tektikla" / "web" / "i18n" if (APP_DIR / "tektikla" / "web
 _current = "tr"
 _table: dict[str, str] = {}
 _NUM = re.compile(r"\d+(?:[.,]\d+)?")
+_local = threading.local()  # telefondan gelen istek kendi dilinde cevaplanır (tektikla/remote.py)
+_cache: dict[str, dict[str, str]] = {}
 
 
 def table(code: str) -> dict[str, str]:
@@ -48,13 +52,31 @@ def language_name(code: str) -> str:
     return NAMES.get(code, code)
 
 
+@contextmanager
+def using(code: str):
+    """Bu iş parçacığında t() geçici olarak başka dile çevirir (uygulamanın dili değişmez)."""
+    if code not in NAMES:
+        yield
+        return
+    if code not in _cache:
+        _cache[code] = table(code)
+    prev = getattr(_local, "table", None)
+    _local.table = _cache[code]
+    try:
+        yield
+    finally:
+        _local.table = prev
+
+
 def t(text: str, **kw) -> str:
     """Metni geçerli dile çevirir; {ad} yer tutucularını doldurur."""
-    out = _table.get(text)
-    if out is None and _table and _NUM.search(text):
+    tab = getattr(_local, "table", None)
+    tab = _table if tab is None else tab
+    out = tab.get(text)
+    if out is None and tab and _NUM.search(text):
         nums = _NUM.findall(text)
         key = _NUM.sub(lambda m, c=iter(range(99)): "{" + str(next(c)) + "}", text)
-        hit = _table.get(key)
+        hit = tab.get(key)
         if hit:
             out = re.sub(r"\{(\d+)\}", lambda m: nums[int(m.group(1))] if int(m.group(1)) < len(nums) else m.group(0), hit)
     out = out or text

@@ -1,10 +1,14 @@
-# TekTıkla — Bütün sitelerden video indirici
+# TekTıkla — Medya ve yapay zekâ stüdyosu
 
-Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğin kalitede, MP3 olarak veya altyazılı indir. Yapay zekâ ile videoyu izlemeden özetini al, uzun videodan kurgulanmış Reels/TikTok klipleri çıkar, kapak görseli üret, videoyu başka dile dublajla. Arayüz 13 dilde.
+**İndir · Üret · Kurgula.**
+
+Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğin kalitede, MP3 olarak veya altyazılı indir. Yapay zekâ ile videoyu izlemeden özetini al, uzun videodan kurgulanmış Reels/TikTok klipleri çıkar, kapak görseli üret ve düzenle, videoyu başka dile dublajla, dosyaları başka biçime dönüştür. Hepsini telefonundan da kullanabilirsin. Arayüz 13 dilde.
 
 ## İndir
 
 **[En son sürümü indir (Windows 10/11)](https://github.com/BurakCNKaya/TekTikla/releases/latest)** — sayfadaki `TekTikla-Setup-<sürüm>.exe` dosyasını indirip çalıştırın.
+
+**Android uygulaması (isteğe bağlı):** aynı sayfadaki `TekTikla-Android.apk`. Bilgisayardaki TekTıkla'yı telefondan kullanmaya yarar: QR kodu okutup bağlanır, YouTube/Instagram/TikTok'tan *Paylaş* ile link gönderilir, sonuçlar doğrudan Galeri'ye kaydedilir. Bilgisayarda TekTıkla açık olmalı ve iki cihaz aynı Wi-Fi'da olmalı (Android 10 ve üzeri). Uygulama kurmadan, telefonun tarayıcısından da kullanılabilir.
 
 ## Kurulum (kullanıcılar için)
 
@@ -22,19 +26,23 @@ Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğ
 |---|---|
 | **İndir** | Linki analiz eder: tüm kaliteler (144p–8K, tahmini boyutlarıyla), MP4/MKV/WEBM, MP3/M4A/OPUS/FLAC/WAV, sitedeki altyazılar veya kendi .srt/.vtt/.ass dosyan (gömülü / videoya yakılmış / ayrı .srt), kesit indirme, en yüksek çözünürlükte kapak fotoğrafı indirme, benzer videoları listeleme. **Oynatma listesi / kanal:** bütün videolar listelenir; arayıp istediklerini seçerek ya da **Hepsini indir** ile indir. ⚡ Hızlı İndir ve Hızlı MP3 analiz beklemeden indirir. |
 | **İndirmeler** | Kuyruk: canlı ilerleme, hız, kalan süre, iptal, tekrar dene, dosyayı aç / klasörde göster. Aynı anda 1–4 iş. Reels ve dublaj işleri de burada görünür. |
+| **İzleme listesi** | Sonra izleyeceğin videolar sırayla durur, uygulama kapansa da kaybolmaz. Oynatma listesi linki her videoyu ayrı ekler; izlenecek / izlenenler, kendi sıran ya da önce kısa olanlar. Google ile giriş yaptıysan YouTube'daki *Daha sonra izle* ve *Beğendiklerim* listelerini tek tıkla çeker. |
 | **Reels** | **Videodan Reels:** yapay zekâ konuşmayı okuyup en çok izlenecek anları puanlarıyla bulur (anahtarsız da çalışır); her klip dikey 9:16'ya çevrilir: yüz takibiyle akıllı kırpma, bulanık arka plan ya da ortadan kırpma, kelime kelime vurgulanan animasyonlu altyazı (Pop / Karaoke / Kutu / Sade), ilk 3 saniyede kanca başlığı, sessizlik kesme, dinamik zoom, ilerleme çubuğu, kullanıcı adı filigranı, konuşmada otomatik kısılan arka plan müziği, sosyal medya ses seviyesi (-14 LUFS). Her klip için kapak görseli ve hazır açıklama + etiket dosyası çıkar. **Fikirden Reels:** fikri yaz (ya da kendi metnini yapıştır), yapay zekâ senaryoyu yazsın, ücretsiz Edge sesiyle seslendirsin, sahnelere stok video (Pexels, ücretsiz anahtar), AI görsel ya da AI video (Higgsfield, ücretli) koysun. |
-| **Görsel** | Fikirden **kapak (thumbnail)** ya da serbest **görsel** üretme: 16:9 YouTube, 9:16 Reels, 1:1, 4:5. Başlık görselin üstüne her zaman net ve kalın yazılır (Türkçe büyük harf doğru), yazı sonradan tek tıkla değiştirilebilir. Arka plan yapay zekâyla üretilebilir ya da analiz edilen videonun kapağı / kendi görselin kullanılabilir. Servisler ücretsizden ücretliye: Pollinations (anahtarsız), Cloudflare (günde ~95 ücretsiz), Gemini Nano Banana (ücretli), Higgsfield SOUL (ücretli). |
+| **Görsel** | Fikirden **kapak (thumbnail)** ya da serbest **görsel** üretme: 16:9 YouTube, 9:16 Reels, 1:1, 4:5. Başlık görselin üstüne her zaman net ve kalın yazılır (Türkçe büyük harf doğru), yazı sonradan tek tıkla değiştirilebilir. Arka plan yapay zekâyla üretilebilir ya da analiz edilen videonun kapağı / kendi görselin kullanılabilir. Servisler ücretsizden ücretliye: Pollinations (anahtarsız), Cloudflare (günde ~95 ücretsiz), Gemini Nano Banana (ücretli), Higgsfield SOUL (ücretli). **Görseli düzenle:** kırp (hazır oranlar), döndür, çevir, eğikliği düzelt; pozlama, parlaklık, kontrast, açık tonlar/gölgeler, sıcaklık, doygunluk, canlılık, netlik, vinyet, gren ve otomatik iyileştirme; 12 filtre; yazı (15 yazı tipi, kontur, gölge, kutulu etiket, Türkçe büyük harf), dikdörtgen, daire, ok, çizgi, emoji, kalem/fosforlu; yüz, plaka ya da adresi pikselleştir veya bulanıklaştır; katmanlar, geri al/yinele, önce/sonra. JPG, PNG, WEBP veya AVIF olarak kaydedilir. |
+| **Dönüştür** | Resim (WEBP, PNG, JPG, AVIF, GIF, BMP, TIFF, ICO, PDF; iPhone HEIC fotoğrafları da açılır), video (MP4, WEBM, MKV, MOV, GIF ya da yalnız ses) ve ses (MP3, M4A, WAV, FLAC, OGG, OPUS) dönüştürme. Hazır ayarlar (Instagram, WhatsApp, e-postaya sığdır…), kalite ve ölçü (Full HD, 2K, 4K, özel), döndürme, kesme, kare hızı, sesi kaldırma/dengeleme (-14 LUFS), mono, konum ve cihaz bilgilerini silme, resimleri tek PDF'te birleştirme, klasörün tamamını ekleme, önce/sonra karşılaştırma. Dosyaları pencereye sürükleyip bırakmak yeter. |
+| **Telefondan kullan** | Bilgisayardaki TekTıkla'yı aynı Wi-Fi'daki telefonun tarayıcısından ya da Android uygulamasından kullan: QR kodu okut; indirme, Reels, dublaj, dönüştürme ve görsel düzenleme işlerini bilgisayar yapar, sonuç telefona iner. Yalnızca ev ağındaki ve bağlanma kodunu bilen cihazlar bağlanabilir; varsayılan olarak kapalıdır (kenar çubuğu › *Telefondan kullan*). |
 | **Dublaj** | Videoyu başka dile çevirip seslendirir: Edge sesleri (ücretsiz, anahtarsız) ya da Gemini TTS (ücretsiz katman); her cümle zamanında okunur, orijinal ses arka planda kısılır, orijinal ses ikinci iz ve hedef dilde altyazı olarak saklanır. **ElevenLabs** ile konuşmacının kendi sesini koruyarak dublaj (ücretsiz planda aylık sınırlı ve filigranlı). |
 | **AI Stüdyo** | **Video özeti:** altyazı dökümünü (yoksa, X/Twitter gibi, sesi bilgisayarda yazıya döküp) okutarak tek cümlelik özet, genel özet, önemli noktalar ve konu etiketleri. **Yorum özeti:** en çok beğenilen 300 yorumdan beğenilenler, eleştiriler, bildirilen sorunlar ve yorumlardaki çözümleri, sık sorulan sorular. **Video fikirleri:** bir linkten benzer (kopya olmayan) ya da yazdığın konudan başlık, açılış cümlesi ve akışıyla 6 içerik fikri. |
 | **AI Altyazı** | İndirirken *Yapay zekâ ile altyazı* açılırsa videonun konuşması seçilen dile (Türkçe, İngilizce, Almanca… 15 dil) çevrilip altyazı olarak eklenir: gömülü, videoya yakılmış ya da ayrı .srt. Videoda altyazı yoksa konuşma bilgisayarda Whisper ile ücretsiz yazıya dökülür (ilk kullanımda ~190 MB model iner). |
 | **Geçmiş** | Aranabilir indirme geçmişi. |
-| **Ayarlar** | Arayüz dili (13 dil; ilk açılışta da sorulur), kayıt klasörü, temalar, pano izleme, paralel indirme, hız sınırı, varsayılan biçimler, kapak/bilgi gömme, SponsorBlock, tarayıcı çerezleri, **Servisler** (Pollinations, Cloudflare, Pexels, ElevenLabs, Higgsfield anahtarları; hangisi ücretsiz hangisi ücretli etiketli), yt-dlp ve uygulama güncellemesi. |
+| **Ayarlar** | İsteğe bağlı hesap (e-posta, Google ya da GitHub; kayıt olmadan da her şey çalışır), arayüz dili (13 dil; ilk açılışta da sorulur), kayıt klasörü, temalar ve yazı tipleri, daraltılabilir kenar çubuğu (Ctrl+B), pano izleme, paralel indirme, hız sınırı, varsayılan biçimler, kapak/bilgi gömme, SponsorBlock, tarayıcı çerezleri, **Servisler** (Pollinations, Cloudflare, Pexels, ElevenLabs, Higgsfield anahtarları; hangisi ücretsiz hangisi ücretli etiketli), yt-dlp ve uygulama güncellemesi. |
 
 ## Yeni sürüm yayınlama
 
-1. `tektikla/__init__.py` içindeki `APP_VERSION`'ı artırın (örn. `2.2.0`). Güncelleme kaynağı aynı dosyadaki `GITHUB_REPO`'dur.
-2. **`kurulum_olustur.bat`** ile `Kurulum\TekTikla-Setup-2.2.0.exe`'yi üretin; değişiklikleri commit'leyip gönderin.
-3. GitHub'da **Releases > Draft a new release**: etiket `v2.2.0`, kurulum exe'sini eke sürükleyip yayınlayın.
+1. `tektikla/__init__.py` içindeki `APP_VERSION`'ı artırın (örn. `3.1.0`). Güncelleme kaynağı aynı dosyadaki `GITHUB_REPO`'dur.
+2. **`kurulum_olustur.bat`** (ya da `build_release.py`) ile `Kurulum\TekTikla-Setup-3.1.0.exe` ve `Kurulum\TekTikla-3.1.0-win64.zip`'i üretin.
+3. İsteğe bağlı: `build_apk.py` ile `Kurulum\TekTikla-Android.apk` (JDK 21 ve Android SDK gerekir; imza anahtarı depoda değil, `D:\Android\keys` içinde durur ve yedeklenmelidir).
+4. Değişiklikleri commit'leyip gönderin; GitHub'da **Releases > Draft a new release** (ya da `gh release create v3.1.0 …`): etiket `v3.1.0`, üç dosyayı ekleyip yayınlayın. APK'nın adı tam olarak `TekTikla-Android.apk` olmalı; uygulamadaki QR kodu `releases/latest/download/TekTikla-Android.apk` adresini gösterir.
 
 Kurulu TekTıkla'lar açılışta en son Release'i kontrol eder; yeni sürüm varsa kenar çubuğunda "Güncelleme var" çıkar, tek tıkla indirir (SHA-256 ile doğrular), sessizce kurar ve yeniden açılır. Siteler değiştiğinde yalnızca indirme motorunu güncellemek için Ayarlar > yt-dlp > Güncelle yeterlidir; yeni sürüm yayınlamak gerekmez.
 
@@ -52,7 +60,9 @@ Tanılama: `TekTikla.exe --selftest <link> <klasör>` bileşen kurulumu, analiz,
 tektikla.py              giriş noktası
 tektikla/app.py          pencere (pywebview + WebView2)
 tektikla/api.py          arayüz ↔ Python köprüsü, indirme kuyruğu, pano izleme
-tektikla/web/            arayüz (index.html, style.css, app.js)
+tektikla/web/            arayüz (index.html, style.css, app.js; studio.js, convert.js, watch.js, editor.js…)
+tektikla/web/editor.js   görsel düzenleyici (WebGL renk ayarları, katmanlar, dışa aktarma)
+tektikla/web/remote.js   telefon sitesi: pywebview köprüsünün yerine geçen HTTP katmanı
 tektikla/engine.py       indirme motoru (yt-dlp + FFmpeg: kalite, MP3, altyazı gömme/yakma, kesit)
 tektikla/ai.py           AI video özeti, yorum özeti, video fikirleri
 tektikla/llm.py          yapay zekâ servisleri (Gemini, Claude Haiku)
@@ -71,10 +81,17 @@ tektikla/tts.py          seslendirme (Edge, Gemini TTS, ElevenLabs)
 tektikla/dublaj.py       dublaj (çeviri + zamanlı seslendirme / ElevenLabs)
 tektikla/services.py     dış servis istemcileri (Pollinations, Cloudflare, Pexels, Gemini, ElevenLabs, Higgsfield)
 tektikla/media.py        FFmpeg yardımcıları ve kuyruk işlerinin temeli
+tektikla/convert.py      dosya dönüştürücü (Pillow + FFmpeg)
+tektikla/watchlist.py    izleme listesi
+tektikla/account.py      isteğe bağlı hesap (Firebase Authentication)
+tektikla/remote.py       telefondan kullanım: yerel ağ sunucusu, bağlanma kodu, dosya gönderme/alma
+tektikla/qr.py           QR kodları (destek, telefon bağlantısı)
 tektikla/i18n.py         arayüz dili; çeviriler tektikla/web/i18n/*.json
 dev/i18n_extract.py      çevrilecek metinleri toplar; dev/i18n/*.txt -> dev/i18n_build.py -> JSON
 installer/setup.py  kurulum/kaldırma programı
 build_release.py    uygulama + kurulum exe'sini derler
+build_apk.py        Android uygulamasını (android/) derler ve imzalar
+server/welcome/     hoş geldin e-postası (Google Apps Script, 13 dil)
 ```
 
 ## Bilinmesi gerekenler
@@ -94,4 +111,6 @@ build_release.py    uygulama + kurulum exe'sini derler
   - **ElevenLabs:** ücretsiz planda ayda ~10.000 karakter / ~5 dk filigranlı dublaj, ticari kullanım yok; sonrası ücretli.
   - **Higgsfield:** yalnızca ücretli (kullandıkça öde) AI görsel ve video.
 - Akıllı kırpma (yüz takibi) ilk kullanımda OpenCV'yi (~44 MB) PyPI'den indirir.
+- Telefondan kullanım yalnızca yerel ağda çalışır, internet üzerinden erişilemez. Telefon bağlanamıyorsa: Windows izin sorarsa "Özel ağlar"a izin verin; Wi-Fi ağınız "Ortak" görünüyorsa Windows Ayarlar › Ağ'dan "Özel" yapın.
+- Görsel düzenleyici her şeyi bilgisayarda yapar; görseller hiçbir servise gönderilmez.
 - Telif hakkı olan içerikleri yalnızca kişisel kullanım için ve sitenin kurallarına uygun şekilde indirin.

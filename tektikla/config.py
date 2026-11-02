@@ -19,6 +19,7 @@ DATA_DIR = Path(os.environ.get("APPDATA", Path.home())) / "TekTikla"
 LOCAL_DIR = Path(os.environ.get("LOCALAPPDATA", DATA_DIR)) / "TekTikla"
 BIN_DIR = LOCAL_DIR / "bin" if FROZEN else APP_DIR / "bin"
 LIB_DIR = LOCAL_DIR / "lib"  # exe için güncellenmiş yt-dlp
+UPLOAD_DIR = LOCAL_DIR / "uploads"  # telefondan gönderilen dosyalar (tektikla/remote.py)
 SETTINGS_FILE = DATA_DIR / "settings.json"
 HISTORY_FILE = DATA_DIR / "history.json"
 OLD_DATA_DIR = DATA_DIR.with_name("BIM")  # uygulamanın eski adı "BİM" iken kullanılan klasör
@@ -26,8 +27,15 @@ OLD_DEFAULT_DOWNLOADS = str(Path.home() / "Downloads" / "BİM")
 
 DEFAULTS = {
     "download_dir": str(Path.home() / "Downloads" / "TekTıkla"),
-    "font": "grotesk",  # başlık yazı tipi: "serif" (Instrument Serif) | "grotesk" (Bricolage Grotesque)
+    "font": "grotesk",  # başlık yazı tipi: "serif" (Instrument Serif) | "grotesk" (Bricolage Grotesque) | "wide" (Unbounded) | "soft" (Fraunces)
     "theme": "mono",  # "mono" (Siyah) | "paper" (Kâğıt) | "violet" (Mor) | "ocean" (Okyanus)
+    "sidebar": "pinned",  # kenar çubuğu: "pinned" (sabit) | "auto" (gizli, fare kenara gelince açılır)
+    "support_seen": "",  # destek penceresinin en son otomatik gösterildiği sürüm (her sürümde bir kez)
+    "account_enc": "",  # oturumun yenileme anahtarı, Windows DPAPI ile şifreli (tektikla/account.py)
+    "account_user": {},  # ad, e-posta, fotoğraf, giriş yöntemi
+    "account_skipped": False,  # "kayıt olmadan devam et" seçildi
+    "remote_enabled": False,  # telefondan kullanım açık mı (tektikla/remote.py)
+    "remote_key_enc": "",  # telefonların bağlanma kodu, Windows DPAPI ile şifreli
     "clipboard_watch": True,
     "max_parallel": 2,
     "container": "mp4",

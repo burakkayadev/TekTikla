@@ -54,6 +54,13 @@ function applyI18n(table, lang, rtl) {
   I18N.lang = lang || "tr";
   document.documentElement.lang = I18N.lang;
   document.documentElement.dir = rtl ? "rtl" : "ltr";
+  // iki parçalı başlıklar (<span>Görsel</span> Stüdyosu): başka dilde kelime sırası değişir, bütün olarak çevrilir
+  for (const el of document.querySelectorAll("[data-i18n-whole]")) {
+    if (el.dataset.orig === undefined) el.dataset.orig = el.innerHTML;
+    const whole = I18N.lang !== "tr" && I18N.table[el.dataset.i18nWhole];
+    if (whole) el.replaceChildren(Object.assign(document.createElement("span"), { className: "grad-text", textContent: whole }));
+    else el.innerHTML = el.dataset.orig;  // kendi sabit HTML'imiz
+  }
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode(n) {
       const p = n.parentElement;

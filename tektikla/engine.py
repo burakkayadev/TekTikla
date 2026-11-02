@@ -83,6 +83,13 @@ def friendly_error(err: Exception | str) -> str:
     msg = re.sub(r"\x1b\[[0-9;]*m", "", str(err)).replace("ERROR: ", "").strip()
     low = msg.lower()
     hints = [
+        # Chrome/Edge çerezleri Windows'ta uygulamaya özel şifreyle korunur; yt-dlp okuyamaz
+        ("could not copy chrome cookie", "Chrome ve Edge çerezleri Windows'ta okunamıyor. Firefox'ta siteye giriş yapıp "
+                                         "Ayarlar > Tarayıcı çerezleri'nden Firefox'u seçin."),
+        ("failed to decrypt with dpapi", "Chrome ve Edge çerezleri Windows'ta okunamıyor. Firefox'ta siteye giriş yapıp "
+                                         "Ayarlar > Tarayıcı çerezleri'nden Firefox'u seçin."),
+        ("cookies database", "Seçtiğin tarayıcı bu bilgisayarda bulunamadı ya da hiç açılmamış. Ayarlar > Tarayıcı "
+                             "çerezleri'nden siteye giriş yaptığın tarayıcıyı seç."),
         ("unsupported url", "Bu linkte indirilebilir video bulunamadı."),
         ("sign in to confirm your age", "Yaş doğrulaması gerekiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin."),
         ("sign in to confirm you", "Site giriş istiyor. Ayarlar > Tarayıcı çerezleri'nden giriş yaptığınız tarayıcıyı seçin."),
@@ -254,7 +261,7 @@ def _playlist_entry(e: dict, index: int) -> dict | None:
     return {
         "index": index, "url": url, "title": title,
         "channel": (e.get("channel") or e.get("uploader") or "").strip(),
-        "duration": human_time(e.get("duration")), "thumb": thumb,
+        "duration": human_time(e.get("duration")), "seconds": e.get("duration"), "thumb": thumb,
         "available": title.lower() not in UNAVAILABLE_TITLES,
     }
 

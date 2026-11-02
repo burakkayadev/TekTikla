@@ -1,0 +1,61 @@
+plugins {
+    id "com.android.application"
+}
+
+// İmza anahtarı depoda durmaz: build_apk.py bilgilerini içeren .properties dosyasının yolunu verir.
+// Verilmezse sürüm, Android'in hata ayıklama anahtarıyla imzalanır (yalnızca deneme için).
+def signingFile = project.findProperty("tektikla.signing")
+def signing = new Properties()
+if (signingFile) {
+    file(signingFile).withInputStream { signing.load(it) }
+}
+
+android {
+    namespace "io.github.burakcnkaya.tektikla"
+    compileSdk 36
+    buildToolsVersion "36.0.0"
+
+    defaultConfig {
+        applicationId "io.github.burakcnkaya.tektikla"
+        minSdk 29
+        targetSdk 36
+        versionCode Integer.parseInt((project.findProperty("tektikla.versionCode") ?: "30000").toString())
+        versionName((project.findProperty("tektikla.versionName") ?: "3.0.0").toString())
+    }
+
+    signingConfigs {
+        release {
+            if (signingFile) {
+                storeFile file(signing.getProperty("storeFile"))
+                storePassword signing.getProperty("storePassword")
+                keyAlias signing.getProperty("keyAlias")
+                keyPassword signing.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingFile ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation "androidx.activity:activity:1.10.1"
+    implementation "androidx.core:core:1.16.0"
+    implementation "com.journeyapps:zxing-android-embedded:4.3.0"
+    implementation "com.google.zxing:core:3.5.4"
+}

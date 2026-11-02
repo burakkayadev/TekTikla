@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_prompt">امسح رمز QR الخاص بـ TekTıkla على حاسوبك</string>
+    <string name="saved">تم الحفظ: %1$s</string>
+    <string name="save_failed">تعذّر حفظ الملف</string>
+    <string name="no_app">لا يوجد تطبيق لفتح هذا</string>
+    <string name="where_gallery">المعرض › TekTıkla</string>
+    <string name="where_music">الموسيقى › TekTıkla</string>
+    <string name="where_downloads">التنزيلات › TekTıkla</string>
+</resources>

@@ -35,6 +35,28 @@ const ICONS = {
   grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
   bulb: '<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
   palette: '<path d="M12 21a9 9 0 1 1 9-9c0 2.5-2 4-4.5 4H15a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 21z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>',
+  panelClose: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M16 15l-3-3 3-3"/>',
+  panelOpen: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M14 9l3 3-3 3"/>',
+  chevronRight: '<path d="M9 18l6-6-6-6"/>',
+  youtube: '<path d="M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="M10 15l5-3-5-3z"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+  phone: '<rect x="6.5" y="2" width="11" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  coffee: '<path d="M3 9h13v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M7 3v3M10.5 3v3M14 3v3"/>',
+  wifi: '<path d="M2 8.8a15 15 0 0 1 20 0M5 12.4a10 10 0 0 1 14 0M8.5 15.9a5 5 0 0 1 7 0"/><circle cx="12" cy="19.3" r="1"/>',
+  upload: '<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',
+  convert: '<path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+  sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
+  arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+  bookmark: '<path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  grip: '<circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/>',
+  arrowUp: '<path d="M12 19V5M5 12l7-7 7 7"/>',
+  arrowDown: '<path d="M12 5v14M19 12l-7 7-7-7"/>',
+  heart: '<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/>',
+  github: '<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.1-1.3-.3-2.5-1-3.5.3-1.2.3-2.4 0-3.5 0 0-1 0-3 1.5a10.4 10.4 0 0 0-8 0C6 2 5 2 5 2c-.3 1.2-.3 2.4 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.4.5-.7 1-.9 1.7-.2.6-.2 1.2-.1 1.8v4"/><path d="M9 18c-4.5 2-5-2-7-2"/>',
 };
 function icon(name) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -112,7 +134,7 @@ function seg(id, onChange) {
   segs[id] = ctl;
   return ctl;
 }
-window.addEventListener("resize", () => Object.values(segs).forEach((s) => s.refresh()));
+window.addEventListener("resize", () => { Object.values(segs).forEach((s) => s.refresh()); moveIndicator(); });
 
 /* ---------------------------------------------------------------- durum */
 const state = {
@@ -131,13 +153,101 @@ function showPage(name) {
 }
 function moveIndicator() {
   const a = $(".nav-item.active");
-  if (a) $("#navIndicator").style.transform = `translateY(${a.offsetTop}px)`;
+  if (!a) return;
+  // kısa pencerede menü öğeleri sıkışır: vurgu kutusu öğenin gerçek yüksekliğini alır
+  $("#navIndicator").style.transform = `translateY(${a.offsetTop}px)`;
+  $("#navIndicator").style.height = a.offsetHeight + "px";
 }
 $$(".nav-item").forEach((n) => n.addEventListener("click", () => showPage(n.dataset.page)));
 
+/* ---------------------------------------------------------------- destek */
+// GitHub profilinin (ve tanımlıysa bağış sayfasının) QR kodu. İlk açılışta ve her yeni sürümde bir kez kendiliğinden açılır.
+let supportLinks = null;
+async function openSupport() {
+  supportLinks = supportLinks || (await api.support_info()).links;
+  $("#supportCards").replaceChildren(...supportLinks.map((l) => {
+    const coffee = l.id === "donate";  // Buy Me a Coffee: "Bana bir kahve alır mısın?"
+    return h("button", { class: "qr-card" + (coffee ? " coffee" : ""), title: l.label, onclick: () => api.open_url("support_" + l.id) },
+      h("span", { class: "qr-img" }, h("img", { src: l.qr, alt: l.label })),
+      coffee ? h("b", { class: "qr-ask" }, "Bana bir kahve alır mısın?") : null,
+      h("span", { class: "qr-label", "data-no-i18n": true }, icon(coffee ? "coffee" : "github"),
+        // uzun bağış adresi kesilmesin: gerekirse "/" işaretinden sonra alt satıra geçer
+        h("span", {}, ...l.label.split("/").flatMap((part, i) => (i ? [h("wbr"), "/" + part] : [part])))));
+  }));
+  $("#supportDonate").classList.toggle("hidden", !supportLinks.some((l) => l.id === "donate"));
+  $("#supportOverlay").classList.remove("hidden");
+}
+function autoSupport() {
+  // dil seçimi ya da ilk kurulum ekranı açıksa bekler: üst üste iki pencere açılmasın
+  const busy = ["#langOverlay", "#setupOverlay", "#authOverlay"].some((s) => !$(s).classList.contains("hidden"));
+  if (busy) return setTimeout(autoSupport, 1200);
+  openSupport();
+  api.support_seen();
+}
+function wireSupport() {
+  const close = () => $("#supportOverlay").classList.add("hidden");
+  $("#supportBtn").addEventListener("click", openSupport);
+  $("#supportSettingsBtn").addEventListener("click", openSupport);
+  $("#supportClose").addEventListener("click", close);
+  $("#supportLater").addEventListener("click", close);
+  $("#supportGo").addEventListener("click", () => api.open_url("support_github"));
+  $("#supportDonate").addEventListener("click", () => api.open_url("support_donate"));
+  $("#supportOverlay").addEventListener("click", (e) => { if (e.target.id === "supportOverlay") close(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("#supportOverlay").classList.contains("hidden")) close(); });
+}
+
+/* ---------------------------------------------------------------- kenar çubuğu */
+// Sabit ya da otomatik gizlenen: gizliyken fare kenara gelince içeriğin üstünde açılır, panel düğmesiyle yeniden sabitlenir.
+let sidebarTimer = 0;
+const sidebarHidden = () => $(".app").classList.contains("sb-auto") && !$(".app").classList.contains("sb-peek");
+function applySidebar(mode, instant = false) {
+  const app = $(".app"), auto = mode === "auto";
+  if (segs.sidebarSeg) segs.sidebarSeg.set(auto ? "auto" : "pinned");
+  if (app.classList.contains("sb-auto") === auto) return;
+  if (instant) app.classList.add("sb-instant");
+  app.classList.toggle("sb-auto", auto);
+  app.classList.remove("sb-peek");
+  if (instant) { void app.offsetWidth; app.classList.remove("sb-instant"); }
+  setTimeout(() => Object.values(segs).forEach((s) => s.refresh()), instant ? 30 : 480);  // sayfa genişliği değişti
+}
+function setSidebar(mode) { applySidebar(mode); setSetting("sidebar", mode); }
+function peekSidebar(open, delay = 0) {
+  clearTimeout(sidebarTimer);
+  sidebarTimer = setTimeout(() => $(".app").classList.toggle("sb-peek", open && $(".app").classList.contains("sb-auto")), delay);
+}
+function wireMobile() {
+  // telefon: menü düğmesi kenar çubuğunu çekmece olarak açar; bir sayfa seçilince ya da dışarı dokununca kapanır
+  const app = $(".app");
+  $("#mMenuBtn").addEventListener("click", () => app.classList.toggle("m-open"));
+  $("#mScrim").addEventListener("click", () => app.classList.remove("m-open"));
+  $$(".nav-item").forEach((n) => n.addEventListener("click", () => app.classList.remove("m-open")));
+  $("#mQueueBtn").addEventListener("click", () => showPage("queue"));
+}
+function wireSidebar() {
+  $("#sbHide").addEventListener("click", () => setSidebar("auto"));
+  $("#sbPin").addEventListener("click", () => setSidebar("pinned"));
+  $("#sbHandle").addEventListener("click", () => setSidebar("pinned"));
+  // kenardan geçerken kazara açılmasın diye kısa bir bekleme; kenar çubuğundan çıkınca biraz sonra kapanır
+  $("#sbEdge").addEventListener("mouseenter", () => peekSidebar(true, 90));
+  $("#sbEdge").addEventListener("mouseleave", () => { if (!$(".app").classList.contains("sb-peek")) peekSidebar(false); });
+  $("#sidebar").addEventListener("mouseenter", () => peekSidebar(true));
+  $("#sidebar").addEventListener("mouseleave", () => peekSidebar(false, 280));
+  $$(".nav-item").forEach((n) => n.addEventListener("click", () => peekSidebar(false, 160)));
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === "b") {
+      e.preventDefault();
+      setSidebar($(".app").classList.contains("sb-auto") ? "pinned" : "auto");
+    }
+  });
+}
+
 /* ---------------------------------------------------------------- tema */
 const THEMES = ["mono", "paper", "violet", "ocean"];
-function applyFont(f) { document.documentElement.dataset.font = f === "serif" ? "serif" : "grotesk"; }
+const FONTS = ["serif", "grotesk", "wide", "soft"];  // Instrument Serif, Bricolage Grotesque, Unbounded, Fraunces
+function applyFont(f) {
+  document.documentElement.dataset.font = FONTS.includes(f) ? f : "grotesk";
+  $$(".font-opt").forEach((o) => o.classList.toggle("on", o.dataset.fontOpt === document.documentElement.dataset.font));
+}
 function applyTheme(t) {
   document.documentElement.dataset.theme = THEMES.includes(t) ? t : "mono";
   $$(".theme-opt").forEach((o) => o.classList.toggle("on", o.dataset.themeOpt === document.documentElement.dataset.theme));
@@ -182,7 +292,7 @@ function onAnalyzed(ev) {
   $("#mBadge").textContent = tr(m.is_playlist ? `Oynatma listesi · ${m.entry_count} öğe` : m.audio_only ? "Ses kaynağı" : nq ? `${nq} kalite seçeneği` : "İndirilebilir");
   $("#mSubs").textContent = tr(m.subtitles.length ? `${m.subtitles.length} altyazı` : "");
   $("#mSubs").classList.toggle("hidden", !m.subtitles.length);
-  for (const id of ["mAiBtn", "mCommentsBtn", "mSimilarBtn", "mReelsBtn", "mDubBtn", "mCoverBtn"]) $("#" + id).classList.toggle("hidden", m.is_playlist);
+  for (const id of ["mAiBtn", "mWatchBtn", "mCommentsBtn", "mSimilarBtn", "mReelsBtn", "mDubBtn", "mCoverBtn"]) $("#" + id).classList.toggle("hidden", m.is_playlist);
   $("#mThumbBtn").classList.toggle("hidden", m.is_playlist || !m.thumb);
   $("#similarBox").classList.add("hidden");
   state.similarToken++;
@@ -396,13 +506,15 @@ async function startDownload(all = false) {
   flyToQueue(btn);
 }
 
-function flyToQueue(from) {
-  // İndir butonundan menüdeki "İndirmeler"e uçan küçük nokta
-  const a = from.getBoundingClientRect(), b = $('.nav-item[data-page="queue"]').getBoundingClientRect();
+function flyToQueue(from, page = "queue") {
+  // düğmeden menüdeki sayfaya ("İndirmeler", "İzleme listesi") uçan küçük nokta
+  // kenar çubuğu gizliyse kenardaki tutamağa uçar
+  const hidden = sidebarHidden();
+  const a = from.getBoundingClientRect(), b = $(hidden ? "#sbHandle" : `.nav-item[data-page="${page}"]`).getBoundingClientRect();
   const dot = h("div");
   dot.style.cssText = `position:fixed;z-index:60;width:16px;height:16px;border-radius:50%;background:var(--grad);box-shadow:var(--glow);left:${a.left + a.width / 2}px;top:${a.top + a.height / 2}px;transition:all .75s cubic-bezier(.5,-0.3,.3,1);pointer-events:none`;
   document.body.append(dot);
-  requestAnimationFrame(() => { dot.style.left = b.left + 40 + "px"; dot.style.top = b.top + b.height / 2 + "px"; dot.style.transform = "scale(.4)"; dot.style.opacity = ".2"; });
+  requestAnimationFrame(() => { dot.style.left = (hidden ? b.left : b.left + 40) + "px"; dot.style.top = b.top + b.height / 2 + "px"; dot.style.transform = "scale(.4)"; dot.style.opacity = ".2"; });
   setTimeout(() => dot.remove(), 800);
 }
 
@@ -433,7 +545,7 @@ function itemCard(it) {
   const acts = h("div", { class: "q-actions" });
   if (it.state === "done") {
     acts.append(h("button", { class: "btn success icon", title: "Aç", onclick: () => api.open_item(it.id) }, icon("play")));
-    acts.append(h("button", { class: "btn icon", title: "Klasörde göster", onclick: () => api.reveal_item(it.id) }, icon("folder")));
+    acts.append(h("button", { class: "btn icon rv", title: "Klasörde göster", onclick: () => api.reveal_item(it.id) }, icon("folder")));
   }
   if (it.state === "error" || it.state === "cancelled")
     acts.append(h("button", { class: "btn icon", title: "Tekrar dene", onclick: () => api.retry(it.id) }, icon("retry")));
@@ -479,6 +591,9 @@ function renderQueue() {
   const badge = $("#queueBadge");
   badge.textContent = tr(active);
   badge.classList.toggle("hidden", !active);
+  $("#sbHandle").classList.toggle("busy", active > 0);
+  $("#mQueueBadge").textContent = tr(active);
+  $("#mQueueBadge").classList.toggle("hidden", !active);
   $("#queueSub").textContent = tr(active ? `${active} indirme devam ediyor.` : "Kuyruktaki ve biten indirmeler.");
 }
 
@@ -578,7 +693,7 @@ function onAiDone(ev) {
     $("#aiPoints").replaceChildren(...numbered(r.key_points));
     $("#aiTopics").replaceChildren(...r.topics.map((t) => h("span", { class: "chip accent" }, "#" + t)));
   } else if (r.mode === "comments") {
-    $("#aiSource").textContent = tr(`${r.provider} · ${r.count.toLocaleString("tr-TR")} yorum okundu`);
+    $("#aiSource").textContent = r.provider + " · " + tr(`${r.count.toLocaleString("tr-TR")} yorum okundu`);  // servis adı çevrilmez
     $("#aiTldr").textContent = tr(r.genel_hava);
     $("#cLikes").replaceChildren(...bullets(r.begenilenler));
     $("#cDislikes").replaceChildren(...bullets(r.begenilmeyenler));
@@ -596,7 +711,7 @@ function onAiDone(ev) {
     $("#cQuestions").replaceChildren(...numbered(r.sorular));
     $("#cSummary").textContent = tr(r.ozet);
   } else {
-    $("#aiSource").textContent = tr(`${r.provider} · ${r.fikirler.length} fikir`);
+    $("#aiSource").textContent = r.provider + " · " + tr(`${r.fikirler.length} fikir`);
     $("#aiTldr").textContent = tr(r.ozet);
     $("#ideaGrid").replaceChildren(...r.fikirler.map((f, i) => {
       const el = h("div", { class: "idea" },
@@ -682,7 +797,7 @@ function renderHistory() {
       h("div", { class: "txt" }, h("b", { title: e.title }, e.title), h("small", {}, `${e.date || ""} · ${e.kind || ""}`)),
       h("div", { class: "acts" },
         h("button", { class: "btn icon success", title: "Aç", onclick: () => api.open_history(i) }, icon("play")),
-        h("button", { class: "btn icon", title: "Klasörde göster", onclick: () => api.reveal_history(i) }, icon("folder"))))));
+        h("button", { class: "btn icon rv", title: "Klasörde göster", onclick: () => api.reveal_history(i) }, icon("folder"))))));
   $("#historyEmpty").classList.toggle("hidden", rows.length > 0);
 }
 
@@ -699,7 +814,7 @@ function renderSettings() {
   $("#folderText").textContent = tr(s.download_dir);
   applyTheme(s.theme);
   applyFont(s.font);
-  segs.fontSeg.set(s.font || "grotesk");
+  applySidebar(s.sidebar, true);
   segs.parallelSeg.set(s.max_parallel);
   segs.defContainerSeg.set(s.container);
   segs.defAudioSeg.set(s.audio_format);
@@ -851,7 +966,11 @@ function wire() {
   seg("whisperSeg", (v) => setSetting("whisper_model", v));
   seg("queueFilter", (v) => { state.queueFilter = v; renderQueue(); }).set("all");
   $$(".theme-opt").forEach((o) => o.addEventListener("click", () => setSetting("theme", o.dataset.themeOpt)));
-  seg("fontSeg", (v) => { applyFont(v); setSetting("font", v); });
+  $$(".font-opt").forEach((o) => o.addEventListener("click", () => { applyFont(o.dataset.fontOpt); setSetting("font", o.dataset.fontOpt); }));
+  seg("sidebarSeg", setSidebar);
+  wireSidebar();
+  wireMobile();
+  wireSupport();
   seg("parallelSeg", (v) => setSetting("max_parallel", Number(v)));
   seg("defContainerSeg", (v) => setSetting("container", v));
   seg("defAudioSeg", (v) => setSetting("audio_format", v));
@@ -943,6 +1062,11 @@ window.addEventListener("pywebviewready", async () => {
   hydrateIcons();
   wire();
   studioWire();
+  wireWatch();
+  wireConvert();
+  wireEditor();
+  wireAccount();
+  wireRemote();
   const init = await api.init();
   state.settings = init.settings;
   state.keys = init.keys;
@@ -955,7 +1079,8 @@ window.addEventListener("pywebviewready", async () => {
   state.repo = init.repo;
   applyTheme(state.settings.theme);
   init.items.forEach((it) => state.items.set(it.id, it));
-  $("#versionText").textContent = tr(`TekTıkla v${init.version}`);
+  $("#versionText").textContent = "v" + init.version;  // durumla aynı satırda: kısa
+  $("#versionText").title = "TekTıkla v" + init.version;
   $("#appVersion").textContent = tr("v" + init.version);
   $("#repoText").textContent = tr(init.repo ? "github.com/" + init.repo : "Ayarlanmadı");
   renderSettings();
@@ -966,7 +1091,11 @@ window.addEventListener("pywebviewready", async () => {
   onSetup({ state: init.setup === "checking" ? "checking" : init.setup, tools: init.tools });
   if (init.setup === "checking") $("#setupChipText").textContent = tr("Kontrol ediliyor…");
   studioInit(init);
+  watchInit(init);
+  accountInit(init);
+  remoteInit(init);
   moveIndicator();
+  if (init.support) setTimeout(autoSupport, 1400);
   $("#urlInput").focus();
   pollLoop();
 });

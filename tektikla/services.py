@@ -52,6 +52,37 @@ class ServiceError(Exception):
     pass
 
 
+class QuotaError(ServiceError):
+    """Ücretsiz kota doldu. retry_after: kaç saniye sonra yeniden denenebilir; daily: o günün kotası bitti."""
+
+    def __init__(self, message: str, retry_after: float | None = None, daily: bool = False):
+        super().__init__(message)
+        self.retry_after, self.daily = retry_after, daily
+
+
+def _quota_error(r: requests.Response) -> QuotaError:
+    """Gemini'nin 429 yanıtından bekleme süresini ve kotanın günlük mü dakikalık mı olduğunu okur."""
+    retry, daily = None, False
+    try:
+        err = r.json().get("error") or {}
+        for d in err.get("details") or []:
+            kind = d.get("@type", "")
+            if kind.endswith("RetryInfo"):
+                m = re.match(r"([\d.]+)s", str(d.get("retryDelay", "")))
+                retry = float(m.group(1)) if m else None
+            elif kind.endswith("QuotaFailure"):
+                daily = any("PerDay" in (v.get("quotaId") or "") for v in d.get("violations") or [])
+        daily = daily or "per day" in (err.get("message") or "").lower()
+    except ValueError:
+        pass
+    if retry is None and r.headers.get("Retry-After", "").isdigit():
+        retry = float(r.headers["Retry-After"])
+    if daily:
+        return QuotaError("Gemini'nin günlük ücretsiz kotası doldu; yarın tekrar deneyin ya da ücretsiz Edge sesini seçin.",
+                          retry, True)
+    return QuotaError("Gemini ücretsiz kota sınırına ulaşıldı; bir dakika sonra tekrar deneyin.", retry, False)
+
+
 def _fail(service: str, r: requests.Response) -> ServiceError:
     try:
         body = r.json()
@@ -107,7 +138,7 @@ def _gemini(key: str, body: dict, timeout: int = 180) -> dict:
     r = requests.post(GEMINI_INTERACTIONS, json=body, timeout=timeout,
                       headers={"x-goog-api-key": key, "Content-Type": "application/json"})
     if r.status_code == 429:
-        raise ServiceError("Gemini ücretsiz kota sınırına ulaşıldı; bir dakika sonra tekrar deneyin.")
+        raise _quota_error(r)
     if not r.ok:
         text = r.text.lower()
         if "free" in text and ("tier" in text or "quota" in text) or "billing" in text:

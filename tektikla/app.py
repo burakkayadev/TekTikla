@@ -9,7 +9,7 @@ from pathlib import Path
 import webview
 from PIL import Image, ImageDraw, ImageFilter
 
-from . import APP_NAME
+from . import APP_NAME, i18n
 from .api import Api
 from .config import APP_DIR
 
@@ -116,7 +116,7 @@ def main() -> None:
 
     api = Api()
     window = webview.create_window(
-        APP_NAME, url=str(WEB_DIR / "index.html"), js_api=api,
+        api._window_title(), url=str(WEB_DIR / "index.html"), js_api=api,
         width=1280, height=840, min_size=(1040, 700), background_color=BG_COLOR,
     )
     api._attach(window)
@@ -124,7 +124,7 @@ def main() -> None:
     def on_closing():
         running = api.running_count()
         if running and not window.create_confirmation_dialog(
-                APP_NAME, f"{running} indirme devam ediyor. Kapatırsanız iptal edilecek. Çıkılsın mı?"):
+                APP_NAME, i18n.t("{n} indirme devam ediyor. Kapatırsanız iptal edilecek. Çıkılsın mı?", n=running)):
             return False
         api.cancel_all()
         return True
