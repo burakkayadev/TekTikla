@@ -114,3 +114,6 @@ server/welcome/     hoş geldin e-postası (Google Apps Script, 13 dil)
 - Telefondan kullanım yalnızca yerel ağda çalışır, internet üzerinden erişilemez. Telefon bağlanamıyorsa: Windows izin sorarsa "Özel ağlar"a izin verin; Wi-Fi ağınız "Ortak" görünüyorsa Windows Ayarlar › Ağ'dan "Özel" yapın.
 - Görsel düzenleyici her şeyi bilgisayarda yapar; görseller hiçbir servise gönderilmez.
 - Telif hakkı olan içerikleri yalnızca kişisel kullanım için ve sitenin kurallarına uygun şekilde indirin.
+
+## Lisans
+Bu proje MIT Lisansı altında lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına bakın.
