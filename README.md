@@ -1,5 +1,34 @@
 # TekTıkla — Medya ve yapay zekâ stüdyosu
 
+> ## 🌙 Veda notu: TekTıkla artık güncelleme almayacak
+>
+> Merhaba,
+>
+> Açık ve net söyleyeyim: **TekTıkla'ya bundan sonra yeni sürüm ve güncelleme gelmeyecek.** Bu proje burada tamamlandı. Yanlış anlaşılmasın: ben yazılım geliştirmeyi bırakmıyorum, yeni uygulamalar yapmaya devam ediyorum. Sadece TekTıkla'nın hikâyesinin son sayfası bu.
+>
+> **Nasıl başladı?** Her şey küçük bir fikirdi: "Bir linki yapıştırayım, tek tıkla insin." İlk günlerde yalnızca bir video indiriciydi. Sonra kullandıkça yeni ihtiyaçlar doğdu; özet çıkaran yapay zekâ, uzun videodan Reels kliplerini seçen kurgu, dublaj, kapak ve görsel üretimi, dosya dönüştürücü, izleme listesi, telefondan kullanım, Android uygulaması ve bir görsel düzenleyici geldi. Birkaç satırlık bir araç, 13 dilde konuşan küçük bir stüdyoya dönüştü. Bunun her satırı büyük bir keyifle, çoğu zaman da gece geç saatlere kadar yazıldı.
+>
+> **Son sürüm:** [v3.0.0](https://github.com/BurakCNKaya/TekTikla/releases/tag/v3.0.0). Kurulum dosyası, taşınabilir zip ve Android uygulaması bu sayfada duruyor ve indirilmeye devam edebilir.
+>
+> **Bundan sonra ne olacak? (Açık konuşayım)**
+> - Yeni özellik ve hata düzeltmesi gelmeyecek.
+> - İndirme motoru (yt-dlp) siteler değiştikçe eskir. Uygulamada **Ayarlar › İndirme motorunu güncelle** düğmesi bunu çoğu zaman yeni sürüm gerekmeden düzeltir; ama bir noktada bazı siteler çalışmayabilir.
+> - Uygulamadaki "güncelleme var" bildirimi artık yeni bir sürüm getirmeyecek.
+> - GitHub ve e-posta ile hesap girişi tamamlanmadı; yalnızca Google girişi çalışıyor. Hesap zaten isteğe bağlıydı, uygulama hesapsız tüm özellikleriyle çalışır.
+> - Telefondan kullanım ve Android uygulaması aynı Wi-Fi'da, bilgisayardaki TekTıkla açıkken çalışır. Android uygulamasını gerçek bir telefonda deneme fırsatım olmadı; sorun çıkarsa şaşırmayın.
+>
+> **Kaynak kod açık ve MIT lisanslı.** Fikri beğenen, devam ettirmek ya da kendi sürümünü yapmak isteyen herkes depoyu çatallayabilir (fork) ve istediği gibi geliştirebilir.
+>
+> **Teşekkür.** TekTıkla'yı indiren, deneyen, hata bildiren, yıldız veren ve bana kahve ısmarlayan herkese kalpten teşekkür ederim. Bir yazılımın en güzel yanı, birinin gününü biraz kolaylaştırmış olmak. TekTıkla sizin için bir videoyu, bir kliği ya da bir dakikayı kolaylaştırdıysa, bu emek yerini bulmuş demektir. Yeni projelerde görüşmek üzere.
+>
+> **Küçük bir hatırlatma:** Telif hakkı olan içerikleri yalnızca kişisel kullanım için ve sitelerin kurallarına uygun şekilde indirin.
+>
+> Hoşça kalın, bol üretimli günler dilerim. ☕
+>
+> **Burak** ([@BurakCNKaya](https://github.com/BurakCNKaya)) · İsterseniz bir kahve: [buymeacoffee.com/vesperky](https://buymeacoffee.com/vesperky)
+
+---
+
 **İndir · Üret · Kurgula.**
 
 Link yapıştır (ya da sadece kopyala), TekTıkla videoyu algılasın; istediğin kalitede, MP3 olarak veya altyazılı indir. Yapay zekâ ile videoyu izlemeden özetini al, uzun videodan kurgulanmış Reels/TikTok klipleri çıkar, kapak görseli üret ve düzenle, videoyu başka dile dublajla, dosyaları başka biçime dönüştür. Hepsini telefonundan da kullanabilirsin. Arayüz 13 dilde.
