@@ -1,0 +1,1 @@
+Gizlilik Politikası: TekTikla, kullanıcılarından hiçbir kişisel veri toplamaz, saklamaz veya üçüncü taraflarla paylaşmaz. İndirme işlemleri ve yapay zeka özellikleri doğrudan kullanıcının cihazında veya kullanıcının kendi seçtiği servisler üzerinden gerçekleştirilir.
